@@ -30,13 +30,7 @@ function github(req, res, next) {
     return User
       .findOne({ email: profile.email })
       .then((user) => {
-        if(!user) {
-          user = new User({
-            username: profile.login,
-            email: profile.email
-          });
-        }
-
+        if(!user) user = new User({ username: profile.login, email: profile.email });
         user.githubId = profile.id;
         user.profileImage = profile.avatar_url;
         return user.save();
@@ -44,10 +38,7 @@ function github(req, res, next) {
   })
   .then((user) => {
     const token = jwt.sign({ userId: user.id }, secret, { expiresIn: '1hr' });
-    return res.json({
-      token,
-      message: `Welcome back ${user.username}!`
-    });
+    return res.json({ token, message: `Welcome back ${user.username}!` });
   })
   .catch(next);
 }

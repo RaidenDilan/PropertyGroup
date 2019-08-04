@@ -11,12 +11,10 @@ function PropsIndexCtrl($http, $uibModal) {
   vm.beds = null;
   vm.limit = 10;
 
-  function getProps(){
-    $http.get('/api/properties', { params: {area: vm.area, minimum_beds: vm.beds, maximum_beds: vm.beds}})
-      .then((response) => {
-        vm.results = response.data;
-
-      });
+  function getProps() {
+    $http
+      .get('/api/properties', { params: { area: vm.area, minimum_beds: vm.beds, maximum_beds: vm.beds }})
+      .then((response) => vm.results = response.data);
   }
   vm.getProps = getProps;
 
@@ -45,7 +43,7 @@ function PropsShowCtrl(User, GroupProperty, $http, $stateParams, selectedProp, $
   const vm = this;
   vm.selected = selectedProp;
 
-  function storeProp(){
+  function storeProp() {
     const newProperty = {
       listingId: vm.selected.listing_id
     };
@@ -59,7 +57,7 @@ function PropsShowCtrl(User, GroupProperty, $http, $stateParams, selectedProp, $
   }
   vm.store = storeProp;
 
-  function closeModal(){
+  function closeModal() {
     $uibModalInstance.close();
   }
   vm.closeModal = closeModal;

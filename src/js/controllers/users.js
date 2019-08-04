@@ -9,10 +9,14 @@ function UsersShowCtrl(User, $stateParams, $state, $auth) {
   vm.user = User.get($stateParams);
 
   function usersDelete() {
-    $auth.logout();
+    // $auth.logout(); // USER DELETE - Doesn't work here
+
     vm.user
       .$remove()
-      .then(() => $state.go('register'));
+      .then((user) => {
+        $auth.logout();  // USER DELETE - Works here
+        $state.go('login');
+      });
   }
   vm.delete = usersDelete;
 }

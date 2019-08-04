@@ -29,9 +29,7 @@ userSchema
   });
 
 userSchema.pre('save', function checkPreviousProfileImage(next) {
-  if(this.isModified('profileImage') && this._profileImage) {
-    return s3.deleteObject({ Key: this._profileImage }, next);
-  }
+  if(this.isModified('profileImage') && this._profileImage) return s3.deleteObject({ Key: this._profileImage }, next);
   next();
 });
 
@@ -41,25 +39,19 @@ userSchema.pre('remove', function deleteImage(next) {
 });
 
 userSchema
-.virtual('passwordConfirmation')
-.set(function setPasswordConfirmation(passwordConfirmation) {
-  this._passwordConfirmation = passwordConfirmation;
-});
+  .virtual('passwordConfirmation')
+  .set(function setPasswordConfirmation(passwordConfirmation) {
+    this._passwordConfirmation = passwordConfirmation;
+  });
 
 userSchema.pre('validate', function checkPassword(next) {
-  if(!this.password && !this.githubId) {
-    this.invalidate('password', 'required');
-  }
-  if(this.isModified('password') && this._passwordConfirmation !== this.password){
-    this.invalidate('passwordConfirmation', 'does not match');
-  }
+  if(!this.password && !this.githubId) this.invalidate('password', 'required');
+  if(this.isModified('password') && this._passwordConfirmation !== this.password)this.invalidate('passwordConfirmation', 'does not match');
   next();
 });
 
 userSchema.pre('save', function hashPassword(next) {
-  if(this.isModified('password')) {
-    this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(11));
-  }
+  if(this.isModified('password')) this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(11));
   next();
 });
 

@@ -13,9 +13,7 @@ function GroupsIndexCtrl(Group) {
   Group
     .query()
     .$promise
-    .then((response) => {
-      vm.all = response;
-    });
+    .then((response) => vm.all = response);
 }
 
 GroupsNewCtrl.$inject = ['Group', 'User', 'filterFilter', '$state', '$auth', '$scope'];
@@ -50,8 +48,6 @@ function GroupsNewCtrl(Group, User, filterFilter, $state, $auth, $scope) {
   vm.removeUser = removeUser;
 
   function groupsCreate() {
-
-
     if(vm.groupsNewForm.$valid) {
       vm.chosenUsers = [];
       if(!vm.group.users.includes(authUserId)) vm.group.users.push(authUserId);
@@ -76,17 +72,13 @@ function GroupsHomeCtrl(Group, $stateParams, $state, $http) {
       vm.group = data;
 
       let ids = [];
-      vm.group.properties.forEach((property) => {
-        ids.push(property.listingId);
-      });
+      vm.group.properties.forEach((property) => ids.push(property.listingId));
 
       ids = ids.join(',');
-      // console.log(ids);
 
-      if(ids) $http.get('/api/groups/:id/properties', { params: { id: vm.group.id, listingId: ids } })
-        .then((response) => {
-          vm.selected = response.data;
-        });
+      if(ids) $http
+        .get('/api/groups/:id/properties', { params: { id: vm.group.id, listingId: ids } })
+        .then((response) => vm.selected = response.data);
     });
 
   function groupsDelete() {
@@ -111,7 +103,8 @@ function GroupsPropsShowCtrl(Group, GroupProperty, GroupPropertyNote, GroupPrope
   vm.labels = ['Anti Social Behaviour', 'Burglary', 'Bike Theft', 'Drugs', 'Robbery', 'Vehicle Crimes', 'Violent Crimes'];
   vm.crimes.pieCrimeData = [];
 
-  Group.get($stateParams)
+  Group
+    .get($stateParams)
     .$promise
     .then((data) => {
       vm.group = data;
@@ -119,8 +112,9 @@ function GroupsPropsShowCtrl(Group, GroupProperty, GroupPropertyNote, GroupPrope
       vm.prop = vm.group.properties.find(obj => obj.listingId === vm.listingId);
     });
 
-  function groupsShowProp(){
-    $http.get('/api/groups/:id/properties/:listingId', { params: { id: vm.group.id, listingId: vm.listingId} })
+  function groupsShowProp() {
+    $http
+      .get('/api/groups/:id/properties/:listingId', { params: { id: vm.group.id, listingId: vm.listingId} })
       .then((response) => {
         vm.gps = response.data;
         vm.listingLat = vm.gps.listing[0].latitude;
@@ -128,97 +122,96 @@ function GroupsPropsShowCtrl(Group, GroupProperty, GroupPropertyNote, GroupPrope
       });
   }
 
-  function getCrimes(){
+  function getCrimes() {
     if(!vm.listingLat) return false;
-    crimes.getCrimes(vm.listingLat, vm.listingLon)
-    .then((data) => {
-      vm.crimes = data;
-      // console.log(vm.crimes.pieCrimeData);
-      return vm.crimes;
-    });
+    crimes
+      .getCrimes(vm.listingLat, vm.listingLon)
+      .then((data) => {
+        vm.crimes = data;
+        return vm.crimes;
+      });
   }
 
   $scope.$watch(() => vm.listingLat, getCrimes);
 
   function addNote() {
     GroupPropertyNote
-    .save({ id: vm.group.id, listingId: vm.listingId }, vm.newNote)
-    .$promise
-    .then((note) => {
-      vm.prop.notes.push(note);
-      vm.newNote = {};
-    });
+      .save({ id: vm.group.id, listingId: vm.listingId }, vm.newNote)
+      .$promise
+      .then((note) => {
+        vm.prop.notes.push(note);
+        vm.newNote = {};
+      });
   }
   vm.addNote = addNote;
 
   function deleteNote(note){
     GroupPropertyNote
-    .delete({ id: vm.group.id, listingId: vm.listingId, noteId: note.id })
-        .$promise
-        .then(() => {
-          const index = vm.prop.notes.indexOf(note);
-          vm.prop.notes.splice(index, 1);
-        });
+      .delete({ id: vm.group.id, listingId: vm.listingId, noteId: note.id })
+      .$promise
+      .then(() => {
+        const index = vm.prop.notes.indexOf(note);
+        vm.prop.notes.splice(index, 1);
+      });
   }
   vm.deleteNote = deleteNote;
 
   function addImage() {
     GroupPropertyImage
-    .save({ id: vm.group.id, listingId: vm.listingId }, vm.newImage)
-    .$promise
-    .then((image) => {
-      vm.prop.images.push(image);
-      vm.newImage = {};
-    });
+      .save({ id: vm.group.id, listingId: vm.listingId }, vm.newImage)
+      .$promise
+      .then((image) => {
+        vm.prop.images.push(image);
+        vm.newImage = {};
+      });
   }
   vm.addImage = addImage;
 
-  function deleteImage(image){
+  function deleteImage(image) {
     GroupPropertyImage
-    .delete({ id: vm.group.id, listingId: vm.listingId, imageId: image.id })
-        .$promise
-        .then(() => {
-          const index = vm.prop.images.indexOf(image);
-          vm.prop.images.splice(index, 1);
-        });
+      .delete({ id: vm.group.id, listingId: vm.listingId, imageId: image.id })
+      .$promise
+      .then(() => {
+        const index = vm.prop.images.indexOf(image);
+        console.log('index ------>', index);
+        console.log('image ------>', image);
+        return vm.prop.images.splice(index, 1);
+      });
   }
   vm.deleteImage = deleteImage;
 
   function addRating() {
     GroupPropertyRating
-    .save({ id: vm.group.id, listingId: vm.listingId }, vm.newRating)
-    .$promise
-    .then((rating) => {
-      vm.prop.rating.push(rating);
-      vm.newRating = {};
-    });
+      .save({ id: vm.group.id, listingId: vm.listingId }, vm.newRating)
+      .$promise
+      .then((rating) => {
+        vm.prop.rating.push(rating);
+        vm.newRating = {};
+      });
   }
   vm.addRating = addRating;
 
-  function deleteRating(rating){
+  function deleteRating(rating) {
     GroupPropertyRating
-    .delete({ id: vm.group.id, listingId: vm.listingId, ratingId: rating.id })
-        .$promise
-        .then(() => {
-          const index = vm.prop.rating.indexOf(rating);
-          vm.prop.rating.splice(index, 1);
-        });
+      .delete({ id: vm.group.id, listingId: vm.listingId, ratingId: rating.id })
+      .$promise
+      .then(() => {
+        const index = vm.prop.rating.indexOf(rating);
+        vm.prop.rating.splice(index, 1);
+      });
   }
   vm.deleteRating = deleteRating;
 
   function deleteProperty() {
     GroupProperty
-    .delete({ listingId: vm.listingId, id: vm.group.id })
-    .$promise
-    .then(() => {
-      $state.go('groupsHome', { id: vm.group.id });
-    });
+      .delete({ listingId: vm.listingId, id: vm.group.id })
+      .$promise
+      .then(() => $state.go('groupsHome', { id: vm.group.id }));
   }
   vm.deleteProperty = deleteProperty;
 
   function openModal(thisImage) {
     $uibModal.open({
-
       templateUrl: 'js/views/modals/images.html',
       controller: 'UserImageModalCtrl as userImage',
       windowClass: 'app-modal-window',
@@ -230,21 +223,18 @@ function GroupsPropsShowCtrl(Group, GroupProperty, GroupPropertyNote, GroupPrope
     });
   }
   vm.openModal = openModal;
-
 }
 
-
 UserImageModalCtrl.$inject = ['selectedImage', 'GroupPropertyImage', '$uibModalInstance'];
-function UserImageModalCtrl(selectedImage, GroupPropertyImage, $uibModalInstance){
+function UserImageModalCtrl(selectedImage, GroupPropertyImage, $uibModalInstance) {
   const vm = this;
   vm.selected = selectedImage;
 
-  function closeModal(){
+  function closeModal() {
     $uibModalInstance.close();
   }
   vm.closeModal = closeModal;
 }
-
 
 // GroupsEditCtrl.$inject = ['Group', 'User', '$stateParams', '$auth', '$state', '$scope', 'filterFilter', 'GroupUser'];
 // function GroupsEditCtrl(Group, User, $stateParams, $auth, $state, $scope, filterFilter, GroupUser) {

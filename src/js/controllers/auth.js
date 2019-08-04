@@ -10,8 +10,10 @@ function RegisterCtrl($auth, $state) {
 
   function submit() {
     if(vm.registerForm.$valid) {
-      $auth.signup(vm.user)
+      $auth
+        .signup(vm.user)
         .then(() => $state.go('login'));
+
       vm.registerForm.$setUntouched();
       vm.registerForm.$setPristine();
     }
@@ -26,8 +28,10 @@ function LoginCtrl($auth, $state) {
 
   function submit() {
     if(vm.loginForm.$valid) {
-      $auth.login(vm.credentials)
+      $auth
+        .login(vm.credentials)
         .then(() => $state.go('usersShow', { id: $auth.getPayload().userId }));
+
       vm.loginForm.$setUntouched();
       vm.loginForm.$setPristine();
     }
@@ -35,8 +39,8 @@ function LoginCtrl($auth, $state) {
   vm.submit = submit;
 
   function authenticate(provider) {
-
-    $auth.authenticate(provider)
+    $auth
+      .authenticate(provider)
       .then(() => $state.go('usersShow', { id: $auth.getPayload().userId }));
   }
 

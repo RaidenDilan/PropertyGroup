@@ -1,13 +1,14 @@
-const router = require('express').Router();
-const auth = require('../controllers/auth');
-const users = require('../controllers/users');
+const router      = require('express').Router();
+const auth        = require('../controllers/auth');
+const users       = require('../controllers/users');
 const imageUpload = require('../lib/imageUpload');
-const oauth = require('../controllers/oauth');
-const groups = require('../controllers/groups');
-const crimes = require('../controllers/crimes');
+const oauth       = require('../controllers/oauth');
+const groups      = require('../controllers/groups');
+const crimes      = require('../controllers/crimes');
 const secureRoute = require('../lib/secureRoute');
-const zooplas = require('../controllers/zooplas');
+const zooplas     = require('../controllers/zooplas');
 
+// API
 router.route('/properties')
   .all(secureRoute)
   .get(zooplas.properties);
@@ -16,7 +17,13 @@ router.route('/properties/:listingId')
   .all(secureRoute)
   .get(zooplas.selectedProp);
 
+router.route('/crimes')
+  .all(secureRoute)
+  .get(crimes.getCrimes);
+
+// USERS
 router.route('/users')
+  .all(secureRoute)
   .get(users.index);
 
 router.route('/users/:id')
@@ -25,6 +32,7 @@ router.route('/users/:id')
   .put(imageUpload, users.update)
   .delete(users.delete);
 
+// GROUPS
 router.route('/groups')
   .all(secureRoute)
   .get(groups.index)
@@ -49,10 +57,6 @@ router.route('/groups/:id/properties')
   .all(secureRoute)
   .get(zooplas.selectedProp);
 
-router.route('/crimes')
-  .all(secureRoute)
-  .get(crimes.getCrimes);
-
 router.route('/groups/:id/properties/:listingId')
   .all(secureRoute)
   .get(zooplas.selectedProp)
@@ -60,7 +64,6 @@ router.route('/groups/:id/properties/:listingId')
 
 router.route('/groups/:id/properties/:listingId/notes')
   .post(secureRoute, groups.addNote);
-
 
 router.route('/groups/:id/properties/:listingId/notes/:noteId')
   .delete(secureRoute, groups.deleteNote);
@@ -77,6 +80,7 @@ router.route('/groups/:id/properties/:listingId/ratings')
 router.route('/groups/:id/properties/:listingId/ratings/:ratingId')
   .delete(secureRoute, groups.deleteRating);
 
+// AUTH
 router.route('/login')
   .post(auth.login);
 

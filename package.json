@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "engines": {
+    "node": "7.4.0"
+  },
   "scripts": {
     "postinstall": "bower install && gulp deploy",
     "start": "node server.js"
@@ -59,7 +62,7 @@
     "chart.js": "^2.5.0",
     "express": "^4.15.2",
     "jsonwebtoken": "^7.3.0",
-    "mongoose": "^4.9.1",
+    "mongoose": "^4.8.6",
     "morgan": "^1.8.1",
     "ng2-charts": "^1.5.0",
     "request": "^2.81.0",

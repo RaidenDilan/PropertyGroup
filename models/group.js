@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const s3 = require('../lib/s3');
 const Promise = require('bluebird');
 
+// GROUP USERS
 const userImageSchema = new mongoose.Schema({
   file: { type: String },
   createdBy: { type: mongoose.Schema.ObjectId, ref: 'User', required: true }
@@ -12,13 +13,12 @@ const userNoteSchema = new mongoose.Schema({
   createdBy: { type: mongoose.Schema.ObjectId, ref: 'User', required: true }
 });
 
-
 const userRatingSchema = new mongoose.Schema({
   opinion: { type: Number },
   createdBy: { type: mongoose.Schema.ObjectId, ref: 'User', required: true }
 });
 
-
+// PROPERTY
 const propertySchema = new mongoose.Schema({
   listingId: { type: String },
   images: [ userImageSchema ],
@@ -26,9 +26,10 @@ const propertySchema = new mongoose.Schema({
   rating: [ userRatingSchema]
 });
 
+// GROUP
 const groupSchema = new mongoose.Schema({
   properties: [ propertySchema ],
-  groupName: { type: String},
+  groupName: { type: String },
   createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' }
 });
 
@@ -84,8 +85,8 @@ groupSchema.pre('save', function addGroupToUsers(next) {
 //
 
 userImageSchema.pre('remove', function deleteImage(next) {
-  if(this.file) return s3.deleteObject({ Key: this.file}, next);
-  next();
+  if(this.file) return s3.deleteObject({ Key: this.file }, next);
+  return next();
 });
 
 

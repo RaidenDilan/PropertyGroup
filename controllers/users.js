@@ -30,9 +30,11 @@ function updateUser(req, res, next) {
     .exec()
     .then((user) => {
       if(!user) return res.notFound();
+
       for (const field in req.body) {
         user[field] = req.body[field];
       }
+
       return user.save();
     })
     .then((user) => res.json(user))
@@ -46,7 +48,6 @@ function deleteUser(req, res, next) {
     .exec()
     .then((user) => {
       if(!user) return res.notFound();
-
       return user.remove();
     })
     .then(() => res.status(204).end())
