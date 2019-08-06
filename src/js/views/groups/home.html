@@ -1,27 +1,35 @@
 <section class="container">
   <div class="groupsHomePage">
     <h1>{{ groupsHome.group.groupName }}</h1>
-    <div class="row row-centered border">
-      <div ng-repeat="user in groupsHome.group.users" class="col-xs-4 col-md-2 col-centered">
-        <div class="groupUsers" style="background-image:url('{{ user.profileImageSRC }}')"></div>
+
+    <div class="row row-centered border groupsHomeUser">
+      <div ng-repeat="user in groupsHome.group.users" class="col-xs-4 col-md-2 groupJoinedUsers">
+        <div>
+          <div class="groupUsers" style="background-image:url('{{ user.profileImageSRC }}')"></div>
+          <h5>{{ user.username }}</h5>
+          <button ui-sref="usersShow({ id: user.id })" class="editButton">View</button>
+        </div>
       </div>
     </div>
+
     <div>
       <button ng-click="groupsHome.delete()" class="deleteGroup">Delete Group</button>
+      <button ui-sref="groupsEdit({ id: main.currentUserGroupId })" class="deleteGroup">Edit</button>
     </div>
+
     <div class="row row-centered">
       <div>
         <p class="listingIDs">Listing IDs:</p>
         <ul ng-repeat="selected in groupsHome.selected.listing" class="col-sm-12 col-md-6 col-lg-6">
           <li>
-            <img ng-src="{{selected.image_645_430_url}}" class="groupsShowZooplaImage">
+            <img ng-src="{{ selected.image_645_430_url }}" class="groupsShowZooplaImage">
           </li>
           <!-- <li><strong>Address: </strong>{{ selected.displayable_address }}</li>
           <li><strong>Bedrooms: </strong>{{ selected.num_bedrooms }}</li>
           <li><strong>Bathrooms: </strong>{{ selected.num_bathrooms }}</li>
           <li><strong>Price: </strong>£{{ selected.rental_prices.per_month }} ppm</li>
           <li><strong>Property Type: </strong>{{ selected.property_type }}</li> -->
-          <button ui-sref="groupsPropsShow({ id: groupsHome.group.id, listing_id: selected.listing_id})">Show Property</button>
+          <button ui-sref="groupsPropsShow({ id: groupsHome.group.id, listing_id: selected.listing_id })">Show Property</button>
         </ul>
       </div>
     </div>

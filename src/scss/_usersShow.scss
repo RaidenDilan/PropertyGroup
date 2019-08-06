@@ -2,8 +2,9 @@
   background-color: $brand-color;
   margin: 80px auto;
   border-radius: 25px;
-  padding: 10px;
+  padding: 25px;
   width: 50%;
+
   h1 {
     color: $white;
     padding: 20px;
@@ -13,6 +14,7 @@
     color: $white;
   }
   h3 {
+    text-transform: none;
     padding: 10px;
     color: $white;
   }
@@ -21,5 +23,5 @@
 .profileImage {
   border: 2px solid $white;
   border-radius: 20px;
-  width: 50%;
+  width: 25%;
 }

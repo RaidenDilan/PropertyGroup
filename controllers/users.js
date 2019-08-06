@@ -37,7 +37,7 @@ function updateUser(req, res, next) {
 
       return user.save();
     })
-    .then((user) => res.json(user))
+    .then((user) => res.json({ user, message: `${user.username} successfully updated`}))
     .catch(next);
 }
 
@@ -48,7 +48,10 @@ function deleteUser(req, res, next) {
     .exec()
     .then((user) => {
       if(!user) return res.notFound();
-      return user.remove();
+
+      return user
+        .remove()
+        .then(() => res.json({ user, message: `${user.username} successfully deleted` }));
     })
     .then(() => res.status(204).end())
     .catch(next);

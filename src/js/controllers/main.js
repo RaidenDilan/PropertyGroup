@@ -13,6 +13,7 @@ function MainCtrl($rootScope, $state, $auth, User){
   });
 
   $rootScope.$on('$stateChangeSuccess', () => {
+    vm.currentUserGroupId = null;
     if(vm.stateHasChanged) vm.message = null;
     if(!vm.stateHasChanged) vm.stateHasChanged = true;
 
@@ -25,6 +26,7 @@ function MainCtrl($rootScope, $state, $auth, User){
         .then((response) => {
           vm.user = response.find(obj => obj.id === vm.currentUserId);
           return (!vm.user.group) ? vm.currentUserGroupId = null : vm.currentUserGroupId = vm.user.group.id;
+          // if (vm.user.group === null || undefined) return null;
           // if (!vm.user.group) vm.currentUserGroupId = null;
           // else if (vm.user.group) vm.currentUserGroupId = vm.user.group.id;
         });

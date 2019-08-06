@@ -8,6 +8,7 @@ function register(req, res, next) {
   User
     .create(req.body)
     .then(() => res.json({ message: 'Registration Successful' }))
+    // .then(() => res.status(200).json({ message: 'Registration Successful' }))
     .catch(next);
 }
 
@@ -16,12 +17,13 @@ function login(req, res, next) {
     .findOne({ email: req.body.email })
     .then((user) => {
       if(!user || !user.validatePassword(req.body.password)) {
-        // return res.status(401).json({ message: `Username of password is incorrect` });
-        return res.unauthorized();
+        return res.status(401).json({ message: `Incorrect username or password` });
+        // return res.unauthorized();
       }
 
-      const token = jwt.sign({ userId: user.id }, secret, { expiresIn: '24hr' }); // '1hr'
-      res.json({ token, message: `Welcome back ${user.username}` });
+      const token = jwt.sign({ userId: user.id }, secret, { expiresIn: '1hr' });
+      return res.status(200).json({ token, message: `Welcome back ${user.username}` });
+      // return res.json({ token, message: `Welcome back ${user.username}` });
     })
     .catch(next);
 }

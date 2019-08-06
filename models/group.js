@@ -23,7 +23,8 @@ const propertySchema = new mongoose.Schema({
   listingId: { type: String },
   images: [ userImageSchema ],
   notes: [ userNoteSchema ],
-  rating: [ userRatingSchema]
+  rating: [ userRatingSchema ],
+  createdBy: { type: mongoose.Schema.ObjectId, ref: 'User', required: true }
 });
 
 // GROUP

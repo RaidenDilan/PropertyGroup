@@ -1,39 +1,92 @@
 <section class="container">
   <div class="groupsNewPage">
     <h1>Create a Group</h1>
+
     <div>
-      <form name="groupsNew.groupsNewForm" ng-submit="groupsNew.create(users)" novalidate>
+      <form
+        name="groupsNew.groupsNewForm"
+        ng-submit="groupsNew.create(users)"
+        novalidate>
+
         <div>
           <label for="groupName">Group Name</label>
-          <input type="text" name="groupName" id="groupName" ng-model="groupsNew.group.groupName" required>
+          <input
+            type="text"
+            name="groupName"
+            id="groupName"
+            ng-model="groupsNew.group.groupName"
+            required
+            >
         </div>
-        <div class="ng-message-error" ng-messages="groupsNew.groupsNewForm.username.$error" ng-show="(groupsNew.groupsNewForm.$submitted || groupsNew.groupsNewForm.username.$touched)">
-          <p ng-message="required">Your username is required.</p>
+
+        <div
+          class="ng-message-error"
+          ng-messages="groupsNew.groupsNewForm.groupName.$error"
+          ng-show="(groupsNew.groupsNewForm.$submitted || groupsNew.groupsNewForm.groupName.$touched)"
+          >
+          <p ng-message="required">Your group name is required.</p>
         </div>
+
         <div>
           <label>Add Users</label>
-          <input type="text" class="search" name="groupsNew.groupsSearchUsers" ng-model="groupsNew.q" placeholder="Search for people...">
+          <input
+            type="text"
+            class="search"
+            name="groupsNew.groupsSearchUsers"
+            ng-model="groupsNew.q"
+            placeholder="Search for people..."
+            >
         </div>
-        <div ng-if="!user.group" ng-repeat="user in groupsNew.filtered" ng-show="groupsNew.q.length > 0">
-          <div ng-click="groupsNew.addUser(user)" class="userSearchResults">
-            <img ng-src="{{ user.profileImageSRC }}" alt="{{ user.username }}" class="addUserImage">
-            <div>
-              {{ user.username }}
-            </div>
+
+        <hr>
+
+        <div
+          class="groupUsersToAdd"
+          ng-if="(!user.group && user.id !== main.currentUserId)"
+          ng-repeat="user in groupsNew.filtered"
+          ng-show="(groupsNew.q.length > 0 && groupsNew.chosenUsers.includes(user) !== true)"
+          >
+          <div
+            ng-click="groupsNew.addUser(user)"
+            class="userSearchResults"
+            >
+            <img
+              ng-src="{{ user.profileImageSRC }}"
+              alt="{{ user.username }}"
+              class="addUserImage"
+              >
+            <h5>{{ user.username }}</h5>
           </div>
         </div>
-        <br>
-        <p id="ChosenUsers">Chosen Users:</p>
 
-        <div ng-repeat="user in groupsNew.group.users">
-          {{ user.username }}
-          <!-- <em id="users">{{ user.username }}</em> -->
-          <img ng-src="{{ user.porfileImageSRC }}" class="chosenUsersImage">
-          <a href="#" ng-click="groupsNew.removeUser(user)" class="removeUser">Remove User</a>
+        <p id="chosenUsers">Chosen Users:</p>
+
+        <hr>
+
+        <div
+          ng-repeat="user in groupsNew.chosenUsers"
+          class="chosenGroupUsers"
+          >
+          <div>
+            <img
+              ng-src="{{ user.profileImageSRC }}"
+              alt="{{ user.profileImageSRC }}"
+              class="chosenUsersImage"
+              >
+            <h5>{{ user.username }}</h5>
+            <a
+              href="#"
+              ng-click="groupsNew.removeUser(user)"
+              class="removeUser"
+              >
+              x
+            </a>
+          </div>
         </div>
 
         <button class="button">Create</button>
       </form>
     </div>
+
   </div>
 </section>

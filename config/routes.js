@@ -23,7 +23,7 @@ router.route('/crimes')
 
 // USERS
 router.route('/users')
-  .all(secureRoute)
+  // .all(secureRoute)
   .get(users.index);
 
 router.route('/users/:id')
@@ -34,9 +34,9 @@ router.route('/users/:id')
 
 // GROUPS
 router.route('/groups')
-  .all(secureRoute)
+  // .all(secureRoute)
   .get(groups.index)
-  .post(groups.create);
+  .post(secureRoute, groups.create);
 
 router.route('/groups/:id')
   .all(secureRoute)
