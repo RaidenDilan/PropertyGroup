@@ -5,8 +5,13 @@ function indexUser(req, res, next) {
     .find()
     .populate('group')
     .exec()
-    .then((users) => res.json(users))
-    .catch(next);
+    .then((users) => {
+      return res.json(users);
+    })
+    .catch((err, next) => {
+      if (err.status) return res.status(err.status).json({ message: err.message });
+      else return res.status(500).json({ message: err.message });
+    });
 }
 
 function showUser(req, res, next) {
@@ -16,7 +21,7 @@ function showUser(req, res, next) {
     .exec()
     .then((user) => {
       if(!user) return res.notFound();
-      res.json(user);
+      else return res.json(user);
     })
     .catch(next);
 }
@@ -26,6 +31,8 @@ function updateUser(req, res, next) {
 
   User
     .findById(req.params.id)
+    // .select('-group')
+    // .select('+group')
     .populate('group')
     .exec()
     .then((user) => {
@@ -35,9 +42,20 @@ function updateUser(req, res, next) {
         user[field] = req.body[field];
       }
 
-      return user.save();
+      if (user.group !== null) user.group = req.user.group;
+
+      return user
+        .save()
+        .then((user) => {
+          return res.json(user);
+        });
     })
-    .then((user) => res.json({ user, message: `${user.username} successfully updated`}))
+    // .then((user) => {
+    //   return res.json(user);
+    // })
+    .then(() => {
+      return res.status(204).end();
+    })
     .catch(next);
 }
 
@@ -51,7 +69,10 @@ function deleteUser(req, res, next) {
 
       return user
         .remove()
-        .then(() => res.json({ user, message: `${user.username} successfully deleted` }));
+        .then(() => {
+          return res.json(user);
+          // return res.json({ user, status: 200, message: `${user.username} successfully deleted` });
+        });
     })
     .then(() => res.status(204).end())
     .catch(next);

@@ -1,12 +1,10 @@
-const mongoose  = require('mongoose');
-const { dbURI } = require('../config/environment');
-const options = { useMongoClient: true };
-
+const mongoose   = require('mongoose');
 mongoose.Promise = require('bluebird');
-mongoose.connect(dbURI, options);
+const Group      = require('../models/group');
+const User       = require('../models/user');
+const { dbURI, mongoOptions } = require('../config/environment');
 
-const Group = require('../models/group');
-const User = require('../models/user');
+mongoose.connect(dbURI, mongoOptions);
 
 Group.collection.drop();
 User.collection.drop();
@@ -17,6 +15,7 @@ User
     surname: 'Dilan',
     username: 'raidendilan',
     email: 'raiden18@me.com',
+    budget: 1000,
     password: 'password',
     passwordConfirmation: 'password',
     profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png'
@@ -25,6 +24,7 @@ User
     surname: 'Ancelotti',
     username: 'lucaancelotti',
     email: 'luca@me.com',
+    budget: 1500,
     password: 'password',
     passwordConfirmation: 'password',
     profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png'
@@ -33,54 +33,7 @@ User
     surname: 'Dilan',
     username: 'rawanddilan',
     email: 'rawand@me.com',
-    password: 'password',
-    passwordConfirmation: 'password',
-    profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png'
-  },{
-    firstname: 'Lanja',
-    surname: 'Roshandel',
-    username: 'lanjaroshandel',
-    email: 'lanja@me.com',
-    password: 'password',
-    passwordConfirmation: 'password',
-    profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png'
-  },{
-    firstname: 'Frederick',
-    surname: 'Roshandel',
-    username: 'fredroshandel',
-    email: 'fred@me.com',
-    password: 'password',
-    passwordConfirmation: 'password',
-    profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png'
-  },{
-    firstname: 'Ranja',
-    surname: 'Dilan',
-    username: 'ranjadilan',
-    email: 'ranja@me.com',
-    password: 'password',
-    passwordConfirmation: 'password',
-    profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png'
-  },{
-    firstname: 'Kany',
-    surname: 'Dilan',
-    username: 'kanydilan',
-    email: 'kany@me.com',
-    password: 'password',
-    passwordConfirmation: 'password',
-    profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png'
-  },{
-    firstname: 'Naz',
-    surname: 'Dilan',
-    username: 'nazdilan',
-    email: 'naz@me.com',
-    password: 'password',
-    passwordConfirmation: 'password',
-    profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png'
-  },{
-    firstname: 'Azad',
-    surname: 'Dilan',
-    username: 'azaddilan',
-    email: 'azad@me.com',
+    budget: 2000,
     password: 'password',
     passwordConfirmation: 'password',
     profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png'
@@ -96,16 +49,16 @@ User
   				listingId: "50639974",
   				rating: [{
 						opinion: 5,
-						createdBy: "5d4740b6cdb106bfaffde981",
+						createdBy: users[0],
 						id: "5d4740d79a13e5bfca7a41d8"
 					}],
   				notes: [{
             text: "MEOW!",
-						createdBy: "5d4740b6cdb106bfaffde981",
+						createdBy: users[0],
 						id: "5d4740d59a13e5bfca7a41d7"
           }],
   				images: [],
-          createdBy: "5d4740b6cdb106bfaffde981",
+          createdBy: users[0],
   				id: "5d474078d7e7cdbe47c2f006"
 			}],
         users: [
@@ -116,5 +69,7 @@ User
       }]);
   })
   .then((groups) => console.log(`${groups.length} Group(s) created`))
-  .catch((err) => console.log('DB err --->', err))
+  .catch((err) => {
+    if (err) console.log('seeds err --->', err);
+  })
   .finally(() => mongoose.connection.close());

@@ -3,33 +3,79 @@
     <h1>{{ groupsHome.group.groupName }}</h1>
 
     <div class="row row-centered border groupsHomeUser">
-      <div ng-repeat="user in groupsHome.group.users" class="col-xs-4 col-md-2 groupJoinedUsers">
+      <div
+        class="col-xs-4 col-md-2 groupJoinedUsers"
+        ng-repeat="user in groupsHome.group.users"
+        >
         <div>
-          <div class="groupUsers" style="background-image:url('{{ user.profileImageSRC }}')"></div>
+          <div
+            class="groupUsers"
+            style="background-image:url('{{ user.profileImageSRC }}')"
+            >
+          </div>
           <h5>{{ user.username }}</h5>
-          <button ui-sref="usersShow({ id: user.id })" class="editButton">View</button>
+          <button
+            class="editButton"
+            ui-sref="usersShow({ id: user.id })"
+            >
+            View
+          </button>
         </div>
       </div>
     </div>
 
     <div>
-      <button ng-click="groupsHome.delete()" class="deleteGroup">Delete Group</button>
-      <button ui-sref="groupsEdit({ id: main.currentUserGroupId })" class="deleteGroup">Edit</button>
+      <button
+        class="deleteGroup"
+        ng-click="groupsHome.removeUser()"
+        >
+        Leave Group
+      </button>
+      <button
+        class="deleteGroup"
+        ng-if="main.currentUserId === groupsHome.group.createdBy"
+        ng-click="groupsHome.delete()"
+        >
+        Delete Group
+      </button>
+      <button
+        class="deleteGroup"
+        ng-if="main.currentUserId === groupsHome.group.createdBy"
+        ui-sref="groupsEdit({ id: main.currentUserGroupId })"
+        >
+        Edit
+      </button>
     </div>
 
     <div class="row row-centered">
       <div>
         <p class="listingIDs">Listing IDs:</p>
-        <ul ng-repeat="selected in groupsHome.selected.listing" class="col-sm-12 col-md-6 col-lg-6">
+        <ul
+          class="col-sm-12 col-md-6 col-lg-6"
+          ng-repeat="selected in groupsHome.selected.listing"
+          >
           <li>
-            <img ng-src="{{ selected.image_645_430_url }}" class="groupsShowZooplaImage">
+            <img
+              class="groupsShowZooplaImage"
+              ng-src="{{ selected.image_645_430_url }}"
+              >
           </li>
           <!-- <li><strong>Address: </strong>{{ selected.displayable_address }}</li>
           <li><strong>Bedrooms: </strong>{{ selected.num_bedrooms }}</li>
           <li><strong>Bathrooms: </strong>{{ selected.num_bathrooms }}</li>
           <li><strong>Price: </strong>£{{ selected.rental_prices.per_month }} ppm</li>
           <li><strong>Property Type: </strong>{{ selected.property_type }}</li> -->
-          <button ui-sref="groupsPropsShow({ id: groupsHome.group.id, listing_id: selected.listing_id })">Show Property</button>
+          <button
+            ui-sref="groupsPropsShow({ id: groupsHome.group.id, listing_id: selected.listing_id })"
+            >
+            Show Property
+          </button>
+          <!-- <button
+            ng-click="groupsHome.deleteProperty(selected)"
+            ng-if="main.isAuthenticated()"
+            >
+            Delete Property
+          </button> -->
         </ul>
       </div>
     </div>

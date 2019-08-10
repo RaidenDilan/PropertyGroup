@@ -4,33 +4,38 @@
     <div>
         <form name="usersEdit.usersEditForm" ng-submit="usersEdit.update()">
           <div>
-            <!-- <label for="username">Username</label> -->
             <input type="text" name="username" id="username" ng-model="usersEdit.user.username" placeholder="Username">
           </div>
+
           <div>
-            <!-- <label for="firstname">First Name</label> -->
             <input type="text" name="firstname" id="firstname" ng-model="usersEdit.user.firstname" placeholder="Firstname">
           </div>
+
           <div>
-            <!-- <label for="surname">Surname</label> -->
             <input type="text" name="surname" id="surname" ng-model="usersEdit.user.surname" placeholder="Surname">
           </div>
+
           <div>
-            <!-- <label for="email">Email</label> -->
             <input type="email" name="email" id="email" ng-model="usersEdit.user.email" placeholder="Email">
           </div>
+
           <div>
-            <!-- <label for="password">Password</label> -->
-            <input type="password" name="password" id="password" ng-model="usersEdit.user.password" placeholder="Password">
+            <input type="budget" name="budget" id="budget" ng-model="usersEdit.user.budget" placeholder="Budget">
           </div>
+
           <div>
-            <!-- <label for="passwordConfirmation">Password Confirmation</label> -->
-            <input type="password" name="passwordConfirmation" id="passwordConfirmation" ng-model="usersEdit.user.passwordConfirmation" placeholder="Password Confirmation">
+            <input type="password" name="password" id="password" ng-model="usersEdit.user.password" placeholder="New password">
           </div>
+
+          <div>
+            <input type="password" name="passwordConfirmation" id="passwordConfirmation" ng-model="usersEdit.user.passwordConfirmation" placeholder="Confirm new password">
+          </div>
+
           <div class="choose button">
             <label for="base64"></label>Select a profile image
             <input class="upload" type="file" base64 name="base64" id="base64" ng-model="usersEdit.user.base64">
           </div>
+
           <button class="button">Update</button>
         </form>
     </div>

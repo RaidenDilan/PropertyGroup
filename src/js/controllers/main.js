@@ -28,7 +28,7 @@ function MainCtrl($rootScope, $state, $auth, User){
           return (!vm.user.group) ? vm.currentUserGroupId = null : vm.currentUserGroupId = vm.user.group.id;
           // if (vm.user.group === null || undefined) return null;
           // if (!vm.user.group) vm.currentUserGroupId = null;
-          // else if (vm.user.group) vm.currentUserGroupId = vm.user.group.id;
+          // if (vm.user.group) vm.currentUserGroupId = vm.user.group.id;
         });
     }
   });

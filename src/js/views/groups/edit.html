@@ -1,7 +1,10 @@
 <section class="container groupsEdit">
   <h1>Groups Edit</h1>
   <div>
-    <form name="groupsEdit.groupsEditForm" novalidate>
+    <form
+      name="groupsEdit.groupsEditForm"
+      ng-submit="groupsEdit.update()"
+      novalidate>
       <div>
         <label for="groupName">Group Name</label>
         <input
@@ -68,7 +71,8 @@
         </div>
       </div>
 
-      <button ui-sref="groupsHome({ id: groupsEdit.group.id})">Update</button>
+      <!-- <button ui-sref="groupsHome({ id: groupsEdit.group.id })">Update</button> -->
+      <button class="button">Update</button>
     </form>
   </div>
 </section>

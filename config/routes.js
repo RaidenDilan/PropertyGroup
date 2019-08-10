@@ -4,9 +4,9 @@ const users       = require('../controllers/users');
 const imageUpload = require('../lib/imageUpload');
 const oauth       = require('../controllers/oauth');
 const groups      = require('../controllers/groups');
-const crimes      = require('../controllers/crimes');
+const crimes      = require('../lib/crimes');
 const secureRoute = require('../lib/secureRoute');
-const zooplas     = require('../controllers/zooplas');
+const zooplas     = require('../lib/zooplas');
 
 // API
 router.route('/properties')
@@ -41,7 +41,7 @@ router.route('/groups')
 router.route('/groups/:id')
   .all(secureRoute)
   .get(groups.show)
-  // .put(groups.update)
+  .put(groups.update)
   .delete(groups.delete)
   .post(secureRoute, groups.addProperty);
 

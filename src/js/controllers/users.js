@@ -10,7 +10,6 @@ function UsersShowCtrl(User, $stateParams, $state, $auth) {
 
   function usersDelete() {
     // $auth.logout(); // USER DELETE - Doesn't work here
-
     vm.user
       .$remove()
       .then((user) => {
@@ -29,7 +28,7 @@ function UsersEditCtrl(User, $stateParams, $state) {
   function usersUpdate() {
     vm.user
       .$update()
-      .then(() => $state.go('usersShow', $stateParams));
+      .then((user) => $state.go('usersShow', $stateParams));
   }
   vm.update = usersUpdate;
 }

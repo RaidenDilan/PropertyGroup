@@ -1,16 +1,19 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const s3 = require('../lib/s3');
+const bcrypt   = require('bcrypt');
+const s3       = require('../lib/s3');
 
 const userSchema = new mongoose.Schema({
   username: { type: String, unique: true },
   firstname: { type: String },
   surname: { type: String },
   email: { type: String },
+  budget: { type: Number },
   password: { type: String },
   profileImage: { type: String },
   githubId: { type: Number },
   group: { type: mongoose.Schema.ObjectId, ref: 'Group' }
+  // groups: { type: mongoose.Schema.ObjectId, ref: 'Group' }
+  // group: { type: mongoose.Schema.ObjectId, ref: 'Group', select: false }
 });
 
 userSchema
@@ -27,6 +30,36 @@ userSchema
     if(this.profileImage.match(/^http/)) return (this.profileImage);
     return `https://s3-eu-west-1.amazonaws.com/${process.env.AWS_BUCKET_NAME}/${this.profileImage}`;
   });
+
+// userSchema
+//   .virtual('groups', {
+//     ref: 'Group',
+//     localField: '_id',
+//     foreignField: 'user'
+//   })
+//   .set(function setUsers(groups) {
+//     this._groups = groups;
+//   });
+
+// userSchema.pre('save', function addUserToGroups(next) {
+//   this
+//     .model('Group')
+//     .find({ _id: this._groups })
+//     .exec()
+//     .then((groups) => {
+//       const promises = groups.map((user) => {
+//         group.user = this.id;
+//         group.save();
+//       });
+//
+//       // group.group = this.id;
+//       // group.save();
+//
+//       return Promise.all(promises);
+//     })
+//     .then(next)
+//     .catch(next);
+// });
 
 userSchema.pre('save', function checkPreviousProfileImage(next) {
   if(this.isModified('profileImage') && this._profileImage) return s3.deleteObject({ Key: this._profileImage }, next);

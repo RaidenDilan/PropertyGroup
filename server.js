@@ -17,29 +17,16 @@ mongoose.Promise = require('bluebird').config({
   // // Enable monitoring
   // monitoring: true
 });
-const { port, env, dbURI } = require('./config/environment');
+const { port, env, dbURI, mongoOptions } = require('./config/environment');
 const routes               = require('./config/routes');
 const customResponses      = require('./lib/customResponses');
 const errorHandler         = require('./lib/errorHandler');
 
 const app = express();
 
-var options = {
-  useMongoClient: true,
-  // autoIndex: false, // Don't build indexes
-  // reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
-  // reconnectInterval: 500, // Reconnect every 500ms
-  // poolSize: 10, // Maintain up to 10 socket connections
-  // // If not connected, return errors immediately rather than waiting for reconnect
-  // bufferMaxEntries: 0
-};
-
-mongoose.connect(dbURI, options);
+mongoose.connect(dbURI, mongoOptions);
 
 mongoose.connection.once('open', () => {
-  // console.info('MongoDB event is open');
-  // console.debug('MongoDB connected [%s]', dbURI);
-
   mongoose.connection
     // .on('connected', () => console.log('Mongoose default connection is open to [%s]', dbURI))
     .on('error', (err) => console.log(error('Mongoose default connection has occured ' + err + ' error')))

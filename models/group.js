@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const s3 = require('../lib/s3');
-const Promise = require('bluebird');
+const s3       = require('../lib/s3');
+const Promise  = require('bluebird');
 
 // GROUP USERS
 const userImageSchema = new mongoose.Schema({
@@ -31,7 +31,7 @@ const propertySchema = new mongoose.Schema({
 const groupSchema = new mongoose.Schema({
   properties: [ propertySchema ],
   groupName: { type: String },
-  createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' }
+  createdBy: { type: mongoose.Schema.ObjectId, ref: 'User', required: true }
 });
 
 userImageSchema
@@ -53,7 +53,8 @@ groupSchema
   });
 
 groupSchema.pre('save', function addGroupToUsers(next) {
-  this.model('User')
+  this
+    .model('User')
     .find({ _id: this._users })
     .exec()
     .then((users) => {

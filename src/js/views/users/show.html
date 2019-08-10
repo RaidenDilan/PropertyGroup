@@ -5,6 +5,7 @@
     <h3><strong>Username:</strong> {{ usersShow.user.username }}</h3>
     <h3><strong>Fullname:</strong> {{ usersShow.user.firstname }} {{ usersShow.user.surname }}</h3>
     <h3><strong>Email:</strong> {{ usersShow.user.email }}</h3>
+    <h3><strong>Budget:</strong> £{{ usersShow.user.budget }}</h3>
     <hr>
     <button ng-if="main.currentUserId === usersShow.user.id" ui-sref="usersEdit({ id: usersShow.user.id })" class="edit">Edit Profile</button>
     <button ng-if="main.currentUserId === usersShow.user.id" ng-click="usersShow.delete()">Delete Profile</button>
