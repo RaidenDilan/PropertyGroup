@@ -42,12 +42,14 @@ function updateUser(req, res, next) {
         user[field] = req.body[field];
       }
 
+      // asign our ggroup to user obkect during update - this could probably be taken care of on the client side
       if (user.group !== null) user.group = req.user.group;
 
       return user
         .save()
         .then((user) => {
           return res.json(user);
+          // return res.status(302).json(user);
         });
     })
     // .then((user) => {

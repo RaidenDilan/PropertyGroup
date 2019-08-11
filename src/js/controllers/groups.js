@@ -38,7 +38,8 @@ function GroupsNewCtrl(Group, User, filterFilter, $state, $auth, $scope) {
   function addUser(user) {
     if(!vm.group.users.includes(user.id) && user.id !== authUserId) vm.group.users.push(user.id);
     if(!vm.chosenUsers.includes(user) && user.id !== authUserId) vm.chosenUsers.push(user);
-    // console.log('user ---***--->', user);
+
+    vm.q = ''; // reset input value after query
     vm.filtered = {};
   }
   vm.addUser = addUser;
@@ -47,8 +48,6 @@ function GroupsNewCtrl(Group, User, filterFilter, $state, $auth, $scope) {
     const index = vm.group.users.indexOf(user);
     vm.group.users.splice(index, 1);
     vm.chosenUsers.splice(index, 1);
-    // console.log('index ---***--->', index);
-    // console.log('user ---***--->', user);
   }
   vm.removeUser = removeUser;
 
@@ -80,14 +79,18 @@ function GroupsHomeCtrl(Group, GroupUser, GroupProperty, $stateParams, $state, $
     .then((data) => {
       vm.group = data;
 
-      let ids = [];
-      vm.group.properties.forEach((property) => ids.push(property.listingId));
+      let propIds = [];
+      vm.group.properties.forEach((property) => {
+        return propIds.push(property.listingId);
+      });
 
-      ids = ids.join(',');
+      propIds = propIds.join(',');
 
-      if(ids) $http
-        .get('/api/groups/:id/properties', { params: { id: vm.group.id, listingId: ids } })
-        .then((response) => vm.selected = response.data);
+      if(propIds) {
+        $http
+          .get('/api/groups/:id/properties', { params: { id: vm.group.id, listingId: propIds } })
+          .then((response) => vm.selected = response.data);
+      }
     });
 
   function groupsDelete() {
@@ -99,24 +102,24 @@ function GroupsHomeCtrl(Group, GroupUser, GroupProperty, $stateParams, $state, $
 
   // ---------------------------------------------------------------------------
 
-  function removeUser(user) {
-    console.log('vm.group.id ---***--->', vm.group.id);
-    console.log('authUserId ---***--->', authUserId);
-
-    GroupUser
-      .delete({ id: vm.group.id, userId: authUserId })
-      .$promise
-      .then((user) => {
-        // console.log('GroupUser ---***--->', user);
-        const indexGroup = vm.group.users.indexOf(user);
-        console.log('indexGroup ---***--->', indexGroup);
-        // console.log('vm.group.users ---***--->', vm.group.users);
-
-        return vm.group.users.splice(indexGroup, 1);
-      })
-      .then((user) => $state.go('groupsNew'));
-  }
-  vm.removeUser = removeUser;
+  // function removeUser(user) {
+  //   console.log('vm.group.id ---***--->', vm.group.id);
+  //   console.log('authUserId ---***--->', authUserId);
+  //
+  //   GroupUser
+  //     .delete({ id: vm.group.id, userId: authUserId })
+  //     .$promise
+  //     .then((user) => {
+  //       // console.log('GroupUser ---***--->', user);
+  //       const index = vm.group.users.indexOf(user);
+  //       console.log('index ---***--->', index);
+  //       // console.log('vm.group.users ---***--->', vm.group.users);
+  //
+  //       return vm.group.users.splice(index, 1);
+  //     })
+  //     .then((user) => $state.go('groupsNew'));
+  // }
+  // vm.removeUser = removeUser;
 
   // ---------------------------------------------------------------------------
 
@@ -291,9 +294,10 @@ function GroupsEditCtrl(Group, GroupUser, User, $stateParams, $auth, $state, $sc
   const vm = this;
 
   vm.group       = Group.get($stateParams);
+  vm.allUsers    = User.query();
   vm.group.users = [];
   vm.chosenUsers = [];
-  vm.allUsers    = User.query();
+  // vm.filtered    = null;
   // vm.user        = User.get($stateParams);
   // vm.groupUsers  = GroupUser.query();
 
@@ -303,89 +307,71 @@ function GroupsEditCtrl(Group, GroupUser, User, $stateParams, $auth, $state, $sc
     .get($stateParams)
     .$promise
     .then((response) => {
+      console.log('response', response);
       vm.chosenUsers = response.users;
       vm.group.users = response.users;
     });
 
   function filterUsers() {
     const params = { username: vm.q };
-    vm.filtered = filterFilter(vm.allUsers, params);
+    // Array: vm.allUsers
+    // Params: params variable/obj - const params = { username: vm.q };
+    // vm.filtered = filterFilter(vm.allUsers, params);
+    vm.filtered = filterFilter(vm.allUsers, params, true);
   }
 
+  // Let’s take a look at the code for $rootscope.watch().
+  // This is its signature: function(watchExp, listener, objectEquality, prettyPrintExpression).
+  //                      : function(vm.q, filterUsers, objectEquality, prettyPrintExpression).
+  // In details, its four parameters:
   $scope.$watch(() => vm.q, filterUsers);
-
-  // function addUser(user) {
-  //   GroupUser
-  //     .update({ id: vm.group.id, userId: user.id }, (group) => {
-  //       console.log(group);
-  //       // console.log('group ---------******------>>>', group);
-  //       vm.group.users.push(user);
-  //       // console.log('user ---------******------>>>', user);
-  //       user.group.push(vm.group.id);
-  //       // user.group.push(vm.group.id);
-  //       vm.filtered = {};
-  //     });
-  // }
-  // vm.addUser = addUser;
-  //
-  // function removeUser(user) {
-  //   // console.log('Current Group ---***--->', vm.group);
-  //   // console.log('User to remove ---***--->', user);
-  //
-  //   GroupUser
-  //     .delete({ id: vm.group.id, userId: user.id })
-  //     .$promise
-  //     .then((user) => {
-  //       console.log('GroupUser --- user ---***--->', user);
-  //
-  //       const indexGroup = vm.group.users.indexOf(user);
-  //       console.log('GroupUser --- indexGroup --- index of user ---***--->', indexGroup);
-  //
-  //       vm.group.users.splice(indexGroup, 1);
-  //     });
-  //
-  //     User
-  //       .query()
-  //       .$promise
-  //       .then((response) => {
-  //         console.log('response ---***--->', response);
-  //         vm.user = response.find(obj => {
-  //           // console.log('obj ---***--->', obj);
-  //           return obj.id === authUserId;
-  //         });
-  //
-  //         console.log('vm.user ---***--->', vm.user);
-  //         vm.user.group = null;
-  //       });
-  // }
-  // vm.removeUser = removeUser;
+  // $scope.$watchGroup(() => vm.q, filterUsers, true);
 
   function addUser(user) {
-    if(!vm.group.users.includes(user.id) && user.id !== authUserId) vm.group.users.push(user.id);
-    if(!vm.chosenUsers.includes(user) && user.id !== authUserId) vm.chosenUsers.push(user);
-    // console.log('user ---***--->', user);
-    vm.filtered = {};
+    console.log('addUser 1', user);
+
+    GroupUser
+      .update({ id: vm.group.id, userId: user.id })
+      .$promise
+      .then((group) => {
+        console.log('group ---***--->', group);
+
+        if(!vm.group.users.includes(user.id) && user.id !== authUserId) vm.group.users.push(user);
+        if(!vm.group.users.includes(user.id) && user.id !== authUserId) user.group.push(vm.group.id);
+
+        vm.q = ''; // reset input value after query
+        vm.filtered = {};
+      });
+
+      console.log('addUser 2', user);
   }
   vm.addUser = addUser;
 
   function removeUser(user) {
-    const index = vm.group.users.indexOf(user);
-    vm.group.users.splice(index, 1);
-    vm.chosenUsers.splice(index, 1);
-    // console.log('index ---***--->', index);
-    // console.log('user ---***--->', user);
+    console.log('removeUser 1', user);
+
+    GroupUser
+      .delete({ id: vm.group.id, userId: user.id })
+      .$promise
+      .then(() => {
+        console.log('removeUser 2', user);
+        const index = vm.group.users.indexOf(user);
+        vm.group.users.splice(index, 1);
+        // vm.group.users.shift(vm.group.users.indexOf(user), 1); // this work for first delete but not second or third
+        // return vm.group.users;
+      });
+
+      console.log('removeUser 3', user);
   }
   vm.removeUser = removeUser;
 
   function groupsUpdate() {
-    if(vm.groupsEditForm.$valid) {
-      vm.chosenUsers = [];
-      if(!vm.group.users.includes(authUserId)) vm.group.users.push(authUserId); // if logged in user is not in a group or this group, push the user into the group 'object'
-
+    console.log('vm.group --->', vm.group);
+    // if(vm.groupsEditForm.$valid) {
       vm.group
         .$update()
         .then(() => $state.go('groupsHome', $stateParams));
-    }
+    // }
   }
   vm.update = groupsUpdate;
 }

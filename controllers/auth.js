@@ -30,7 +30,9 @@ function login(req, res, next) {
       const token = jwt.sign({ userId: user.id }, secret, { expiresIn: '1hr' });
       return res.json({ token, status: 200, message: `Welcome back ${user.username}` });
     })
-    .catch(next);
+    .catch((err, next) => {
+      if (err) console.log('err', err);
+    });
 }
 
 module.exports = { register, login };

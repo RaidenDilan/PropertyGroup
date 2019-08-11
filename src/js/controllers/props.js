@@ -51,9 +51,7 @@ function PropsShowCtrl(User, GroupProperty, $http, $stateParams, selectedProp, $
     GroupProperty
       .save(newProperty)
       .$promise
-      .then(() => {
-        vm.newProperty = {};
-      });
+      .then(() => vm.newProperty = {});
   }
   vm.store = storeProp;
 

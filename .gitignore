@@ -4,3 +4,4 @@
 /archive
 /lib/mail.js
 /lib/geoCoder.js
+/src/js/service/geocoder.js

@@ -37,74 +37,55 @@ function createGroup(req, res, next) {
     .catch(next);
 }
 
-// In Developement
 function updateGroup(req, res, next) {
-  console.log('req.params.userId', req.params.userId);
   Group
-    // .findById(req.params.id)
-    // .findByIdAndUpdate(req.user.id, { $pull: { users: req.params.userId } })
-    // .findByIdAndUpdate(req.params.id, { $pull: { users: req.params.userId } })
-    .findByIdAndUpdate(req.params.id, req.user.id, { $pull: { users: req.params.userId } })
-    // .findOneAndUpdate(req.params.id, req.user.id, { $pull: { users: req.params.userId } })
+    .findById(req.params.id)
     .populate('users')
     .exec()
     .then((group) => {
-      console.log('group.users ------------>', group.users);
-      // if(group.users.includes(req.params.userId)) {}
-      const index = group.users.indexOf(req.params.userId);
-      console.log('index ------------>', index);
-      group.users.splice(index, 1);
-      return group.save();
-    })
-    // .then((group) => {
-    //   console.log('group ------------>', group);
-    //   console.log('PARAMS ------------>', req.params);
-    //   console.log('Joined Group ------------>', req.params.id);
-    //   console.log('Logged in user ------------>', req.user.id);
-    //
-    //   if(!group) return res.notFound();
-    //
-    //   for(const field in req.body) {
-    //     group[field] = req.body[field];
-    //   }
-    //
-    //   // const usersInGroup = group.users.find((user) => {
-    //   //   console.log('user ------------>', user.id);
-    //   //   return user.id === req.params.userId;
-    //   // });
-    //
-    //   // const selected = usersInGroup.users.id(req.params.userId);
-    //
-    //   // selected.user.group = null;
-    //
-    //   // console.log('usersInGroup ------------>', usersInGroup);
-    //   // console.log('selected --- server-side --->', selected);
-    //
-    //   // selected.save();
-    //   // selected.remove();
-    //   // usersInGroup.remove();
-    //
-    //   // return group
-    //   //   .save()
-    //   //   .then(() => {
-    //   //     return res.json(group);
-    //   //   });
-    //   return group.save();
-    //   // return group.update({
-    //   //   id: req.params.id,
-    //   //   user: { $not: { $elemMatch: { id: req.params.userId } } }
-    //   // }, {
-    //   //   $push: { user: { group: req.params.id, id: req.params.userId } }
-    //   // });
-    // })
-    // .then(() => res.status(204).end())
-    .then((group) => {
-      return res.json(group);
+      // console.log('group *********>>>', group);
+      console.log('group.users *********>>>', group.users);
+
+      if(!group) return res.notFound();
+
+      // const members = group.users.find((user) => {
+      //   return console.log('user >>>>>>>>>', user);
+      //   // return user.id === req.params.userId;
+      // });
+
+      for(const field in req.body) {
+        group[field] = req.body[field];
+      }
+
+      // if(!group.users.includes(req.params.id)) group.users.push(req.params.id);
+
+
+      // const newUser = members.users.id(req.params.userId);
+      // newUser.game();
+      // User
+      //   .findById(req.params.userId)
+      //   .then((user) => {
+      //     // user.group = null;
+      //     return user.save();
+      //   })
+      //   .then(() => res.status(204).end())
+      //   .catch(next);
+      //
+      //   return group
+      //     .save()
+      //     .then(() => {
+      //       return res.json(group);
+      //     });
+
+      return group
+        .save()
+        .then(() => {
+          return res.json(group);
+        });
     })
     .catch(next);
 }
 
-// GROUP - DELETE
 function deleteGroup(req, res, next) {
   Group
     .findById(req.params.id)
@@ -124,30 +105,49 @@ function deleteGroup(req, res, next) {
     .catch(next);
 }
 
-// GROUP - ADD USER TO GROUP
 function addUserToGroup(req, res, next) {
   Group
-    .findById(req.params.id)
+    // .findById(req.params.id)
+    .findByIdAndUpdate(req.params.id, req.user.id, { $pull: { users: req.params.userId } })
     .then((user) => {
-      if(!user.group.includes(req.params.id)) user.group.push(req.params.id);
+      console.log('user ------>', user);
+      console.log('user.group ------>', user.group);
+      // console.log('group.users ------>', user.users);
+
+      if(!user.group.includes(req.params.id)) {
+        console.log('If User is not already in this group', !user.group.includes(req.params.id));
+        user.group.push(req.params.id);
+      }
+      if (!user.group.includes(req.params.id)) {
+
+      }
       return user.save();
     })
-    .then((group) => {
-      return res.json(group);
-    })
+    .then((group) => res.json(group))
     .catch(next);
 }
 
-// GROUP - DELETE USER FROM GROUP
 function deleteUserFromGroup(req, res, next) {
   Group
-    // .findByIdAndUpdate(req.user.id, { $pull: { users: req.params.userId } })
     .findByIdAndUpdate(req.params.id, req.user.id, { $pull: { users: req.params.userId } })
-    // .findOneAndUpdate(req.params.id, req.user.id, { $pull: { users: req.params.userId } })
     .populate('users')
     .exec()
     .then((group) => {
       if(!group) return res.notFound();
+
+      // const groupUsers = group.users.map((user) => { // .find() || .map()
+      //   return user.id === req.params.userId;
+      // });
+
+      User
+        .findById(req.params.userId)
+        .then((user) => {
+          user.group = null; // sets user group property to null when deleting user during groupsEdit/groupsNew
+          return user.save();
+        })
+        .then(() => res.status(204).end())
+        .catch(next);
+
       return group
         .save()
         .then(() => {
@@ -158,7 +158,6 @@ function deleteUserFromGroup(req, res, next) {
     .catch(next);
 }
 
-// PROPERTY - ADD TO GROUP
 function addPropertyRoute(req, res, next) {
   req.body.createdBy = req.user;
 
@@ -180,7 +179,6 @@ function addPropertyRoute(req, res, next) {
     .catch(next);
 }
 
-// PROPERTY - DELETE FROM GROUP
 function deletePropertyRoute(req, res, next) {
   Group
     .findById(req.user.group)
@@ -205,7 +203,6 @@ function deletePropertyRoute(req, res, next) {
 
 }
 
-// PROPERTY - ADD NOTE
 function addPropertyNote(req, res, next) {
   req.body.createdBy = req.user;
 
@@ -232,7 +229,6 @@ function addPropertyNote(req, res, next) {
     .catch(next);
 }
 
-// PROPERTY - DELETE NOTE
 function deletePropertyNote(req, res, next) {
   Group
     .findById(req.params.id)
@@ -258,7 +254,6 @@ function deletePropertyNote(req, res, next) {
     .catch(next);
 }
 
-// PROPERTY - ADD IMAGE
 function addPropertyImage(req, res, next) {
   req.body.createdBy = req.user;
   if(req.file) req.body.file = req.file.filename;
@@ -286,7 +281,6 @@ function addPropertyImage(req, res, next) {
     .catch(next);
 }
 
-// PROPERTY - DELETE IMAGE
 function deletePropertyImage(req, res, next) {
   Group
     .findById(req.params.id)
@@ -314,7 +308,6 @@ function deletePropertyImage(req, res, next) {
     .catch(next);
 }
 
-// PROPERTY - ADD RATING
 function addPropertyRating(req, res, next) {
   req.body.createdBy = req.user;
 
@@ -341,7 +334,6 @@ function addPropertyRating(req, res, next) {
     .catch(next);
 }
 
-// PROPERTY - DELETE RATING
 function deletePropertyRating(req, res, next) {
   Group
     .findById(req.params.id)
