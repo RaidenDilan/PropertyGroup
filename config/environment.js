@@ -3,7 +3,9 @@ const env          = process.env.NODE_ENV || 'development';
 const dbURI        = process.env.MONGODB_URI || `mongodb://localhost/project-3-${env}`;
 const secret       = process.env.SECRET || 'I bet you never even look at this!';
 const mongoOptions = {
-  useMongoClient: true,
+  useMongoClient: true
+  // useCreateIndex: true,
+  // useNewUrlParser: true
   // autoIndex: false, // Don't build indexes
   // reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
   // reconnectInterval: 500, // Reconnect every 500ms

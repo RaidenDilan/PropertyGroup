@@ -1,25 +1,30 @@
 <section class="container">
   <div class="groupsShowPage">
     <h2>Property Details</h2>
+
     <div class="row" ng-repeat="selected in groupsPropsShow.gps.listing">
       <div class="col-sm-12 col-md-6 col-lg-12">
         <img ng-src="{{ selected.image_645_430_url }}" class="propertyImage">
       </div>
+
+      <button ng-click="groupsPropsShow.deleteProperty(selected)" ng-if="main.isAuthenticated()">Delete Property</button>
+
       <div class="col-sm-12 col-md-6 col-lg-12">
         <ul>
           <li><strong>Bedrooms: </strong>{{ selected.num_bedrooms }}</li>
           <li><strong>Property Type: </strong>{{ selected.property_type }}</li>
           <li><strong>Price: </strong>£{{ selected.rental_prices.per_month }} ppm</li>
           <li class="address"><strong>Address: </strong>{{ selected.displayable_address }}</li>
-          <button ng-click="groupsPropsShow.deleteProperty(selected)" ng-if="main.isAuthenticated()">Delete Property</button>
         </ul>
       </div>
     </div>
+
     <div class="row">
       <div class="col-sm-12 col-md-6 col-lg-12">
         <p ng-repeat="selected in groupsPropsShow.gps.listing" class="description">{{ selected.description }}</p>
       </div>
     </div>
+
     <div ng-repeat="selected in groupsPropsShow.gps.listing" class="agencyInfo">
       <ul>
         <h3>Agency Info</h3>
@@ -31,6 +36,7 @@
         </li>
       </ul>
     </div>
+
     <div class="ratingList">
       <h3>Ratings</h3>
       <div ng-repeat="rating in groupsPropsShow.prop.rating track by $index" class="col-sm-4 col-md-4 col-lg-4">
@@ -40,6 +46,7 @@
         </button>
       </div>
     </div>
+
     <div class="ratings">
       <form ng-submit="groupsPropsShow.addRating()" ng-if="main.isAuthenticated()">
         <label for="rating"></label>
@@ -47,6 +54,7 @@
         <button class="addimage">Add Rating</button>
       </form>
     </div>
+
     <div class="overflow">
       <div class="col-md-6 col-lg-6">
         <h3>Images</h3>
@@ -56,6 +64,7 @@
             <button ng-click="groupsPropsShow.deleteImage(image)" class="deleteimage">Delete</button>
           </div>
         </div>
+
         <div class="addimages row">
           <form ng-submit="groupsPropsShow.addImage()" ng-if="main.isAuthenticated()" class="form-group">
             <input type="file" id="image" base64 name="base64" ng-model="groupsPropsShow.newImage.base64" class="base64 form-control" style="display: none;">
@@ -64,6 +73,7 @@
           </form>
         </div>
       </div>
+
       <div class="col-md-6 col-lg-6">
         <div class="row">
           <h3>Notes</h3>
@@ -72,6 +82,7 @@
             <button ng-click="groupsPropsShow.deleteNote(note)" class="smaller">Delete</button>
           </div>
         </div>
+
         <div class="row addNotes">
           <form ng-submit="groupsPropsShow.addNote()" ng-if="main.isAuthenticated()">
             <h3>Add Comments</h3>
@@ -79,14 +90,17 @@
             <button class="addcomment">Post</button>
           </form>
         </div>
+
       </div>
     </div>
+
     <div class="row">
       <div class="col-sm-offset-1 col-sm-4 crimePie">
         <h3 class="mapAndCrime">Recent crime</h3>
         <canvas id="doughnut" class="chart chart-doughnut" chart-data="groupsPropsShow.crimes.pieCrimeData" chart-labels="groupsPropsShow.labels" chart-legend="false">
         </canvas>
       </div>
+
       <div class="col-sm-4 col-sm-offset-1">
         <div class="map" ng-repeat="selected in groupsPropsShow.gps.listing">
           <h3 class="mapAndCrime">Location</h3>
@@ -96,5 +110,6 @@
         </div>
       </div>
     </div>
+
   </div>
 </section>

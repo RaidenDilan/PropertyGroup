@@ -22,6 +22,11 @@ function Router($locationProvider, $stateProvider, $urlRouterProvider) {
       templateUrl: 'js/views/groups/home.html',
       controller: 'GroupsHomeCtrl as groupsHome'
     })
+    // .state('groupsEdit', {
+    //   url: '/groups/:id/users/:userId/edit',
+    //   templateUrl: 'js/views/groups/edit.html',
+    //   controller: 'GroupsEditCtrl as groupsEdit'
+    // })
     .state('groupsEdit', {
       url: '/groups/:id/edit',
       templateUrl: 'js/views/groups/edit.html',

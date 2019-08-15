@@ -21,8 +21,8 @@ function RegisterCtrl($auth, $state) {
   vm.submit = submit;
 }
 
-LoginCtrl.$inject = ['$auth', '$state'];
-function LoginCtrl($auth, $state) {
+LoginCtrl.$inject = ['$auth', '$state', '$stateParams'];
+function LoginCtrl($auth, $state, $stateParams) {
   const vm = this;
   vm.credentials = {};
 
@@ -30,6 +30,7 @@ function LoginCtrl($auth, $state) {
     if(vm.loginForm.$valid) {
       $auth
         .login(vm.credentials)
+        // .then(() => $state.go('groupsHome', { id: $auth.getPayload().userId }));
         .then(() => $state.go('usersShow', { id: $auth.getPayload().userId }));
 
       vm.loginForm.$setUntouched();

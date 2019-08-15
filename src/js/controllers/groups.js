@@ -29,10 +29,17 @@ function GroupsNewCtrl(Group, User, filterFilter, $state, $auth, $scope) {
   const authUserId = $auth.getPayload().userId;
 
   function filterUsers() {
+    // Array: vm.allUsers
+    // Params: params variable/obj - const params = { username: vm.q };
+
     const params = { username: vm.q };
     vm.filtered = filterFilter(vm.allUsers, params);
   }
 
+  // Let’s take a look at the code for $rootscope.watch().
+  // This is its signature: function(watchExp, listener, objectEquality, prettyPrintExpression).
+  //                      : function(vm.q, filterUsers, objectEquality, prettyPrintExpression).
+  // In details, its four parameters:
   $scope.$watch(() => vm.q, filterUsers);
 
   function addUser(user) {
@@ -45,7 +52,7 @@ function GroupsNewCtrl(Group, User, filterFilter, $state, $auth, $scope) {
   vm.addUser = addUser;
 
   function removeUser(user) {
-    const index = vm.group.users.indexOf(user);
+    const index = vm.group.users.indexOf(user); // returns -1 if the user isn't found, or it's index otherwise. Can be eplaced by array.indexOf(item) !== -1
     vm.group.users.splice(index, 1);
     vm.chosenUsers.splice(index, 1);
   }
@@ -297,81 +304,81 @@ function GroupsEditCtrl(Group, GroupUser, User, $stateParams, $auth, $state, $sc
   vm.allUsers    = User.query();
   vm.group.users = [];
   vm.chosenUsers = [];
-  // vm.filtered    = null;
-  // vm.user        = User.get($stateParams);
-  // vm.groupUsers  = GroupUser.query();
 
   const authUserId = $auth.getPayload().userId;
 
   Group
     .get($stateParams)
     .$promise
-    .then((response) => {
-      console.log('response', response);
-      vm.chosenUsers = response.users;
-      vm.group.users = response.users;
+    .then((group) => {
+      vm.group.users = group.users;
+      vm.chosenUsers = group.users;
     });
 
   function filterUsers() {
     const params = { username: vm.q };
-    // Array: vm.allUsers
-    // Params: params variable/obj - const params = { username: vm.q };
-    // vm.filtered = filterFilter(vm.allUsers, params);
-    vm.filtered = filterFilter(vm.allUsers, params, true);
+    vm.filtered = filterFilter(vm.allUsers, params);
   }
 
-  // Let’s take a look at the code for $rootscope.watch().
-  // This is its signature: function(watchExp, listener, objectEquality, prettyPrintExpression).
-  //                      : function(vm.q, filterUsers, objectEquality, prettyPrintExpression).
-  // In details, its four parameters:
-  $scope.$watch(() => vm.q, filterUsers);
-  // $scope.$watchGroup(() => vm.q, filterUsers, true);
+  $scope.$watch(() => vm.q, filterUsers); // $scope.$watchGroup(() => vm.q, filterUsers, true);
+
+  // // Function for searching and filtering through users
+  // function filterUsers() {
+  //   vm.filtered = filterFilter(vm.all, vm.q);
+  //   vm.filtered = orderByFilter(vm.filtered, vm.sort);
+  // }
+  // $scope.$watchGroup([
+  //   () => vm.q,
+  //   () => vm.sort
+  // ], filterUsers);
+  // filterUsers(); // USEAGE in a 
 
   function addUser(user) {
-    console.log('addUser 1', user);
+    console.log('USER: === INITIAL ===>', user);
 
     GroupUser
       .update({ id: vm.group.id, userId: user.id })
       .$promise
       .then((group) => {
-        console.log('group ---***--->', group);
-
-        if(!vm.group.users.includes(user.id) && user.id !== authUserId) vm.group.users.push(user);
-        if(!vm.group.users.includes(user.id) && user.id !== authUserId) user.group.push(vm.group.id);
-
+        vm.group.users.push(user);
+        user.group = vm.group.id; // <--- OR ---> user.group.push(vm.group.id);
         vm.q = ''; // reset input value after query
-        vm.filtered = {};
+        vm.filtered = {}; // reset filtered so users input list disappear after selecting a add
       });
 
-      console.log('addUser 2', user);
+    /* PREVIOUS VERSION CODE
+      GroupUser
+        .update({ id: vm.group.id, userId: user.id }, (group) => {
+          console.log('addUser : user --->', user);
+          console.log('addUser : group --->', group);
+
+          vm.group.users.push(user);
+          user.group.push(vm.group.id);
+
+          vm.q = ''; // reset input value after query
+          vm.filtered = {};
+        });
+    */
   }
   vm.addUser = addUser;
 
   function removeUser(user) {
-    console.log('removeUser 1', user);
-
     GroupUser
       .delete({ id: vm.group.id, userId: user.id })
       .$promise
-      .then(() => {
-        console.log('removeUser 2', user);
+      .then((group) => {
         const index = vm.group.users.indexOf(user);
         vm.group.users.splice(index, 1);
-        // vm.group.users.shift(vm.group.users.indexOf(user), 1); // this work for first delete but not second or third
-        // return vm.group.users;
       });
-
-      console.log('removeUser 3', user);
   }
   vm.removeUser = removeUser;
 
   function groupsUpdate() {
-    console.log('vm.group --->', vm.group);
-    // if(vm.groupsEditForm.$valid) {
+    if(vm.groupsEditForm.$valid) {
       vm.group
         .$update()
         .then(() => $state.go('groupsHome', $stateParams));
-    // }
+    }
   }
   vm.update = groupsUpdate;
 }

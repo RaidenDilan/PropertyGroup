@@ -12,10 +12,23 @@ function MainCtrl($rootScope, $state, $auth, User){
     if(err.status === 401) $state.go('login');
   });
 
+  // $rootScope.$on('loggedIn', () => {
+  //   console.log('logged in');
+  //   vm.user = CurrentUserService.getUser();
+  //   $state.go('companyIndex');
+  // });
+  //
+  // $rootScope.$on('loggedOut', () => {
+  //   console.log('logged out');
+  //   vm.user = null;
+  //   $state.go('login');
+  // });
+
   $rootScope.$on('$stateChangeSuccess', () => {
     vm.currentUserGroupId = null;
     if(vm.stateHasChanged) vm.message = null;
     if(!vm.stateHasChanged) vm.stateHasChanged = true;
+    if (vm.stateHasChanged) document.body.scrollTop = document.documentElement.scrollTop = 0;
 
     if($auth.getPayload()) {
       vm.currentUserId = $auth.getPayload().userId;
@@ -65,6 +78,7 @@ function MainCtrl($rootScope, $state, $auth, User){
 
   function logout() {
     $auth.logout();
+    // vm.user = null;
     $state.go('login');
   }
   vm.logout = logout;

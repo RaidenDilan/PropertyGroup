@@ -2,10 +2,12 @@
   <h1>Groups Edit</h1>
   <div>
     <form name="groupsEdit.groupsEditForm" ng-submit="groupsEdit.update()">
+
       <div>
         <label for="groupName">Group Name</label>
         <input type="text" name="groupName" id="groupName" ng-model="groupsEdit.group.groupName" required>
       </div>
+
       <div
         class="ng-message-error"
         ng-messages="groupsEdit.groupsEditForm.groupName.$error"
@@ -13,50 +15,49 @@
         >
         <p ng-message="required">Your group name is required.</p>
       </div>
-
-      <div>
-        <input type="text" class="search" name="groupsEdit.groupsSearchUsers" ng-model="groupsEdit.q" placeholder="Search users...">
-      </div>
-
-      <hr>
-
-      <div class="groupFilterUsers" ng-repeat="user in groupsEdit.filtered">
-        <!-- ng-repeat="user in groupsEdit.filtered | filter:group:strict" -->
-        <!-- ng-if="(!user.group && user.id !== main.currentUserId)" -->
-        <!-- ng-show="groupsEdit.q.length > 0" -->
-        <!-- ng-show="(groupsNew.q.length > 0 && groupsNew.chosenUsers.includes(user) !== true)" -->
-        <div ng-click="groupsEdit.addUser(user)" class="userSearchResults">
-          <img ng-src="{{ user.profileImageSRC }}" alt="{{ user.username }}">
-          <h5>{{ user.username }}</h5>
-        </div>
-      </div>
-
-      <br>
-
-      <p>Current users in - {{ groupsEdit.group.groupName }}</p>
-      <div class="groupsUsersEdit" ng-repeat="user in groupsEdit.group.users track by $index">
-        <!-- ng-if="(user.id && user.id !== groupsEdit.group.createdBy)" -->
-        <!-- <div class="userImage">
-          <img ng-src="{{ user.profileImageSRC }}">
-        </div> -->
-        <div class="userName">
-          <h5>{{ user.username }}</h5>
-        </div>
-
-        <div class="deleteUser">
-          <!-- <a
-            href="#"
-            ng-if="main.currentUserId !== user.id"
-            ng-click="groupsEdit.removeUser(user)"
-            >
-            x
-          </a> -->
-          <a ng-click="groupsEdit.removeUser(user)">x</a>
-        </div>
-      </div>
-
       <!-- <button ui-sref="groupsHome({ id: groupsEdit.group.id })">Update</button> -->
-      <button class="button" ng-click="groupsEdit.update()">Update</button>
+      <!-- <button class="button" ng-click="groupsEdit.update()">Update</button> -->
+      <button class="button">Update</button>
     </form>
+
+    <hr>
+
+    <div>
+      <input
+        type="text"
+        class="search"
+        name="groupsEdit.groupsSearchUsers"
+        ng-model="groupsEdit.q"
+        placeholder="Search users...">
+    </div>
+
+    <div class="groupFilterUsers" ng-repeat="user in groupsEdit.filtered">
+      <!-- ng-repeat="user in groupsEdit.filtered | filter:group:strict" -->
+      <!-- ng-if="(!user.group && user.id !== main.currentUserId)" -->
+      <!-- ng-show="groupsEdit.q.length > 0" -->
+      <!-- ng-show="(groupsNew.q.length > 0 && groupsNew.chosenUsers.includes(user) !== true)" -->
+      <div ng-click="groupsEdit.addUser(user)" class="userSearchResults">
+        <img ng-src="{{ user.profileImageSRC }}" alt="{{ user.username }}">
+        <h5>{{ user.username }}</h5>
+      </div>
+    </div>
+
+    <hr>
+
+    <p>Current users in - {{ groupsEdit.group.groupName }}</p>
+    <div class="groupsUsersEdit" ng-repeat="user in groupsEdit.group.users track by $index">
+      <!-- ng-if="(user.id && user.id !== groupsEdit.group.owner)" -->
+      <div class="userImage">
+        <img ng-src="{{ user.profileImageSRC }}">
+      </div>
+
+      <div class="userName">
+        <h5>{{ user.username }}</h5>
+      </div>
+
+      <div class="deleteUser">
+        <a ng-click="groupsEdit.removeUser(user)">x</a>
+      </div>
+    </div>
   </div>
 </section>

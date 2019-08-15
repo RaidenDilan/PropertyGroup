@@ -1,18 +1,19 @@
-const mongoose = require('mongoose');
-const bcrypt   = require('bcrypt');
-const s3       = require('../lib/s3');
+const mongoose  = require('mongoose');
+const bcrypt    = require('bcrypt');
+const s3        = require('../lib/s3');
+// const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
-  username: { type: String, unique: true },
-  firstname: { type: String },
-  surname: { type: String },
-  email: { type: String },
-  budget: { type: Number },
-  password: { type: String },
-  profileImage: { type: String },
+  username: { type: String, unique: true, trim: true, required: true },
+  email: { type: String, unique: true, trim: true, required: true },
+  firstname: { type: String, required: true },
+  surname: { type: String, required: true },
+  budget: { type: Number , required: true },
+  password: { type: String, required: true },
+  profileImage: { type: String, required: true },
   githubId: { type: Number },
-  group: { type: mongoose.Schema.ObjectId, ref: 'Group' }
-  // groups: { type: mongoose.Schema.ObjectId, ref: 'Group' }
+  // group: { type: mongoose.Schema.ObjectId, ref: 'Group' }
+  group: { type: mongoose.Schema.ObjectId, ref: 'Group', default: null }
   // group: { type: mongoose.Schema.ObjectId, ref: 'Group', select: false }
 });
 
@@ -31,44 +32,14 @@ userSchema
     return `https://s3-eu-west-1.amazonaws.com/${process.env.AWS_BUCKET_NAME}/${this.profileImage}`;
   });
 
-// userSchema
-//   .virtual('groups', {
-//     ref: 'Group',
-//     localField: '_id',
-//     foreignField: 'user'
-//   })
-//   .set(function setUsers(groups) {
-//     this._groups = groups;
-//   });
-
-// userSchema.pre('save', function addUserToGroups(next) {
-//   this
-//     .model('Group')
-//     .find({ _id: this._groups })
-//     .exec()
-//     .then((groups) => {
-//       const promises = groups.map((user) => {
-//         group.user = this.id;
-//         group.save();
-//       });
-//
-//       // group.group = this.id;
-//       // group.save();
-//
-//       return Promise.all(promises);
-//     })
-//     .then(next)
-//     .catch(next);
-// });
-
 userSchema.pre('save', function checkPreviousProfileImage(next) {
   if(this.isModified('profileImage') && this._profileImage) return s3.deleteObject({ Key: this._profileImage }, next);
-  next();
+  return next();
 });
 
 userSchema.pre('remove', function deleteImage(next) {
   if(this.profileImage) return s3.deleteObject({ Key: this.profileImage}, next);
-  next();
+  return next();
 });
 
 userSchema
@@ -80,12 +51,34 @@ userSchema
 userSchema.pre('validate', function checkPassword(next) {
   if(!this.password && !this.githubId) this.invalidate('password', 'required');
   if(this.isModified('password') && this._passwordConfirmation !== this.password)this.invalidate('passwordConfirmation', 'does not match');
-  next();
+  return next();
 });
+
+// userSchema
+//   .path('email')
+//   .validate(validateEmail);
+//   function validateEmail(email) {
+//   if(!validator.isEmail(email)) return this.invalidate('email', 'Email must be valid email address');
+// }
+
+// userSchema
+//   .path('email')
+//   .validate(function validateEmail(email) {
+//     console.log('email validation');
+//     if(!validator.isEmail(email)) {
+//       console.log('!validator.isEmail(email)', !validator.isEmail(email));
+//       return this.invalidate('email', 'Email must be valid email address');
+//     }
+// });
+
+// userSchema.pre('validate', function validateEmail(email, next) {
+//   if(!validator.isEmail(email)) return this.invalidate('email', 'Email must be valid email address');
+//   next();
+// });
 
 userSchema.pre('save', function hashPassword(next) {
   if(this.isModified('password')) this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(11));
-  next();
+  return next();
 });
 
 userSchema.methods.validatePassword = function validatePassword(password) {

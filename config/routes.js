@@ -23,7 +23,6 @@ router.route('/crimes')
 
 // USERS
 router.route('/users')
-  // .all(secureRoute)
   .get(users.index);
 
 router.route('/users/:id')
@@ -34,14 +33,13 @@ router.route('/users/:id')
 
 // GROUPS
 router.route('/groups')
-  // .all(secureRoute)
   .get(groups.index)
   .post(secureRoute, groups.create);
 
 router.route('/groups/:id')
   .all(secureRoute)
   .get(groups.show)
-  .put(groups.update)
+  .put(groups.update) // we are working on this
   .delete(groups.delete)
   .post(secureRoute, groups.addProperty);
 

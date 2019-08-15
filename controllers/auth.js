@@ -13,25 +13,26 @@ function register(req, res, next) {
       //   if(err) next(err);
       //   res.status(201).json({ message: 'Registration successful'});
       // });
-      return res.json({ status: 200, message: 'Registration Successful' });
+      return res.status(201).json({ message: 'Registration Successful' });
     })
-    .catch(next);
+    .catch((err, next) => {
+      if (err) return res.status(500).json({ error: err.message, message: 'Something went wrong while registering' });
+      else return next();
+    });
 }
 
 function login(req, res, next) {
   User
     .findOne({ email: req.body.email })
     .then((user) => {
-      if(!user || !user.validatePassword(req.body.password)) {
-        return res.status(401).json({ message: `Incorrect username or password` });
-        // return res.unauthorized();
-      }
+      if(!user || !user.validatePassword(req.body.password)) return res.status(401).json({ message: `Incorrect username or password` }); // return res.unauthorized();
 
       const token = jwt.sign({ userId: user.id }, secret, { expiresIn: '1hr' });
-      return res.json({ token, status: 200, message: `Welcome back ${user.username}` });
+      return res.status(200).json({ token, message: `Welcome back ${user.username}` });
     })
     .catch((err, next) => {
-      if (err) console.log('err', err);
+      if (err) return res.status(500).json({ error: err.message, message: 'Something went wrong while logging in' });
+      else return next();
     });
 }
 

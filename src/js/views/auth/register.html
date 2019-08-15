@@ -3,6 +3,7 @@
     <div id="registerForm">
       <h2 class="registerHeader">Register</h2>
       <form name="register.registerForm" ng-submit="register.submit()" novalidate>
+
         <div>
           <!-- <label for="username">Username</label> -->
           <input type="text" name="username" id="username" ng-model="register.user.username" placeholder="Username" required>
@@ -10,6 +11,7 @@
         <div class="ng-message-error" ng-messages="register.registerForm.username.$error" ng-show="(register.registerForm.$submitted || register.registerForm.username.$touched)">
           <p ng-message="required">Your username is required.</p>
         </div>
+
         <div>
           <!-- <label for="firstname">First Name</label> -->
           <input type="text" name="firstname" id="firstname" ng-model="register.user.firstname" placeholder="Firstname" required>
@@ -17,6 +19,7 @@
         <div class="ng-message-error" ng-messages="register.registerForm.firstname.$error" ng-show="(register.registerForm.$submitted || register.registerForm.firstname.$touched)">
           <p ng-message="required">Your first name is required.</p>
         </div>
+
         <div>
           <!-- <label for="surname">Surname</label> -->
           <input type="text" name="surname" id="surname" ng-model="register.user.surname" placeholder="Surname" required>
@@ -24,6 +27,7 @@
         <div class="ng-message-error" ng-messages="register.registerForm.surname.$error" ng-show="(register.registerForm.$submitted || register.registerForm.surname.$touched)">
           <p ng-message="required">Your surname is required.</p>
         </div>
+
         <div>
           <!-- <label for="email">Email</label> -->
           <input type="email" name="email" id="email" ng-model="register.user.email" placeholder="Email" required>
@@ -32,6 +36,7 @@
           <p ng-message="required">Your email is required.</p>
           <p ng-message="email">A valid email is required.</p>
         </div>
+
         <div>
           <!-- <label for="password">Password</label> -->
           <input type="password" name="password" id="password" ng-model="register.user.password" placeholder="Password" required>
@@ -39,6 +44,7 @@
         <div class="ng-message-error" ng-messages="register.registerForm.password.$error" ng-show="(register.registerForm.$submitted || register.registerForm.password.$touched)">
           <p ng-message="required">Your password is required.</p>
         </div>
+
         <div>
           <!-- <label for="passwordConfirmation">Password Confirmation</label> -->
           <input type="password" name="passwordConfirmation" id="passwordConfirmation" ng-model="register.user.passwordConfirmation" placeholder="Password Confirmation" required>
@@ -46,6 +52,16 @@
         <div class="ng-message-error" ng-messages="register.registerForm.passwordConfirmation.$error" ng-show="(register.registerForm.$submitted || register.registerForm.passwordConfirmation.$touched)">
           <p ng-message="required">Your password confirmation is required.</p>
         </div>
+
+        <div>
+          <!-- <label for="email">Email</label> -->
+          <input type="budget" name="budget" id="budget" ng-model="register.user.budget" placeholder="Budget" required>
+        </div>
+        <div class="ng-message-error" ng-messages="register.registerForm.budget.$error" ng-show="(register.registerForm.$submitted || register.registerForm.budget.$touched)">
+          <p ng-message="required">A budget is required.</p>
+          <!-- <p ng-message="budget">A valid budget is required.</p> -->
+        </div>
+
         <div class="choose button">Select a profile image
           <label for="base64"></label>
           <input class="upload" type="file" base64 name="base64" id="base64" ng-model="register.user.base64" required>
@@ -53,6 +69,7 @@
         <div class="ng-message-error" ng-messages="register.registerForm.base64.$error" ng-show="(register.registerForm.$submitted)">
           <p ng-message="required">An image is required.</p>
         </div>
+
         <button class="button">Register</button>
       </form>
         <p id="alreadyRegistered">Already registered?</p>
