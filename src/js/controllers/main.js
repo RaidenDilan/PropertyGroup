@@ -12,6 +12,15 @@ function MainCtrl($rootScope, $state, $auth, User){
     if(err.status === 401) $state.go('login');
   });
 
+  // $rootScope.$on('userAddedToGroup', () => {
+  //   vm.message = 'User added to group';
+  //   console.log(vm.message);
+  // });
+  // $rootScope.$on('success', () => {
+  //   vm.message = 'User added to group';
+  //   console.log(vm.message);
+  // });
+
   // $rootScope.$on('loggedIn', () => {
   //   console.log('logged in');
   //   vm.user = CurrentUserService.getUser();
@@ -24,8 +33,13 @@ function MainCtrl($rootScope, $state, $auth, User){
   //   $state.go('login');
   // });
 
-  $rootScope.$on('$stateChangeSuccess', () => {
+  $rootScope.$on('$stateChangeSuccess', (event, toState, fromState) => {
+    // console.log('event --->', event);
+    // console.log('toState --->', toState);
+    // console.log('fromState --->', fromState);
+
     vm.currentUserGroupId = null;
+
     if(vm.stateHasChanged) vm.message = null;
     if(!vm.stateHasChanged) vm.stateHasChanged = true;
     if (vm.stateHasChanged) document.body.scrollTop = document.documentElement.scrollTop = 0;
@@ -33,7 +47,7 @@ function MainCtrl($rootScope, $state, $auth, User){
     if($auth.getPayload()) {
       vm.currentUserId = $auth.getPayload().userId;
 
-      User
+      return User
         .query()
         .$promise
         .then((response) => {

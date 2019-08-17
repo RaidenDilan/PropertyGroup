@@ -12,10 +12,11 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   profileImage: { type: String, required: true },
   githubId: { type: Number },
-  // group: { type: mongoose.Schema.ObjectId, ref: 'Group' }
   group: { type: mongoose.Schema.ObjectId, ref: 'Group', default: null }
-  // group: { type: mongoose.Schema.ObjectId, ref: 'Group', select: false }
 });
+
+// The raw value of `email` is lowercased
+// userSchema.get('email', null, { getters: false }); // 'test@gmail.com'
 
 userSchema
   .path('profileImage')

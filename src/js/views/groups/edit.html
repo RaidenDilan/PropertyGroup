@@ -35,7 +35,7 @@
       <!-- ng-repeat="user in groupsEdit.filtered | filter:group:strict" -->
       <!-- ng-if="(!user.group && user.id !== main.currentUserId)" -->
       <!-- ng-show="groupsEdit.q.length > 0" -->
-      <!-- ng-show="(groupsNew.q.length > 0 && groupsNew.chosenUsers.includes(user) !== true)" -->
+      <!-- ng-show="(groupsNew.q.length > 0 && groupsNew.group.users.includes(user) !== true)" -->
       <div ng-click="groupsEdit.addUser(user)" class="userSearchResults">
         <img ng-src="{{ user.profileImageSRC }}" alt="{{ user.username }}">
         <h5>{{ user.username }}</h5>
