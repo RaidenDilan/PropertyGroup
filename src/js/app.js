@@ -6,6 +6,7 @@ angular
     'ui.bootstrap',
     'ngAnimate',
     'ngMessages',
+    'ngMaterial',
     'ngMap',
     'chart.js'
   ]);

@@ -1,26 +1,78 @@
-<section class="container">
-  <div id="loginFormDiv">
-    <div id="loginForm">
-      <h2 class="loginHeader">Login</h2>
-      <form name="login.loginForm" ng-submit="login.submit()" novalidate>
-        <div>
-          <!-- <label for="email">Email</label> -->
-          <input type="email" name="email" id="email" ng-model="login.credentials.email" placeholder="Email" required>
+<md-content class="md-padding loginForm">
+  <md-card>
+
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">Login</span>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-card-title-text>
+    </md-card-title>
+
+    <form
+      name="login.loginForm"
+      class="login.loginForm"
+      ng-submit="login.submit()"
+      novalidate
+      >
+
+      <div class="input-field col s6">
+        <md-input-container class="md-block">
+          <md-icon class="material-icons">email</md-icon>
+          <label for="email">Email</label>
+          <input
+            type="email"
+            name="email"
+            ng-model="login.credentials.email"
+            ng-required="true"
+            aria-label="Email (required)"
+            >
+        </md-input-container>
+
+        <div
+          class="alert alert-danger"
+          role="alert"
+          ng-messages="login.loginForm.email.$error"
+          ng-show="(login.loginForm.$submitted || login.loginForm.email.$touched) && login.loginForm.email.$invalid"
+          >
+          <div ng-message="required">Your email address is required.</div>
+          <div ng-message="email">Please enter a valid email address.</div>
         </div>
-        <div class="ng-message-error" ng-messages="login.loginForm.email.$error" ng-show="(login.loginForm.$submitted || login.loginForm.email.$touched)">
-          <p ng-message="required">Your email is required.</p>
+      </div>
+
+      <div class="input-field col s6">
+        <md-input-container class="md-block">
+          <md-icon class="material-icons">lock</md-icon>
+          <label for="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            ng-model="login.credentials.password"
+            ng-minlength="1"
+            ng-required="true"
+            aria-label="Password (required)"
+            >
+        </md-input-container>
+
+        <div
+          class="alert alert-danger"
+          role="alert"
+          ng-messages="login.loginForm.password.$error"
+          ng-show="(login.loginForm.$submitted || login.loginForm.password.$touched) && login.loginForm.password.$invalid"
+          >
+          <div ng-message="required">Your password is required.</div>
+          <div ng-message="minlength">Password must be at least 4 characters.</div>
         </div>
-        <div>
-          <!-- <label for="password">Password</label> -->
-          <input type="password" name="password" id="password" ng-model="login.credentials.password" placeholder="Password" required>
-        </div>
-        <div class="ng-message-error" ng-messages="login.loginForm.password.$error" ng-show="(login.loginForm.$submitted || login.loginForm.password.$touched)">
-          <p ng-message="required">Your password is required.</p>
-        </div>
-        <button class="button">Login</button>
-      </form>
-        <p id="OR">---------- or ----------</p>
-        <button ng-click="login.authenticate('github')">Sign in with GitHub</button>
-    </div>
-    </div>
-</section>
+      </div>
+
+      <md-button
+        class="md-raised md-primary md-button md-ink-ripple"
+        type="submit"
+        ng-disabled="login.loginForm.$invalid"
+        ng-click="login.loginForm.$invalid"
+        >
+        <i class="material-icons left"></i>Login
+      </md-button>
+
+    </form>
+  </md-card>
+</md-content>

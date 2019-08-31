@@ -4,9 +4,10 @@
   <base href="/">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Project 3</title>
+  <title>PNC</title>
   <link rel="icon" href="/images/home.jpg" type="image/jpg">
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPqioi-i1ju-WmQSHxeRsy0ippwMshxu4"></script> -->
   <!-- <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -19,28 +20,156 @@
 
   </script> -->
   <!-- inject:js -->
+  <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script>
   <!-- endinject -->
   <!-- inject:css -->
   <!-- endinject -->
 </head>
-  <body ng-controller="MainCtrl as main" class="site">
-    <nav>
-      <div class="links">
-        <ul class="link">
-          <li ng-if="main.isAuthenticated()"><a ui-sref="propsIndex">Find Properties</a></li>
-          <li ng-if="(main.isAuthenticated() && main.currentUserGroupId)"><a ui-sref="groupsHome({ id: main.currentUserGroupId })">My Group</a></li>
-          <li ng-if="main.isAuthenticated() && !main.currentUserGroupId"><a ui-sref="groupsNew">Add a Group</a></li>
-          <li ng-if="main.isAuthenticated()"><a ui-sref="usersShow({ id: main.currentUserId })">Profile</a></li>
-          <li ng-if="main.isAuthenticated()"><a id="logout-link" ng-click="main.logout()" href="#">Logout</a></li>
-          <li ng-if="!main.isAuthenticated()"><a ui-sref="login">Login</a></li>
-          <li ng-if="!main.isAuthenticated()"><a ui-sref="register">Register</a></li>
-        </ul>
+  <body ng-controller="MainCtrl as main" class="site" ng-cloak>
+
+    <md-toolbar class="md-hue-2">
+      <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings" ng-click="main.toggleLeft()">
+          <md-icon md-font-set="material-icons">menu</md-icon>
+        </md-button>
+
+        <!-- <h2 ui-sref="propsIndex"><span>PNC</span></h2> -->
+        <h2><span>PNC</span></h2>
+        <span flex></span>
+
+        <md-button class="md-icon-button" aria-label="Favorite">
+          <md-icon md-font-set="material-icons">more_vert</md-icon>
+        </md-button>
       </div>
-    </nav>
+    </md-toolbar>
+
+    <section layout="row" flex>
+      <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+        <md-toolbar class="md-tall md-hue-2" layout-align="end end">
+          <div class="md-toolbar-tools">
+            <img ng-show="main.user" src="{{ main.user.profileImageSRC }}" width="30" height="30" style="border-radius:50px;margin-right:10px" />
+
+            <div layout="column"><span class="md-body-2">{{ main.user.username }}</span></div>
+            <span flex></span>
+
+            <md-button class="md-icon-button" aria-label="More">
+              <md-icon>more_vert</md-icon>
+            </md-button>
+          </div>
+        </md-toolbar>
+
+        <md-content role="navigation">
+          <md-list>
+            <md-list-item
+              ng-if="main.isAuthenticated()"
+              md-nav-sref="propsIndex"
+              ui-sref="propsIndex"
+              sref-opts="{ reload: true, notify: true }"
+              name="propsIndex"
+              ng-click="main.close()"
+              >
+              <md-icon md-font-set="material-icons" aria-label="Search Properties">search</md-icon>
+              <p class="md-body-2">Find Properties</p>
+              <span flex></span>
+              <md-icon>chevron_right</md-icon>
+            </md-list-item>
+            <md-list-item
+              ng-if="(main.isAuthenticated() && main.currentUserGroupId)"
+              ng-click="main.close()"
+              md-nav-sref="groupsHome({ id: main.currentUserGroupId })"
+              ui-sref="groupsHome({ id: main.currentUserGroupId })"
+              sref-opts="{ reload: true, notify: true }"
+              name="groupsHome"
+              >
+              <md-icon md-font-set="material-icons" aria-label="My Group">group_work</md-icon>
+              <p class="md-body-2">My Group</p>
+              <span flex></span>
+              <md-icon>chevron_right</md-icon>
+            </md-list-item>
+            <md-list-item
+              ng-if="main.isAuthenticated() && !main.currentUserGroupId"
+              md-nav-sref="groupsNew"
+              ui-sref="groupsNew"
+              sref-opts="{ reload: true, notify: true }"
+              name="groupsNew"
+              ng-click="main.close()"
+              >
+              <md-icon md-font-set="material-icons" aria-label="Create New Group">add</md-icon>
+              <p class="md-body-2">New Group</p>
+              <span flex></span>
+              <md-icon>chevron_right</md-icon>
+            </md-list-item>
+            <md-list-item
+              ng-if="main.isAuthenticated()"
+              md-nav-sref="usersShow({ id: main.currentUserId })"
+              ui-sref="usersShow({ id: main.currentUserId })"
+              sref-opts="{ reload: true, notify: true }"
+              name="usersShow"
+              ng-click="main.close()"
+              >
+              <md-icon md-font-set="material-icons" aria-label="Account">account_circle</md-icon>
+              <p class="md-body-2">Profile</p>
+              <span flex></span>
+              <md-icon>chevron_right</md-icon>
+            </md-list-item>
+            <md-list-item
+              ng-if="main.isAuthenticated()"
+              ng-click="main.logout(); main.close();"
+              md-nav-href="#"
+              name="logout"
+              >
+              <md-icon md-font-set="material-icons" aria-label="Logout">exit_to_app</md-icon>
+              <p class="md-body-2">Logout</p>
+              <span flex></span>
+              <md-icon>chevron_right</md-icon>
+            </md-list-item>
+            <md-list-item
+              ng-if="!main.isAuthenticated()"
+              md-nav-sref="login"
+              ui-sref="login"
+              sref-opts="{ reload: true, notify: true }"
+              name="login"
+              ng-click="main.close()"
+              >
+              <md-icon md-font-set="material-icons" aria-label="Login">transit_enterexit</md-icon>
+              <p class="md-body-2">Login</p>
+              <span flex></span>
+              <md-icon>chevron_right</md-icon>
+            </md-list-item>
+            <md-list-item
+              ng-if="!main.isAuthenticated()"
+              md-nav-sref="register"
+              ui-sref="register"
+              sref-opts="{ reload: true, notify: true }"
+              name="register"
+              ng-click="main.close()"
+              >
+              <md-icon md-font-set="material-icons" aria-label="Register">create</md-icon>
+              <p class="md-body-2">Register</p>
+              <span flex></span>
+              <md-icon>chevron_right</md-icon>
+            </md-list-item>
+          </md-list>
+        </md-content>
+      </md-sidenav>
+
+      <!-- <md-content flex layout-padding>
+        <div layout="column" layout-fill layout-align="top left">
+          <p>Main content here</p>
+        </div>
+        <div flex></div>
+      </md-content> -->
+
+    </section>
     <div class="message" ng-if="main.message">{{ main.message }}</div>
-    <main ui-view class="site-content">
-    </main>
-    <footer>Made With <span>&hearts;</span> @ General Assembly London</footer>
+
+    <main ui-view class="site-content"></main>
+
+    <footer>
+      <md-toolbar class="md-hue-2 md-scroll-shrink">
+        <div layout="row" layout-align="center center" flex>Made With <span>&hearts;</span> @ General Assembly London</div>
+      </md-toolbar>
+    </footer>
     <!-- <footer>WE DA BEST    - Big <span>&hearts;</span> from The Pretty Mongooses</footer> -->
   </body>
 </html>

@@ -1,330 +1,330 @@
-// IPHONE 5
-@media only screen and (min-width: 320px) and (max-width: 568px) {
-
-  nav {
-    div {
-      margin-left: 0;
-      ul {
-        padding-top: 10px;
-        margin-top: 30px;
-        li {
-          text-align: center;
-          font-size: 15px !important;
-          font-weight: bolder;
-          margin-left: 0;
-          a {
-            color: white !important;
-            padding-right: 5px;
-            font-size: 12px !important;
-          }
-        }
-      }
-    }
-  }
-
-  section {
-    margin-top: 30px;
-    div {
-      form {
-        input {
-          width: 100%;
-        }
-        textarea {
-          border: 1px solid black;
-          width: 100%;
-        }
-      }
-      img {
-        &.propertyimage {
-          float: none;
-          max-width: 90%;
-        }
-        &.profileimage {
-          max-width: 70%;
-        }
-        &.groupUsers {
-          margin-bottom: 10px;
-          padding: 0;
-        }
-        &.userimages {
-          width: 370px;
-          height: auto;
-          text-align: center;
-          margin: 0;
-          margin-top: 5px;
-          padding: 0;
-        }
-      }
-      ul {
-        li {
-          strong {
-            font-weight: 900;
-          }
-        }
-      }
-      button {
-        &.search {
-          padding: 7px 120px;
-        }
-        &.deleteproperty {
-          margin-left: 20px;
-        }
-        &.addcomment {
-          padding: 10px 0;
-          width: 100%;
-        }
-      }
-      &.gallery {
-        max-width: none;
-      }
-      &.propo {
-        margin-left: 65px;
-        padding-left: 10px;
-      }
-    }
-    h2 {
-      font-size: 25px;
-      font-weight: bold;
-      margin-bottom: 30px;
-    }
-  }
-
-  .app-modal-window .modal-dialog {
-    width: 95%;
-  }
-
-  .area {
-    text-transform: capitalize;
-  }
-
-  button {
-    &.deleteimage {
-      margin: 5px 0;
-    }
-    &.deletenote {
-      padding: 5px;
-    }
-  }
-
-  .groupsShowPage {
-    padding: 0 !important;
-    button.close {
-      width: 30% !important;
-    }
-    ul {
-      li {
-        width: 90% !important;
-      }
-    }
-    button {
-      width: 90% !important;
-    }
-    h3 {
-      padding: 0 0 20px 0 !important;
-    }
-    .smaller {
-      width: 30% !important;
-    }
-    textarea {
-      width: 90% !important;
-    }
-    .crimePie {
-      margin: 25px !important;
-    }
-    .deleteimage {
-      margin: 10px auto !important;
-    }
-    ng-map {
-      margin: 15px !important;
-      height: 250px !important;
-      border: 5px solid black;
-    }
-  }
-  .description {
-    font-size: 10px !important;
-    padding: 10px !important;
-    padding-top: 20px;
-  }
-  .ratingBox {
-    width: 50% !important;
-  }
-  .addimage {
-    margin: 10px !important;
-  }
-  .noteText {
-    text-align: center !important;
-    margin: auto;
-    display: block !important;
-  }
-  #loginFormDiv {
-    width: 100% !important;
-    margin: 50px auto !important;
-  }
-  .usersShowPage {
-    width: 100% !important;
-    margin: 50px auto !important;
-    button {
-      width: 100% !important;
-      margin: 5px auto !important;
-    }
-  }
-  .usersEditPage {
-    width: 100% !important;
-    margin: 50px auto !important;
-    button {
-      width: 100% !important;
-      margin: 5px auto !important;
-    }
-  }
-  .groupsHomePage {
-    button {
-      width: 100% !important;
-    }
-  }
-  .propsIndexPage {
-    margin-top: 40px !important;
-    width: 100% !important;
-    input {
-      width: 100% !important;
-    }
-    .search {
-      width: 100% !important;
-    }
-    .results {
-      ul {
-        li {
-          width: 100% !important;
-          font-size: 12px !important;
-          &:nth-child(1) {
-            padding: 0 !important;
-          }
-          img {
-            width: 100% !important;
-          }
-          .ZooplaImage {
-            padding: 0 !important;
-            width: 100% !important;
-          }
-        }
-      }
-      button {
-        width: 100% !important;
-      }
-    }
-    .loadMore {
-        background-color: yellow !important;
-      }
-  }
-  .modal-content {
-    margin: 25px auto !important;
-  }
-  .app-modal-window, .modal-dialog {
-    width: 95% !important;
-    margin: 0 auto !important;
-  }
-  .propertyImage {
-    width: 90% !important;
-  }
-  .close {
-    color: black !important;
-    padding: 3px !important;
-    margin: 5px auto !important;
-    float: none !important;
-    font-size: 12px !important;
-    opacity: 1 !important;
-    background-color: white !important;
-  }
-  footer {
-    font-size: 15px !important;
-    letter-spacing: normal !important;
-    color: white !important;
-    span {
-      color: red !important;
-    }
-  }
-  .modal-body {
-    padding: 15px !important;
-  }
-  .modal-footer {
-    .storeProperty {
-      width: 89% !important;
-    }
-  }
-  .groupsNewPage {
-    width: 100% !important;
-    h1 {
-      font-size: 20px;
-      padding-top: 20px;
-    }
-  }
-}
-
-@media only screen and (min-width : 768px) and (max-width : 1024px)  {
-  #loginFormDiv {
-    width: 80% !important;
-    margin: 300px auto !important;
-  }
-
-  #registerFormDiv {
-    width: 80% !important;
-    margin: 125px auto !important;
-  }
-
-  .usersShowPage {
-    width: 80% !important;
-    margin: 250px auto !important;
-  }
-
-  .usersEditPage {
-    width: 80% !important;
-    margin: 200px auto !important;
-    button {
-      width: 100% !important;
-    }
-  }
-
-  .groupsNewPage {
-    width: 80% !important;
-    margin: 200px auto !important;
-    button {
-      width: 100% !important;
-    }
-  }
-  .addUserImage {
-    width: 15% !important;
-  }
-  .app-modal-window, .modal-dialog {
-    width: 95% !important;
-    margin: 30px auto !important;
-  }
-  .propTile {
-    .storeProperty {
-      width: 91% !important;
-    }
-  }
-  .groupUsers {
-    width: 50% !important;
-  }
-  .groupsShowZooplaImage {
-    width: 90% !important;
-  }
-  .groupsHomePage {
-    button {
-      width: 90% !important;
-    }
-  }
-  .addcomment {
-    width: 59% !important;
-  }
-  ng-map {
-    width: 250px !important;
-    height: 270px !important;
-  }
-  canvas {
-    height: 270px !important;
-    width: 270px !important;
-  }
-  .mapAndCrime {
-    padding: 20px 0 20px 35px !important;
-  }
-}
+// // IPHONE 5
+// @media only screen and (min-width: 320px) and (max-width: 568px) {
+//
+//   nav {
+//     div {
+//       margin-left: 0;
+//       ul {
+//         padding-top: 10px;
+//         margin-top: 30px;
+//         li {
+//           text-align: center;
+//           font-size: 15px !important;
+//           font-weight: bolder;
+//           margin-left: 0;
+//           a {
+//             color: white !important;
+//             padding-right: 5px;
+//             font-size: 12px !important;
+//           }
+//         }
+//       }
+//     }
+//   }
+//
+//   section {
+//     margin-top: 30px;
+//     div {
+//       form {
+//         input {
+//           width: 100%;
+//         }
+//         textarea {
+//           border: 1px solid black;
+//           width: 100%;
+//         }
+//       }
+//       img {
+//         &.propertyimage {
+//           float: none;
+//           max-width: 90%;
+//         }
+//         &.profileimage {
+//           max-width: 70%;
+//         }
+//         &.groupUsers {
+//           margin-bottom: 10px;
+//           padding: 0;
+//         }
+//         &.userimages {
+//           width: 370px;
+//           height: auto;
+//           text-align: center;
+//           margin: 0;
+//           margin-top: 5px;
+//           padding: 0;
+//         }
+//       }
+//       ul {
+//         li {
+//           strong {
+//             font-weight: 900;
+//           }
+//         }
+//       }
+//       button {
+//         &.search {
+//           padding: 7px 120px;
+//         }
+//         &.deleteproperty {
+//           margin-left: 20px;
+//         }
+//         &.addcomment {
+//           padding: 10px 0;
+//           width: 100%;
+//         }
+//       }
+//       &.gallery {
+//         max-width: none;
+//       }
+//       &.propo {
+//         margin-left: 65px;
+//         padding-left: 10px;
+//       }
+//     }
+//     h2 {
+//       font-size: 25px;
+//       font-weight: bold;
+//       margin-bottom: 30px;
+//     }
+//   }
+//
+//   .app-modal-window .modal-dialog {
+//     width: 95%;
+//   }
+//
+//   .area {
+//     text-transform: capitalize;
+//   }
+//
+//   button {
+//     &.deleteimage {
+//       margin: 5px 0;
+//     }
+//     &.deletenote {
+//       padding: 5px;
+//     }
+//   }
+//
+//   .groupsShowPage {
+//     padding: 0 !important;
+//     button.close {
+//       width: 30% !important;
+//     }
+//     ul {
+//       li {
+//         width: 90% !important;
+//       }
+//     }
+//     button {
+//       width: 90% !important;
+//     }
+//     h3 {
+//       padding: 0 0 20px 0 !important;
+//     }
+//     .smaller {
+//       width: 30% !important;
+//     }
+//     textarea {
+//       width: 90% !important;
+//     }
+//     .crimePie {
+//       margin: 25px !important;
+//     }
+//     .deleteimage {
+//       margin: 10px auto !important;
+//     }
+//     ng-map {
+//       margin: 15px !important;
+//       height: 250px !important;
+//       border: 5px solid black;
+//     }
+//   }
+//   .description {
+//     font-size: 10px !important;
+//     padding: 10px !important;
+//     padding-top: 20px;
+//   }
+//   .ratingBox {
+//     width: 50% !important;
+//   }
+//   .addimage {
+//     margin: 10px !important;
+//   }
+//   .noteText {
+//     text-align: center !important;
+//     margin: auto;
+//     display: block !important;
+//   }
+//   #loginFormDiv {
+//     width: 100% !important;
+//     margin: 50px auto !important;
+//   }
+//   .usersShowPage {
+//     width: 100% !important;
+//     margin: 50px auto !important;
+//     button {
+//       width: 100% !important;
+//       margin: 5px auto !important;
+//     }
+//   }
+//   .usersEditPage {
+//     width: 100% !important;
+//     margin: 50px auto !important;
+//     button {
+//       width: 100% !important;
+//       margin: 5px auto !important;
+//     }
+//   }
+//   .groupsHomePage {
+//     button {
+//       width: 100% !important;
+//     }
+//   }
+//   .propsIndexPage {
+//     margin-top: 40px !important;
+//     width: 100% !important;
+//     input {
+//       width: 100% !important;
+//     }
+//     .search {
+//       width: 100% !important;
+//     }
+//     .results {
+//       ul {
+//         li {
+//           width: 100% !important;
+//           font-size: 12px !important;
+//           &:nth-child(1) {
+//             padding: 0 !important;
+//           }
+//           img {
+//             width: 100% !important;
+//           }
+//           .ZooplaImage {
+//             padding: 0 !important;
+//             width: 100% !important;
+//           }
+//         }
+//       }
+//       button {
+//         width: 100% !important;
+//       }
+//     }
+//     .loadMore {
+//         background-color: yellow !important;
+//       }
+//   }
+//   .modal-content {
+//     margin: 25px auto !important;
+//   }
+//   .app-modal-window, .modal-dialog {
+//     width: 95% !important;
+//     margin: 0 auto !important;
+//   }
+//   .propertyImage {
+//     width: 90% !important;
+//   }
+//   .close {
+//     color: black !important;
+//     padding: 3px !important;
+//     margin: 5px auto !important;
+//     float: none !important;
+//     font-size: 12px !important;
+//     opacity: 1 !important;
+//     background-color: white !important;
+//   }
+//   footer {
+//     font-size: 15px !important;
+//     letter-spacing: normal !important;
+//     color: white !important;
+//     span {
+//       color: red !important;
+//     }
+//   }
+//   .modal-body {
+//     padding: 15px !important;
+//   }
+//   .modal-footer {
+//     .storeProperty {
+//       width: 89% !important;
+//     }
+//   }
+//   .groupsNewPage {
+//     width: 100% !important;
+//     h1 {
+//       font-size: 20px;
+//       padding-top: 20px;
+//     }
+//   }
+// }
+//
+// @media only screen and (min-width : 768px) and (max-width : 1024px)  {
+//   #loginFormDiv {
+//     width: 80% !important;
+//     margin: 300px auto !important;
+//   }
+//
+//   #registerFormDiv {
+//     width: 80% !important;
+//     margin: 125px auto !important;
+//   }
+//
+//   .usersShowPage {
+//     width: 80% !important;
+//     margin: 250px auto !important;
+//   }
+//
+//   .usersEditPage {
+//     width: 80% !important;
+//     margin: 200px auto !important;
+//     button {
+//       width: 100% !important;
+//     }
+//   }
+//
+//   .groupsNewPage {
+//     width: 80% !important;
+//     margin: 200px auto !important;
+//     button {
+//       width: 100% !important;
+//     }
+//   }
+//   .addUserImage {
+//     width: 15% !important;
+//   }
+//   .app-modal-window, .modal-dialog {
+//     width: 95% !important;
+//     margin: 30px auto !important;
+//   }
+//   .propTile {
+//     .storeProperty {
+//       width: 91% !important;
+//     }
+//   }
+//   .groupUsers {
+//     width: 50% !important;
+//   }
+//   .groupsShowZooplaImage {
+//     width: 90% !important;
+//   }
+//   .groupsHomePage {
+//     button {
+//       width: 90% !important;
+//     }
+//   }
+//   .addcomment {
+//     width: 59% !important;
+//   }
+//   ng-map {
+//     width: 250px !important;
+//     height: 270px !important;
+//   }
+//   canvas {
+//     height: 270px !important;
+//     width: 270px !important;
+//   }
+//   .mapAndCrime {
+//     padding: 20px 0 20px 35px !important;
+//   }
+// }

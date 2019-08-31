@@ -1,92 +1,118 @@
-<section class="container">
-  <div class="groupsNewPage">
-    <h1>Create a Group</h1>
+<md-content class="md-padding groupsNew">
+  <md-card>
 
-    <div>
-      <form
-        name="groupsNew.groupsNewForm"
-        ng-submit="groupsNew.create(users)"
-        novalidate>
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">New Group</span>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-card-title-text>
+    </md-card-title>
 
-        <div>
+    <form
+      name="groupsNew.groupsNewForm"
+      class="groupsNew.groupsNewForm"
+      ng-submit="groupsNew.create(users)"
+      novalidate
+      >
+
+      <div class="input-field col s6">
+        <md-input-container class="md-block">
+          <md-icon class="material-icons">group_work</md-icon>
           <label for="groupName">Group Name</label>
           <input
             type="text"
             name="groupName"
             id="groupName"
             ng-model="groupsNew.group.groupName"
-            required
+            ng-minlength="1"
+            ng-required="true"
+            aria-label="Group name (required)"
             >
-        </div>
+        </md-input-container>
 
         <div
-          class="ng-message-error"
+          class="alert alert-danger"
+          role="alert"
           ng-messages="groupsNew.groupsNewForm.groupName.$error"
-          ng-show="(groupsNew.groupsNewForm.$submitted || groupsNew.groupsNewForm.groupName.$touched)"
+          ng-show="(groupsNew.groupsNewForm.$submitted || groupsNew.groupsNewForm.groupName.$touched) && groupsNew.groupsNewForm.groupName.$invalid"
           >
-          <p ng-message="required">Your group name is required.</p>
+          <div ng-message="required">Please enter a group name.</div>
+          <div ng-message="minlength">Group name must be at least 4 characters.</div>
         </div>
+      </div>
 
+      <div class="input-field col s6">
+        <label>Search Users</label>
+        <input
+          type="text"
+          class="search"
+          name="groupsNew.groupsSearchUsers"
+          ng-model="groupsNew.q"
+          placeholder="Search for people..."
+          >
+      </div>
+
+      <md-divider ng-if="!$last"></md-divider>
+
+      <div
+        class="input-field col s6 groupUsersToAdd"
+        ng-if="(!user.group && user.id !== main.currentUserId)"
+        ng-repeat="user in groupsNew.filtered"
+        ng-show="(groupsNew.q.length > 0 && groupsNew.chosenUsers.includes(user) !== true)"
+        >
+        <div
+          ng-click="groupsNew.addUser(user)"
+          class="userSearchResults"
+          >
+          <img
+            ng-src="{{ user.profileImageSRC }}"
+            alt="{{ user.username }}"
+            class="addUserImage"
+            >
+          <h5>{{ user.username }}</h5>
+        </div>
+      </div>
+
+      <p id="chosenUsers">Chosen Users:</p>
+
+      <md-divider ng-if="!$last"></md-divider>
+
+      <div
+        class="input-field col s6 chosenGroupUsers"
+        ng-repeat="user in groupsNew.chosenUsers"
+        >
         <div>
-          <label>Add Users</label>
-          <input
-            type="text"
-            class="search"
-            name="groupsNew.groupsSearchUsers"
-            ng-model="groupsNew.q"
-            placeholder="Search for people..."
+          <img
+            ng-src="{{ user.profileImageSRC }}"
+            alt="{{ user.profileImageSRC }}"
+            class="chosenUsersImage"
             >
-        </div>
-
-        <hr>
-
-        <div
-          class="groupUsersToAdd"
-          ng-if="(!user.group && user.id !== main.currentUserId)"
-          ng-repeat="user in groupsNew.filtered"
-          ng-show="(groupsNew.q.length > 0 && groupsNew.chosenUsers.includes(user) !== true)"
-          >
-          <div
-            ng-click="groupsNew.addUser(user)"
-            class="userSearchResults"
+          <h5>{{ user.username }}</h5>
+          <a
+            href="#"
+            ng-click="groupsNew.removeUser(user)"
+            class="removeUser"
             >
-            <img
-              ng-src="{{ user.profileImageSRC }}"
-              alt="{{ user.username }}"
-              class="addUserImage"
-              >
-            <h5>{{ user.username }}</h5>
-          </div>
+            x
+          </a>
         </div>
+      </div>
 
-        <p id="chosenUsers">Chosen Users:</p>
-
-        <hr>
-
-        <div
-          ng-repeat="user in groupsNew.chosenUsers"
-          class="chosenGroupUsers"
+      <div class="space-top text-center">
+        <md-button
+          class="md-raised md-primary md-button md-ink-ripple"
+          ng-disabled="groupsNew.groupsNewForm.$invalid"
           >
-          <div>
-            <img
-              ng-src="{{ user.profileImageSRC }}"
-              alt="{{ user.profileImageSRC }}"
-              class="chosenUsersImage"
-              >
-            <h5>{{ user.username }}</h5>
-            <a
-              href="#"
-              ng-click="groupsNew.removeUser(user)"
-              class="removeUser"
-              >
-              x
-            </a>
-          </div>
-        </div>
+          <i class="material-icons left"></i>Create
+        </md-button>
 
-        <button class="button">Create</button>
-      </form>
-    </div>
-
-  </div>
-</section>
+        <md-button
+          class="md-raised"
+          ng-click="groupsNew.group = {}"
+          >
+          <i class="material-icons left"></i>Clear Form
+        </md-button>
+      </div>
+    </form>
+  </md-card>
+</md-content>

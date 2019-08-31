@@ -1,43 +1,185 @@
-<section class="container">
-  <div class="usersEditPage">
-    <h2>Edit Profile</h2>
-    <div>
-        <form name="usersEdit.usersEditForm" ng-submit="usersEdit.update()">
-          <div>
-            <input type="text" name="username" id="username" ng-model="usersEdit.user.username" placeholder="Username">
-          </div>
+<md-content class="md-padding usersEdit">
+  <md-card>
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">Edit Your Profile</span>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-card-title-text>
+    </md-card-title>
 
-          <div>
-            <input type="text" name="firstname" id="firstname" ng-model="usersEdit.user.firstname" placeholder="Firstname">
-          </div>
 
-          <div>
-            <input type="text" name="surname" id="surname" ng-model="usersEdit.user.surname" placeholder="Surname">
-          </div>
+    <form
+      name="usersEdit.usersEditForm"
+      class="usersEdit.usersEditForm"
+      ng-submit="usersEdit.update()"
+      novalidate
+      >
 
-          <div>
-            <input type="email" name="email" id="email" ng-model="usersEdit.user.email" placeholder="Email">
-          </div>
+      <div>
+        <md-input-container>
+          <label for="username">Username</label>
+          <input
+            id="username"
+            type="text"
+            name="username"
+            ng-model="usersEdit.user.username"
+            ng-required="true"
+            aria-label="Username (required)"
+            >
+        </md-input-container>
 
-          <div>
-            <input type="budget" name="budget" id="budget" ng-model="usersEdit.user.budget" placeholder="Budget">
-          </div>
+        <div
+          class="alert alert-danger"
+          role="alert"
+          ng-messages="usersEdit.usersEditForm.username.$error"
+          ng-show="(usersEdit.usersEditForm.$submitted || usersEdit.usersEditForm.username.$touched) && usersEdit.usersEditForm.username.$invalid"
+          >
+          <div ng-message="required">Please enter your username.</div>
+        </div>
+      </div>
 
-          <div>
-            <input type="password" name="password" id="password" ng-model="usersEdit.user.password" placeholder="New password">
-          </div>
+      <div class="input-field col s6">
+        <md-input-container>
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            ng-model="usersEdit.user.email"
+            ng-required="true"
+            aria-label="Email (required)"
+            >
+        </md-input-container>
 
-          <div>
-            <input type="password" name="passwordConfirmation" id="passwordConfirmation" ng-model="usersEdit.user.passwordConfirmation" placeholder="Confirm new password">
-          </div>
+        <div
+          class="alert alert-danger"
+          role="alert"
+          ng-messages="usersEdit.usersEditForm.email.$error"
+          ng-show="(usersEdit.usersEditForm.$submitted || usersEdit.usersEditForm.email.$touched) && usersEdit.usersEditForm.email.$invalid"
+          >
+          <div ng-message="required">Please enter your email address.</div>
+          <div ng-message="email">Please enter a valid email address.</div>
+        </div>
 
-          <div class="choose button">
-            <label for="base64"></label>Select a profile image
-            <input class="upload" type="file" base64 name="base64" id="base64" ng-model="usersEdit.user.base64">
-          </div>
+        <!-- Error message! -->
+        <!-- <p class="alert alert-danger" ng-show="(usersEdit.user.email.$submitted || usersEdit.user.email.$touched) && usersEdit.user.email.$invalid">Email address not valid</p> -->
+      </div>
 
-          <button class="button">Update</button>
-        </form>
-    </div>
-  </div>
-</section>
+      <div class="input-field col s6">
+        <md-input-container>
+          <label for="budget">Budget</label>
+          <input
+            id="budget"
+            type="budget"
+            name="budget"
+            ng-model="usersEdit.user.budget"
+            ng-required="true"
+            aria-label="Username (required)"
+            >
+        </md-input-container>
+
+        <div
+          class="alert alert-danger"
+          role="alert"
+          ng-messages="usersEdit.usersEditForm.budget.$error"
+          ng-show="(usersEdit.usersEditForm.$submitted || usersEdit.usersEditForm.budget.$touched) && usersEdit.usersEditForm.budget.$invalid"
+          >
+          <div ng-message="required">Please enter your budget.</div>
+        </div>
+      </div>
+
+      <div class="input-field col s6">
+        <md-input-container>
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            ng-model="usersEdit.user.password"
+            ng-minlength="1"
+            ng-required="true"
+            aria-label="Password (required)"
+            >
+        </md-input-container>
+
+        <!-- <p class="alert alert-danger" ng-show="usersEdit.password.$error.minlength || form.password.$invalid">Password must be at least 6 characters</p> -->
+
+        <div
+          class="alert alert-danger"
+          role="alert"
+          ng-messages="usersEdit.usersEditForm.password.$error"
+          ng-show="(usersEdit.usersEditForm.$submitted || usersEdit.usersEditForm.password.$touched) && usersEdit.usersEditForm.password.$invalid"
+          >
+          <div ng-message="required">Please enter your password.</div>
+          <div ng-message="minlength">Password must be at least 1 characters.</div>
+        </div>
+      </div>
+
+      <div class="input-field col s6">
+        <md-input-container>
+          <label for="passwordConfirmation">Password Confirmation</label>
+          <input
+            id="passwordConfirmation"
+            type="password"
+            name="passwordConfirmation"
+            ng-model="usersEdit.user.passwordConfirmation"
+            ng-minlength="1"
+            ng-required="true"
+            compare-to="usersEdit.user.password"
+            aria-label="Password Confirmation (required)"
+            >
+        </md-input-container>
+
+        <!-- <p class="alert alert-danger" ng-show="(usersEdit.password.$submitted || usersEdit.passwordConfirmation.$touched) && (user.password !== user.passwordConfirmation)">Password does not match</p> -->
+
+        <div
+          class="alert alert-danger"
+          role="alert"
+          ng-messages="usersEdit.usersEditForm.passwordConfirmation.$error"
+          ng-show="(usersEdit.usersEditForm.password.$submitted || usersEdit.usersEditForm.passwordConfirmation.$touched) && usersEdit.usersEditForm.passwordConfirmation.$invalid"
+          >
+          <div ng-message="required">Please re-enter your password.</div>
+          <div ng-message="minlength">Password must be at least 1 characters.</div>
+          <div ng-message="compareTo">Your password does not match.</div>
+        </div>
+
+      </div>
+
+      <div class="input-field col s6">
+        <label
+          for="base64"
+          class="md-raised md-accent md-button md-ink-ripple"
+          >
+          Choose Profile Image
+        </label>
+        <input
+          base64
+          type="file"
+          name="base64"
+          id="base64"
+          ng-model="usersEdit.user.base64"
+          placeholder="Profile image link.."
+          style="display:none"
+          >
+      </div>
+
+      <div class="space-top text-center">
+        <md-button
+          class="md-raised md-primary md-button md-ink-ripple"
+          ng-click="usersEdit.update()"
+          ng-disabled="usersEdit.usersEditForm.$invalid"
+          >
+          <i class="material-icons left"></i>Update
+        </md-button>
+
+        <md-button
+          type="button"
+          class="md-raised"
+          ng-click="usersEdit.user = {}"
+          >
+          <i class="material-icons left"></i>Clear Form
+        </md-button>
+      </div>
+    </form>
+  </md-card>
+</md-content>

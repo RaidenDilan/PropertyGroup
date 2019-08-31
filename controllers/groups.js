@@ -50,7 +50,7 @@ function deleteGroup(req, res, next) {
       if(!group) return res.notFound('Group not found');
       return group.remove();
     })
-    .then((user) => res.status(200).json({ message: `${group.groupName} deleted` }))
+    .then((group) => res.status(200).json({ message: `${group.groupName} deleted` }))
     .catch(next);
 }
 
@@ -138,7 +138,7 @@ function addPropertyRoute(req, res, next) {
 
       return group
         .save()
-        .then(() => res.json({ property, message: `Property added` }));
+        .then(() => res.json(property));
     })
     .then(() => res.status(204).end())
     .catch(next);
@@ -151,15 +151,15 @@ function deletePropertyRoute(req, res, next) {
     .then((group) => {
       if(!group) return res.notFound('Group not found');
 
-      const prop = group.properties.find((property) => {
+      const property = group.properties.find((property) => {
         return property.listingId === req.params.listingId;
       });
 
-      prop.remove();
+      property.remove();
 
       return group
-        .save()
-        .then(() => res.json({ pop, message: `Property deleted` }));
+        .save();
+        // .then(() => res.json(property));
     })
     .then(() => res.status(204).end())
     .catch(next);
@@ -185,7 +185,7 @@ function addPropertyNote(req, res, next) {
 
       return group
         .save()
-        .then(() => res.json({ note, message: `Note added` }));
+        .then(() => res.json(note));
     })
     .catch(next);
 }
@@ -207,7 +207,7 @@ function deletePropertyNote(req, res, next) {
 
       return group
         .save()
-        .then(() => res.json({ note, message: `Note deleted` }));
+        .then(() => res.json(note));
     })
     .then(() => res.status(204).end())
     .catch(next);
@@ -233,7 +233,7 @@ function addPropertyImage(req, res, next) {
 
       return group
         .save()
-        .then(() => res.json({ image, message: `Image added` }));
+        .then(() => res.json(image));
     })
     .catch(next);
 }
@@ -256,7 +256,7 @@ function deletePropertyImage(req, res, next) {
         .then(() => {
           return group
             .save()
-            .then(() => res.json({ image, message: `Image deleted` }));
+            .then(() => res.json(image));
         });
     })
     .then(() => res.status(204).end())
@@ -282,7 +282,7 @@ function addPropertyRating(req, res, next) {
 
       return group
         .save()
-        .then(() => res.json({ rating, message: `rating added` }));
+        .then(() => res.json(rating));
     })
     .catch(next);
 }
@@ -303,10 +303,32 @@ function deletePropertyRating(req, res, next) {
 
       return group
         .save()
-        .then(() => res.json({ rating, message: `rating deleted` }));
+        .then(() => res.json(rating));
     })
     .then(() => res.status(204).end())
     .catch(next);
+}
+
+function addPropertyLike(req, res) {
+  Group.findById(req.params.id, (err, group) => {
+    if(group.dislike.indexOf(req.user.id) === -1) {
+      Group.findByIdAndUpdate(req.params.id, { $addToSet: { likes: req.user.id }}, { new: true }, (err, group) => {
+        if (err) return res.status(500).json({ message: 'Something went wrong with upvoting this group '});
+        return res.status(200).json(group);
+      });
+    }
+  });
+}
+
+function deletePropertyLike(req, res) {
+  Group.findById(req.params.id, (err, group) => {
+    if(group.likes.indexOf(req.user.id) === -1) {
+      Group.findByIdAndUpdate(req.params.id, { $addToSet: { dislike: req.user.id }}, { new: true }, (err, group) => {
+        if (err) return res.status(500).json({ message: 'Something went wrong with downvoting this group '});
+        return res.status(200).json(group);
+      });
+    }
+  });
 }
 
 module.exports = {
@@ -324,7 +346,9 @@ module.exports = {
   addImage: addPropertyImage,
   deleteImage: deletePropertyImage,
   addRating: addPropertyRating,
-  deleteRating: deletePropertyRating
+  deleteRating: deletePropertyRating,
+  addLike: addPropertyLike,
+  deleteLike: deletePropertyLike
 };
 
 // console.log('req.user --------->>>', req.user);

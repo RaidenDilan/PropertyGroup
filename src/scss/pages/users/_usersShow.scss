@@ -1,0 +1,33 @@
+.usersShow {
+  width: 100%;
+  height: calc(100vh - 50px);
+  min-width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+  md-card {
+    width: 50%;
+
+    img {
+      width: 25%;
+      margin: 1rem auto;
+      border-radius: 20px;
+      border: 2px solid #FFFFFF;
+    }
+
+    md-card-content {
+      padding: 30px;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+
+      div {
+        margin: 0 auto;
+      }
+    }
+  }
+}

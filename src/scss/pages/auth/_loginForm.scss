@@ -1,0 +1,33 @@
+.loginForm {
+  width: 100%;
+  height: calc(100vh - 50px);
+  min-width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+  md-card {
+    width: 50%;
+    padding: 2.5rem;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    md-card-title {
+      padding: 0;
+    }
+
+    form {
+      width: 100%;
+      margin: 0 auto;
+
+      button {
+        width: 100%;
+        margin: 0;
+      }
+    }
+  }
+}

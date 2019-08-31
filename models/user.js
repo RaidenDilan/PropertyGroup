@@ -6,8 +6,6 @@ const s3        = require('../lib/s3');
 const userSchema = new mongoose.Schema({
   username: { type: String, unique: true, trim: true, required: true },
   email: { type: String, unique: true, trim: true, required: true },
-  firstname: { type: String, required: true },
-  surname: { type: String, required: true },
   budget: { type: Number , required: true },
   password: { type: String, required: true },
   profileImage: { type: String, required: true },
@@ -35,12 +33,12 @@ userSchema
 
 userSchema.pre('save', function checkPreviousProfileImage(next) {
   if(this.isModified('profileImage') && this._profileImage) return s3.deleteObject({ Key: this._profileImage }, next);
-  return next();
+  next();
 });
 
 userSchema.pre('remove', function deleteImage(next) {
   if(this.profileImage) return s3.deleteObject({ Key: this.profileImage}, next);
-  return next();
+  next();
 });
 
 userSchema
@@ -52,7 +50,7 @@ userSchema
 userSchema.pre('validate', function checkPassword(next) {
   if(!this.password && !this.githubId) this.invalidate('password', 'required');
   if(this.isModified('password') && this._passwordConfirmation !== this.password)this.invalidate('passwordConfirmation', 'does not match');
-  return next();
+  next();
 });
 
 // userSchema
@@ -79,7 +77,7 @@ userSchema.pre('validate', function checkPassword(next) {
 
 userSchema.pre('save', function hashPassword(next) {
   if(this.isModified('password')) this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(11));
-  return next();
+  next();
 });
 
 userSchema.methods.validatePassword = function validatePassword(password) {

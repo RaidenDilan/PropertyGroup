@@ -37,6 +37,27 @@
       </ul>
     </div>
 
+    <div layout="row">
+        <div class="md-panel-content">
+
+          <!-- <md-button class="md-primary md-raised dialog-open-button"
+          ng-click="groupsPropsShow.like(like._id, $event)">
+          Upvote<i class="fa fa-arrow-up" aria-hidden="true"></i>
+          (<span class="likes">{{ like.likes.length }}</span>)
+          </md-button>
+        <md-button class="md-primary md-raised menu-open-button"
+        ng-click="groupsPropsShow.dislike(like._id, $event)">
+        Downvote
+        <i class="fa fa-arrow-down" aria-hidden="true"></i>
+        (<span class="likes">{{ like.dislikes.length }}</span>)
+      </md-button> -->
+
+        <button class="btn btn-primary" ng-click="groupsPropsShow.like(like._id)">Like<i class="fa fa-arrow-up" aria-hidden="true"></i>({{ like.likes.length }})</button>
+        <button class="btn btn-primary" ng-click="groupsPropsShow.dislike(dislikes._id)">Dislike<i class="fa fa-arrow-down" aria-hidden="true"></i>({{ like.dislikes.length }})</button>
+
+    </div>
+  </div>
+
     <div class="ratingList">
       <h3>Ratings</h3>
       <div ng-repeat="rating in groupsPropsShow.prop.rating track by $index" class="col-sm-4 col-md-4 col-lg-4">
@@ -60,7 +81,7 @@
         <h3>Images</h3>
         <div class ="row">
           <div ng-repeat="image in groupsPropsShow.prop.images track by $index" class="col-sm-4 col-md-4 col-lg-4">
-            <img ng-click="groupsPropsShow.openModal(image)" ng-src="{{ image.imageSRC }}" class="userimages img-fluid img-thumbnail">
+            <img ng-click="groupsPropsShow.showUserImage(image)" ng-src="{{ image.imageSRC }}" class="userimages img-fluid img-thumbnail">
             <button ng-click="groupsPropsShow.deleteImage(image)" class="deleteimage">Delete</button>
           </div>
         </div>

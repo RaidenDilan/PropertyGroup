@@ -1,0 +1,31 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #000000;
+  text-decoration: none;
+
+  &:active {
+    text-decoration: none;
+  }
+}
+
+body {
+  font: 78%/130% arial, helvetica, sans-serif;
+}
+
+// h1 {
+//   font-weight: 600;
+//   font-family: $heading-font;
+// }
+//
+// h2,h3,h4,h5,h6 {
+//   font-weight: 100;
+// }
+//
+// html, body {
+//   font-size: 14px;
+// }

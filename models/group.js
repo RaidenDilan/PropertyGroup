@@ -23,7 +23,9 @@ const propertySchema = new mongoose.Schema({
   listingId: { type: String },
   images: [ userImageSchema ],
   notes: [ userNoteSchema ],
-  rating: [ userRatingSchema ]
+  rating: [ userRatingSchema ],
+  like: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
+  dislike: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
   // createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' }
 });
 
@@ -35,6 +37,10 @@ const groupSchema = new mongoose.Schema({
 }, {
   usePushEach : true
 });
+
+// propertySchema.pre('save', function(next) {
+//   return this.model('Company').findByIdAndUpdate(this.company, { $push: { ideas: this._id }}, next);
+// });
 
 groupSchema
   .virtual('users', {

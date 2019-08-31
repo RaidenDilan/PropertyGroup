@@ -1,83 +1,30 @@
+@import 'mixins';
+
 @import 'reset';
-@import 'devices';
+@import 'material';
+
 @import 'variables';
+@import 'structure';
+@import 'typography';
 @import 'extends';
-@import 'keyframes';
-@import 'navbar';
-@import 'section';
+@import 'buttons';
 @import 'forms';
-@import 'loginForm';
-@import 'registerForm';
-@import 'usersShow';
-@import 'usersEdit';
-@import 'groupsNew';
-@import 'groupsHome';
-@import 'groupsShow';
-@import 'groupsEdit';
-@import 'propsIndex';
-@import 'propsShow';
-@import 'footer';
-// @import 'groupsIndex';
-// @import 'groupsEdit';
+@import 'animations';
+@import 'devices';
 
-* {
-  box-sizing: border-box;
-}
+@import 'modules/footer';
+@import 'modules/navbar';
 
-a {
-  color: black;
-  text-decoration: none;
-  &:active {
-    text-decoration: none;
-  }
-}
+@import 'pages/auth/loginForm';
+@import 'pages/auth/registerForm';
 
-h1 {
-  @extend .heading-styles;
-}
+@import 'pages/users/usersShow';
+@import 'pages/users/usersEdit';
 
-body {
-  font-family: 'Raleway', sans-serif;
-}
+@import 'pages/groups/groupsNew';
+@import 'pages/groups/groupsHome';
+@import 'pages/groups/groupsShow';
+@import 'pages/groups/groupsEdit';
 
-.groupusersimages {
-  text-align: center;
-  float: center;
-}
-
-.container1 {
-  padding-right: 200px;
-  padding-left: 200px;
-  margin-right: auto;
-  margin-left: auto;
-}
-
-.propTile {
-  text-align: center;
-  margin-top: 10px;
-}
-
-.middle {
-  text-align: center;
-}
-
-.inline {
-  display: inline-block;
-}
-
-.bigger {
-  font-size: 35px;
-  opacity: 1;
-  color: black;
-
-}
-
-.margin-bottom {
-  margin-bottom: 25px;
-}
-
-.userimages {
-  width: 200px;
-  padding: 0;
-  height: 150px;
-}
+@import 'pages/props/propsIndex';
+@import 'pages/props/propsShow';

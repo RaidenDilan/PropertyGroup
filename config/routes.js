@@ -78,6 +78,12 @@ router.route('/groups/:id/properties/:listingId/ratings')
 router.route('/groups/:id/properties/:listingId/ratings/:ratingId')
   .delete(secureRoute, groups.deleteRating);
 
+router.route('/groups/:id/properties/:listingId/like')
+  .put(secureRoute, groups.addLike);
+
+router.route('/groups/:id/properties/:listingId/dislike')
+  .put(secureRoute, groups.deleteLike);
+
 // AUTH
 router.route('/login')
   .post(auth.login);

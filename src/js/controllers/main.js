@@ -2,15 +2,34 @@ angular
   .module('pncApp')
   .controller('MainCtrl', MainCtrl);
 
-MainCtrl.$inject = ['$rootScope', '$state', '$auth', 'User'];
-function MainCtrl($rootScope, $state, $auth, User){
+MainCtrl.$inject = ['$rootScope', '$timeout', '$state', '$auth', 'User', '$window', '$mdSidenav', '$log'];
+function MainCtrl($rootScope, $timeout, $state, $auth, User, $window, $mdSidenav, $log) {
   const vm = this;
+  const protectedStates = [
+    'groupsIndex',
+    'groupsNew',
+    'groupsHome',
+    'groupsEdit',
+    'groupsEdit',
+    'groupsPropsShow',
+    'usersShow',
+    'usersEdit',
+    'propsIndex'
+  ];
+
   vm.isAuthenticated = $auth.isAuthenticated;
 
-  $rootScope.$on('error', (e, err) => {
-    vm.message = err.data.message;
-    if(err.status === 401) $state.go('login');
-  });
+  vm.toggleLeft = buildToggler('left');
+
+  vm.menu = [
+    { 'name': 'Search Properties', 'icon': 'search' },
+    { 'name': 'My Group', 'icon': 'group_work' },
+    { 'name': 'New Group', 'icon': 'add' },
+    { 'name': 'Profile', 'icon': 'account_circle' },
+    { 'name': 'Login', 'icon': 'transit_enterexit' },
+    { 'name': 'Register', 'icon': 'enter_to_app' },
+    { 'name': 'Logout', 'icon': 'exit_to_app' },
+  ];
 
   // $rootScope.$on('userAddedToGroup', () => {
   //   vm.message = 'User added to group';
@@ -33,67 +52,80 @@ function MainCtrl($rootScope, $state, $auth, User){
   //   $state.go('login');
   // });
 
-  $rootScope.$on('$stateChangeSuccess', (event, toState, fromState) => {
-    // console.log('event --->', event);
-    // console.log('toState --->', toState);
-    // console.log('fromState --->', fromState);
+  function stateErrors(event, err) {
+    vm.stateHasChanged = false;
+    vm.message         = err.data.message;
 
-    vm.currentUserGroupId = null;
+    if(err.status === 401) $state.go('login');
+  }
 
+  function secureState(event, toState) {
+    vm.message = null;
+
+    if(!$auth.isAuthenticated() && protectedStates.includes(toState.name)) {
+      event.preventDefault();
+      $state.go('login');
+      vm.message = 'You must be logged in to go there!';
+    }
+  }
+
+  function authenticateState(event, toState) {
+    // vm.currentUserGroupId = null;
     if(vm.stateHasChanged) vm.message = null;
     if(!vm.stateHasChanged) vm.stateHasChanged = true;
-    if (vm.stateHasChanged) document.body.scrollTop = document.documentElement.scrollTop = 0;
+    if(vm.stateHasChanged) document.body.scrollTop = document.documentElement.scrollTop = 0;
 
     if($auth.getPayload()) {
-      vm.currentUserId = $auth.getPayload().userId;
+    vm.currentUserId = $auth.getPayload().userId;
 
-      return User
-        .query()
-        .$promise
-        .then((response) => {
-          vm.user = response.find(obj => obj.id === vm.currentUserId);
-          return (!vm.user.group) ? vm.currentUserGroupId = null : vm.currentUserGroupId = vm.user.group.id;
-          // if (vm.user.group === null || undefined) return null;
-          // if (!vm.user.group) vm.currentUserGroupId = null;
-          // if (vm.user.group) vm.currentUserGroupId = vm.user.group.id;
-        });
+    return User
+      .get({ id: vm.currentUserId }) // OR ===> .query()
+      .$promise
+      .then((user) => {
+        vm.user = user; // OR with query() ===> // vm.user = users.find(obj => obj.id === vm.currentUserId);
+
+        if((toState.name === 'propsIndex' && vm.user.group === null || undefined) && protectedStates.includes(toState.name)) {
+          event.preventDefault();
+          $state.go('groupsNew');
+          vm.message = 'You must create a group before searching for properties';
+        }
+
+        return !vm.user.group ? vm.currentUserGroupId = null : vm.currentUserGroupId = vm.user.group.id;
+      });
     }
-
-    // if($auth.getPayload()) {
-    //   vm.currentUserId = $auth.getPayload().userId;
-    //
-    //   User
-    //     .get({ id: vm.currentUserId })
-    //     .$promise
-    //     .then((user) => {
-    //       vm.currentUser = user;
-    //
-    //       if(toState.name === 'message' && vm.currentUser.locked === true) {
-    //         e.preventDefault();
-    //         $state.go('usersIndex');
-    //         vm.message = 'Complete your profile in order to message other users';
-    //       }
-    //     });
-    // }
-    //
-    // const protectedStates = ['usersProfile', 'usersEdit', 'message'];
-    //
-    // function secureState(e, toState) {
-    //   // console.log('Changing states');
-    //   vm.message = null;
-    //   if(!$auth.isAuthenticated() && protectedStates.includes(toState.name)) {
-    //     e.preventDefault();
-    //     $state.go('login');
-    //     vm.message = 'You must be logged in to go there!';
-    //   }
-    // }
-    // $rootScope.$on('$stateChangeStart', secureState);
-  });
-
-  function logout() {
-    $auth.logout();
-    // vm.user = null;
-    $state.go('login');
   }
-  vm.logout = logout;
+
+  $rootScope.$on('error', stateErrors);
+  $rootScope.$on('$stateChangeStart', secureState);
+  $rootScope.$on('$stateChangeSuccess', authenticateState);
+
+  vm.logout = () => {
+    $auth
+      .logout()
+      // .removeToken()
+      .then(() => {
+        // $window.localStorage.clear();
+        $state.go('login');
+      });
+      // remove user from local storage and clear http auth header
+      // delete $localStorage.currentUser;
+      // $http.defaults.headers.common.Authorization = '';
+  };
+  // vm.message = 'Sorry to see you leaving and we hope to see you again soon.😃';
+
+  vm.close = () => {
+    // Component lookup should always be available since we are not using `ng-if`
+    $mdSidenav('left')
+      .close()
+      .then(() => $log.debug('close LEFT is done'));
+  };
+
+  function buildToggler(navID) {
+    return () => {
+      // Component lookup should always be available since we are not using `ng-if`
+      $mdSidenav(navID)
+        .toggle()
+        .then(() => $log.debug('toggle ' + navID + ' is done'));
+    };
+  }
 }

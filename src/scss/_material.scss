@@ -1,0 +1,30 @@
+// md-dialog .md-actions, md-dialog md-dialog-actions {
+//   padding: 0;
+// }
+
+md-content {
+  overflow: unset;
+
+  .ext-content {
+    // padding: 50px;
+    // margin: 20px;
+    // background-color: #FFF2E0;
+  }
+}
+
+md-button {
+  margin: 0 4px;
+}
+
+md-card .md-actions:not(.layout-column) .md-button:not(.md-icon-button):first-of-type,
+md-card md-card-actions:not(.layout-column) .md-button:not(.md-icon-button):first-of-type {
+  margin: 0 4px;
+}
+
+strong {
+  font-weight: 900;
+}
+
+md-card md-card-header md-card-header-text {
+  flex: none;
+}

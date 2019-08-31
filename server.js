@@ -30,7 +30,8 @@ mongoose.connection.once('open', () => {
   mongoose.connection
     // .on('connected', () => console.log('Mongoose default connection is open to [%s]', dbURI))
     .on('error', (err) => console.log(error('Mongoose default connection has occured ' + err + ' error')))
-    .on('reconnected', () => console.info('MongoDB event reconnected'))
+    .on('reconnected', () => console.log('MongoDB event reconnected'))
+    // .on('reconnected', () => console.info('MongoDB event reconnected'))
     .on('disconnected', () => console.log('Mongoose default connection is disconnected '));
 
   process.on('SIGINT', () => mongoose.connection.close(() => {

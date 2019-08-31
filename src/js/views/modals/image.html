@@ -1,0 +1,17 @@
+<md-dialog aria-label="Image modal">
+  <md-toolbar>
+    <div class="md-toolbar-tools" layout="row" layout-align="center center">
+      <h2>Uploaded by: {{ userImageModal.selected.createdBy.username }}</h2>
+    </div>
+  </md-toolbar>
+
+  <md-dialog-content>
+    <div class="md-dialog-content" layout="column" layout-align="center center">
+      <img style="margin: auto; max-width: 250px;" alt="{{ userImageModal.selected.imageSRC }}" ng-src="{{ userImageModal.selected.imageSRC }}">
+    </div>
+  </md-dialog-content>
+
+  <md-dialog-actions layout-align="center center">
+    <md-button ng-click="userImageModal.hide()" aria-label="Close" class="md-primary md-raised">Close</md-button>
+  </md-dialog-actions>
+</md-dialog>

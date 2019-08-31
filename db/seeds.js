@@ -13,7 +13,6 @@ User.collection.drop();
 User
   .create([{
     firstname: 'Raiden',
-    surname: 'Dilan',
     username: 'raidendilan',
     email: 'raiden18@me.com',
     budget: 1000,
@@ -23,7 +22,6 @@ User
     profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png'
   },{
     firstname: 'Luca',
-    surname: 'Ancelotti',
     username: 'lucaancelotti',
     email: 'luca@me.com',
     budget: 1500,
@@ -33,7 +31,6 @@ User
     profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png'
   },{
     firstname: 'Rawand',
-    surname: 'Dilan',
     username: 'rawanddilan',
     email: 'rawand@me.com',
     budget: 2000,
@@ -43,7 +40,6 @@ User
     profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png'
   },{
     firstname: 'Omario',
-    surname: 'Jones',
     username: 'omariojones',
     email: 'omario@me.com',
     budget: 2000,
@@ -53,7 +49,6 @@ User
     profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png'
   },{
     firstname: 'Frederick',
-    surname: 'Roshandel',
     username: 'frederickroshandel',
     email: 'frederick@me.com',
     budget: 3000,
@@ -69,19 +64,19 @@ User
       .create([{
         groupName: 'Group One',
         owner: users[0],
-        // properties: [{
-  			// 	listingId: '50639974',
-  			// 	rating: [{
-        //     opinion: 5,
-        //     createdBy: users[0]
-        //   }],
-  			// 	notes: [{
-        //     text: 'MEOW!',
-        //     createdBy: users[0]
-        //   }],
-  			// 	images: [],
-        //   createdBy: users[0]
-			  // }],
+        properties: [{
+  				listingId: '50639974',
+  				rating: [{
+            opinion: 5,
+            createdBy: users[0]
+          }],
+  				notes: [{
+            text: 'MEOW!',
+            createdBy: users[0]
+          }],
+  				images: [],
+          createdBy: users[0]
+			  }],
         users: [
           users[0],
           users[1],
@@ -144,7 +139,6 @@ User
 //   const users = [
 //     {
 //       firstname: 'Raiden',
-//       surname: 'Dilan',
 //       username: 'raidendilan',
 //       email: 'raiden18@me.com',
 //       budget: 1000,
@@ -154,7 +148,6 @@ User
 //     },
 //     {
 //       firstname: 'Luca',
-//       surname: 'Ancelotti',
 //       username: 'lucaancelotti',
 //       email: 'luca@me.com',
 //       budget: 1500,
@@ -164,7 +157,6 @@ User
 //     },
 //     {
 //       firstname: 'Rawand',
-//       surname: 'Dilan',
 //       username: 'rawanddilan',
 //       email: 'rawand@me.com',
 //       budget: 2000,
@@ -174,7 +166,6 @@ User
 //     },
 //     {
 //       firstname: 'Omario',
-//       surname: 'Jones',
 //       username: 'omariojones',
 //       email: 'omario@me.com',
 //       budget: 2000,

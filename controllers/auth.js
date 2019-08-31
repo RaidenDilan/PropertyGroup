@@ -27,7 +27,7 @@ function login(req, res, next) {
     .then((user) => {
       if(!user || !user.validatePassword(req.body.password)) return res.status(401).json({ message: `Incorrect username or password` }); // return res.unauthorized();
 
-      const token = jwt.sign({ userId: user.id }, secret, { expiresIn: '1hr' });
+      const token = jwt.sign({ userId: user.id }, secret, { expiresIn: '24hr' }); // TURN BACK INTO 1HR
       return res.status(200).json({ token, message: `Welcome back ${user.username}` });
     })
     .catch((err, next) => {

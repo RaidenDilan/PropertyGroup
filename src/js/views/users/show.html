@@ -1,13 +1,34 @@
-<section class="container">
-  <div class="usersShowPage">
-    <img ng-src="{{ usersShow.user.profileImageSRC }}" class="profileImage">
-    <hr>
-    <h3><strong>Username:</strong> {{ usersShow.user.username }}</h3>
-    <h3><strong>Fullname:</strong> {{ usersShow.user.firstname }} {{ usersShow.user.surname }}</h3>
-    <h3><strong>Email:</strong> {{ usersShow.user.email }}</h3>
-    <h3><strong>Budget:</strong> £{{ usersShow.user.budget }}</h3>
-    <hr>
-    <button ng-if="main.currentUserId === usersShow.user.id" ui-sref="usersEdit({ id: usersShow.user.id })" class="edit">Edit Profile</button>
-    <button ng-if="main.currentUserId === usersShow.user.id" ng-click="usersShow.delete()">Delete Profile</button>
-  </div>
-</section>
+<md-content class="md-padding usersShow">
+  <md-card>
+    <img ng-src="{{ usersShow.user.profileImageSRC }}" class="md-card-image profileImageSRC" alt="User Avatar">
+
+    <md-card-title layout="column" layout-padding layout-align="center center" class="card-content">
+      <md-card-title-text>
+        <span class="md-headline">{{ usersShow.user.username }}</span>
+      </md-card-title-text>
+    </md-card-title>
+
+    <md-divider ng-if="!$last"></md-divider>
+
+    <md-card-content class="usersShowContent" layout="column" layout-align="center start">
+      <div>
+        <h3><strong>Username: </strong>{{ usersShow.user.username }}</h3>
+        <br>
+        <h3><strong>Email: </strong>{{ usersShow.user.email }}</h3>
+        <br>
+        <h3><strong>Budget: </strong>£{{ usersShow.user.budget }}</h3>
+      </div>
+    </md-card-content>
+
+    <md-divider ng-if="!$last"></md-divider>
+
+    <!-- <div class="md-padding"> -->
+      <md-card-actions layout="row" layout-align="center center">
+        <md-button ng-if="main.currentUserId === usersShow.user.id" ui-sref="usersEdit({ id: usersShow.user.id })" class="md-button md-raised">Edit</md-button>
+        <md-button ng-if="main.currentUserId === usersShow.user.id" ng-click="usersShow.delete()" class="md-warn md-raised">Delete</md-button>
+      </md-card-actions>
+    <!-- </div> -->
+
+    <!-- <br> -->
+  </md-card>
+</md-content>

@@ -8,7 +8,7 @@ function UsersShowCtrl(User, $stateParams, $state, $auth) {
   const vm = this;
   vm.user = User.get($stateParams);
 
-  function usersDelete() {
+  vm.delete = () => {
     // $auth.logout(); // USER DELETE - Doesn't work here
     vm.user
       .$remove()
@@ -16,8 +16,7 @@ function UsersShowCtrl(User, $stateParams, $state, $auth) {
         $auth.logout();  // USER DELETE - Works here
         $state.go('login');
       });
-  }
-  vm.delete = usersDelete;
+  };
 }
 
 UsersEditCtrl.$inject = ['User', '$stateParams', '$state'];
@@ -25,10 +24,17 @@ function UsersEditCtrl(User, $stateParams, $state) {
   const vm = this;
   vm.user = User.get($stateParams);
 
-  function usersUpdate() {
-    vm.user
-      .$update()
-      .then((user) => $state.go('usersShow', $stateParams));
-  }
-  vm.update = usersUpdate;
+  vm.update = () => {
+    if(vm.usersEditForm.$valid) {
+      vm.user
+        .$update()
+        .then((user) => {
+          $state.go('usersShow', $stateParams);
+          console.log('user', user);
+        });
+
+      vm.usersEditForm.$setUntouched();
+      vm.usersEditForm.$setPristine();
+    }
+  };
 }
