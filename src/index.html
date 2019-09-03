@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPqioi-i1ju-WmQSHxeRsy0ippwMshxu4"></script> -->
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCx_35Epv3rapWbxBZHsqjPWhzGV8qHTYQ"></script> -->
   <!-- <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -37,8 +38,17 @@
         <h2><span>PNC</span></h2>
         <span flex></span>
 
-        <md-button class="md-icon-button" aria-label="Favorite">
-          <md-icon md-font-set="material-icons">more_vert</md-icon>
+        <md-button
+          class="md-icon-button"
+          name="usersShow"
+          ng-if="main.isAuthenticated()"
+          md-nav-sref="usersShow({ id: main.currentUserId })"
+          ui-sref="usersShow({ id: main.currentUserId })"
+          aria-label="Favorite"
+          >
+          <!-- <md-icon md-font-set="material-icons">account_circle</md-icon> -->
+          <img ng-show="main.user" src="{{ main.user.profileImageSRC }}" width="30" height="30" style="border-radius:50px;margin-right:10px" />
+          <!-- <md-icon md-font-set="material-icons">more_vert</md-icon> -->
         </md-button>
       </div>
     </md-toolbar>
@@ -52,9 +62,9 @@
             <div layout="column"><span class="md-body-2">{{ main.user.username }}</span></div>
             <span flex></span>
 
-            <md-button class="md-icon-button" aria-label="More">
+            <!-- <md-button class="md-icon-button" aria-label="More">
               <md-icon>more_vert</md-icon>
-            </md-button>
+            </md-button> -->
           </div>
         </md-toolbar>
 
@@ -69,7 +79,7 @@
               ng-click="main.close()"
               >
               <md-icon md-font-set="material-icons" aria-label="Search Properties">search</md-icon>
-              <p class="md-body-2">Find Properties</p>
+              <p class="md-body-2">Search Properties</p>
               <span flex></span>
               <md-icon>chevron_right</md-icon>
             </md-list-item>
@@ -108,7 +118,7 @@
               ng-click="main.close()"
               >
               <md-icon md-font-set="material-icons" aria-label="Account">account_circle</md-icon>
-              <p class="md-body-2">Profile</p>
+              <p class="md-body-2">Account</p>
               <span flex></span>
               <md-icon>chevron_right</md-icon>
             </md-list-item>
@@ -131,7 +141,7 @@
               name="login"
               ng-click="main.close()"
               >
-              <md-icon md-font-set="material-icons" aria-label="Login">transit_enterexit</md-icon>
+              <md-icon md-font-set="material-icons" aria-label="Login">exit_to_app</md-icon>
               <p class="md-body-2">Login</p>
               <span flex></span>
               <md-icon>chevron_right</md-icon>

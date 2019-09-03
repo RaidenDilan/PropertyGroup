@@ -20,14 +20,35 @@
       padding: 0;
     }
 
+    .registerLink {
+      padding: 1rem 0;
+
+      span {
+        font-size: 15px;
+        // display: flex;
+        // flex-flow: row nowrap;
+        // justify-content: center;
+
+        a {
+          // padding: 0 0 0 0.5rem;
+          color: #337ab7;
+          text-decoration: underline;
+        }
+      }
+    }
     form {
       width: 100%;
       margin: 0 auto;
+
+      md-icon {
+        // margin: 0 10px;
+      }
 
       button {
         width: 100%;
         margin: 0;
       }
+
     }
   }
 }

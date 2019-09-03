@@ -7,8 +7,13 @@ const groups      = require('../controllers/groups');
 const crimes      = require('../lib/crimes');
 const secureRoute = require('../lib/secureRoute');
 const zooplas     = require('../lib/zooplas');
+const geoCoder    = require('../lib/geoCoder');
 
 // API
+router.route('/location')
+  .all(secureRoute)
+  .get(geoCoder.getLocation);
+
 router.route('/properties')
   .all(secureRoute)
   .get(zooplas.properties);

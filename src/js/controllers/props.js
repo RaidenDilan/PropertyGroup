@@ -16,11 +16,18 @@ function PropsIndexCtrl($http, $uibModal, $mdDialog) {
   vm.getProps = () => {
     $http
       .get('/api/properties', { params: { area: vm.area, minimum_beds: vm.beds, maximum_beds: vm.beds }})
-      .then((response) => vm.results = response.data);
+      .then((response) => {
+        vm.results = response.data;
+        console.log('vm.results', vm.results);
+      });
   };
 
   vm.loadMore = () => {
     return vm.limit +=12;
+  };
+
+  vm.showResults = () => {
+    return vm.results.length !== 0;
   };
 
   vm.showProperty = (thisProperty) => {

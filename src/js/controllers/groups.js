@@ -27,6 +27,7 @@ function GroupsNewCtrl(Group, User, filterFilter, $state, $auth, $scope) {
   vm.group.users = [];
   vm.chosenUsers = [];
   vm.allUsers    = User.query();
+  vm.search      = null;
 
   const authUserId = $auth.getPayload().userId;
 
@@ -67,6 +68,38 @@ function GroupsNewCtrl(Group, User, filterFilter, $state, $auth, $scope) {
         });
     }
   };
+
+  // vm.delete = function(user) {
+	// 	vm.chosenUsers.splice(vm.chosenUsers.indexOf(user), 1);
+	// };
+
+  vm.showPreSearchBar = () => {
+    return vm.search === null;
+  };
+
+  vm.initiateSearch = () => {
+    vm.search = '';
+  };
+
+  vm.showSearchBar = () => {
+    return vm.search !== null;
+  };
+
+  vm.endSearch = () => {
+    // return vm.search == null;
+    vm.search = null;
+  };
+
+  vm.submit = () => {
+    console.error('Search function not yet implemented');
+  };
+
+  // to focus on input element after it appears
+  $scope.$watch(() => {
+    return document.querySelector('#search-bar:not(.ng-hide)');
+  }, function() {
+    document.getElementById('search-input').focus();
+  });
 }
 
 GroupsHomeCtrl.$inject = ['Group', 'GroupUser', 'GroupProperty', '$stateParams', '$scope', '$state', '$http', '$auth', '$mdDialog'];
@@ -80,7 +113,8 @@ function GroupsHomeCtrl(Group, GroupUser, GroupProperty, $stateParams, $scope, $
 
   const authUserId = $auth.getPayload().userId;
 
-  Group.get($stateParams)
+  Group
+    .get($stateParams)
     .$promise
     .then((data) => {
       vm.group = data;
@@ -154,8 +188,8 @@ function GroupsHomeUser($scope, $mdDialog, selectedUser) {
   vm.showUserId = (userId) => $mdDialog.hide(userId);
 }
 
-GroupsPropsShowCtrl.$inject = ['Group', 'GroupProperty','GroupPropertyNote', 'GroupPropertyImage', 'Crimes',  'GroupPropertyRating', '$stateParams', '$state', '$http', '$uibModal', '$scope', '$mdDialog'];
-function GroupsPropsShowCtrl(Group, GroupProperty, GroupPropertyNote, GroupPropertyImage, Crimes, GroupPropertyRating, $stateParams, $state, $http, $uibModal, $scope, $mdDialog) {
+GroupsPropsShowCtrl.$inject = ['Group', 'GroupProperty','GroupPropertyNote', 'GroupPropertyImage', 'Crimes',  'GroupPropertyRating', '$stateParams', '$state', '$http', '$uibModal', '$scope', '$mdDialog', '$filter', 'GeoCoder'];
+function GroupsPropsShowCtrl(Group, GroupProperty, GroupPropertyNote, GroupPropertyImage, Crimes, GroupPropertyRating, $stateParams, $state, $http, $uibModal, $scope, $mdDialog, $filter, GeoCoder) {
   const vm = this;
 
   vm.max                 = 5;
@@ -174,17 +208,21 @@ function GroupsPropsShowCtrl(Group, GroupProperty, GroupPropertyNote, GroupPrope
     .$promise
     .then((data) => {
       vm.group = data;
-      groupsShowProp();
+      fetchGroupProperty();
       vm.prop = vm.group.properties.find(obj => obj.listingId === vm.listingId);
     });
 
-  function groupsShowProp() {
+  function fetchGroupProperty() {
     $http
       .get('/api/groups/:id/properties/:listingId', { params: { id: vm.group.id, listingId: vm.listingId} })
       .then((response) => {
         vm.gps        = response.data;
         vm.listingLat = vm.gps.listing[0].latitude;
         vm.listingLon = vm.gps.listing[0].longitude;
+
+        // const location = 'United Kingdom';
+
+        // getLocationOfProperty(location);
       });
   }
 
@@ -200,6 +238,71 @@ function GroupsPropsShowCtrl(Group, GroupProperty, GroupPropertyNote, GroupPrope
   }
 
   $scope.$watch(() => vm.listingLat, fetchCrimes);
+
+  // $scope.$watch(() => vm.prop, getLocation);
+  //
+  // function getLocation() {
+  //   if(!vm.prop) return false;
+  //
+  //   GeoCoder
+  //     .getLocation(vm.listingLat, vm.listingLon)
+  //     .then((data) => {
+  //       console.log('mapppppppppp', data);
+  //       vm.all = data;
+  //     });
+  // }
+
+  // function getLocationOfProperty(location) {
+  //   GeoCoder
+  //     .getLocation(location)
+  //     .then((data) => {
+  //       const latlng = data;
+  //
+  //       console.log('getLocationOfProperty', data);
+  //
+  //       initMap(latlng);
+  //     });
+  // }
+  //
+  // const latLng = { lat: vm.listingLat, lng: vm.listingLon };
+  //
+  // function initMap(latlng) {
+  //   // Creates The actual Map
+  //   const map = new google.maps.Map(document.getElementById('maps'), {
+  //     center: latlng,
+  //     zoom: 10,
+  //     scrollwheel: false,
+  //     styles: mapStyles.styles
+  //   });
+  //   //marker puts marker on the screen with a animation
+  //
+  //   const marker = new google.maps.Marker({
+  //     animation: google.maps.Animation.BOUNCE,
+  //     position: latlng,
+  //     draggable: true,
+  //     map: map
+  //   });
+  //
+  //   const cityCircle = new google.maps.Circle({
+  //     strokeColor: '#FF0000',
+  //     strokeOpacity: 0.8,
+  //     strokeWeight: 2,
+  //     fillColor: '#AA0000',
+  //     fillOpacity: 0.35,
+  //     map: map,
+  //     center: latlng,
+  //     radius: 5000
+  //   });
+  //
+  //   function editRadius(radius) {
+  //     cityCircle.setRadius(radius * 1000);
+  //   }
+  //
+  //   $scope.$watch(() => vm.range.radius, () => {
+  //     const radius = vm.range.radius;
+  //     editRadius(radius);
+  //   });
+  // }
 
   vm.addNote = () => {
     GroupPropertyNote
@@ -285,23 +388,23 @@ function GroupsPropsShowCtrl(Group, GroupProperty, GroupPropertyNote, GroupPrope
     });
   };
 
-  function upVote(ideaId, $event) {
-    $http
-      .put(`${API}/groups/${$stateParams.id}/properties/${listingId}/like`)
-      .then(() => {
-        vm.group = Group.get($stateParams);
-        // console.log(angular.element($event.target).children('.upvotes'));
-      });
-  }
-
-  function downVote(ideaId, $event) {
-    $http
-      .put(`${API}/groups/${$stateParams.id}/properties/${listingId}/dislike`)
-      .then(() => {
-        vm.group = Group.get($stateParams);
-        // console.log($event.target);
-      });
-  }
+  // function upVote(ideaId, $event) {
+  //   $http
+  //     .put(`${API}/groups/${$stateParams.id}/properties/${listingId}/like`)
+  //     .then(() => {
+  //       vm.group = Group.get($stateParams);
+  //       // console.log(angular.element($event.target).children('.upvotes'));
+  //     });
+  // }
+  //
+  // function downVote(ideaId, $event) {
+  //   $http
+  //     .put(`${API}/groups/${$stateParams.id}/properties/${listingId}/dislike`)
+  //     .then(() => {
+  //       vm.group = Group.get($stateParams);
+  //       // console.log($event.target);
+  //     });
+  // }
 }
 
 UserImageModalCtrl.$inject = ['selectedImage', '$mdDialog'];
@@ -323,6 +426,7 @@ function GroupsEditCtrl(Group, GroupUser, User, $stateParams, $auth, $state, $sc
   vm.allUsers    = User.query();
   vm.groupUsers  = [];
   vm.chosenUsers = [];
+  vm.search      = null;
 
   const authUserId = $auth.getPayload().userId;
 
@@ -382,11 +486,9 @@ function GroupsEditCtrl(Group, GroupUser, User, $stateParams, $auth, $state, $sc
     if(vm.groupsEditForm.$valid) {
       vm.group
         .$update()
-        .then(() => {
-          $state.go('groupsHome', $stateParams);
-          console.log('vm.create group - Array of user Obj ids', vm.group);
-          // $rootScope.$broadcast('userAddedToGroup');
-        });
+        .then(() => $state.go('groupsHome', $stateParams));
+        // console.log('vm.create group - Array of user Obj ids', vm.group);
+        // $rootScope.$broadcast('userAddedToGroup');
     }
   };
 
@@ -406,6 +508,34 @@ function GroupsEditCtrl(Group, GroupUser, User, $stateParams, $auth, $state, $sc
       }
     });
   };
+
+  vm.showPreSearchBar = () => {
+    return vm.search === null;
+  };
+
+  vm.initiateSearch = () => {
+    vm.search = '';
+  };
+
+  vm.showSearchBar = () => {
+    return vm.search !== null;
+  };
+
+  vm.endSearch = () => {
+    // return vm.search == null;
+    vm.search = null;
+  };
+
+  vm.submit = () => {
+    console.error('Search function not yet implemented');
+  };
+
+  // to focus on input element after it appears
+  $scope.$watch(() => {
+    return document.querySelector('#search-bar:not(.ng-hide)');
+  }, function() {
+    document.getElementById('search-input').focus();
+  });
 }
 
 GroupUserModalCtrl.$inject = ['selectedUser', 'User', 'Group', 'GroupUser', '$uibModalInstance', '$stateParams', '$auth', '$state'];

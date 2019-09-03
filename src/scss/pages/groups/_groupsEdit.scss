@@ -1,139 +1,138 @@
-// .groupsEdit {
-//   img {
-//     width: 40px;
-//     height: 40px;
-//     // margin: 0;
-//     margin: 0 5%;
-//   }
-//
-//   .userImage {
-//     // width: 100%;
-//     // margin-left: 1rem;
-//
-//     img {
-//       // width: 100%;
-//       // height: 100%;
-//       display: flex;
-//       // background-color: #FFFFFF;
-//       // flex-flow: row nowrap;
-//       // justify-content: space-around;
-//       // align-items: center;
-//       margin: 0;
-//       border: 0;
-//     }
-//   }
-//
-//   form {
-//     padding: 0 20%;
-//     background: #00A2BB;
-//
-//     label {
-//       padding-top: 1rem;
-//     }
-//     input {
-//       border-radius: 0;
-//       width: 50%;
-//     }
-//   }
-//
-//   .search {
-//     // width: auto;
-//     // margin: auto;
-//     background-color: #FFFFFF;
-//     border-radius: 0;
-//
-//     &::placeholder {
-//       color: #000000;
-//     }
-//   }
-//
-//   .groupFilterUsers {
-//     width: 25%;
-//     margin: auto;
-//   }
-//
-//   .userSearchResults {
-//     // width: 25%;
-//     margin: 1rem auto;
-//     padding: 5px 10px;
-//     display: flex;
-//     background-color: #FFFFFF;
-//     flex-flow: row nowrap;
-//     justify-content: flex-start;
-//     align-items: center;
-//
-//     img {
-//       width: 25px;
-//       height: 25px;
-//       margin: 0 10% 0 0;
-//       border: 0;
-//     }
-//     // h5 {
-//     //
-//     // }
-//   }
-//
-//   h4, h5 {
-//     color: #000000;
-//   }
-//   p {
-//     color: #FFFFFF;
-//   }
-//
-//   .groupsUsersEdit {
-//     width: 50%;
-//     margin: 1rem auto;
-//     padding: 5px 10px;
-//     display: flex;
-//     background-color: #FFFFFF;
-//     flex-flow: row nowrap;
-//     justify-content: space-between;
-//     align-items: center;
-//     // align-content: center;
-//
-//     .userImage {
-//       // width: 100%
-//       margin: 0 25% 0 0;
-//     }
-//
-//     .userName {
-//       width: 100%;
-//       // margin: 0 0 0 5%;
-//       // height: 100%;
-//       display: flex;
-//       // text-align: left;
-//       justify-content: flex-start;
-//       align-items: flex-start;
-//
-//       h5 {
-//         // text-align: left;
-//         // align-self: flex-start;
-//       }
-//     }
-//     .deleteUser {
-//       display: flex;
-//       flex-flow: row nowrap;
-//       justify-content: flex-end;
-//       align-items: center;
-//       align-content: center;
-//       width: 100%;
-//       // height: 100%;
-//       // margin: 0 5% 0 5%;
-//     }
-//     h4 {
-//       // width: 100%;
-//       // height: 100%;
-//       // margin: 0 2.5rem;
-//     }
-//     a {
-//       text-transform: none;
-//       text-decoration: none;
-//       font-size: 2rem;
-//
-//       &:hover {
-//         color: #FF0000;
-//       }
-//       // margin: 0 2.5rem;
-//     }
-//   }
-// }
+.groupsEdit {
+  width: 100%;
+  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+  md-card {
+    width: 50%;
+    padding: 2.5rem;
+
+    md-card-title {
+      margin: 0 auto 2.5rem auto;
+    }
+
+    form {
+      md-input-container {
+        width: 100%;
+        margin: 0.5rem 0;
+      }
+      label {
+        width: 100%;
+        margin: 1rem 0;
+      }
+      button {
+        width: 100%;
+        margin: 0 0 1rem 0;
+      }
+      img {
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+      }
+
+    }
+  }
+  .md-toolbar-tools {
+    padding: 0;
+
+    .md-button {
+      // width: 100%;
+      padding: 0;
+    }
+
+    .md-button:last-child {
+      margin: 0;
+    }
+    .md-button:first-child {
+      margin: 0;
+    }
+  }
+  .chosenUsers {
+    // width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    // text-align: center;
+    // margin: 0.5rem 0;
+    // padding: 0.5rem 0;
+  }
+  .chosenGroupUsers {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 10px 0;
+
+    smart-confirm {
+      margin: 0;
+    }
+    .md-divider {
+      margin: 5px 0;
+    }
+    div {
+      // padding: 0 1rem;
+      // margin: 0.25rem 0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+
+      h5 {
+        // padding: 0 0 0 1rem;
+        text-transform: uppercase;
+      }
+      .md-button {
+        // width: 30px;
+        min-width: 35px;
+        font-size: 10px;
+        // max-width: 25px;
+        // height: 25px;
+        // min-height: 25px;
+        // max-height: 25px;
+        margin: 0 0.5rem;
+        // padding: 0 0 0 1rem;
+        // text-transform: uppercase;
+
+        // .material-icons {
+        //   font-size: 20px;
+        //
+        //   .md-icon {
+        //     height: 20px;
+        //     width: 20px;
+        //     min-height: 20px;
+        //     min-width: 20px;
+        //   }
+        // }
+      }
+    }
+  }
+  .groupUsersToAdd {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+    div {
+      padding: 0 1rem;
+      margin: 0.5rem 0;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: center;
+
+      h5 {
+        padding: 0 0 0 1rem;
+        text-transform: uppercase;
+      }
+    }
+  }
+  .groupsEditButtons {
+    margin-top: 1rem;
+
+    .md-button {
+      width: 100%;
+    }
+  }
+}

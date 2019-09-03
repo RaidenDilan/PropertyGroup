@@ -22,13 +22,22 @@
 
     <md-divider ng-if="!$last"></md-divider>
 
-    <!-- <div class="md-padding"> -->
-      <md-card-actions layout="row" layout-align="center center">
-        <md-button ng-if="main.currentUserId === usersShow.user.id" ui-sref="usersEdit({ id: usersShow.user.id })" class="md-button md-raised">Edit</md-button>
-        <md-button ng-if="main.currentUserId === usersShow.user.id" ng-click="usersShow.delete()" class="md-warn md-raised">Delete</md-button>
-      </md-card-actions>
-    <!-- </div> -->
+    <md-card-actions>
+      <md-button
+        ng-if="main.currentUserId === usersShow.user.id"
+        ui-sref="usersEdit({ id: usersShow.user.id })"
+        class="md-raised md-primary md-button md-ink-ripple"
+        >
+        Edit
+      </md-button>
+      <md-button
+        ng-if="main.currentUserId === usersShow.user.id"
+        ng-click="usersShow.delete()"
+        class="md-raised md-warn md-button md-ink-ripple"
+        >
+        Delete
+      </md-button>
+    </md-card-actions>
 
-    <!-- <br> -->
   </md-card>
 </md-content>

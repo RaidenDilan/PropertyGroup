@@ -1,32 +1,68 @@
-<section class="container">
-  <div class="propsIndexPage">
-    <h1>Search Properties</h1>
+<md-content class="md-padding propsIndex">
+  <md-card class="md-padding searchProperties">
+
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">Search Properties</span>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-card-title-text>
+    </md-card-title>
 
     <form>
-      <div>
-        <label for="area">Area: </label>
-        <input type="text" ng-model="propsIndex.area" class="area">
-      </div>
-      <div>
-        <label for="beds">Number of Beds: </label>
-        <input type="number" ng-model="propsIndex.beds" class="bedrooms">
-      </div>
-      <button ng-click="propsIndex.getProps()" class="search">Search</button>
-    </form>
-    <h5 class="listings">Found {{ propsIndex.results.result_count }} Listings</h5>
+      <div class="propertiesSearch">
+        <div>
+          <md-input-container class="md-block">
+            <label for="area">Area: </label>
+            <input type="text" ng-model="propsIndex.area" class="area">
+          </md-input-container>
+        </div>
 
-    <div ng-repeat="props in propsIndex.results.listing | limitTo: propsIndex.limit" class="results">
-      <ul>
-        <li><img ng-src="{{props.image_645_430_url}}" class="ZooplaImage"></li>
-        <li><strong>Address: </strong>{{ props.displayable_address }}</li>
-        <li><strong>Price Per Month: </strong>£{{ props.rental_prices.per_month }}</li>
-        <li><strong>Bedrooms: </strong>{{ props.num_bedrooms }}</li>
-        <li><strong>Property Type: </strong>{{ props.property_type }}</li>
-        <button ng-click="propsIndex.showProperty(props)" class="moreInfoButton button">More Info</button>
-      </ul>
+        <div>
+          <md-input-container class="md-block">
+            <label for="beds">Number of Beds: </label>
+            <input type="number" ng-model="propsIndex.beds" class="bedrooms">
+          </md-input-container>
+        </div>
+      </div>
+
+      <div>
+        <md-card-actions>
+          <md-button ng-click="propsIndex.getProps()" class="md-raised md-primary md-button md-ink-ripple search">Search</md-button>
+        </md-card-actions>
+      </div>
+    </form>
+
+  </md-card>
+
+  <md-card ng-show="propsIndex.showResults()" class="md-padding searchResults" layout="row" layout-wrap>
+    <div class="foundListings">
+      <span class="md-heading listings">Found {{ propsIndex.results.result_count }} Listings</span>
+      <md-divider ng-if="!$last"></md-divider>
     </div>
-    <div class="row">
-      <button ng-if="propsIndex.results.listing" ng-click="propsIndex.loadMore()" class="button loadMore">Load More Properties</button>
-    </div>
-  </div>
-</section>
+
+    <md-card class="md-padding searchResultsCard" ng-repeat="props in propsIndex.results.listing | limitTo: propsIndex.limit">
+      <img ng-src="{{ props.image_645_430_url }}" class="ZooplaImage">
+
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">{{ props.displayable_address }}</span>
+        </md-card-title-text>
+      </md-card-title>
+
+      <md-card-content>
+        <h3><strong>Address: </strong>{{ props.displayable_address }}</h3>
+        <h3><strong>Price Per Month: </strong>£{{ props.rental_prices.per_month }}</h3>
+        <h3><strong>Bedrooms: </strong>{{ props.num_bedrooms }}</h3>
+        <h3><strong>Property Type: </strong>{{ props.property_type }}</h3>
+      </md-card-content>
+
+      <md-card-actions layout="row" layout-align="end center">
+        <md-button class="md-raised md-primary md-button md-ink-ripple moreInfoButton" ng-click="propsIndex.showProperty(props)">More Info</md-button>
+      </md-card-actions>
+    </md-card>
+
+    <md-card-actions class="loadMore">
+      <md-button ng-if="propsIndex.results.listing" ng-click="propsIndex.loadMore()" class="md-raised md-primary md-button md-ink-ripple loadMore">Load More Properties</md-button>
+    </md-card-actions>
+  </md-card>
+</md-content>

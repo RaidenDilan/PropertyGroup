@@ -73,7 +73,8 @@ function MainCtrl($rootScope, $timeout, $state, $auth, User, $window, $mdSidenav
     // vm.currentUserGroupId = null;
     if(vm.stateHasChanged) vm.message = null;
     if(!vm.stateHasChanged) vm.stateHasChanged = true;
-    if(vm.stateHasChanged) document.body.scrollTop = document.documentElement.scrollTop = 0;
+    // if(vm.stateHasChanged)
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
 
     if($auth.getPayload()) {
     vm.currentUserId = $auth.getPayload().userId;

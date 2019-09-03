@@ -17,6 +17,7 @@
 
       <div>
         <md-input-container>
+          <md-icon class="material-icons">person</md-icon>
           <label for="username">Username</label>
           <input
             id="username"
@@ -38,8 +39,9 @@
         </div>
       </div>
 
-      <div class="input-field col s6">
+      <div class="input-field">
         <md-input-container>
+          <md-icon class="material-icons">email</md-icon>
           <label for="email">Email</label>
           <input
             id="email"
@@ -65,8 +67,9 @@
         <!-- <p class="alert alert-danger" ng-show="(usersEdit.user.email.$submitted || usersEdit.user.email.$touched) && usersEdit.user.email.$invalid">Email address not valid</p> -->
       </div>
 
-      <div class="input-field col s6">
+      <div class="input-field">
         <md-input-container>
+          <md-icon class="material-icons">attach_money</md-icon>
           <label for="budget">Budget</label>
           <input
             id="budget"
@@ -88,8 +91,9 @@
         </div>
       </div>
 
-      <div class="input-field col s6">
+      <div class="input-field">
         <md-input-container>
+          <md-icon class="material-icons">lock</md-icon>
           <label for="password">Password</label>
           <input
             id="password"
@@ -115,8 +119,9 @@
         </div>
       </div>
 
-      <div class="input-field col s6">
+      <div class="input-field">
         <md-input-container>
+          <md-icon class="material-icons">lock</md-icon>
           <label for="passwordConfirmation">Password Confirmation</label>
           <input
             id="passwordConfirmation"
@@ -145,12 +150,12 @@
 
       </div>
 
-      <div class="input-field col s6">
+      <div class="uploadPhoto">
         <label
           for="base64"
           class="md-raised md-accent md-button md-ink-ripple"
           >
-          Choose Profile Image
+          <md-icon class="material-icons">add_a_photo</md-icon>
         </label>
         <input
           base64
@@ -163,7 +168,7 @@
           >
       </div>
 
-      <div class="space-top text-center">
+      <div>
         <md-button
           class="md-raised md-primary md-button md-ink-ripple"
           ng-click="usersEdit.update()"

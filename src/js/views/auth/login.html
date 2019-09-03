@@ -4,9 +4,13 @@
     <md-card-title>
       <md-card-title-text>
         <span class="md-headline">Login</span>
-        <md-divider ng-if="!$last"></md-divider>
+        <!-- <md-divider ng-if="!$last"></md-divider> -->
       </md-card-title-text>
     </md-card-title>
+
+    <div class="input-field col s6 registerLink">
+      <span>New to PNC? <a ui-sref="register">Create an Account</a></span>
+    </div>
 
     <form
       name="login.loginForm"
@@ -15,7 +19,7 @@
       novalidate
       >
 
-      <div class="input-field col s6">
+      <div class="input-field">
         <md-input-container class="md-block">
           <md-icon class="material-icons">email</md-icon>
           <label for="email">Email</label>
@@ -39,7 +43,7 @@
         </div>
       </div>
 
-      <div class="input-field col s6">
+      <div class="input-field">
         <md-input-container class="md-block">
           <md-icon class="material-icons">lock</md-icon>
           <label for="password">Password</label>

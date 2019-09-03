@@ -1,136 +1,367 @@
-<section class="container">
-  <div class="groupsShowPage">
-    <h2>Property Details</h2>
+<md-content class="md-padding groupsShowProp">
+  <md-card>
 
-    <div class="row" ng-repeat="selected in groupsPropsShow.gps.listing">
-      <div class="col-sm-12 col-md-6 col-lg-12">
-        <img ng-src="{{ selected.image_645_430_url }}" class="propertyImage">
+    <div ng-repeat="property in groupsPropsShow.gps.listing">
+      <div class="groupsPropsShow_title">
+        <div>
+          <div class="md-card-image propertyImage" style="background-image:url('{{ property.image_645_430_url }}');"></div>
+        </div>
+
+        <div>
+          <md-card-title>
+            <md-card-title-text>
+              <span class="md-headline">{{ property.displayable_address }}</span>
+            </md-card-title-text>
+          </md-card-title>
+
+          <md-card-content>
+            <ul>
+              <li><md-icon class="material-icons">single_bed</md-icon>{{ property.num_bedrooms }} bedroom</li>
+              <li><md-icon class="material-icons">bathtub</md-icon>{{ property.num_bathrooms }} bathroom</li>
+              <li><span class="md-headline">£{{ property.rental_prices.per_month | number : fractionSize }}</span></li>
+            </ul>
+
+            <md-divider ng-if="$last"></md-divider>
+
+            <ul>
+              <li><img class="agencyLogo" ng-src="{{ property.agent_logo }}" alt="Agency Logo"></li>
+              <li><span class="md-subhead">{{ property.agent_name }}</span></li>
+              <li><md-icon class="material-icons">phone_iphone</md-icon><a class="md-title" href="tel:{{ property.agent_phone }}">{{ property.agent_phone }}</a></li>
+            </ul>
+          </md-card-content>
+
+          <md-card-actions class="propertyActions" layout="row" layout-align="start center">
+            <md-button
+              class="md-raised md-warn md-button md-ink-ripple"
+              >
+              Email Agent
+            </md-button>
+            <md-button
+              class="md-raised md-primary md-button md-ink-ripple"
+              ng-click="groupsPropsShow.deleteProperty(property)"
+              ng-if="main.isAuthenticated()"
+              >
+              Delete Property
+            </md-button>
+          </md-card-actions>
+
+          <md-divider ng-if="$last"></md-divider>
+
+          <md-card-actions layout="row" layout-align="start center">
+            <md-card-icon-actions>
+
+              <md-button class="md-icon-button" aria-label="Favorite">
+                <md-icon class="material-icons">favorite</md-icon>
+              </md-button>
+
+              <md-button class="md-icon-button" aria-label="Share">
+                <md-icon class="material-icons">share</md-icon>
+              </md-button>
+
+            </md-card-icon-actions>
+          </md-card-actions>
+        </div>
       </div>
 
-      <button ng-click="groupsPropsShow.deleteProperty(selected)" ng-if="main.isAuthenticated()">Delete Property</button>
+      <md-content class="propertyTabs">
+        <md-tabs class="md-primary" md-center-tabs="" md-dynamic-height md-border-bottom>
+          <md-tab label="Property Details">
+            <md-content class="md-padding">
+              <h2 class="md-display-1 center-align">Property Details</h2>
+              <br>
+              <p class="md-body-1">{{ property.description }}</p>
+            </md-content>
+          </md-tab>
+          <md-tab label="Maps & Nearby">
+            <md-content class="md-padding">
+              <h2 class="md-display-1 center-align">Maps & Nearby</h2>
+              <br>
+              <div class="maps">
+                <!-- <ng-map center="[{{property.latitude}}, {{property.longitude}}]" zoom="13" scrollwheel="false">
+                  <marker position="[{{property.latitude}}, {{property.longitude}}]" animation="DROP"></marker>
+                </ng-map> -->
+              </div>
+            </md-content>
+          </md-tab>
+          <md-tab label="Crime Stats">
+            <md-content class="md-padding">
+              <h2 class="md-display-1 center-align">Crime Stats</h2>
+              <br>
+              <canvas
+                basechart
+                height="50%"
+                class="chart chart-doughnut"
+                id="doughnut"
+                chart-data="groupsPropsShow.crimes.pieCrimeData"
+                chart-labels="groupsPropsShow.labels"
+                chart-legend="false"
+                >
+              </canvas>
+            </md-content>
+          </md-tab>
+        </md-tabs>
+      </md-content>
 
-      <div class="col-sm-12 col-md-6 col-lg-12">
-        <ul>
-          <li><strong>Bedrooms: </strong>{{ selected.num_bedrooms }}</li>
-          <li><strong>Property Type: </strong>{{ selected.property_type }}</li>
-          <li><strong>Price: </strong>£{{ selected.rental_prices.per_month }} ppm</li>
-          <li class="address"><strong>Address: </strong>{{ selected.displayable_address }}</li>
-        </ul>
-      </div>
-    </div>
+      <md-card-content>
+        <div class="ratingList">
+          <md-card-title>
+            <md-card-title-text>
+              <span class="md-headline">Ratings</span>
+              <!-- <md-divider></md-divider> -->
+            </md-card-title-text>
+          </md-card-title>
 
-    <div class="row">
-      <div class="col-sm-12 col-md-6 col-lg-12">
-        <p ng-repeat="selected in groupsPropsShow.gps.listing" class="description">{{ selected.description }}</p>
-      </div>
-    </div>
+          <md-divider></md-divider>
 
-    <div ng-repeat="selected in groupsPropsShow.gps.listing" class="agencyInfo">
-      <ul>
-        <h3>Agency Info</h3>
-        <li>
-          <strong>Company: </strong>{{ selected.agent_name }}</li>
-        <li>
-          <strong>Contact: </strong>
-          <a href="tel:{{selected.agent_phone}}" class="number">{{selected.agent_phone}}</a>
-        </li>
-      </ul>
-    </div>
+          <div
+            ng-repeat="rating in groupsPropsShow.prop.rating track by $index"
+            class="col s4 userRatings"
+            >
+            <img class="md-card-image userRatingImage" ng-src="{{ rating.createdBy.profileImageSRC }}" alt="User Image">
 
-    <div layout="row">
-        <div class="md-panel-content">
+            <div class="userRatingOpinion">
+              <strong>{{ rating.createdBy.username }}</strong>
+              <span
+                uib-rating ng-model="rating.opinion"
+                max="groupsPropsShow.max"
+                read-only="groupsPropsShow.isReadonly"
+                on-hover="hoveringOver(value)"
+                on-leave="overStar = null"
+                >
+              </span>
+            </div>
 
-          <!-- <md-button class="md-primary md-raised dialog-open-button"
-          ng-click="groupsPropsShow.like(like._id, $event)">
-          Upvote<i class="fa fa-arrow-up" aria-hidden="true"></i>
-          (<span class="likes">{{ like.likes.length }}</span>)
-          </md-button>
-        <md-button class="md-primary md-raised menu-open-button"
-        ng-click="groupsPropsShow.dislike(like._id, $event)">
-        Downvote
-        <i class="fa fa-arrow-down" aria-hidden="true"></i>
-        (<span class="likes">{{ like.dislikes.length }}</span>)
-      </md-button> -->
-
-        <button class="btn btn-primary" ng-click="groupsPropsShow.like(like._id)">Like<i class="fa fa-arrow-up" aria-hidden="true"></i>({{ like.likes.length }})</button>
-        <button class="btn btn-primary" ng-click="groupsPropsShow.dislike(dislikes._id)">Dislike<i class="fa fa-arrow-down" aria-hidden="true"></i>({{ like.dislikes.length }})</button>
-
-    </div>
-  </div>
-
-    <div class="ratingList">
-      <h3>Ratings</h3>
-      <div ng-repeat="rating in groupsPropsShow.prop.rating track by $index" class="col-sm-4 col-md-4 col-lg-4">
-        <strong>{{ rating.createdBy.username }}</strong>
-        <span uib-rating ng-model="rating.opinion" max="groupsPropsShow.max" read-only="groupsPropsShow.isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null"></span>
-        <button type="button" ng-click="groupsPropsShow.deleteRating(rating)" class="close" aria-label="Close"><span aria-hidden="true">Delete</span>
-        </button>
-      </div>
-    </div>
-
-    <div class="ratings">
-      <form ng-submit="groupsPropsShow.addRating()" ng-if="main.isAuthenticated()">
-        <label for="rating"></label>
-        <span uib-rating ng-model="groupsPropsShow.newRating.opinion" max="groupsPropsShow.max" read-only="groupsPropsShow.isReadonlyfalse" on-hover="hoveringOver(value)" on-leave="overStar = null" class="form-control ratingBox" name="rating" id="rating"></span>
-        <button class="addimage">Add Rating</button>
-      </form>
-    </div>
-
-    <div class="overflow">
-      <div class="col-md-6 col-lg-6">
-        <h3>Images</h3>
-        <div class ="row">
-          <div ng-repeat="image in groupsPropsShow.prop.images track by $index" class="col-sm-4 col-md-4 col-lg-4">
-            <img ng-click="groupsPropsShow.showUserImage(image)" ng-src="{{ image.imageSRC }}" class="userimages img-fluid img-thumbnail">
-            <button ng-click="groupsPropsShow.deleteImage(image)" class="deleteimage">Delete</button>
+            <md-button
+              type="button"
+              class="md-raised md-warn md-button md-ink-ripple"
+              ng-click="groupsPropsShow.deleteRating(rating)"
+              aria-label="Close"
+              >
+              <i class="material-icons left"></i>x
+            </md-button>
           </div>
         </div>
 
-        <div class="addimages row">
-          <form ng-submit="groupsPropsShow.addImage()" ng-if="main.isAuthenticated()" class="form-group">
-            <input type="file" id="image" base64 name="base64" ng-model="groupsPropsShow.newImage.base64" class="base64 form-control" style="display: none;">
-            <label for="image" class="addimage smaller">Choose image</label>
-            <button class="addimage smaller">Upload</button>
+        <md-divider ng-if="$last"></md-divider>
+
+        <div class="ratings">
+          <form
+            class="ratingForm"
+            ng-submit="groupsPropsShow.addRating()"
+            ng-if="main.isAuthenticated()"
+            >
+            <div class="col s6">
+              <md-input-container class="md-block">
+                <!-- <md-icon class="material-icons">group_work</md-icon> -->
+                <label for="rating"></label>
+                <span
+                  class="ratingBox"
+                  name="rating"
+                  id="rating"
+                  uib-rating
+                  ng-model="groupsPropsShow.newRating.opinion"
+                  max="groupsPropsShow.max"
+                  read-only="groupsPropsShow.isReadonlyfalse"
+                  on-hover="hoveringOver(value)"
+                  on-leave="overStar = null"
+                  >
+                </span>
+              </md-input-container>
+            </div>
+
+            <div class="col s6">
+              <md-button class="md-raised md-primary md-button md-ink-ripple addimage" ng-click="groupsPropsShow.addRating()">
+                <i class="material-icons left"></i>Add Rating
+              </md-button>
+            </div>
           </form>
         </div>
-      </div>
+      </md-card-content>
 
-      <div class="col-md-6 col-lg-6">
-        <div class="row">
-          <h3>Notes</h3>
-          <div ng-repeat="note in groupsPropsShow.prop.notes track by $index" class="col-sm-3 col-md-3 col-lg-3 noteHeight">
-            <strong>{{ note.createdBy.username }}</strong><br><p class="noteText">{{ note.text }}</p><br>
-            <button ng-click="groupsPropsShow.deleteNote(note)" class="smaller">Delete</button>
+      <md-divider></md-divider>
+
+      <md-card-content>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Images</span>
+          </md-card-title-text>
+        </md-card-title>
+
+        <div class="groupsPropsShowUserImages row">
+          <div class="col s4" ng-repeat="image in groupsPropsShow.prop.images track by $index">
+
+            <md-card>
+              <md-card-header>
+
+                <md-card-avatar>
+                  <img src="{{ image.createdBy.profileImageSRC }}" width="30" height="30" style="border-radius:50px;margin-right:10px" />
+                </md-card-avatar>
+
+                <md-card-header-text>
+                  <span class="md-title">{{ image.createdBy.username }}</span>
+                  <!-- <span class="md-subhead">{{ image.createdBy.createdAt }}</span> -->
+                </md-card-header-text>
+
+              </md-card-header>
+
+              <img ng-click="groupsPropsShow.showUserImage(image)" class="userImages img-fluid img-thumbnail" style="background-image:url('{{ image.imageSRC }}')">
+
+              <md-card-actions>
+                <md-button
+                  style="width:100%; margin:0;"
+                  type="button"
+                  class="md-raised md-warn md-button md-ink-ripple"
+                  ng-click="groupsPropsShow.deleteImage(image)"
+                  aria-label="Close"
+                  >
+                  Delete
+                </md-button>
+              </md-card-actions>
+            </md-card>
+
           </div>
         </div>
 
-        <div class="row addNotes">
-          <form ng-submit="groupsPropsShow.addNote()" ng-if="main.isAuthenticated()">
-            <h3>Add Comments</h3>
-            <textarea ng-model="groupsPropsShow.newNote.text"></textarea><br>
-            <button class="addcomment">Post</button>
+        <div class="col s4">
+          <form
+            class="addImageForm"
+            ng-submit="groupsPropsShow.addImage()"
+            ng-if="main.isAuthenticated()"
+            >
+            <div class="uploadPhoto">
+              <label
+                for="base64"
+                class="md-raised md-accent md-button md-ink-ripple addimage"
+                >
+                <md-icon class="material-icons">add_a_photo</md-icon>
+              </label>
+              <input
+                base64
+                type="file"
+                name="base64"
+                id="base64"
+                ng-model="groupsPropsShow.newImage.base64"
+                placeholder="Property image link.."
+                style="display:none"
+                >
+            </div>
+            <!-- <label
+              for="image"
+              class="addimage smaller"
+              >
+              <md-icon class="material-icons">add_a_photo</md-icon>
+              Choose image
+            </label> -->
+            <md-button
+              type="button"
+              ng-click="groupsPropsShow.addImage()"
+              class="md-raised md-primary md-button md-ink-ripple addimage"
+              >
+              Upload
+            </md-button>
           </form>
         </div>
+      </md-card-content>
 
-      </div>
-    </div>
+      <md-divider></md-divider>
 
-    <div class="row">
-      <div class="col-sm-offset-1 col-sm-4 crimePie">
-        <h3 class="mapAndCrime">Recent crime</h3>
-        <canvas id="doughnut" class="chart chart-doughnut" chart-data="groupsPropsShow.crimes.pieCrimeData" chart-labels="groupsPropsShow.labels" chart-legend="false">
-        </canvas>
-      </div>
+      <md-card-content>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Notes</span>
+          </md-card-title-text>
+        </md-card-title>
 
-      <div class="col-sm-4 col-sm-offset-1">
-        <div class="map" ng-repeat="selected in groupsPropsShow.gps.listing">
-          <h3 class="mapAndCrime">Location</h3>
-          <!-- <ng-map center="[{{selected.latitude}}, {{selected.longitude}}]" zoom="13" scrollwheel="false">
-            <marker position="[{{selected.latitude}}, {{selected.longitude}}]" animation="DROP"></marker>
-          </ng-map> -->
+        <div class="col s6 addComment">
+          <div class="row">
+            <div ng-repeat="note in groupsPropsShow.prop.notes track by $index" class="col s3">
+
+              <md-card>
+                <md-card-header>
+
+                  <md-card-avatar>
+                    <img src="{{ note.createdBy.profileImageSRC }}" width="30" height="30" style="border-radius:50px;margin-right:10px" />
+                  </md-card-avatar>
+
+                  <md-card-header-text>
+                    <span class="md-title">{{ note.createdBy.username }}</span>
+                  </md-card-header-text>
+
+                </md-card-header>
+
+                <md-card-content>
+                  <span class="md-body-1 noteText">{{ note.text }}</span>
+                </md-card-content>
+
+                <md-card-actions>
+                  <md-button
+                    style="width:100%; margin:0;"
+                    type="button"
+                    class="md-raised md-warn md-button md-ink-ripple"
+                    ng-click="groupsPropsShow.deleteNote(note)"
+                    aria-label="Close"
+                    >
+                    Delete
+                  </md-button>
+                </md-card-actions>
+              </md-card>
+            </div>
+          </div>
+
+          <md-divider></md-divider>
+
+          <div class="row">
+            <form
+              ng-submit="groupsPropsShow.addNote()"
+              ng-if="main.isAuthenticated()"
+              >
+              <md-card-title>
+                <md-card-title-text>
+                  <span class="md-headline">Add Comments</span>
+                </md-card-title-text>
+              </md-card-title>
+              <div class="col s12">
+                <md-input-container class="md-block">
+                  <!-- <md-icon class="material-icons">group_work</md-icon> -->
+                  <textarea
+                    ng-model="groupsPropsShow.newNote.text"
+                    md-maxlength="150"
+                    maxlength="150"
+                    placeholder="Post a commnet.."
+                    aria-label="Comment (required)"
+                    style="width:100%;"
+                    >
+                  </textarea>
+                  <!-- <br> -->
+                </md-input-container>
+              </div>
+
+              <md-card-actions>
+                <md-button
+                  type="button"
+                  class="md-raised md-warn md-button md-ink-ripple"
+                  ng-click="groupsPropsShow.addNote()"
+                  aria-label="Close"
+                  >
+                  Post
+                </md-button>
+              </md-card-actions>
+            </form>
+          </div>
+
         </div>
-      </div>
+      </md-card-content>
     </div>
 
+  </md-card>
+</md-content>
+
+<!-- <div class="col s6">
+  <div class="md-panel-content">
+    <md-button class="md-primary md-raised dialog-open-button" ng-click="groupsPropsShow.like(like._id, $event)">Upvote<i class="fa fa-arrow-up" aria-hidden="true"></i>(<span class="likes">{{ like.likes.length }}</span>)</md-button>
+    <md-button class="md-primary md-raised menu-open-button" ng-click="groupsPropsShow.dislike(like._id, $event)">Downvote<i class="fa fa-arrow-down" aria-hidden="true"></i>(<span class="likes">{{ like.dislikes.length }}</span>)</md-button>
+
+    <button class="btn btn-primary" ng-click="groupsPropsShow.like(like._id)">Like<i class="fa fa-arrow-up" aria-hidden="true"></i>({{ like.likes.length }})</button>
+    <button class="btn btn-primary" ng-click="groupsPropsShow.dislike(dislikes._id)">Dislike<i class="fa fa-arrow-down" aria-hidden="true"></i>({{ like.dislikes.length }})</button>
   </div>
-</section>
+</div> -->

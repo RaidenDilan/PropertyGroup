@@ -15,7 +15,7 @@
       novalidate
       >
 
-      <div class="input-field col s6">
+      <div class="col s6">
         <md-input-container class="md-block">
           <md-icon class="material-icons">group_work</md-icon>
           <label for="groupName">Group Name</label>
@@ -41,21 +41,45 @@
         </div>
       </div>
 
-      <div class="input-field col s6">
-        <label>Search Users</label>
-        <input
-          type="text"
-          class="search"
-          name="groupsNew.groupsSearchUsers"
-          ng-model="groupsNew.q"
-          placeholder="Search for people..."
-          >
+      <div class="col s6 searchUsers">
+        <!-- Pre-Search Bar -->
+        <div id="search-bar" ng-show="groupsNew.showPreSearchBar()" class="md-toolbar-tools">
+          <!-- Search button (initiates search) -->
+          <md-button ng-click="groupsNew.initiateSearch()">
+            <md-icon>search</md-icon>
+            <span>Search Users</span>
+          </md-button>
+
+        </div>
+
+        <!-- Search bar -->
+        <div ng-show="groupsNew.showSearchBar()" class="md-toolbar-tools search-bar">
+
+          <md-button class="md-icon-button" ng-click="groupsNew.submit()">
+            <md-icon>search</md-icon>
+          </md-button>
+
+          <!-- Input Text -->
+          <md-input-container flex>
+            <!-- <label for="search">Search</label> -->
+            <input
+              id="search-input"
+              type="text"
+              class="search"
+              name="groupsNew.groupsSearchUsers"
+              ng-model="groupsNew.q"
+              placeholder="Search for users..."
+              >
+          </md-input-container>
+
+          <md-button class="md-icon-button" ng-click="groupsNew.endSearch()">
+            <md-icon>close</md-icon>
+          </md-button>
+        </div>
       </div>
 
-      <md-divider ng-if="!$last"></md-divider>
-
       <div
-        class="input-field col s6 groupUsersToAdd"
+        class="col s6 groupUsersToAdd"
         ng-if="(!user.group && user.id !== main.currentUserId)"
         ng-repeat="user in groupsNew.filtered"
         ng-show="(groupsNew.q.length > 0 && groupsNew.chosenUsers.includes(user) !== true)"
@@ -73,34 +97,47 @@
         </div>
       </div>
 
-      <p id="chosenUsers">Chosen Users:</p>
 
-      <md-divider ng-if="!$last"></md-divider>
+      <div class="chosenUsers">
+        <span class="md-headline">Chosen Users:</span>
+        <md-divider></md-divider>
+      </div>
 
       <div
-        class="input-field col s6 chosenGroupUsers"
+        class="col s6 chosenGroupUsers"
         ng-repeat="user in groupsNew.chosenUsers"
         >
-        <div>
+        <div class="">
           <img
             ng-src="{{ user.profileImageSRC }}"
             alt="{{ user.profileImageSRC }}"
             class="chosenUsersImage"
             >
           <h5>{{ user.username }}</h5>
-          <a
-            href="#"
+          <!-- <md-button
             ng-click="groupsNew.removeUser(user)"
-            class="removeUser"
+            class="md-raised md-warn md-button md-ink-ripple"
             >
             x
-          </a>
+            <md-icon class="material-icons">close</md-icon>
+          </md-button> -->
+
+        <!-- <md-button
+          class="md-raised md-warn md-button md-ink-ripple"
+          confirm="groupsNew.removeUser(user)"
+          >
+          <md-icon class="material-icons">close</md-icon>
+        </md-button> -->
+          <smart-confirm confirm="groupsNew.removeUser(user)">
+            <md-icon class="material-icons">close</md-icon>
+          </smart-confirm>
         </div>
       </div>
 
-      <div class="space-top text-center">
+      <div class="col s6 groupsNewButtons">
         <md-button
           class="md-raised md-primary md-button md-ink-ripple"
+          ng-click="groupsNew.create()"
           ng-disabled="groupsNew.groupsNewForm.$invalid"
           >
           <i class="material-icons left"></i>Create

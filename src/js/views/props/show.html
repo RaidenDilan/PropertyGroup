@@ -1,7 +1,8 @@
 <md-dialog aria-label="Image modal">
   <md-toolbar>
     <div class="md-toolbar-tools" layout="row" layout-align="center center">
-      <h2>Property ID: {{ propsShow.selected.listing_id }}</h2>
+      <h3>Property ID: {{ propsShow.selected.displayable_address }}</h3>
+      <!-- <h2>Property ID: {{ propsShow.selected.listing_id }}</h2> -->
     </div>
   </md-toolbar>
 
@@ -9,26 +10,48 @@
     <div class="md-dialog-content" layout="column" layout-align="center center">
       <ul>
         <li><img ng-src="{{ propsShow.selected.image_645_430_url }}"></li>
-        <h3>Property Decription</h3>
-        <!-- <li class="address"><strong>Address: </strong>{{propsShow.selected.displayable_address}}</li> -->
-        <!-- <li><strong>Bedrooms: </strong>{{propsShow.selected.num_bedrooms}}</li> -->
-        <!-- <li><strong>Bathrooms: </strong>{{propsShow.selected.num_bathrooms}}</li> -->
-        <!-- <li><strong>Price: </strong>£{{propsShow.selected.rental_prices.per_month}} ppm</li> -->
-        <!-- <li><strong>Property Type: </strong>{{propsShow.selected.property_type}}</li> -->
-
-        <li class="modalDescription">{{ propsShow.selected.description }}</li>
-
-        <div class="modalAgencyInfo">
-          <h3>Agency Info</h3>
-          <li><strong>Company: </strong>{{ propsShow.selected.agent_name }}</li>
-          <li><strong>Contact: </strong>{{ propsShow.selected.agent_phone }}</li>
+        <!-- <li><span class="md-headline">Property Decription</span></li>
+        <br> -->
+        <li>{{ propsShow.selected.description }}</li>
+        <div>
+          <span class="md-headline">Agency Info</span>
+          <h3><strong>Company: </strong>{{ propsShow.selected.agent_name }}</h3>
+          <h3><strong>Contact: </strong>{{ propsShow.selected.agent_phone }}</h3>
         </div>
       </ul>
     </div>
+
+    <!-- <md-list>
+      <md-list-item
+        ng-if="main.isAuthenticated()"
+        md-nav-sref="propsIndex"
+        ui-sref="propsIndex"
+        sref-opts="{ reload: true, notify: true }"
+        name="propsIndex"
+        ng-click="main.close()"
+        >
+        <md-icon md-font-set="material-icons" aria-label="Search Properties">search</md-icon>
+        <p class="md-body-2">Find Properties</p>
+        <span flex></span>
+        <md-icon>chevron_right</md-icon>
+      </md-list-item>
+    </md-list> -->
   </md-dialog-content>
 
-  <md-dialog-actions layout-align="center center">
-    <md-button ng-click="propsShow.store(selected); propsShow.hide()" aria-label="Store Property" class="md-primary md-raised">Store Property</md-button>
-    <md-button ng-click="propsShow.hide()" aria-label="Close" class="md-primary md-raised">Close</md-button>
+  <md-dialog-actions layout="row" layout-align="center center">
+    <md-button
+      class="md-raised md-primary md-button md-ink-ripple"
+      ng-click="propsShow.store(selected); propsShow.hide()"
+      aria-label="Store Property"
+      >
+      Save Property
+    </md-button>
+    <md-button
+      class="md-raised md-warn md-button md-ink-ripple"
+      ng-click="propsShow.hide()"
+      aria-label="Close"
+      >
+      Close
+    </md-button>
   </md-dialog-actions>
 </md-dialog>

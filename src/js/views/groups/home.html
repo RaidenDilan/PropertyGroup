@@ -1,4 +1,4 @@
-<md-content flex="100" class="md-padding" layout="column">
+<md-content flex="100" class="md-padding groupsHome" layout="column">
   <md-card>
     <md-card-header layout="row" layout-align="center center">
       <md-card-avatar>
@@ -17,12 +17,12 @@
       </md-card-title-text>
     </md-card-title> -->
 
-    <md-divider ng-if="!$last"></md-divider>
+    <md-divider></md-divider>
 
-    <md-card-actions layout="row" layout-align="center center">
+    <md-card-actions layout="column" layout-align="center center">
       <md-button
         ng-click="groupsHome.removeUser()"
-        class="md-warn md-raised"
+        class="md-raised md-warn md-button md-ink-ripple"
         >
         Leave
       </md-button>
@@ -30,14 +30,14 @@
         ng-if="main.currentUserId === groupsHome.group.owner"
         md-nav-sref="groupsEdit({ id: main.currentUserGroupId })"
         ui-sref="groupsEdit({ id: main.currentUserGroupId })"
-        class="md-raised"
+        class="md-raised md-primary md-button md-ink-ripple"
         >
         Edit
       </md-button>
       <md-button
         ng-if="main.currentUserId === groupsHome.group.owner"
         ng-click="groupsHome.delete()"
-        class="md-warn md-raised"
+        class="md-raised md-warn md-button md-ink-ripple"
         >
         Delete
       </md-button>
@@ -75,25 +75,17 @@
   </md-card>
 </md-content>
 
-<md-content flex="100" class="md-padding">
+<md-content class="md-padding groupsHomeProperties">
   <md-card>
-    <md-card-content layout="row" layout-wrap="wrap" layout-align="center center" layout-padding="0">
-      <md-card-content layout="column" layout-align="center center">
-        <span class="md-headline">Properties</span>
-      </md-card-content>
-    </md-card-content>
-  </md-card>
-</md-content>
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">Saved properties</span>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-card-title-text>
+    </md-card-title>
 
-<md-content class="md-padding" layout="column" layout-align="center center">
-  <md-card>
-    <md-content class="md-padding" layout="row" layout-wrap>
-      <md-card
-        flex="100"
-        flex-sm="25"
-        flex-gt-sm="35"
-        ng-repeat="selected in groupsHome.selected.listing"
-        >
+    <md-content class="md-padding groupsHomePropertiesList">
+      <md-card ng-repeat="selected in groupsHome.selected.listing">
         <md-grid-list class="groupsHomeProperties" layout="column" layout-align="center center">
           <!-- class="md-avatar" on image tag -->
           <img class="groupsShowZooplaImage" ng-src="{{ selected.image_645_430_url }}" alt="{{ selected.image_645_430_url }}">
@@ -103,43 +95,3 @@
     </md-content>
   </md-card>
 </md-content>
-
-<!-- <section class="container">
-  <div class="groupsHomePage">
-    <h1>{{ groupsHome.group.groupName }}</h1>
-
-    <div class="row row-centered border groupsHomeUser">
-      <div class="col-xs-4 col-md-2 groupJoinedUsers" ng-repeat="user in groupsHome.group.users">
-        <div class="dialog-demo-content" layout="row" layout-wrap="" layout-margin="" layout-align="center">
-          <div class="groupUsers" style="background-image:url('{{ user.profileImageSRC }}')"></div>
-          <h5>{{ user.username }}</h5>
-
-          <md-dialog-actions layout="row">
-            <md-button class="md-primary md-raised" ng-click="groupsHome.showGroupUser(user)">View</md-button>
-          </md-dialog-actions>
-        </div>
-      </div>
-    </div>
-
-    <div ng-if="groupsHome.status" id="status">
-      <b layout="row" layout-align="center center" class="md-padding">{{ groupsHome.status }}</b>
-    </div>
-
-    <div>
-      <button class="deleteGroup" ng-if="main.currentUserId === groupsHome.group.owner" ui-sref="groupsEdit({ id: main.currentUserGroupId })">Edit</button>
-      <button class="deleteGroup" ng-click="groupsHome.removeUser()">Leave Group</button>
-      <button class="deleteGroup" ng-click="groupsHome.delete()" ng-if="main.currentUserId === groupsHome.group.owner">Delete Group</button>
-    </div>
-
-    <div class="row row-centered">
-      <div>
-        <p class="listingIDs">Listing IDs:</p>
-        <ul class="col-sm-12 col-md-6 col-lg-6" ng-repeat="selected in groupsHome.selected.listing">
-          <li><img class="groupsShowZooplaImage" ng-src="{{ selected.image_645_430_url }}"></li>
-          <button ui-sref="groupsPropsShow({ id: groupsHome.group.id, listing_id: selected.listing_id })">Show Property</button>
-        </ul>
-      </div>
-    </div>
-
-  </div>
-</section> -->

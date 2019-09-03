@@ -1,6 +1,8 @@
 .registerForm {
   width: 100%;
-  height: calc(100vh - 85px);
+  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
@@ -8,49 +10,60 @@
 
   md-card {
     width: 50%;
-    padding: 5rem 2.5rem;
+    height: 100%;
+    padding: 2.5rem;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    // align-content: center;
 
+    md-card-title {
+      padding: 0;
+    }
+
+    .actionButtons {
+      display: flex;
+      flex-flow: column nowrap;
+    }
+
+    .uploadPhoto {
+      md-icon {
+        margin: 0 auto;
+      }
+      label {
+        display: flex;
+        flex-flow: row nowrap;
+        // justify-content: center;
+        // align-items: center;
+      }
+    }
+
+    .alreadyRegistered {
+      span {
+        font-size: 15px;
+        // display: flex;
+        // flex-flow: row nowrap;
+        // justify-content: center;
+
+        a {
+          // padding: 0 0 0 0.5rem;
+          color: #337ab7;
+          text-decoration: underline;
+        }
+      }
+    }
     form {
       width: 100%;
       margin: 0 auto;
 
-      button {
+      md-input-container {
+        width: 100%
+      }
+
+      .md-button {
         width: 100%;
-        margin: 0;
+        margin: 0.5rem 0;
       }
     }
   }
 }
-
-// #registerFormDiv {
-//   background-color: $brand-color;
-//   border-radius: 20px;
-//   margin: 95px auto;
-//   width: 60%;
-//   .registerHeader {
-//     padding-top: 10px;
-//     color: #FFFFFF;
-//     letter-spacing: 2px;
-//     margin-bottom: 15px;
-//   }
-//   #registerForm {
-//     padding: 10px;
-//   }
-//   button {
-//     width: 100%;
-//     // background-color: #FFFFFF;
-//     margin: 15px auto;
-//   }
-//   #alreadyRegistered {
-//     padding-top: 10px;
-//     color: #FFFFFF;
-//     font-size: 17px;
-//     font-weight: bold;
-//     text-transform: uppercase;
-//   }
-// }

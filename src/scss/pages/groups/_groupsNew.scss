@@ -30,110 +30,109 @@
         margin: 0 0 1rem 0;
       }
       img {
-        width: 50px;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+      }
+
+      .md-toolbar-tools {
+        padding: 0;
+
+        .md-button {
+          // width: 100%;
+          padding: 0;
+        }
+
+        .md-button:last-child {
+          margin: 0;
+        }
+        .md-button:first-child {
+          margin: 0;
+        }
+      }
+      .chosenUsers {
+        // width: 100%;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+        // text-align: center;
+        // margin: 0.5rem 0;
+        // padding: 0.5rem 0;
+      }
+      .chosenGroupUsers {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        padding: 10px 0;
+
+        smart-confirm {
+          margin: 0;
+        }
+        .md-divider {
+          margin: 5px 0;
+        }
+        div {
+          // padding: 0 1rem;
+          // margin: 0.25rem 0;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: space-between;
+          align-items: center;
+
+          h5 {
+            // padding: 0 0 0 1rem;
+            text-transform: uppercase;
+          }
+          .md-button {
+            // width: 30px;
+            min-width: 35px;
+            font-size: 10px;
+            // max-width: 25px;
+            // height: 25px;
+            // min-height: 25px;
+            // max-height: 25px;
+            margin: 0 0.5rem;
+            // padding: 0 0 0 1rem;
+            // text-transform: uppercase;
+
+            // .material-icons {
+            //   font-size: 20px;
+            //
+            //   .md-icon {
+            //     height: 20px;
+            //     width: 20px;
+            //     min-height: 20px;
+            //     min-width: 20px;
+            //   }
+            // }
+          }
+        }
+      }
+      .groupUsersToAdd {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+        div {
+          padding: 0 1rem;
+          margin: 0.5rem 0;
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: flex-start;
+          align-items: center;
+
+          h5 {
+            padding: 0 0 0 1rem;
+            text-transform: uppercase;
+          }
+        }
+      }
+      .groupsNewButtons {
+        margin-top: 1rem;
+
+        .md-button {
+          width: 100%;
+        }
       }
     }
   }
 }
-
-
-// .groupsNewPage {
-//   background-color: $brand-color;
-//   margin: 80px auto;
-//   border-radius: 25px;
-//   padding: 10px;
-//   width: 50%;
-//
-//   h1 {
-//     padding-top: 20px;
-//     color: #FFFFFF;
-//   }
-//
-//   #chosenUsers {
-//     color: #FFFFFF;
-//   }
-// }
-
-// .groupUsersToAdd {
-//   width: 50%;
-//   background-color: #FFFFFF;
-//   margin: 1rem auto;
-//   display: flex;
-//   // flex-flow: column nowrap;
-//   justify-content: center;
-//   align-items: center;
-//   transform: scale(1, 1);
-//   transition: transform 500ms ease;
-//
-//   &:hover {
-//     transform: scale(1.01, 1.01);
-//     transition: transform 500ms ease;
-//   }
-// }
-
-// .userSearchResults {
-//   padding: 0.25rem;
-//   display: flex;
-//   align-items: center;
-//   color: #000000;
-//
-//   div {
-//     display: flex;
-//     flex-flow: row nowrap;
-//     justify-content: flex-start;
-//   }
-// }
-
-// .chosenGroupUsers {
-//   padding: 0.25rem;
-//   width: 50%;
-//   margin: 1rem auto;
-//   background-color: #FFFFFF;
-//
-//   div {
-//     display: flex;
-//     flex-flow: row nowrap;
-//     justify-content: space-between;
-//     align-items: center;
-//   }
-//
-//   p {
-//     color: #FFFFFF;
-//   }
-//
-//   h1 {
-//     color: black;
-//   }
-// }
-
-// .chosenUsersImage {
-//   width: 10%;
-//   height: 10%;
-//   // margin: 0 2.25rem 0 0.5rem;
-//   margin: 0;
-//   border: 0;
-// }
-
-// .addUserImage {
-//   width: 10%;
-//   margin: 0 2.25rem 0 2.5rem;
-//   border: 0;
-//
-//   &:hover {
-//     border: 0;
-//   }
-// }
-
-// .removeUser {
-//   margin: 0 1rem 0 0;
-//   font-size: 15px;
-//   font-weight: 600;
-//   text-decoration: none;
-//   color: #000000;
-//   display: block;
-//
-//   &:hover {
-//     color: black;
-//     text-decoration: none;
-//   }
-// }

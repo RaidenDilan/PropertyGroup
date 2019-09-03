@@ -19,5 +19,6 @@ angular
     // Use that theme for the primary intentions
     $mdThemingProvider.theme('default')
       .primaryPalette('neonPurple')
-      .accentPalette('neonRed');
+      .accentPalette('neonRed')
+      .backgroundPalette('grey');
   }

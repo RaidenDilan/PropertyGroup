@@ -15,7 +15,9 @@
       width: 25%;
       margin: 1rem auto;
       border-radius: 20px;
-      border: 2px solid #FFFFFF;
+      border: 0px solid rgba(255, 255, 255, 0);
+      outline: none;
+      // border: 2px solid #FFFFFF;
     }
 
     md-card-content {
@@ -27,6 +29,17 @@
 
       div {
         margin: 0 auto;
+      }
+    }
+
+    md-card-actions {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+
+      button, a {
+        width: 50%;
       }
     }
   }
