@@ -4,15 +4,14 @@ angular
 
 GeoCoder.$inject = ['$http'];
 function GeoCoder($http) {
-  this.getLocation = function getLocation(location) {
+  this.getLocation = function getLocation(lat, lng) {
     return $http
-      .get('/api/location', { params: { location }})
-      .then((data) => {
-        console.log('SERVICE', data);
-        
-        const latlng = data.data.results[0].geometry.location || 'United Kingdom';
-        return latlng;
+      .get('/api/location', { params: { lat, lng }})
+      .then((response) => {
+        // console.log('SERVICE', response.data);
+        // const latLon = response.data.results[0].geometry.latLng;
+        // return latLon;
+        return response.data;
       });
   };
-
 }

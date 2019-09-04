@@ -1,4 +1,7 @@
 {
   "esversion": 6,
-  "predef": [ "-Promise" ]
+  "predef": [ "-Promise" ],
+  "globals": {
+    "google": true
+  }
 }

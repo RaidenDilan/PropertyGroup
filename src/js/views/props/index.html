@@ -8,26 +8,85 @@
       </md-card-title-text>
     </md-card-title>
 
-    <form>
+    <form
+      name="propsIndex.propsIndexForm"
+      class="propsIndex.propsIndexForm"
+      novalidate
+      >
       <div class="propertiesSearch">
         <div>
           <md-input-container class="md-block">
-            <label for="area">Area: </label>
-            <input type="text" ng-model="propsIndex.area" class="area">
+            <md-icon class="material-icon">search</md-icon>
+            <label for="area">Location: </label>
+            <input
+              type="text"
+              class="area"
+              id="area"
+              ng-model="propsIndex.area"
+              ng-required="true"
+              placeholder="e.g. Chelsea, SW3 or Sloane Square Station"
+              aria-label="Location (required)"
+              >
           </md-input-container>
+
+          <!-- <div
+            class="alert alert-danger"
+            role="alert"
+            ng-messages="propsIndex.propsIndexForm.area.$error"
+            ng-show="(propsIndex.propsIndexForm.$submitted || propsIndex.propsIndexForm.area.$touched) && propsIndex.propsIndexForm.area.$invalid"
+            >
+            <div ng-message="required">Please enter a location.</div>
+          </div> -->
         </div>
 
         <div>
           <md-input-container class="md-block">
-            <label for="beds">Number of Beds: </label>
-            <input type="number" ng-model="propsIndex.beds" class="bedrooms">
+            <md-icon class="material-icon">single_bed</md-icon>
+            <label for="area">Bedrooms</label>
+              <md-select
+                name="beds"
+                class="beds"
+                id="beds"
+                ng-model="propsIndex.beds"
+                ng-required="true"
+                aria-label="Bedroom (required)"
+                >
+                <md-option ng-value="any" ng-selected="true" ng-disabled="true">Any</md-option>
+                <md-option ng-value="1">1</md-option>
+                <md-option ng-value="2">2</md-option>
+                <md-option ng-value="3">3</md-option>
+                <md-option ng-value="4">4</md-option>
+                <md-option ng-value="5">4</md-option>
+              </md-select>
+              <!-- <label for="beds">Bendroom: </label> -->
+              <!-- <input
+                type="number"
+                class="bedrooms"
+                ng-model="propsIndex.beds"
+                ng-require="required"
+                aria-label="Bedroom (required)"
+                > -->
           </md-input-container>
+
+          <!-- <div
+            class="alert alert-danger"
+            role="alert"
+            ng-messages="propsIndex.propsIndexForm.beds.$error"
+            ng-show="(propsIndex.propsIndexForm.$submitted || propsIndex.propsIndexForm.beds.$touched) && propsIndex.propsIndexForm.beds.$invalid"
+            >
+            <div ng-message="required">Please enter number of bedrooms.</div>
+          </div> -->
         </div>
       </div>
 
       <div>
         <md-card-actions>
-          <md-button ng-click="propsIndex.getProps()" class="md-raised md-primary md-button md-ink-ripple search">Search</md-button>
+          <md-button
+            class="md-raised md-primary md-button md-ink-ripple search"
+            ng-click="propsIndex.getProps()"
+            >
+            Search
+          </md-button>
         </md-card-actions>
       </div>
     </form>

@@ -199,9 +199,19 @@ function GroupsPropsShowCtrl(Group, GroupProperty, GroupPropertyNote, GroupPrope
   vm.listingId           = $stateParams.listing_id;
   vm.listingLat          = null;
   vm.listingLon          = null;
+  vm.latLng              = null;
   vm.labels              = ['Anti Social Behaviour', 'Burglary', 'Bike Theft', 'Drugs', 'Robbery', 'Vehicle Crimes', 'Violent Crimes'];
   vm.crimes              = [];
   vm.crimes.pieCrimeData = [];
+
+  vm.chartOptions = {
+      pieceLabel: {
+        render: 'label',
+        fontColor: '#000',
+        position: 'outside',
+        segment: true
+      }
+    };
 
   Group
     .get($stateParams)
@@ -217,14 +227,40 @@ function GroupsPropsShowCtrl(Group, GroupProperty, GroupPropertyNote, GroupPrope
       .get('/api/groups/:id/properties/:listingId', { params: { id: vm.group.id, listingId: vm.listingId} })
       .then((response) => {
         vm.gps        = response.data;
+        console.log('vm.gps --------->>>', vm.gps);
         vm.listingLat = vm.gps.listing[0].latitude;
         vm.listingLon = vm.gps.listing[0].longitude;
-
-        // const location = 'United Kingdom';
-
-        // getLocationOfProperty(location);
+        vm.latlng     = `${vm.listingLat},${vm.listingLon}`;
+        getPropertyLocation(vm.listingLat, vm.listingLon);
       });
   }
+
+  // $scope.$watch(() => vm.listingLat, getPropertyLocation);
+  // $scope.$watch(() => vm.latLng, getPropertyLocation);
+
+  // console.log('vm.latlng', vm.latlng);
+
+  function getPropertyLocation(lat, lng) {
+    if(!vm.listingLat) return false;
+
+    // console.log('lat', lat);
+    // console.log('lng', lng);
+
+    // console.log('vm.listingLat', vm.listingLat);
+    // console.log('vm.listingLon', vm.listingLon);
+
+    GeoCoder
+      .getLocation(lat, lng)
+      // .getLocation(vm.listingLat, vm.listingLon)
+      .then((response) => {
+        console.log('CONTROLLER', response);
+        vm.property = response;
+
+        return vm.property;
+      });
+  }
+
+  $scope.$watch(() => vm.listingLat, fetchCrimes);
 
   function fetchCrimes() {
     if(!vm.listingLat) return false;
@@ -236,73 +272,6 @@ function GroupsPropsShowCtrl(Group, GroupProperty, GroupPropertyNote, GroupPrope
         return vm.crimes;
       });
   }
-
-  $scope.$watch(() => vm.listingLat, fetchCrimes);
-
-  // $scope.$watch(() => vm.prop, getLocation);
-  //
-  // function getLocation() {
-  //   if(!vm.prop) return false;
-  //
-  //   GeoCoder
-  //     .getLocation(vm.listingLat, vm.listingLon)
-  //     .then((data) => {
-  //       console.log('mapppppppppp', data);
-  //       vm.all = data;
-  //     });
-  // }
-
-  // function getLocationOfProperty(location) {
-  //   GeoCoder
-  //     .getLocation(location)
-  //     .then((data) => {
-  //       const latlng = data;
-  //
-  //       console.log('getLocationOfProperty', data);
-  //
-  //       initMap(latlng);
-  //     });
-  // }
-  //
-  // const latLng = { lat: vm.listingLat, lng: vm.listingLon };
-  //
-  // function initMap(latlng) {
-  //   // Creates The actual Map
-  //   const map = new google.maps.Map(document.getElementById('maps'), {
-  //     center: latlng,
-  //     zoom: 10,
-  //     scrollwheel: false,
-  //     styles: mapStyles.styles
-  //   });
-  //   //marker puts marker on the screen with a animation
-  //
-  //   const marker = new google.maps.Marker({
-  //     animation: google.maps.Animation.BOUNCE,
-  //     position: latlng,
-  //     draggable: true,
-  //     map: map
-  //   });
-  //
-  //   const cityCircle = new google.maps.Circle({
-  //     strokeColor: '#FF0000',
-  //     strokeOpacity: 0.8,
-  //     strokeWeight: 2,
-  //     fillColor: '#AA0000',
-  //     fillOpacity: 0.35,
-  //     map: map,
-  //     center: latlng,
-  //     radius: 5000
-  //   });
-  //
-  //   function editRadius(radius) {
-  //     cityCircle.setRadius(radius * 1000);
-  //   }
-  //
-  //   $scope.$watch(() => vm.range.radius, () => {
-  //     const radius = vm.range.radius;
-  //     editRadius(radius);
-  //   });
-  // }
 
   vm.addNote = () => {
     GroupPropertyNote

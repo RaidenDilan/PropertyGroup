@@ -14,12 +14,17 @@ function PropsIndexCtrl($http, $uibModal, $mdDialog) {
   vm.fullscreen = true;
 
   vm.getProps = () => {
-    $http
+    if(vm.propsIndexForm.$valid) {
+      $http
       .get('/api/properties', { params: { area: vm.area, minimum_beds: vm.beds, maximum_beds: vm.beds }})
       .then((response) => {
         vm.results = response.data;
         console.log('vm.results', vm.results);
       });
+
+      vm.propsIndexForm.$setUntouched();
+      vm.propsIndexForm.$setPristine();
+    }
   };
 
   vm.loadMore = () => {

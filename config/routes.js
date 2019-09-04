@@ -11,7 +11,7 @@ const geoCoder    = require('../lib/geoCoder');
 
 // API
 router.route('/location')
-  .all(secureRoute)
+  // .all(secureRoute)
   .get(geoCoder.getLocation);
 
 router.route('/properties')

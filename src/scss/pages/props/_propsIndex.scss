@@ -9,7 +9,7 @@
   align-items: center;
 
   .searchProperties {
-    width: 50%;
+    width: 70%;
   }
 
   md-card {
@@ -23,6 +23,11 @@
     form {
       display: flex;
       flex-flow: column nowrap;
+
+      label, md-select {
+        line-height: normal;
+        margin: 0;
+      }
 
       .propertiesSearch {
         display: flex;

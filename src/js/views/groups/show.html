@@ -67,26 +67,42 @@
         <md-tabs class="md-primary" md-center-tabs="" md-dynamic-height md-border-bottom>
           <md-tab label="Property Details">
             <md-content class="md-padding">
-              <h2 class="md-display-1 center-align">Property Details</h2>
-              <br>
+              <!-- <h2 class="md-display-1 center-align">Property Details</h2> -->
+              <!-- <br> -->
               <p class="md-body-1">{{ property.description }}</p>
             </md-content>
           </md-tab>
+
           <md-tab label="Maps & Nearby">
-            <md-content class="md-padding">
-              <h2 class="md-display-1 center-align">Maps & Nearby</h2>
-              <br>
-              <div class="maps">
-                <!-- <ng-map center="[{{property.latitude}}, {{property.longitude}}]" zoom="13" scrollwheel="false">
-                  <marker position="[{{property.latitude}}, {{property.longitude}}]" animation="DROP"></marker>
-                </ng-map> -->
-              </div>
+            <md-content>
+              <!-- <h2 class="md-display-1 center-align">Maps & Nearby</h2> -->
+              <!-- <br> -->
+              <!-- <code>{{ groupsPropsShow }}</code> -->
+              <!-- ng-if="property.length && main.currentUser.$resolved" -->
+
+              <property-map
+                property="property"
+                lat="property.latitude"
+                lng="property.longitude"
+                center="groupsPropsShow.latLng"
+                >
+              </property-map>
+
+              <!-- ng-if="property.length && main.currentUser.$resolved" -->
+              <!-- <google-map
+                property="property"
+                lat="property.latitude"
+                lng="property.longitude"
+                center="groupsPropsShow.latLng"
+                >
+              </google-map> -->
             </md-content>
           </md-tab>
+
           <md-tab label="Crime Stats">
             <md-content class="md-padding">
-              <h2 class="md-display-1 center-align">Crime Stats</h2>
-              <br>
+              <!-- <h2 class="md-display-1 center-align">Crime Stats</h2> -->
+              <!-- <br> -->
               <canvas
                 basechart
                 height="50%"
@@ -95,6 +111,7 @@
                 chart-data="groupsPropsShow.crimes.pieCrimeData"
                 chart-labels="groupsPropsShow.labels"
                 chart-legend="false"
+                chart-options="groupsPropsShow.chartOptions"
                 >
               </canvas>
             </md-content>
