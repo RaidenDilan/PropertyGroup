@@ -9,8 +9,8 @@
   align-items: center;
 
   md-card {
-    width: 50%;
-    height: 100%;
+    // width: 50%;
+    // height: 100%;
     padding: 2.5rem;
     display: flex;
     flex-flow: column nowrap;
@@ -52,12 +52,17 @@
         }
       }
     }
+
     form {
       width: 100%;
       margin: 0 auto;
 
       md-input-container {
         width: 100%
+      }
+
+      label {
+        line-height: 20px;
       }
 
       .md-button {
@@ -67,3 +72,92 @@
     }
   }
 }
+
+@include breakpoint(desktop) {
+  .registerForm {
+
+    md-card {
+      width: 50%;
+    }
+  }
+}
+
+@include breakpoint(iPhoneSE) {
+  .registerForm {
+
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhone8) {
+  .registerForm {
+
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhone8Plus) {
+  .registerForm {
+
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhoneX) {
+  .registerForm {
+
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPadPro) {
+  .registerForm {
+    height: 100vh;
+
+    md-card {
+      width: 75%;
+    }
+  }
+}
+
+@include breakpoint(iPadMiniPortrait) {
+  .registerForm {
+    height: 100vh;
+
+    md-card {
+      width: 75%;
+    }
+  }
+}
+// /* ----------- Non-Retina Screens ----------- */
+// @media screen
+//   and (min-device-width: 1200px)
+//   and (max-device-width: 1600px)
+//   and (-webkit-min-device-pixel-ratio: 1) {
+//     .registerForm {
+//       md-card {
+//         width: 50%;
+//       }
+//     }
+// }
+//
+// /* ----------- Retina Screens ----------- */
+// @media screen
+//   and (min-device-width: 1200px)
+//   and (max-device-width: 1600px)
+//   and (-webkit-min-device-pixel-ratio: 2)
+//   and (min-resolution: 192dpi) {
+//     .registerForm {
+//       md-card {
+//         width: 50%;
+//       }
+//     }
+// }

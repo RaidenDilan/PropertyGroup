@@ -21,7 +21,15 @@
 
     <md-card-actions layout="column" layout-align="center center">
       <md-button
-        ng-click="groupsHome.removeUser()"
+        ng-if="main.currentUserId"
+        md-nav-sref="propsIndex"
+        ui-sref="propsIndex"
+        class="md-raised md-primary md-button md-ink-ripple"
+        >
+        Search Properties
+      </md-button>
+      <md-button
+        ng-click="groupsHome.leaveGroup(main.currentUserId)"
         class="md-raised md-warn md-button md-ink-ripple"
         >
         Leave
@@ -63,12 +71,17 @@
 
       <div class="groupJoinedUsers" ng-repeat="user in groupsHome.group.users">
         <div class="dialog-demo-content" layout="column" layout-wrap="wrap" layout-margin="auto" layout-align="center center">
-          <div class="groupUser" style="background-image:url('{{ user.profileImageSRC }}')"></div>
-          <h5>{{ user.username }}</h5>
+          <div
+            class="groupUser"
+            style="background-image:url('{{ user.profileImageSRC }}'); outline: none;"
+            ng-click="groupsHome.showGroupUser(user)"
+            >
+          </div>
+          <h5 style="text-transform: uppercase;">{{ user.username }}</h5>
 
-          <md-dialog-actions layout="row" layout-align="center center">
+          <!-- <md-dialog-actions layout="row" layout-align="center center">
             <md-button class="md-primary md-raised" ng-click="groupsHome.showGroupUser(user)">View</md-button>
-          </md-dialog-actions>
+          </md-dialog-actions> -->
         </div>
       </div>
     </md-card-content>
@@ -86,7 +99,13 @@
 
     <md-content class="md-padding groupsHomePropertiesList">
       <md-card ng-repeat="selected in groupsHome.selected.listing">
-        <md-grid-list class="groupsHomeProperties" layout="column" layout-align="center center">
+        <md-grid-list
+          md-cols="2"
+          md-row-height="3:4"
+          class="groupsHomeProperties"
+          layout="column"
+          layout-align="center center"
+          >
           <!-- class="md-avatar" on image tag -->
           <img class="groupsShowZooplaImage" ng-src="{{ selected.image_645_430_url }}" alt="{{ selected.image_645_430_url }}">
           <md-button class="md-primary md-raised" ui-sref="groupsPropsShow({ id: groupsHome.group.id, listing_id: selected.listing_id })">Show Property</md-button>

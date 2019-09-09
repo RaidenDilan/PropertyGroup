@@ -9,9 +9,7 @@
   <md-dialog-content>
     <div class="md-dialog-content" layout="column" layout-align="center center">
       <ul>
-        <li><img ng-src="{{ propsShow.selected.image_645_430_url }}"></li>
-        <!-- <li><span class="md-headline">Property Decription</span></li>
-        <br> -->
+        <li><img class="propsShowImage" ng-src="{{ propsShow.selected.image_645_430_url }}"></li>
         <li>{{ propsShow.selected.description }}</li>
         <div>
           <span class="md-headline">Agency Info</span>
@@ -20,25 +18,9 @@
         </div>
       </ul>
     </div>
-
-    <!-- <md-list>
-      <md-list-item
-        ng-if="main.isAuthenticated()"
-        md-nav-sref="propsIndex"
-        ui-sref="propsIndex"
-        sref-opts="{ reload: true, notify: true }"
-        name="propsIndex"
-        ng-click="main.close()"
-        >
-        <md-icon md-font-set="material-icons" aria-label="Search Properties">search</md-icon>
-        <p class="md-body-2">Find Properties</p>
-        <span flex></span>
-        <md-icon>chevron_right</md-icon>
-      </md-list-item>
-    </md-list> -->
   </md-dialog-content>
 
-  <md-dialog-actions layout="row" layout-align="center center">
+  <md-dialog-actions>
     <md-button
       class="md-raised md-primary md-button md-ink-ripple"
       ng-click="propsShow.store(selected); propsShow.hide()"

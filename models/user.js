@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, unique: true, trim: true, required: true },
   budget: { type: Number , required: true },
   password: { type: String, required: true },
-  profileImage: { type: String, required: true },
+  profileImage: { type: String, default: 'https://www.searchpng.com/wp-content/uploads/2019/02/Profile-ICon.png', required: true },
   githubId: { type: Number },
   group: { type: mongoose.Schema.ObjectId, ref: 'Group', default: null }
 });

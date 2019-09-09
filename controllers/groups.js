@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 const Group   = require('../models/group');
 const User    = require('../models/user');
+const Vote    = require('../models/vote');
 
 function indexGroup(req, res, next) {
   Group
@@ -73,9 +74,11 @@ function updateGroup(req, res, next) {
 }
 
 function addUserToGroup(req, res, next) {
+  req.body.owner = req.user;
+
   Group
-    // .findById(req.params.id)
-    .findByIdAndUpdate(req.params.id, { $addToSet: { users: req.body.userId } }, { new: true }) // The $pullAll operator removes all instances of the specified values from an existing array. Unlike the $pull operator that removes elements by specifying a query, $pullAll removes elements that match the listed values.
+    .findById(req.params.id)
+    // .findByIdAndUpdate(req.params.id, { $addToSet: { users: req.body.userId } }, { new: true }) // The $pullAll operator removes all instances of the specified values from an existing array. Unlike the $pull operator that removes elements by specifying a query, $pullAll removes elements that match the listed values.
     // .findByIdAndUpdate(req.params.id, { $set: { users: req.body.userId } }, { new: true }) // The $pullAll operator removes all instances of the specified values from an existing array. Unlike the $pull operator that removes elements by specifying a query, $pullAll removes elements that match the listed values.
     .populate('users')
     .exec()
@@ -100,8 +103,12 @@ function addUserToGroup(req, res, next) {
 }
 
 function deleteUserFromGroup(req, res, next) {
+  req.body.owner = req.user;
+
   Group
-    .findByIdAndUpdate(req.params.id, { $pullAll: { users: req.params.userId } }, { new: true }) // The $pullAll operator removes all instances of the specified values from an existing array. Unlike the $pull operator that removes elements by specifying a query, $pullAll removes elements that match the listed values.
+    .findById(req.params.id)
+    // .findByIdAndUpdate(req.params.id, { $push: { values: { $each: [2, 3] }}}, { new: true }) // The $pullAll operator removes all instances of the specified values from an existing array. Unlike the $pull operator that removes elements by specifying a query, $pullAll removes elements that match the listed values.
+    // .findByIdAndUpdate(req.params.id, { $pullAll: { users: req.params.userId } }, { new: true }) // The $pullAll operator removes all instances of the specified values from an existing array. Unlike the $pull operator that removes elements by specifying a query, $pullAll removes elements that match the listed values.
     .populate('users')
     .exec()
     .then((group) => {
@@ -126,15 +133,19 @@ function deleteUserFromGroup(req, res, next) {
 
 function addPropertyRoute(req, res, next) {
   req.body.createdBy = req.user;
+  // req.body.groupId   = req.user.group;
 
   Group
-    .findById(req.user.group)
+    .findById(req.body.group)
+    // .findByIdAndUpdate(req.user.group, { $addToSet: { properties: req.body }}, { new: true })
+    .populate('users')
     .exec()
     .then((group) => {
       if(!group) return res.notFound('Group not found');
 
       const property = group.properties.create(req.body);
-      group.properties.push(property); // group.properties.concat([property]); // this uses $set so no problems
+      group.properties.push(property);
+      // group.properties.concat(property); // this uses $set so no problems
 
       return group
         .save()
@@ -145,8 +156,14 @@ function addPropertyRoute(req, res, next) {
 }
 
 function deletePropertyRoute(req, res, next) {
+  // console.log('req.params -------------------', req.params);
+  // console.log('req.user.group -------------------', req.user.group);
+
   Group
     .findById(req.user.group)
+    // .findByIdAndRemove(req.params.listingId)
+    // .findByIdAndUpdate(req.params.id, { $pull: { properties: req.params.listingId }}, { safe: true, upsert: true })
+    // .findByIdAndUpdate(req.user.group, { $pull: { properties: req.params.listingId }}, { multi: true })
     .exec()
     .then((group) => {
       if(!group) return res.notFound('Group not found');
@@ -309,26 +326,119 @@ function deletePropertyRating(req, res, next) {
     .catch(next);
 }
 
-function addPropertyLike(req, res) {
-  Group.findById(req.params.id, (err, group) => {
-    if(group.dislike.indexOf(req.user.id) === -1) {
-      Group.findByIdAndUpdate(req.params.id, { $addToSet: { likes: req.user.id }}, { new: true }, (err, group) => {
-        if (err) return res.status(500).json({ message: 'Something went wrong with upvoting this group '});
-        return res.status(200).json(group);
+
+
+// 1. GET GROUP
+// 2. GET PROPERTIES
+// 3. FIND SELECTED PROPERTY
+// 4. ADD LIKE OR DISLIKE TO PROPERTY
+function addPropertyLike(req, res, next) {
+  // req.body.createdBy = req.user;
+  Group
+    .findById(req.params.id)
+    .populate('users')
+    .exec()
+    .then((group) => {
+      const prop = group.properties.find((property) => {
+        return property.listingId === req.params.listingId;
       });
-    }
-  });
+
+      if(prop.upvotes.indexOf(req.user.id) === -1) {
+        prop.upvotes.push(req.user.id);
+
+        return group
+          .save()
+          .then((group) => res.json(group));
+      }
+      else if(prop.upvotes.indexOf(req.user.id) !== -1) res.json({ message: `User has voted already` });
+  })
+  .then(() => res.status(204).end())
+  .catch(next);
+
+  // Group
+  //   .findById(req.params.id)
+  //   // .findByIdAndUpdate(req.params.id, { $addToSet: { downvotes: req.user.id }}, { new: true })
+  //   // .findByIdAndUpdate(req.params.id, { $push: { downvotes: req.user.id }}, { new: true })
+  //   .populate('users properties')
+  //   .exec()
+  //   .then((group) => {
+  //     if(!group) return res.notFound('Group not found');
+  //
+  //     const prop = group.properties.find((property) => {
+  //       return property.listingId === req.params.listingId;
+  //     });
+  //
+  //     if(prop.upvotes.indexOf(req.user.id) === -1) {
+  //       console.log('VOTE ALREADY EXISTS --->', prop.upvotes.indexOf(req.user.id) === -1);
+  //
+  //       const vote = prop.upvotes.create(req.body);
+  //       prop.upvotes.push(vote);
+  //
+  //       return group.save();
+  //
+  //       // return Vote
+  //       //   .create(req.body)
+  //       //   .then((vote) => {
+  //       //     if(!vote) return res.notFound('Vote not found');
+  //       //     // console.log('vote --------------------------->>>>>>>>>', vote);
+  //       //     // prop.upvotes.push(vote);
+  //       //     return res.status(200).json(vote);
+  //       //   })
+  //       //   .catch(next);
+  //     }
+  //     // else res.json({ message: `User already voted` });
+  //   })
+  //   .then(() => res.status(200).json(group))
+  //   // .then(() => res.status(204).end())
+  //   .catch(next);
 }
 
-function deletePropertyLike(req, res) {
-  Group.findById(req.params.id, (err, group) => {
-    if(group.likes.indexOf(req.user.id) === -1) {
-      Group.findByIdAndUpdate(req.params.id, { $addToSet: { dislike: req.user.id }}, { new: true }, (err, group) => {
-        if (err) return res.status(500).json({ message: 'Something went wrong with downvoting this group '});
-        return res.status(200).json(group);
+function deletePropertyLike(req, res, next) {
+  // req.body.createdBy = req.user;
+
+  Group
+    .findById(req.params.id)
+    .populate('users')
+    .exec()
+    .then((group) => {
+      const prop = group.properties.find((property) => {
+        return property.listingId === req.params.listingId;
       });
-    }
-  });
+
+      if(prop.downvotes.indexOf(req.user.id) === -1) {
+        prop.downvotes.push(req.user.id);
+
+        return group
+          .save()
+          .then((group) => res.json(group));
+      }
+      else if(prop.downvotes.indexOf(req.user.id) !== -1) res.json({ message: `User has voted already` });
+  })
+  .then(() => res.status(204).end())
+  .catch(next);
+
+  // Group
+  //   .findById(req.params.id)
+  //   // .findByIdAndUpdate(req.params.id, { $addToSet: { downvotes: req.user.id }}, { new: true })
+  //   // .findByIdAndUpdate(req.params.id, { $push: { downvotes: req.user.id }}, { new: true })
+  //   .populate('users')
+  //   .exec()
+  //   .then((group) => {
+  //     if(!group) return res.notFound('Group not found');
+  //
+  //     const prop = group.properties.find((property) => {
+  //       return property.listingId === req.params.listingId;
+  //     });
+  //
+  //     const vote = prop.downvotes.create(req.body);
+  //     prop.downvotes.push(vote);
+  //
+  //     return group
+  //       .save()
+  //       .then(() => res.json(vote));
+  //   })
+  //   .then(() => res.status(204).end())
+  //   .catch(next);
 }
 
 module.exports = {
@@ -347,11 +457,6 @@ module.exports = {
   deleteImage: deletePropertyImage,
   addRating: addPropertyRating,
   deleteRating: deletePropertyRating,
-  addLike: addPropertyLike,
-  deleteLike: deletePropertyLike
+  upvote: addPropertyLike,
+  downvote: deletePropertyLike
 };
-
-// console.log('req.user --------->>>', req.user);
-// console.log('req.params --------->>>', req.params);
-// console.log('req.body --------->>>', req.body);
-// if (mongoose.Types.ObjectId.isValid(req.params.id)) {}

@@ -11,7 +11,7 @@ const geoCoder    = require('../lib/geoCoder');
 
 // API
 router.route('/location')
-  // .all(secureRoute)
+  .all(secureRoute)
   .get(geoCoder.getLocation);
 
 router.route('/properties')
@@ -83,11 +83,11 @@ router.route('/groups/:id/properties/:listingId/ratings')
 router.route('/groups/:id/properties/:listingId/ratings/:ratingId')
   .delete(secureRoute, groups.deleteRating);
 
-router.route('/groups/:id/properties/:listingId/like')
-  .put(secureRoute, groups.addLike);
+router.route('/groups/:id/properties/:listingId/upvote')
+  .put(secureRoute, groups.upvote);
 
-router.route('/groups/:id/properties/:listingId/dislike')
-  .put(secureRoute, groups.deleteLike);
+router.route('/groups/:id/properties/:listingId/downvote')
+  .put(secureRoute, groups.downvote);
 
 // AUTH
 router.route('/login')

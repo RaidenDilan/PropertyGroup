@@ -5,6 +5,8 @@ angular
   .factory('GroupProperty', GroupProperty)
   .factory('GroupPropertyImage', GroupPropertyImage)
   .factory('GroupPropertyNote', GroupPropertyNote)
+  .factory('GroupPropertyLike', GroupPropertyLike)
+  .factory('GroupPropertyDislike', GroupPropertyDislike)
   .factory('GroupPropertyRating', GroupPropertyRating);
 
 Group.$inject = ['$resource'];
@@ -42,10 +44,23 @@ function GroupPropertyNote($resource) {
   });
 }
 
-
 GroupPropertyRating.$inject = ['$resource'];
 function GroupPropertyRating($resource) {
   return new $resource('/api/groups/:id/properties/:listingId/ratings/:ratingId', { id: '@id' }, {
+    update: { method: 'PUT' }
+  });
+}
+
+GroupPropertyLike.$inject = ['$resource'];
+function GroupPropertyLike($resource) {
+  return new $resource('/api/groups/:id/properties/:listingId/upvote', { id: '@id' }, {
+    update: { method: 'PUT' }
+  });
+}
+
+GroupPropertyDislike.$inject = ['$resource'];
+function GroupPropertyDislike($resource) {
+  return new $resource('/api/groups/:id/properties/:listingId/downvote', { id: '@id' }, {
     update: { method: 'PUT' }
   });
 }

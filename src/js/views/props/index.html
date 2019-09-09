@@ -4,124 +4,171 @@
     <md-card-title>
       <md-card-title-text>
         <span class="md-headline">Search Properties</span>
-        <md-divider ng-if="!$last"></md-divider>
       </md-card-title-text>
     </md-card-title>
 
-    <form
-      name="propsIndex.propsIndexForm"
-      class="propsIndex.propsIndexForm"
-      novalidate
-      >
+    <form name="propsIndex.propsIndexForm" class="propsIndex.propsIndexForm" novalidate>
       <div class="propertiesSearch">
-        <div>
-          <md-input-container class="md-block">
-            <md-icon class="material-icon">search</md-icon>
-            <label for="area">Location: </label>
-            <input
-              type="text"
-              class="area"
-              id="area"
-              ng-model="propsIndex.area"
-              ng-required="true"
-              placeholder="e.g. Chelsea, SW3 or Sloane Square Station"
-              aria-label="Location (required)"
-              >
-          </md-input-container>
+        <md-input-container class="md-block">
+          <md-icon class="material-icons">search</md-icon>
+          <label for="area">Location: </label>
 
-          <!-- <div
-            class="alert alert-danger"
-            role="alert"
-            ng-messages="propsIndex.propsIndexForm.area.$error"
-            ng-show="(propsIndex.propsIndexForm.$submitted || propsIndex.propsIndexForm.area.$touched) && propsIndex.propsIndexForm.area.$invalid"
+          <input
+            name="area"
+            class="area"
+            id="area"
+            type="text"
+            autocomplete
+            ng-model="propsIndex.area"
+            geometry="propsIndex.area"
+            placeholder="e.g. Chelsea, SW3 or Sloane Square Station"
+            ng-required="true"
+            aria-label="Location (required)"
             >
-            <div ng-message="required">Please enter a location.</div>
-          </div> -->
-        </div>
+        </md-input-container>
 
-        <div>
-          <md-input-container class="md-block">
-            <md-icon class="material-icon">single_bed</md-icon>
-            <label for="area">Bedrooms</label>
-              <md-select
-                name="beds"
-                class="beds"
-                id="beds"
-                ng-model="propsIndex.beds"
-                ng-required="true"
-                aria-label="Bedroom (required)"
-                >
-                <md-option ng-value="any" ng-selected="true" ng-disabled="true">Any</md-option>
-                <md-option ng-value="1">1</md-option>
-                <md-option ng-value="2">2</md-option>
-                <md-option ng-value="3">3</md-option>
-                <md-option ng-value="4">4</md-option>
-                <md-option ng-value="5">4</md-option>
-              </md-select>
-              <!-- <label for="beds">Bendroom: </label> -->
-              <!-- <input
-                type="number"
-                class="bedrooms"
-                ng-model="propsIndex.beds"
-                ng-require="required"
-                aria-label="Bedroom (required)"
-                > -->
-          </md-input-container>
+        <md-input-container class="md-block">
+          <md-icon class="material-icons">single_bed</md-icon>
+          <label for="beds">Bedrooms</label>
 
-          <!-- <div
-            class="alert alert-danger"
-            role="alert"
-            ng-messages="propsIndex.propsIndexForm.beds.$error"
-            ng-show="(propsIndex.propsIndexForm.$submitted || propsIndex.propsIndexForm.beds.$touched) && propsIndex.propsIndexForm.beds.$invalid"
+          <md-select
+            name="beds"
+            class="beds"
+            id="beds"
+            type="number"
+            ng-model="propsIndex.beds"
+            ng-required="true"
+            aria-label="Bedroom (required)"
             >
-            <div ng-message="required">Please enter number of bedrooms.</div>
-          </div> -->
-        </div>
+            <md-option ng-value="any" ng-selected="true" ng-disabled="true">Any</md-option>
+            <md-option ng-value="1">1</md-option>
+            <md-option ng-value="2">2</md-option>
+            <md-option ng-value="3">3</md-option>
+            <md-option ng-value="4">4</md-option>
+            <md-option ng-value="5">5</md-option>
+            <md-option ng-value="6">6</md-option>
+            <md-option ng-value="7">7</md-option>
+            <md-option ng-value="8">8</md-option>
+            <md-option ng-value="9">9</md-option>
+            <md-option ng-value="10">10</md-option>
+          </md-select>
+        </md-input-container>
       </div>
 
-      <div>
-        <md-card-actions>
-          <md-button
-            class="md-raised md-primary md-button md-ink-ripple search"
-            ng-click="propsIndex.getProps()"
-            >
-            Search
-          </md-button>
-        </md-card-actions>
-      </div>
+      <md-card-actions>
+        <md-button class="md-raised md-primary md-button md-ink-ripple search" ng-click="propsIndex.getProperties()">Search</md-button>
+      </md-card-actions>
     </form>
 
   </md-card>
 
-  <md-card ng-show="propsIndex.showResults()" class="md-padding searchResults" layout="row" layout-wrap>
-    <div class="foundListings">
-      <span class="md-heading listings">Found {{ propsIndex.results.result_count }} Listings</span>
-      <md-divider ng-if="!$last"></md-divider>
+  <div class="foundListings" ng-show="propsIndex.showResults()">
+    <span class="md-heading listings" ng-if="propsIndex.showResults().length !== 0">
+      Found {{ propsIndex.results.result_count }} Properties
+      <!-- <code class="1">{{ propsIndex.showResults.length !== 0 }}</code> -->
+    </span>
+    <span class="md-heading listings" ng-if="propsIndex.showResults().length === 0">
+      Found 0 Properties
+      <!-- <code class="2">{{ propsIndex.showResults.length === 0 }}</code> -->
+    </span>
+    <md-divider ng-if="!$last"></md-divider>
+  </div>
+
+  <!-- <div class="row" ng-show="propsIndex.showResults()"> -->
+  <div class="row">
+    <div class="col-md-6">
+      <div class="md-menu-container" layout-align="center center" layout="column">
+        <md-menu ng-model="toShow">
+          <md-button aria-label="Open Sort options menu" ng-click="propsIndex.openMenu($mdMenu, $event)">Limit Properties Showing</md-button>
+          <md-menu-content>
+            <md-menu-item>
+              <md-button ng-click="propsIndex.maxNum(5)" value="5">5</md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ng-click="propsIndex.maxNum(10)">10</md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ng-click="propsIndex.maxNum(20)">25</md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ng-click="propsIndex.maxNum(30)">25</md-button>
+            </md-menu-item>
+            <md-menu-divider></md-menu-divider>
+            <md-menu-item>
+              <md-button ng-click="propsIndex.maxNum(49)">All</md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+      </div>
     </div>
 
-    <md-card class="md-padding searchResultsCard" ng-repeat="props in propsIndex.results.listing | limitTo: propsIndex.limit">
-      <img ng-src="{{ props.image_645_430_url }}" class="ZooplaImage">
+    <div class="col-md-6">
+      <div class="md-menu-container" layout-align="center center" layout="column">
+        <md-menu ng-model="toShow">
+          <md-button
+            ng-click="propsIndex.openMenu($mdMenu, $event)"
+            aria-label="Open Sort options menu"
+            >
+            Sort By
+            <span ng-if="propsIndex.selected"> - {{ propsIndex.selected }}</span>
+          </md-button>
+          <md-menu-content>
+            <md-menu-item>
+              <md-button ng-click="propsIndex.sortMethod('price')">Price - Low to High</md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ng-click="propsIndex.sortMethod('-price')">Price - High to Low</md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ng-click="propsIndex.sortMethod('-popular')">Popular</md-button>
+            </md-menu-item>
+            <md-menu-divider></md-menu-divider>
+            <md-menu-item>
+              <md-button ng-click="propsIndex.sortMethod('-createdAt')">Newest First</md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ng-click="propsIndex.sortMethod('createdAt')">Oldest First</md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+      </div>
+    </div>
+  </div>
 
-      <md-card-title>
-        <md-card-title-text>
-          <span class="md-headline">{{ props.displayable_address }}</span>
-        </md-card-title-text>
-      </md-card-title>
+  <!-- <div layout="column" layout-center="center center" layout-wrap> -->
+  <div class="container">
+    <!-- <div layout="row" layout-center="center center" layout-wrap ng-show="propsIndex.showResults"> -->
+    <div class="row align-items-center" ng-show="propsIndex.showResults">
+      <md-card
+        class="searchResultsCard col col-md-3"
+        ng-repeat="props in propsIndex.results.listing | orderBy:  propsIndex.sortBy"
+        ng-animate="'animate'"
+        ng-show="$index < propsIndex.toShow"
+        >
+        <img ng-src="{{ props.image_645_430_url }}" class="ZooplaImage">
+        <!-- <img ng-src="{{ props.floor_plan[0] }}" class="ZooplaImage"> -->
 
-      <md-card-content>
-        <h3><strong>Address: </strong>{{ props.displayable_address }}</h3>
-        <h3><strong>Price Per Month: </strong>£{{ props.rental_prices.per_month }}</h3>
-        <h3><strong>Bedrooms: </strong>{{ props.num_bedrooms }}</h3>
-        <h3><strong>Property Type: </strong>{{ props.property_type }}</h3>
-      </md-card-content>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{ props.displayable_address }}</span>
+          </md-card-title-text>
+        </md-card-title>
 
-      <md-card-actions layout="row" layout-align="end center">
-        <md-button class="md-raised md-primary md-button md-ink-ripple moreInfoButton" ng-click="propsIndex.showProperty(props)">More Info</md-button>
+        <md-card-content>
+          <h3><strong>Address: </strong>{{ props.displayable_address }}</h3>
+          <h3><strong>Price Per Month: </strong>£{{ props.rental_prices.per_month | number : fractionSize }}</h3>
+          <h3><strong>Bedrooms: </strong>{{ props.num_bedrooms }}</h3>
+          <h3><strong>Property Type: </strong>{{ props.property_type }}</h3>
+        </md-card-content>
+
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-raised md-primary md-button md-ink-ripple moreInfoButton" ng-click="propsIndex.showProperty(props)">More Info</md-button>
+        </md-card-actions>
+      </md-card>
+
+      <md-card-actions class="loadMore">
+        <md-button class="md-raised md-primary md-button md-ink-ripple" ng-if="propsIndex.results.listing" ng-click="propsIndex.loadMore()">Load More</md-button>
       </md-card-actions>
-    </md-card>
-
-    <md-card-actions class="loadMore">
-      <md-button ng-if="propsIndex.results.listing" ng-click="propsIndex.loadMore()" class="md-raised md-primary md-button md-ink-ripple loadMore">Load More Properties</md-button>
-    </md-card-actions>
-  </md-card>
+    </div>
+  </div>
 </md-content>

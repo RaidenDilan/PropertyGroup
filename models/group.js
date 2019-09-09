@@ -1,46 +1,49 @@
 const mongoose = require('mongoose');
 const s3       = require('../lib/s3');
 const Promise  = require('bluebird');
+// const ObjectId = mongoose.Schema.ObjectId;
 
-// GROUP USERS
 const userImageSchema = new mongoose.Schema({
   file: { type: String },
   createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' }
+}, {
+  timestamps: { createdAt: true, updatedAt: false }
 });
 
 const userNoteSchema = new mongoose.Schema({
-  text: { type: String },
+  text: { type: String, required: true },
   createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' }
+}, {
+  timestamps: { createdAt: true, updatedAt: false }
 });
 
 const userRatingSchema = new mongoose.Schema({
-  opinion: { type: Number },
+  stars: { type: Number, required: true },
   createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' }
+}, {
+  timestamps: { createdAt: true, updatedAt: false }
 });
 
-// PROPERTY
 const propertySchema = new mongoose.Schema({
   listingId: { type: String },
   images: [ userImageSchema ],
   notes: [ userNoteSchema ],
   rating: [ userRatingSchema ],
-  like: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
-  dislike: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
-  // createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' }
+  upvotes: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
+  downvotes: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
+  createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' }
+}, {
+  timestamps: { createdAt: true, updatedAt: false }
 });
 
-// GROUP
 const groupSchema = new mongoose.Schema({
   properties: [ propertySchema ],
-  groupName: { type: String },
+  groupName: { type: String, required: true },
   owner: { type: mongoose.Schema.ObjectId, ref: 'User' }
 }, {
-  usePushEach : true
+  usePushEach: true, // equivalent of $push with $each array of documents
+  timestamps: { createdAt: true, updatedAt: true }
 });
-
-// propertySchema.pre('save', function(next) {
-//   return this.model('Company').findByIdAndUpdate(this.company, { $push: { ideas: this._id }}, next);
-// });
 
 groupSchema
   .virtual('users', {

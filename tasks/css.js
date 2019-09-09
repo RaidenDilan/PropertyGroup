@@ -14,13 +14,15 @@ const browserSync      = require('browser-sync');
 const config           = require('../package').gulp;
 
 const fetchVendorCss = () => {
-  return gulp.src(bowerFiles(config.selectors.css))
+  return gulp
+    .src(bowerFiles(config.selectors.css))
     .pipe(stripCssComments()) // Removing the sourcemaps
     .pipe(concat(config.vendor.css));
 };
 
 const fetchLocalCss = () => {
-  return gulp.src(`${config.src.scss}${config.main.scss}`)
+  return gulp
+    .src(`${config.src.scss}${config.main.scss}`)
     .pipe(sass({ style: 'expanded' }))
     .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
     .pipe(concat(config.output.css));
@@ -30,7 +32,8 @@ const buildCss = () => {
   const vendorCss = fetchVendorCss();
   const localCss  = fetchLocalCss();
 
-  return eventStream.merge(vendorCss, localCss)
+  return eventStream
+    .merge(vendorCss, localCss)
     .pipe(order([config.vendor.css,config.output.css]))
     .pipe(concat(config.output.css))
     .pipe(sourcemaps.init())

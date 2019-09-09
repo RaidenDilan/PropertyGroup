@@ -19,8 +19,8 @@ function GroupsIndexCtrl(Group) {
     .then((response) => vm.all = response);
 }
 
-GroupsNewCtrl.$inject = ['Group', 'User', 'filterFilter', '$state', '$auth', '$scope'];
-function GroupsNewCtrl(Group, User, filterFilter, $state, $auth, $scope) {
+GroupsNewCtrl.$inject = ['$state', '$auth', '$scope', 'Group', 'User', 'filterFilter'];
+function GroupsNewCtrl($state, $auth, $scope, Group, User, filterFilter) {
   const vm = this;
 
   vm.group       = {};
@@ -102,8 +102,8 @@ function GroupsNewCtrl(Group, User, filterFilter, $state, $auth, $scope) {
   });
 }
 
-GroupsHomeCtrl.$inject = ['Group', 'GroupUser', 'GroupProperty', '$stateParams', '$scope', '$state', '$http', '$auth', '$mdDialog'];
-function GroupsHomeCtrl(Group, GroupUser, GroupProperty, $stateParams, $scope, $state, $http, $auth, $mdDialog) {
+GroupsHomeCtrl.$inject = ['$scope', '$state', '$http', '$auth', 'Group', 'GroupUser', 'GroupProperty', '$stateParams', '$mdDialog'];
+function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupProperty, $stateParams, $mdDialog) {
   const vm = this;
 
   vm.group      = {};
@@ -170,6 +170,17 @@ function GroupsHomeCtrl(Group, GroupUser, GroupProperty, $stateParams, $scope, $
       // });
     };
 
+    vm.leaveGroup = (user) => {
+      GroupUser
+        .delete({ id: vm.group.id, userId: user })
+        .$promise
+        .then((group) => {
+          const index = vm.group.users.indexOf(user);
+          vm.group.users.splice(index, 1);
+          $state.go('groupsNew');
+        });
+    };
+
     // // When the 'enter' animation finishes...
     // function afterShowAnimation(scope, element, options) {
     //   console.log('scope, element, options --------->>>>>>', scope, element, options);
@@ -188,8 +199,8 @@ function GroupsHomeUser($scope, $mdDialog, selectedUser) {
   vm.showUserId = (userId) => $mdDialog.hide(userId);
 }
 
-GroupsPropsShowCtrl.$inject = ['Group', 'GroupProperty','GroupPropertyNote', 'GroupPropertyImage', 'Crimes',  'GroupPropertyRating', '$stateParams', '$state', '$http', '$uibModal', '$scope', '$mdDialog', '$filter', 'GeoCoder'];
-function GroupsPropsShowCtrl(Group, GroupProperty, GroupPropertyNote, GroupPropertyImage, Crimes, GroupPropertyRating, $stateParams, $state, $http, $uibModal, $scope, $mdDialog, $filter, GeoCoder) {
+GroupsPropsShowCtrl.$inject = ['$stateParams', '$state', '$http', '$scope', 'API', 'Group', 'GroupProperty', 'GroupPropertyNote', 'GroupPropertyImage', 'GroupPropertyRating', 'Crimes', '$uibModal', '$mdDialog', 'GeoCoder'];
+function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, API, Group, GroupProperty, GroupPropertyNote, GroupPropertyImage, GroupPropertyRating, Crimes, $uibModal, $mdDialog, GeoCoder) {
   const vm = this;
 
   vm.max                 = 5;
@@ -203,15 +214,21 @@ function GroupsPropsShowCtrl(Group, GroupProperty, GroupPropertyNote, GroupPrope
   vm.labels              = ['Anti Social Behaviour', 'Burglary', 'Bike Theft', 'Drugs', 'Robbery', 'Vehicle Crimes', 'Violent Crimes'];
   vm.crimes              = [];
   vm.crimes.pieCrimeData = [];
+  vm.upvote              = null;
+  vm.downvote            = null;
 
   vm.chartOptions = {
-      pieceLabel: {
-        render: 'label',
-        fontColor: '#000',
-        position: 'outside',
-        segment: true
-      }
-    };
+    responsive: true,  // set to false to remove responsiveness. Default responsive value is true.
+    legend: {
+      display: true,
+      position: 'right',
+      // fullWidth: true,
+      labels: {
+        fontColor: 'rgb(255, 99, 132)'
+      },
+      onClick: (e) => e.stopPropagation(),
+    }
+  };
 
   Group
     .get($stateParams)
@@ -224,14 +241,13 @@ function GroupsPropsShowCtrl(Group, GroupProperty, GroupPropertyNote, GroupPrope
 
   function fetchGroupProperty() {
     $http
-      .get('/api/groups/:id/properties/:listingId', { params: { id: vm.group.id, listingId: vm.listingId} })
+      .get('/api/groups/:id/properties/:listingId', { params: { id: vm.group.id, listingId: vm.listingId } })
       .then((response) => {
-        vm.gps        = response.data;
-        console.log('vm.gps --------->>>', vm.gps);
-        vm.listingLat = vm.gps.listing[0].latitude;
-        vm.listingLon = vm.gps.listing[0].longitude;
+        vm.properties = response.data;
+        vm.listingLat = vm.properties.listing[0].latitude;
+        vm.listingLon = vm.properties.listing[0].longitude;
         vm.latlng     = `${vm.listingLat},${vm.listingLon}`;
-        getPropertyLocation(vm.listingLat, vm.listingLon);
+        // getPropertyLocation(vm.listingLat, vm.listingLon);
       });
   }
 
@@ -253,14 +269,14 @@ function GroupsPropsShowCtrl(Group, GroupProperty, GroupPropertyNote, GroupPrope
       .getLocation(lat, lng)
       // .getLocation(vm.listingLat, vm.listingLon)
       .then((response) => {
-        console.log('CONTROLLER', response);
+        // console.log('CONTROLLER', response);
         vm.property = response;
 
         return vm.property;
       });
   }
 
-  $scope.$watch(() => vm.listingLat, fetchCrimes);
+  // $scope.$watch(() => vm.listingLat, fetchCrimes);
 
   function fetchCrimes() {
     if(!vm.listingLat) return false;
@@ -357,23 +373,39 @@ function GroupsPropsShowCtrl(Group, GroupProperty, GroupPropertyNote, GroupPrope
     });
   };
 
-  // function upVote(ideaId, $event) {
-  //   $http
-  //     .put(`${API}/groups/${$stateParams.id}/properties/${listingId}/like`)
-  //     .then(() => {
-  //       vm.group = Group.get($stateParams);
-  //       // console.log(angular.element($event.target).children('.upvotes'));
-  //     });
-  // }
-  //
-  // function downVote(ideaId, $event) {
-  //   $http
-  //     .put(`${API}/groups/${$stateParams.id}/properties/${listingId}/dislike`)
-  //     .then(() => {
-  //       vm.group = Group.get($stateParams);
-  //       // console.log($event.target);
-  //     });
-  // }
+  // $scope.$watch(() => vm.upvote, upvote);
+
+  vm.upvote = (listingId, $event) => {
+    // GroupPropertyLike
+    //   .save({ id: vm.group.id, listingId: vm.listingId }, vm.newUpvote)
+    //   .$promise
+
+    $http
+      .put(`${API}/groups/${$stateParams.id}/properties/${listingId}/upvote`)
+      .then((upvote) => {
+        console.log('upvote ------>>>', upvote);
+        vm.prop.upvotes.push(upvote);
+        // vm.upvotes = vm.upvotes === flag ? 'None' : flag;
+        // console.log(vm.upvotes);
+        vm.upvotes = {};
+        // console.log(angular.element($event.target).children('.upvotes'));
+      });
+  };
+
+  vm.downvote = (listingId, $event) => {
+    // GroupPropertyDislike
+    //   .update({ id: vm.group.id, listingId: vm.listingId }, vm.downvote)
+    //   .$promise
+
+    $http
+      .put(`${API}/groups/${$stateParams.id}/properties/${listingId}/downvote`)
+      .then((downvote) => {
+        console.log('downvote ------>>>', downvote);
+        vm.prop.downvotes.push(downvote);
+        vm.downvotes = {};
+        // console.log($event.target);
+      });
+  };
 }
 
 UserImageModalCtrl.$inject = ['selectedImage', '$mdDialog'];
@@ -387,8 +419,8 @@ function UserImageModalCtrl(selectedImage, $mdDialog) {
   vm.showUserId = (userId) => $mdDialog.hide(userId);
 }
 
-GroupsEditCtrl.$inject = ['Group', 'GroupUser', 'User', '$stateParams', '$auth', '$state', '$scope', 'filterFilter', '$rootScope', '$uibModal'];
-function GroupsEditCtrl(Group, GroupUser, User, $stateParams, $auth, $state, $scope, filterFilter, $rootScope, $uibModal) {
+GroupsEditCtrl.$inject = ['$stateParams', '$auth', '$state', '$scope', 'Group', 'GroupUser', 'User', 'filterFilter', '$uibModal'];
+function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, User, filterFilter, $uibModal) {
   const vm = this;
 
   vm.group       = Group.get($stateParams);
@@ -514,20 +546,20 @@ function GroupUserModalCtrl(selectedUser, User, Group, GroupUser, $uibModalInsta
   vm.selected = selectedUser;
   vm.group    = Group.get($stateParams);
 
-  vm.removeUser = (user) => {
-    console.log('user ===>', user);
-
-    GroupUser
-      .delete({ id: vm.group.id, userId: vm.selected.id })
-      .$promise
-      .then((group) => {
-        const index = vm.group.users.indexOf(user);
-
-        vm.group.users.splice(index, 1);
-
-        $state.go($state.current, {}, { reload: true });
-      });
-  };
+  // vm.removeUser = (user) => {
+  //   console.log('user ===>', user);
+  //
+  //   GroupUser
+  //     .delete({ id: vm.group.id, userId: vm.selected.id })
+  //     .$promise
+  //     .then((group) => {
+  //       const index = vm.group.users.indexOf(user);
+  //
+  //       vm.group.users.splice(index, 1);
+  //
+  //       $state.go($state.current, {}, { reload: true });
+  //     });
+  // };
 
   vm.closeModal = () => $uibModalInstance.close(vm.selected);
 

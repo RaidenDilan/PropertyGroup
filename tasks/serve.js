@@ -2,7 +2,6 @@ const gulp        = require('gulp');
 const nodemon     = require('gulp-nodemon');
 const browserSync = require('browser-sync').create();
 const config      = require('../package').gulp;
-// const { env }     = require('./config/environment');
 
 const serve = () => {
   let started = false;
@@ -19,14 +18,10 @@ const serve = () => {
     script: config.main.server,
     ignore: [config.destDir, config.srcDir],
     env: { NODE_ENV: 'development' }
-    // env: { env: 'development' }
   })
   .on('start', () => {
-    if (!started) {
-      browserSync.reload();
-    } else {
-      started = false;
-    }
+    if (!started) browserSync.reload();
+    else started = false;
   });
 };
 

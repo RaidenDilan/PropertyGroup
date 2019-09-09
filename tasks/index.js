@@ -1,15 +1,16 @@
-const gulp             = require('gulp');
-const gulpIf           = require('gulp-if');
-const htmlhint         = require('gulp-htmlhint');
-const htmlmin          = require('gulp-htmlmin');
-const inject           = require('gulp-inject');
-const browserSync      = require('browser-sync');
-const config           = require('../package').gulp;
+const gulp        = require('gulp');
+const gulpIf      = require('gulp-if');
+const htmlhint    = require('gulp-htmlhint');
+const htmlmin     = require('gulp-htmlmin');
+const inject      = require('gulp-inject');
+const browserSync = require('browser-sync');
+const config      = require('../package').gulp;
 
 const validateIndex = () => {
-  return gulp.src(`${config.srcDir}${config.main.index}`)
-  .pipe(htmlhint({'doctype-first': false}))
-  .pipe(htmlhint.reporter('htmlhint-stylish'));
+  return gulp
+    .src(`${config.srcDir}${config.main.index}`)
+    .pipe(htmlhint({'doctype-first': false}))
+    .pipe(htmlhint.reporter('htmlhint-stylish'));
 };
 
 const buildIndex = () => {

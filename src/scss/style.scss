@@ -2,6 +2,7 @@
 
 @import 'reset';
 @import 'material';
+@import 'google';
 
 @import 'variables';
 @import 'structure';
@@ -10,10 +11,11 @@
 @import 'buttons';
 @import 'forms';
 @import 'animations';
-@import 'devices';
+// @import 'devices';
 
 @import 'modules/footer';
 @import 'modules/navbar';
+@import 'modules/queries';
 
 @import 'pages/auth/loginForm';
 @import 'pages/auth/registerForm';

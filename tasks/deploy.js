@@ -1,4 +1,4 @@
-const gulp             = require('gulp');
+const gulp = require('gulp');
 
 gulp.task('deploy', () => {
   global.production = true;

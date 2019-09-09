@@ -1,12 +1,18 @@
 .usersShow {
   width: 100%;
-  height: calc(100vh - 50px);
+  // height: calc(100vh - 50px);
+  height: 100%;
   min-width: 100%;
   min-height: 100%;
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+
+  md-card .md-actions:not(.layout-column) .md-button:not(.md-icon-button),
+  md-card md-card-actions:not(.layout-column) .md-button:not(.md-icon-button) {
+    margin: 6px 8px;
+  }
 
   md-card {
     width: 50%;
@@ -19,7 +25,6 @@
       outline: none;
       // border: 2px solid #FFFFFF;
     }
-
     md-card-content {
       padding: 30px;
       display: flex;
@@ -31,16 +36,82 @@
         margin: 0 auto;
       }
     }
-
     md-card-actions {
       display: flex;
       flex-flow: row nowrap;
-      justify-content: center;
-      align-items: center;
+      // justify-content: center;
+      // align-items: center;
 
-      button, a {
+      .md-button, .md-icon-button {
+      // .md-button:not(.md-icon-button) {
+        // margin: 6px 8px;
+        // margin-left: 8px;
+        // margin-right: 8px;
+      }
+      .md-button, a {
         width: 50%;
       }
+    }
+  }
+}
+
+@include breakpoint(iPhoneSE) {
+  .usersShow {
+    height: 100vh;
+
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+
+@include breakpoint(iPhone8) {
+  .usersShow {
+    height: 100vh;
+
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhone8Plus) {
+  .usersShow {
+    height: 100vh;
+
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhoneX) {
+  .usersShow {
+    height: 100vh;
+
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPadMiniPortrait) {
+  .usersShow {
+    height: 100vh;
+
+    md-card {
+      width: 75%;
+    }
+  }
+}
+
+@include breakpoint(iPadPro) {
+  .usersShow {
+    height: 100vh;
+
+    md-card {
+      width: 75%;
     }
   }
 }

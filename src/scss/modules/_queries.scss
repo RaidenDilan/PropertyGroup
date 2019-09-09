@@ -1,0 +1,113 @@
+/* NOTE Breakpoint Sizes */
+$screen-iPhoneSE-max-width: 320px; // iPhone SE
+
+$screen-iPhoneX-max-width: 375px; // iPhone X
+$screen-iPhoneX-max-height: 812px; // iPhone X
+
+$screen-iPhone8-min-width: 375px; // iPhone 6/7/8
+$screen-iPhone8-max-width: 375px; // iPhone 6/7/8
+$screen-iPhone8-min-height: 667px; // iPhone 6/7/8
+$screen-iPhone8-max-height: 667px; // iPhone 6/7/8
+
+$screen-iPhone8Plus-min-width: 414px; // iPhone 6/7/8 PLUS
+$screen-iPhone8Plus-max-width: 414px; // iPhone 6/7/8 PLUS
+$screen-iPhone8Plus-min-height: 736px; // iPhone 6/7/8 PLUS
+$screen-iPhone8Plus-max-height: 736px; // iPhone 6/7/8 PLUS
+
+$screen-iPad-max-width: 768px; // iPad
+
+$screen-iPadMini-min-width: 768px; // iPad Mini
+$screen-iPadMini-max-width: 768px; // iPad Mini
+$screen-iPadMini-min-height: 1024px; // iPad Mini
+$screen-iPadMini-max-height: 1024px; // iPad Mini
+
+$screen-desktop-max-width: 1024px; // Desktop
+$screen-desktop-min-width: 1024px; // Desktop
+
+$screen-iPadPro-min-width: 1024px; // Desktop
+$screen-iPadPro-max-width: 1024px; // Desktop
+$screen-iPadPro-min-height: 1366px; // Desktop
+$screen-iPadPro-max-height: 1366px; // Desktop
+
+/* NOTE BREAKPOINT MIXIN */
+@mixin breakpoint($media) {
+	@if $media == iPhoneSE {
+		@media only screen
+			and (max-device-width: $screen-iPhoneSE-max-width) { @content; }
+	}
+	@else if $media == iPhoneX {
+		@media only screen
+			and (max-device-width: $screen-iPhoneX-max-width)
+			and (max-device-height: $screen-iPhoneX-max-height) { @content; }
+	}
+	@else if $media == iPhone8 {
+		@media only screen
+			and (max-device-width: $screen-iPhone8-max-width)
+			and (min-device-width: $screen-iPhone8-min-width)
+			and (max-device-height: $screen-iPhone8-max-height)
+			and (min-device-height: $screen-iPhone8-min-height) { @content; }
+	}
+	@else if $media == iPhone8Plus {
+		@media only screen
+			and (max-device-width: $screen-iPhone8Plus-max-width)
+			and (min-device-width: $screen-iPhone8Plus-min-width)
+			and (max-device-height: $screen-iPhone8Plus-max-height)
+			and (min-device-height: $screen-iPhone8Plus-min-height) { @content; }
+	}
+	@else if $media == iPhone8Plus {
+		@media only screen
+			and (max-device-width: $screen-iPhone8Plus-width) { @content; }
+	}
+	@else if $media == iPad {
+		@media only screen
+			and (max-device-width: $screen-iPad-max-width) { @content; }
+	}
+	@else if $media == iPadMiniPortrait {
+		@media only screen
+			and (max-device-width: $screen-iPadMini-max-width)
+			and (min-device-width: $screen-iPadMini-min-width)
+			and (min-device-height: $screen-iPadMini-min-height)
+			and (max-device-height: $screen-iPadMini-max-height)
+			and (orientation: portrait) { @content; }
+	}
+	@else if $media == iPadMiniLandscape {
+		@media only screen
+			and (max-device-height: $screen-iPadMini-max-width)
+			and (min-device-height: $screen-iPadMini-min-width)
+			and (min-device-width: $screen-iPadMini-min-height)
+			and (max-device-width: $screen-iPadMini-max-height)
+			and (orientation: landscape) { @content; }
+	}
+	@else if $media == iPadPro {
+		@media only screen
+			and (min-device-height: $screen-iPadPro-min-height)
+			and (max-device-height: $screen-iPadPro-max-height)
+			and (min-device-width: $screen-iPadPro-min-width)
+			and (max-device-width: $screen-iPadPro-max-width)
+			and (-webkit-min-device-pixel-ratio: 1.5) { @content; }
+	}
+	@else if $media == desktop {
+		@media only screen
+			// and (max-device-width: $screen-desktop-max-width)
+			and (min-device-width: $screen-desktop-min-width) { @content; }
+	}
+}
+
+// // breakpoints
+// $S: 480px;
+// $M: 768px;
+// $L: 1170px;
+//
+// // media queries
+//
+// @mixin MQ($canvas) {
+//   @if $canvas == S {
+//     @media only screen and (min-width: $S) { @content; }
+//   }
+//   @else if $canvas == M {
+//     @media only screen and (min-width: $M) { @content; }
+//   }
+//   @else if $canvas == L {
+//     @media only screen and (min-width: $L) { @content; }
+//   }
+// }

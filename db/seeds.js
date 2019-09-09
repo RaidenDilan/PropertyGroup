@@ -67,20 +67,32 @@ User
         properties: [{
   				listingId: '50639974',
   				rating: [{
-            opinion: 5,
+            stars: 5,
             createdBy: users[0]
           }],
   				notes: [{
             text: 'MEOW!',
-            createdBy: users[0]
+            createdBy: users[1]
           }],
-  				images: [],
+  				images: [{
+            file: 'https://www.searchpng.com/wp-content/uploads/2019/02/Profile-ICon.png',
+            createdBy: users[1]
+          }],
+          // upvotes: [
+          //   users[1],
+          //   users[2]
+          // ],
+          // downvotes: [
+          //   users[3],
+          //   users[4]
+          // ],
           createdBy: users[0]
 			  }],
         users: [
           users[0],
           users[1],
-          users[2]
+          users[2],
+          users[3]
         ]
       }]);
   })

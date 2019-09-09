@@ -1,6 +1,6 @@
 {
   "name": "project-3",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "main": "server.js",
   "engines": {
@@ -10,8 +10,12 @@
     "postinstall": "bower install && gulp deploy",
     "start": "node server.js"
   },
-  "author": "Mike Hayden <mickyginger@gmail.com> (https://github.com/mickyginger)",
+  "author": "Raiden Dilan <raiden18@me.com> (https://github.com/raidendilan)",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raidendilan/pNc-App/issues"
+  },
+  "homepage": "https://github.com/raidendilan/pNc-App#readme",
   "gulp": {
     "srcDir": "src/",
     "destDir": "public/",

@@ -9,10 +9,6 @@ function register(req, res, next) {
   User
     .create(req.body)
     .then((user) => {
-      // mail.send(user.email, 'Thanks for registering!', `Hey ${user.username}! Thanks for registering, for real!`, (err) => {
-      //   if(err) next(err);
-      //   res.status(201).json({ message: 'Registration successful'});
-      // });
       return res.status(201).json({ message: 'Registration Successful' });
     })
     .catch((err, next) => {

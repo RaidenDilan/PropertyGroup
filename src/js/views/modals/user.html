@@ -1,32 +1,41 @@
-<md-dialog aria-label="User modal">
+<md-dialog
+  class="userModal"
+  aria-label="User Modal"
+  >
   <md-toolbar>
-    <div class="md-toolbar-tools" layout="row" layout-align="center center">
-
+    <div
+      class="md-toolbar-tools"
+      layout="row"
+      layout-align="center center"
+      >
       <h2>{{ groupsHomeUser.selected.username }}</h2>
-      <!-- <span flex></span> -->
-      <!-- <md-button class="md-icon-button" ng-click="groupsHomeUser.hide()">
-        <md-icon md-src="../images/home.jpg" aria-label="Close dialog"></md-icon>
-        <md-icon md-svg-src="/images/baseline-close-24px.svg" aria-label="Close dialog"></md-icon>
-        <i class="material-icons">X</i>
-      </md-button> -->
     </div>
   </md-toolbar>
 
   <md-dialog-content>
-    <div class="md-dialog-content" layout="column" layout-align="center center">
-      <img style="margin: auto; max-width: 100px;" alt="{{ groupsHomeUser.selected.profileImageSRC }}" ng-src="{{ groupsHomeUser.selected.profileImageSRC }}">
+    <div
+      class="md-dialog-content"
+      layout="column"
+      layout-align="center center"
+      >
+      <div
+        class="userModalImage"
+        alt="{{ groupsHomeUser.selected.profileImageSRC }}"
+        style="background-image:url('{{ groupsHomeUser.selected.profileImageSRC }}');"
+        >
+      </div>
       <br>
       <h3><strong>Budget:</strong> £{{ groupsHomeUser.selected.budget }}</h3>
     </div>
   </md-dialog-content>
 
-  <md-dialog-actions layout-align="center center">
-    <!-- <span flex></span> -->
-
-    <md-button ng-click="groupsHomeUser.hide()" aria-label="Close" class="md-primary md-raised">Close</md-button>
-
-    <!-- <md-button ng-click="groupsHomeUser.showUserId(groupsHomeUser.selected.username)">User ID</md-button> -->
-    <!-- <md-button ng-click="groupsHomeUser.cancel()" aria-label="Cancel">Cancel</md-button> -->
-
+  <md-dialog-actions>
+    <md-button
+      class="md-raised md-primary md-button md-ink-ripple"
+      ng-click="groupsHomeUser.hide()"
+      aria-label="Close"
+      >
+      Close
+    </md-button>
   </md-dialog-actions>
 </md-dialog>

@@ -1,6 +1,7 @@
 .loginForm {
   width: 100%;
-  height: calc(100vh - 50px);
+  // height: calc(100vh - 50px);
+  height: 100%;
   min-width: 100%;
   min-height: 100%;
   display: flex;
@@ -9,7 +10,8 @@
   align-items: center;
 
   md-card {
-    width: 50%;
+    // width: calc(100vw / 2);
+    // width: 50%;
     padding: 2.5rem;
     display: flex;
     flex-flow: column nowrap;
@@ -49,6 +51,59 @@
         margin: 0;
       }
 
+    }
+  }
+}
+
+// @include breakpoint(desktop) {
+//   .loginForm {
+//   }
+// }
+
+@include breakpoint(iPhoneSE) {
+  .loginForm {
+    height: 100vh;
+
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhoneX) {
+  .loginForm {
+    height: 100vh;
+  }
+}
+
+@include breakpoint(iPhone8) {
+  .loginForm {
+    height: 100vh;
+  }
+}
+
+@include breakpoint(iPhone8Plus) {
+  .loginForm {
+    height: 100vh;
+  }
+}
+
+@include breakpoint(iPadPro) {
+  .loginForm {
+    height: 100vh;
+
+    md-card {
+      width: 50%;
+    }
+  }
+}
+
+@include breakpoint(iPadMiniPortrait) {
+  .loginForm {
+    height: 100vh;
+
+    md-card {
+      width: 50%;
     }
   }
 }

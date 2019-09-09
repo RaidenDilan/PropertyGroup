@@ -32,3 +32,59 @@
     }
   }
 }
+
+@include breakpoint(iPhoneSE) {
+  .usersEdit {
+    
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhone8) {
+  .usersEdit {
+
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhone8Plus) {
+  .usersEdit {
+
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhoneX) {
+  .usersEdit {
+
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPadMiniPortrait) {
+  .usersEdit {
+    height: 100vh;
+
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPadPro) {
+  .usersEdit {
+    height: 100vh;
+
+    md-card {
+      width: 100%;
+    }
+  }
+}

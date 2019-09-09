@@ -1,10 +1,14 @@
 <md-content class="md-padding groupsShowProp">
   <md-card>
 
-    <div ng-repeat="property in groupsPropsShow.gps.listing">
+    <div ng-repeat="property in groupsPropsShow.properties.listing">
       <div class="groupsPropsShow_title">
         <div>
-          <div class="md-card-image propertyImage" style="background-image:url('{{ property.image_645_430_url }}');"></div>
+          <div
+            class="md-card-image propertyImage"
+            style="background-image:url('{{ property.image_645_430_url }}');"
+            >
+          </div>
         </div>
 
         <div>
@@ -18,10 +22,11 @@
             <ul>
               <li><md-icon class="material-icons">single_bed</md-icon>{{ property.num_bedrooms }} bedroom</li>
               <li><md-icon class="material-icons">bathtub</md-icon>{{ property.num_bathrooms }} bathroom</li>
+              <br>
               <li><span class="md-headline">£{{ property.rental_prices.per_month | number : fractionSize }}</span></li>
             </ul>
 
-            <md-divider ng-if="$last"></md-divider>
+            <md-divider></md-divider>
 
             <ul>
               <li><img class="agencyLogo" ng-src="{{ property.agent_logo }}" alt="Agency Logo"></li>
@@ -45,23 +50,55 @@
             </md-button>
           </md-card-actions>
 
-          <md-divider ng-if="$last"></md-divider>
+          <md-divider></md-divider>
 
           <md-card-actions layout="row" layout-align="start center">
             <md-card-icon-actions>
 
-              <md-button class="md-icon-button" aria-label="Favorite">
-                <md-icon class="material-icons">favorite</md-icon>
+              <!-- <md-button class="md-icon-button" aria-label="Favorite">
+                <md-icon class="material-icons" ng-click="groupsPropsShow.like(properties._id, $event)">
+                  favorite
+                  <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                  (<span class="likes">{{ properties.likes.length }}</span>)
+                </md-icon>
+              </md-button> -->
+
+              <md-button
+                class="md-raised md-primary md-button md-ink-ripple"
+                ng-click="groupsPropsShow.upvote(property.listing_id, $event)"
+                aria-label="Like"
+                >
+                <!-- {{ groupsPropsShow.properties }} -->
+                <!-- Like -->
+                <!-- <i class="fas fa-thumbs-up"></i> -->
+                <md-icon class="material-icons">thumb_up</md-icon>
+                <!-- <i class="fa fa-arrow-up" aria-hidden="true"></i> -->
+                (<span class="likes">{{ groupsPropsShow.group.properties[0].upvotes.length }}</span>)
+              </md-button>
+              <md-button
+                class="md-raised md-primary md-button md-ink-ripple"
+                ng-click="groupsPropsShow.downvote(property.listing_id, $event)"
+                aria-label="Dislike"
+                >
+                <!-- ng-click="groupsPropsShow.addDislike(properties.listingId, $event)" -->
+                <!-- Dislike -->
+                <!-- <i class="fas fa-thumbs-down"></i> -->
+                <md-icon class="material-icons">thumb_down</md-icon>
+                <!-- <i class="fa fa-arrow-down" aria-hidden="true"></i> -->
+                (<span class="likes">{{ groupsPropsShow.group.properties[0].downvotes.length }}</span>)
               </md-button>
 
-              <md-button class="md-icon-button" aria-label="Share">
+              <!-- <md-button class="md-icon-button" aria-label="Share">
                 <md-icon class="material-icons">share</md-icon>
-              </md-button>
+              </md-button> -->
 
             </md-card-icon-actions>
           </md-card-actions>
         </div>
       </div>
+
+      <!-- CHANGE MD-CONTENT TO MD-CARD-CONTENT -->
+      <!-- ADD CLASS TO MD-CARD-CONTENTS -->
 
       <md-content class="propertyTabs">
         <md-tabs class="md-primary" md-center-tabs="" md-dynamic-height md-border-bottom>
@@ -120,47 +157,6 @@
       </md-content>
 
       <md-card-content>
-        <div class="ratingList">
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline">Ratings</span>
-              <!-- <md-divider></md-divider> -->
-            </md-card-title-text>
-          </md-card-title>
-
-          <md-divider></md-divider>
-
-          <div
-            ng-repeat="rating in groupsPropsShow.prop.rating track by $index"
-            class="col s4 userRatings"
-            >
-            <img class="md-card-image userRatingImage" ng-src="{{ rating.createdBy.profileImageSRC }}" alt="User Image">
-
-            <div class="userRatingOpinion">
-              <strong>{{ rating.createdBy.username }}</strong>
-              <span
-                uib-rating ng-model="rating.opinion"
-                max="groupsPropsShow.max"
-                read-only="groupsPropsShow.isReadonly"
-                on-hover="hoveringOver(value)"
-                on-leave="overStar = null"
-                >
-              </span>
-            </div>
-
-            <md-button
-              type="button"
-              class="md-raised md-warn md-button md-ink-ripple"
-              ng-click="groupsPropsShow.deleteRating(rating)"
-              aria-label="Close"
-              >
-              <i class="material-icons left"></i>x
-            </md-button>
-          </div>
-        </div>
-
-        <md-divider ng-if="$last"></md-divider>
-
         <div class="ratings">
           <form
             class="ratingForm"
@@ -176,7 +172,7 @@
                   name="rating"
                   id="rating"
                   uib-rating
-                  ng-model="groupsPropsShow.newRating.opinion"
+                  ng-model="groupsPropsShow.newRating.stars"
                   max="groupsPropsShow.max"
                   read-only="groupsPropsShow.isReadonlyfalse"
                   on-hover="hoveringOver(value)"
@@ -193,6 +189,43 @@
             </div>
           </form>
         </div>
+
+        <br>
+        <md-divider></md-divider>
+
+        <div class="ratingList">
+          <md-card-title>
+            <md-card-title-text>
+              <span class="md-headline">Ratings</span>
+            </md-card-title-text>
+          </md-card-title>
+
+          <md-divider></md-divider>
+
+          <div
+            ng-repeat="rating in groupsPropsShow.prop.rating track by $index"
+            class="col s4 userRatings"
+            >
+            <img class="md-card-image userRatingImage" ng-src="{{ rating.createdBy.profileImageSRC }}" alt="User Image">
+
+            <div class="userRatingOpinion">
+              <strong>{{ rating.createdBy.username }}</strong>
+              <span
+                uib-rating ng-model="rating.stars"
+                max="groupsPropsShow.max"
+                read-only="groupsPropsShow.isReadonly"
+                on-hover="hoveringOver(value)"
+                on-leave="overStar = null"
+                >
+              </span>
+            </div>
+
+            <smart-confirm confirm="groupsPropsShow.deleteRating(rating)">
+              <md-icon class="material-icons">close</md-icon>
+            </smart-confirm>
+          </div>
+        </div>
+
       </md-card-content>
 
       <md-divider></md-divider>
@@ -200,44 +233,9 @@
       <md-card-content>
         <md-card-title>
           <md-card-title-text>
-            <span class="md-headline">Images</span>
+            <span class="md-headline">Add Image</span>
           </md-card-title-text>
         </md-card-title>
-
-        <div class="groupsPropsShowUserImages row">
-          <div class="col s4" ng-repeat="image in groupsPropsShow.prop.images track by $index">
-
-            <md-card>
-              <md-card-header>
-
-                <md-card-avatar>
-                  <img src="{{ image.createdBy.profileImageSRC }}" width="30" height="30" style="border-radius:50px;margin-right:10px" />
-                </md-card-avatar>
-
-                <md-card-header-text>
-                  <span class="md-title">{{ image.createdBy.username }}</span>
-                  <!-- <span class="md-subhead">{{ image.createdBy.createdAt }}</span> -->
-                </md-card-header-text>
-
-              </md-card-header>
-
-              <img ng-click="groupsPropsShow.showUserImage(image)" class="userImages img-fluid img-thumbnail" style="background-image:url('{{ image.imageSRC }}')">
-
-              <md-card-actions>
-                <md-button
-                  style="width:100%; margin:0;"
-                  type="button"
-                  class="md-raised md-warn md-button md-ink-ripple"
-                  ng-click="groupsPropsShow.deleteImage(image)"
-                  aria-label="Close"
-                  >
-                  Delete
-                </md-button>
-              </md-card-actions>
-            </md-card>
-
-          </div>
-        </div>
 
         <div class="col s4">
           <form
@@ -278,65 +276,82 @@
             </md-button>
           </form>
         </div>
+
+        <br>
+        <md-divider></md-divider>
+
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Images</span>
+          </md-card-title-text>
+        </md-card-title>
+
+        <md-divider></md-divider>
+        <br>
+
+        <div class="groupsPropsShowUserImages row">
+          <div class="col s4" ng-repeat="image in groupsPropsShow.prop.images track by $index">
+
+            <md-card>
+              <md-card-header>
+
+                <md-card-avatar>
+                  <img
+                    ng-src="{{ image.createdBy.profileImageSRC }}"
+                    width="30"
+                    height="30"
+                    style="border-radius:50px;margin-right:10px"
+                    />
+                </md-card-avatar>
+
+                <md-card-header-text>
+                  <span class="md-title">{{ image.createdBy.username }}</span>
+                  <!-- <span class="md-subhead">{{ image.createdBy.createdAt }}</span> -->
+                </md-card-header-text>
+
+              </md-card-header>
+
+              <img
+                class="userImages img-fluid img-thumbnail"
+                ng-click="groupsPropsShow.showUserImage(image)"
+                style="background-image:url('{{ image.imageSRC }}')"
+                >
+
+              <md-card-actions>
+                <!-- <md-button
+                  style="width:100%; margin:0;"
+                  type="button"
+                  class="md-raised md-warn md-button md-ink-ripple"
+                  ng-click="groupsPropsShow.deleteImage(image)"
+                  aria-label="Close"
+                  >
+                  Delete
+                </md-button> -->
+                <smart-confirm confirm="groupsPropsShow.deleteImage(image)">
+                  <md-icon class="material-icons">close</md-icon>
+                </smart-confirm>
+              </md-card-actions>
+            </md-card>
+
+          </div>
+        </div>
       </md-card-content>
 
       <md-divider></md-divider>
 
       <md-card-content>
-        <md-card-title>
-          <md-card-title-text>
-            <span class="md-headline">Notes</span>
-          </md-card-title-text>
-        </md-card-title>
-
-        <div class="col s6 addComment">
-          <div class="row">
-            <div ng-repeat="note in groupsPropsShow.prop.notes track by $index" class="col s3">
-
-              <md-card>
-                <md-card-header>
-
-                  <md-card-avatar>
-                    <img src="{{ note.createdBy.profileImageSRC }}" width="30" height="30" style="border-radius:50px;margin-right:10px" />
-                  </md-card-avatar>
-
-                  <md-card-header-text>
-                    <span class="md-title">{{ note.createdBy.username }}</span>
-                  </md-card-header-text>
-
-                </md-card-header>
-
-                <md-card-content>
-                  <span class="md-body-1 noteText">{{ note.text }}</span>
-                </md-card-content>
-
-                <md-card-actions>
-                  <md-button
-                    style="width:100%; margin:0;"
-                    type="button"
-                    class="md-raised md-warn md-button md-ink-ripple"
-                    ng-click="groupsPropsShow.deleteNote(note)"
-                    aria-label="Close"
-                    >
-                    Delete
-                  </md-button>
-                </md-card-actions>
-              </md-card>
-            </div>
-          </div>
-
-          <md-divider></md-divider>
+        <div class="addComment">
+          <md-card-title>
+            <md-card-title-text>
+              <span class="md-headline">Add Review</span>
+            </md-card-title-text>
+          </md-card-title>
 
           <div class="row">
             <form
               ng-submit="groupsPropsShow.addNote()"
               ng-if="main.isAuthenticated()"
               >
-              <md-card-title>
-                <md-card-title-text>
-                  <span class="md-headline">Add Comments</span>
-                </md-card-title-text>
-              </md-card-title>
               <div class="col s12">
                 <md-input-container class="md-block">
                   <!-- <md-icon class="material-icons">group_work</md-icon> -->
@@ -344,8 +359,8 @@
                     ng-model="groupsPropsShow.newNote.text"
                     md-maxlength="150"
                     maxlength="150"
-                    placeholder="Post a commnet.."
-                    aria-label="Comment (required)"
+                    placeholder="Post a review.."
+                    aria-label="Review (required)"
                     style="width:100%;"
                     >
                   </textarea>
@@ -366,19 +381,76 @@
             </form>
           </div>
 
+          <md-divider></md-divider>
+
+          <div class="row">
+            <md-card-title>
+              <md-card-title-text>
+                <span class="md-headline">Reviews</span>
+              </md-card-title-text>
+            </md-card-title>
+
+            <md-divider></md-divider>
+
+            <md-list class="comment-list">
+              <md-list-item class="md-3-line" ng-repeat="note in groupsPropsShow.prop.notes track by $index" ng-click="null">
+                <img ng-src="{{ note.createdBy.profileImageSRC }}" class="md-avatar" alt="{{ note.createdBy.profileImageSRC }}" />
+                <div class="md-list-item-text" layout="column">
+                  <h3>{{ note.createdBy.username }}</h3>
+                  <!-- <h4>{{ note.createdBy.what }}</h4> -->
+                  <p>{{ note.text }}</p>
+
+                </div>
+
+                <smart-confirm confirm="groupsPropsShow.deleteNote(note)">
+                  <md-icon class="material-icons">close</md-icon>
+                </smart-confirm>
+              </md-list-item>
+              <md-divider></md-divider>
+            </md-list>
+
+            <!-- <div ng-repeat="note in groupsPropsShow.prop.notes track by $index" class="col s3">
+
+              <md-card>
+
+                <md-card-header>
+
+                  <md-card-avatar>
+                    <img src="{{ note.createdBy.profileImageSRC }}" width="30" height="30" style="border-radius:50px;margin-right:10px" />
+                  </md-card-avatar>
+
+                  <md-card-header-text>
+                    <span class="md-title">{{ note.createdBy.username }}</span>
+                  </md-card-header-text>
+
+                </md-card-header>
+
+                <md-card-content>
+                  <span class="md-body-1 noteText">{{ note.createdBy.text }}</span>
+                </md-card-content>
+
+                <md-card-actions>
+                  <md-button
+                    style="width:100%; margin:0;"
+                    type="button"
+                    class="md-raised md-warn md-button md-ink-ripple"
+                    ng-click="groupsPropsShow.deleteNote(note)"
+                    aria-label="Close"
+                    >
+                    Delete
+                  </md-button>
+
+                  <smart-confirm confirm="groupsPropsShow.deleteNote(note)">
+                    <md-icon class="material-icons">close</md-icon>
+                  </smart-confirm>
+                </md-card-actions>
+              </md-card>
+            </div> -->
+          </div>
+
         </div>
       </md-card-content>
     </div>
 
   </md-card>
 </md-content>
-
-<!-- <div class="col s6">
-  <div class="md-panel-content">
-    <md-button class="md-primary md-raised dialog-open-button" ng-click="groupsPropsShow.like(like._id, $event)">Upvote<i class="fa fa-arrow-up" aria-hidden="true"></i>(<span class="likes">{{ like.likes.length }}</span>)</md-button>
-    <md-button class="md-primary md-raised menu-open-button" ng-click="groupsPropsShow.dislike(like._id, $event)">Downvote<i class="fa fa-arrow-down" aria-hidden="true"></i>(<span class="likes">{{ like.dislikes.length }}</span>)</md-button>
-
-    <button class="btn btn-primary" ng-click="groupsPropsShow.like(like._id)">Like<i class="fa fa-arrow-up" aria-hidden="true"></i>({{ like.likes.length }})</button>
-    <button class="btn btn-primary" ng-click="groupsPropsShow.dislike(dislikes._id)">Dislike<i class="fa fa-arrow-down" aria-hidden="true"></i>({{ like.dislikes.length }})</button>
-  </div>
-</div> -->
