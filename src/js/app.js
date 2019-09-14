@@ -8,5 +8,6 @@ angular
     'ngMessages',
     'ngMaterial',
     'chart.js',
+    'typer',
     'angular-momentjs'
   ]);

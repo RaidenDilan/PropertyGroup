@@ -11,11 +11,12 @@
 @import 'buttons';
 @import 'forms';
 @import 'animations';
-// @import 'devices';
 
 @import 'modules/footer';
 @import 'modules/navbar';
 @import 'modules/queries';
+
+@import 'pages/home';
 
 @import 'pages/auth/loginForm';
 @import 'pages/auth/registerForm';
@@ -28,5 +29,5 @@
 @import 'pages/groups/groupsShow';
 @import 'pages/groups/groupsEdit';
 
-@import 'pages/props/propsIndex';
-@import 'pages/props/propsShow';
+@import 'pages/properties/propertiesIndex';
+@import 'pages/properties/propertiesShow';

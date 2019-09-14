@@ -1,4 +1,4 @@
-<md-content class="md-padding usersShow">
+<md-content class="md-padding usersShow .md-whiteframe-24dp">
   <md-card>
     <img ng-src="{{ usersShow.user.profileImageSRC }}" class="md-card-image profileImageSRC" alt="User Avatar">
 
@@ -11,12 +11,34 @@
     <md-divider ng-if="!$last"></md-divider>
 
     <md-card-content class="usersShowContent" layout="column" layout-align="center start">
-      <div>
-        <h3><strong>Username: </strong>{{ usersShow.user.username }}</h3>
+      <div class="basicInformation">
+        <h2>Basic information</h2>
+        <h3>
+          <span>Username </span>
+          <span>{{ usersShow.user.username }}</span>
+        </h3>
         <br>
-        <h3><strong>Email: </strong>{{ usersShow.user.email }}</h3>
+        <h3>
+          <span>Email </span>
+          <span><a href="mailto:{{ usersShow.user.email }}">{{ usersShow.user.email }}</a></span>
+        </h3>
         <br>
-        <h3><strong>Budget: </strong>£{{ usersShow.user.budget }}</h3>
+      </div>
+
+      <div class="propertyInformation">
+        <h2>Property information</h2>
+        <h3>
+          <span>Budget </span>
+          <span>£{{ usersShow.user.budget }}</span>
+        </h3>
+      </div>
+
+      <div class="groupInformation">
+        <h2>Group information</h2>
+        <h3>
+          <span>Group Name </span>
+          <span><a ui-sref="groupsHome({ id: main.currentUserGroupId })">{{ main.user.group.groupName }}</a></span>
+        </h3>
       </div>
     </md-card-content>
 

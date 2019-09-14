@@ -2,15 +2,16 @@ const mongoose  = require('mongoose');
 const bcrypt    = require('bcrypt');
 const s3        = require('../lib/s3');
 // const validator = require('validator');
+const avatar = 'https://www.searchpng.com/wp-content/uploads/2019/02/Profile-ICon.png';
 
 const userSchema = new mongoose.Schema({
   username: { type: String, unique: true, trim: true, required: true },
   email: { type: String, unique: true, trim: true, required: true },
   budget: { type: Number , required: true },
   password: { type: String, required: true },
-  profileImage: { type: String, default: 'https://www.searchpng.com/wp-content/uploads/2019/02/Profile-ICon.png', required: true },
+  profileImage: { type: String, default: avatar, required: true },
   githubId: { type: Number },
-  group: { type: mongoose.Schema.ObjectId, ref: 'Group', default: null }
+  group: { type: mongoose.Schema.ObjectId, ref: 'Group', default: null } // ---> REFERENCED SCHEMA
 });
 
 // The raw value of `email` is lowercased

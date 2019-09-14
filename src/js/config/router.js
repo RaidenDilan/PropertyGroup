@@ -7,6 +7,10 @@ function Router($locationProvider, $stateProvider, $urlRouterProvider) {
   $locationProvider.html5Mode(true);
 
   $stateProvider
+    .state('home', {
+      url: '/',
+      templateUrl: '/js/views/home.html'
+    })
     .state('groupsIndex', {
       url: '/groups',
       templateUrl: 'js/views/groups/index.html',
@@ -22,11 +26,6 @@ function Router($locationProvider, $stateProvider, $urlRouterProvider) {
       templateUrl: 'js/views/groups/home.html',
       controller: 'GroupsHomeCtrl as groupsHome'
     })
-    // .state('groupsEdit', {
-    //   url: '/groups/:id/users/:userId/edit',
-    //   templateUrl: 'js/views/groups/edit.html',
-    //   controller: 'GroupsEditCtrl as groupsEdit'
-    // })
     .state('groupsEdit', {
       url: '/groups/:id/edit',
       templateUrl: 'js/views/groups/edit.html',
@@ -47,16 +46,11 @@ function Router($locationProvider, $stateProvider, $urlRouterProvider) {
       templateUrl: 'js/views/users/edit.html',
       controller: 'UsersEditCtrl as usersEdit'
     })
-    .state('propsIndex', {
+    .state('propertiesIndex', {
       url: '/properties',
-      templateUrl: 'js/views/props/index.html',
-      controller: 'PropsIndexCtrl as propsIndex'
+      templateUrl: 'js/views/properties/index.html',
+      controller: 'PropertiesIndexCtrl as propertiesIndex'
     })
-    // .state('propsShow', {
-    //   url: '/properties/:listing_id',
-    //   templateUrl: 'js/views/props/show.html',
-    //   controller: 'PropsShowCtrl as propsShow'
-    // })
     .state('register', {
       url: '/register',
       templateUrl: 'js/views/auth/register.html',
@@ -68,6 +62,6 @@ function Router($locationProvider, $stateProvider, $urlRouterProvider) {
       controller: 'LoginCtrl as login'
     });
 
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/');
 
 }

@@ -1,105 +1,142 @@
-// md-card .md-actions:not(.layout-column) .md-button:not(.md-icon-button):first-of-type,
-// md-card md-card-actions:not(.layout-column) .md-button:not(.md-icon-button):first-of-type {
-//   margin: 0.5rem 0;
-//   width: 100%;
-// }
+md-content.groupsHome {
+  background-color: $brand-color;
 
-md-card .md-actions.layout-column .md-button:not(.md-icon-button), md-card md-card-actions.layout-column .md-button:not(.md-icon-button) {
-  margin: 0.5rem 0;
-}
+  // md-card {
+  //   margin: 2.5rem auto;
+  // }
 
-.addImageForm {
-  button {
-    width: 100%;
-    margin: 1rem 0;
-    padding: 0;
-  }
-}
-
-.uploadPhoto {
-  label {
-    width: 100%;
-    margin: 1rem 0;
-    padding: 0;
-  }
-}
-
-.groupsHome {
-  md-card {
-    width: 25%;
+  md-card-header {
     margin: 0 auto;
   }
-
-  md-card .md-actions,
-  md-card md-card-actions {
+  div.md-card-actions {
     display: flex;
     flex-flow: column wrap;
-    // justify-content: space-around;
 
-    a {
-      width: 100%;
-      padding: 0;
-      margin: 1.5rem 0;
+    a:first-child {
+      margin: 16px auto 6px auto;
     }
 
-    button, .md-button, md-button {
-      margin: 1rem 0;
-      width: 100%;
+    a, button {
+      width: 12rem;
+      margin: 6px auto;
     }
   }
-  md-card {
-    md-card-actions {
-      // display: flex;
-      // flex-flow: column wrap;
-      // justify-content: space-around;
 
-      a {
-        // margin: 1.5rem 0;
-        // padding: 0;
-        width: 100%;
-      }
+  md-card.groupsHomeFollowers {
+    margin: 2.5rem 8px;
 
-      button, .md-button {
-        // margin: 0.5rem 0;
-        // width: 100%;
+    md-card-content {
+      padding: 8px 16px;
+
+      .joinedUsers {
+        .dialog-demo-content {
+          margin: 0;
+        }
       }
     }
-  }
-}
-
-.groupUser {
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  width: 60px;
-  height: 60px;
-  border-radius: 100%;
-}
-
-.groupsHomePropertiesList {
-  width: 100%;
-  display: flex;
-  flex-flow: row wrap;
-
-  md-card {
-    width: 32%;
-  }
-}
-
-.groupsHomeProperties {
-  md-card {
     md-card-title {
-      // display: flex;
-      // flex-flow: row wrap;
-      // justify-content: center;
-      // align-items: center;
-      // background-color: rgb(250,250,250);
-      margin: 0 auto 2.5rem auto;
+      margin: 0 auto;
+    }
+    .groupUser {
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      border-radius: 100%;
+      width: 40px;
+      height: 40px;
+    }
+    h5 {
+      font-size: 15px;
     }
   }
-  .md-button {
-    width: 100%;
-    min-width: 100%;
-    margin: 0;
+  md-card.groupsHomeProperties {
+    padding: 0;
+    // margin: 1rem auto;
+    // margin: 2.5rem 8px;
+    background: transparent;
+    box-shadow: none;
+
+    md-card-title {
+      width: 100%;
+      border-radius: 15px;
+      background: $white;
+      margin: 0 auto 2rem auto;
+      text-align: center;
+      padding: 16px;
+    }
+
+    md-card {
+      padding: 6px;
+
+      md-card-title {
+        margin: 0 auto;
+      }
+      .md-button {
+        width: 100%;
+        min-width: 100%;
+        margin: 0;
+      }
+    }
+
+    div.groupsHomePropertiesContainer {
+      display: flex;
+      flex-flow: row wrap;
+      padding: 0 4px;
+
+      md-card {
+        padding: 16px;
+        width: 296px;
+        min-height: 500px;
+        display: flex;
+        flex-flow: column nowrap;
+
+        div.zooplaImage {
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          height: 200px;
+          border-radius: 10px;
+        }
+        md-card {
+
+        }
+        md-card-title {
+          padding: 24px 0 0;
+
+          .md-headline {
+            color: $brand-color;
+            font-size: 18px;
+            font-weight: 900;
+          }
+        }
+        md-card-content {
+          padding: 24px 0 0;
+
+          h3 {
+            padding: 4px 0;
+            line-height: 20px;
+          }
+        }
+        md-card-actions {
+          padding: 24px 0 0;
+          margin: 0;
+        }
+      }
+    }
   }
 }
+
+// .addImageForm {
+//   button {
+//     width: 100%;
+//     margin: 1rem 0;
+//     padding: 0;
+//   }
+// }
+// .uploadPhoto {
+//   label {
+//     width: 100%;
+//     margin: 1rem 0;
+//     padding: 0;
+//   }
+// }

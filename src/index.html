@@ -26,14 +26,14 @@
 </head>
   <body ng-controller="MainCtrl as main" class="site" ng-cloak>
 
-    <md-toolbar class="md-hue-2">
+    <md-toolbar class="md-hue-2 navBar">
       <div class="md-toolbar-tools">
         <md-button class="md-icon-button" aria-label="Settings" ng-click="main.toggleLeft()">
           <md-icon md-font-set="material-icons">menu</md-icon>
         </md-button>
 
-        <!-- <h2 ui-sref="propsIndex"><span>PNC</span></h2> -->
-        <h2><span>PNC</span></h2>
+        <!-- <h2 ui-sref="propertiesIndex"><span>PNC</span></h2> -->
+        <a ui-sref="home" aria-label="Home"><h2><span>PNC</span></h2></a>
         <span flex></span>
 
         <md-button
@@ -72,11 +72,11 @@
         <md-content role="navigation">
           <md-list>
             <md-list-item
+              name="propertiesIndex"
               ng-if="main.isAuthenticated()"
-              md-nav-sref="propsIndex"
-              ui-sref="propsIndex"
+              md-nav-sref="propertiesIndex"
+              ui-sref="propertiesIndex"
               sref-opts="{ reload: true, notify: true }"
-              name="propsIndex"
               ng-click="main.close()"
               >
               <md-icon md-font-set="material-icons" aria-label="Search Properties">search</md-icon>
@@ -85,12 +85,12 @@
               <md-icon>chevron_right</md-icon>
             </md-list-item>
             <md-list-item
+              name="groupsHome"
               ng-if="(main.isAuthenticated() && main.currentUserGroupId)"
               ng-click="main.close()"
               md-nav-sref="groupsHome({ id: main.currentUserGroupId })"
               ui-sref="groupsHome({ id: main.currentUserGroupId })"
               sref-opts="{ reload: true, notify: true }"
-              name="groupsHome"
               >
               <md-icon md-font-set="material-icons" aria-label="My Group">group_work</md-icon>
               <p class="md-body-2">My Group</p>
@@ -98,11 +98,11 @@
               <md-icon>chevron_right</md-icon>
             </md-list-item>
             <md-list-item
+              name="groupsNew"
               ng-if="main.isAuthenticated() && !main.currentUserGroupId"
               md-nav-sref="groupsNew"
               ui-sref="groupsNew"
               sref-opts="{ reload: true, notify: true }"
-              name="groupsNew"
               ng-click="main.close()"
               >
               <md-icon md-font-set="material-icons" aria-label="Create New Group">add</md-icon>
@@ -111,11 +111,11 @@
               <md-icon>chevron_right</md-icon>
             </md-list-item>
             <md-list-item
+              name="usersShow"
               ng-if="main.isAuthenticated()"
               md-nav-sref="usersShow({ id: main.currentUserId })"
               ui-sref="usersShow({ id: main.currentUserId })"
               sref-opts="{ reload: true, notify: true }"
-              name="usersShow"
               ng-click="main.close()"
               >
               <md-icon md-font-set="material-icons" aria-label="Account">account_circle</md-icon>
@@ -124,10 +124,10 @@
               <md-icon>chevron_right</md-icon>
             </md-list-item>
             <md-list-item
+              name="logout"
               ng-if="main.isAuthenticated()"
               ng-click="main.logout(); main.close();"
               md-nav-href="#"
-              name="logout"
               >
               <md-icon md-font-set="material-icons" aria-label="Logout">exit_to_app</md-icon>
               <p class="md-body-2">Logout</p>
@@ -135,11 +135,11 @@
               <md-icon>chevron_right</md-icon>
             </md-list-item>
             <md-list-item
+              name="login"
               ng-if="!main.isAuthenticated()"
               md-nav-sref="login"
               ui-sref="login"
               sref-opts="{ reload: true, notify: true }"
-              name="login"
               ng-click="main.close()"
               >
               <md-icon md-font-set="material-icons" aria-label="Login">exit_to_app</md-icon>
@@ -148,11 +148,11 @@
               <md-icon>chevron_right</md-icon>
             </md-list-item>
             <md-list-item
+              name="register"
               ng-if="!main.isAuthenticated()"
               md-nav-sref="register"
               ui-sref="register"
               sref-opts="{ reload: true, notify: true }"
-              name="register"
               ng-click="main.close()"
               >
               <md-icon md-font-set="material-icons" aria-label="Register">create</md-icon>
@@ -172,13 +172,13 @@
       </md-content> -->
 
     </section>
-    <div class="message" ng-if="main.message">{{ main.message }}</div>
+    <div class="message alert alert-info" ng-if="main.message">{{ main.message }}</div>
 
     <main ui-view class="site-content"></main>
 
     <footer>
-      <md-toolbar class="md-hue-2 md-scroll-shrink">
-        <div layout="row" layout-align="center center" flex>Made With <span>&hearts;</span> @ General Assembly London</div>
+      <md-toolbar class="md-hue-2 md-scroll-shrink footer-toolbar">
+        <div>Made With <span>&hearts;</span> @ General Assembly London</div>
       </md-toolbar>
     </footer>
     <!-- <footer>WE DA BEST    - Big <span>&hearts;</span> from The Pretty Mongooses</footer> -->

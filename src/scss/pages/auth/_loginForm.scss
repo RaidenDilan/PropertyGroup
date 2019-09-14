@@ -1,17 +1,9 @@
 .loginForm {
-  width: 100%;
-  // height: calc(100vh - 50px);
-  height: 100%;
-  min-width: 100%;
-  min-height: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
+  background-color: $brand-color;
 
-  md-card {
-    // width: calc(100vw / 2);
-    // width: 50%;
+  .loginFormCard {
+    width: 50%;
+    margin: 5rem auto 0 auto;
     padding: 2.5rem;
     display: flex;
     flex-flow: column nowrap;
@@ -27,12 +19,8 @@
 
       span {
         font-size: 15px;
-        // display: flex;
-        // flex-flow: row nowrap;
-        // justify-content: center;
 
         a {
-          // padding: 0 0 0 0.5rem;
           color: #337ab7;
           text-decoration: underline;
         }
@@ -42,15 +30,12 @@
       width: 100%;
       margin: 0 auto;
 
-      md-icon {
-        // margin: 0 10px;
-      }
+      // md-icon {}
 
       button {
         width: 100%;
         margin: 0;
       }
-
     }
   }
 }

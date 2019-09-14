@@ -3,6 +3,7 @@ const s3       = require('../lib/s3');
 const Promise  = require('bluebird');
 // const ObjectId = mongoose.Schema.ObjectId;
 
+// ---> EMBEDDED SCHEMAS
 const userImageSchema = new mongoose.Schema({
   file: { type: String },
   createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' }
@@ -19,19 +20,27 @@ const userNoteSchema = new mongoose.Schema({
 
 const userRatingSchema = new mongoose.Schema({
   stars: { type: Number, required: true },
-  createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' }
+  createdBy: { type: mongoose.Schema.ObjectId, ref: 'User', unique: true }
 }, {
   timestamps: { createdAt: true, updatedAt: false }
 });
 
+const voteSchema = new mongoose.Schema({
+  like: { type: Number, default: 0 },
+  user: { type: mongoose.Schema.ObjectId, ref: 'User' }
+});
+
 const propertySchema = new mongoose.Schema({
   listingId: { type: String },
-  images: [ userImageSchema ],
-  notes: [ userNoteSchema ],
-  rating: [ userRatingSchema ],
-  upvotes: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
-  downvotes: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
+  images: [ userImageSchema ], // ---> EMBEDDED REFERENCES
+  notes: [ userNoteSchema ], // ---> EMBEDDED REFERENCES
+  ratings: [ userRatingSchema ], // ---> EMBEDDED REFERENCES
+  votes: [ voteSchema ], // ---> EMBEDDED REFERENCES
   createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' }
+
+  // likes: [{ type: mongoose.Schema.ObjectId, ref: 'Vote', default: 0 }],
+  // upvotes: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
+  // downvotes: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
 }, {
   timestamps: { createdAt: true, updatedAt: false }
 });

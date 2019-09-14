@@ -1,20 +1,28 @@
-html, body {
-  height: 100%;
-}
-
-body {
-  background: $primary-color;
-  // font-family: $body-font;
-  font-family: $lato-font;
-}
-
-main {
-  background: $white;
-  min-height: 100%;
-}
-
 .alert {
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 5px 10px;
+  margin-bottom: 0;
   font-size: 15px;
+  border: 1px solid #ff5252;
+}
+
+.alert-danger {
+  color: #FFFFFF;
+  background-color: #ff5252;
+  border-color: #ff5252;
+}
+
+// .col-centered {
+//   float: none;
+//   margin: 0 auto;
+// }
+
+.alert-info {
+  // background-color: rgba(106, 27, 154, 0);
+  // color: $white;
+  color: $black;
+  text-transform: uppercase;
+  width: 25%;
+  margin: 0 auto;
+  border: 0;
+  text-align: center;
 }

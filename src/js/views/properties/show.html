@@ -23,11 +23,26 @@
   <md-dialog-actions>
     <md-button
       class="md-raised md-primary md-button md-ink-ripple"
+      ng-click="propsShow.storeAndView(selected); propsShow.hide();"
+      aria-label="Store & View Property"
+      >
+      Save & View Property
+    </md-button>
+    <md-button
+      class="md-raised md-primary md-button md-ink-ripple"
+      ng-click="propsShow.storeAndContinue(selected); propsShow.hide();"
+      aria-label="Store & Continue Property Search"
+      >
+      Save & Continue
+    </md-button>
+
+    <!-- <md-button
+      class="md-raised md-primary md-button md-ink-ripple"
       ng-click="propsShow.store(selected); propsShow.hide()"
       aria-label="Store Property"
       >
       Save Property
-    </md-button>
+    </md-button> -->
     <md-button
       class="md-raised md-warn md-button md-ink-ripple"
       ng-click="propsShow.hide()"

@@ -1,6 +1,6 @@
-<md-content flex="100" class="md-padding groupsHome" layout="column">
-  <md-card>
-    <md-card-header layout="row" layout-align="center center">
+<md-content class="md-padding groupsHome">
+  <md-card class="groupsHomeActions">
+    <md-card-header>
       <md-card-avatar>
         <img class="md-user-avatar" src="/images/home.jpg">
       </md-card-avatar>
@@ -10,32 +10,33 @@
       </md-card-header-text>
     </md-card-header>
 
-    <!-- <md-card-title>
-      <md-card-title-text>
-        <span class="md-headline">{{ groupsHome.group.groupName }}</span>
-        <span class="md-subhead">{{ groupsHome.group.owner }}</span>
-      </md-card-title-text>
-    </md-card-title> -->
-
     <md-divider></md-divider>
 
-    <md-card-actions layout="column" layout-align="center center">
+    <div class="md-card-actions">
       <md-button
         ng-if="main.currentUserId"
-        md-nav-sref="propsIndex"
-        ui-sref="propsIndex"
+        md-nav-sref="propertiesIndex"
+        ui-sref="propertiesIndex"
         class="md-raised md-primary md-button md-ink-ripple"
         >
         Search Properties
       </md-button>
+      <!-- <code>{{ main.user.id }}</code> -->
+      <!-- <code>{{ main.currentUserId }}</code> -->
+      <!-- <code>{{ groupsHome.currentGroup.users.includes(main.currentUserId) }}</code> -->
       <md-button
+        ng-if="main.user.group.id === groupsHome.currentGroup"
         ng-click="groupsHome.leaveGroup(main.currentUserId)"
         class="md-raised md-warn md-button md-ink-ripple"
         >
+        <!-- ng-if="groupsHome.group.owner || groupsHome.includes(main.currentUserId) === true" -->
+        <!-- ng-if="groupsHome.group.users.includes(main.currentUserId) === true" -->
+        <!-- ng-show="groupsHome.currentGroup.users.includes(main.currentUserId) === true" -->
         Leave
       </md-button>
       <md-button
-        ng-if="main.currentUserId === groupsHome.group.owner"
+        ng-if="(main.isAuthenticated && main.currentUserId === groupsHome.group.owner)"
+        ng-show="(main.isAuthenticated && groupsHome.group.owner === main.currentUserId)"
         md-nav-sref="groupsEdit({ id: main.currentUserGroupId })"
         ui-sref="groupsEdit({ id: main.currentUserGroupId })"
         class="md-raised md-primary md-button md-ink-ripple"
@@ -55,21 +56,21 @@
           <md-icon md-svg-icon="md-toggle-arrow"></md-icon>
         </md-button>
       </md-card-icon-actions> -->
-    </md-card-actions>
+    </div>
   </md-card>
-</md-content>
 
-<md-content flex="100" class="md-padding">
-  <md-card>
-    <md-card-content layout="row" layout-align="center center">
-      <h1 class="md-headline">Followers</h1>
-    </md-card-content>
+  <md-card class="groupsHomeFollowers">
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">Followers</span>
+      </md-card-title-text>
+    </md-card-title>
 
     <md-divider ng-if="!$last"></md-divider>
 
     <md-card-content layout="row" layout-align="center center">
 
-      <div class="groupJoinedUsers" ng-repeat="user in groupsHome.group.users">
+      <div class="joinedUsers" ng-repeat="user in groupsHome.group.users">
         <div class="dialog-demo-content" layout="column" layout-wrap="wrap" layout-margin="auto" layout-align="center center">
           <div
             class="groupUser"
@@ -86,31 +87,40 @@
       </div>
     </md-card-content>
   </md-card>
-</md-content>
 
-<md-content class="md-padding groupsHomeProperties">
-  <md-card>
+  <md-card class="md-padding groupsHomeProperties col">
     <md-card-title>
       <md-card-title-text>
         <span class="md-headline">Saved properties</span>
-        <md-divider ng-if="!$last"></md-divider>
       </md-card-title-text>
     </md-card-title>
 
-    <md-content class="md-padding groupsHomePropertiesList">
-      <md-card ng-repeat="selected in groupsHome.selected.listing">
-        <md-grid-list
-          md-cols="2"
-          md-row-height="3:4"
-          class="groupsHomeProperties"
-          layout="column"
-          layout-align="center center"
-          >
-          <!-- class="md-avatar" on image tag -->
-          <img class="groupsShowZooplaImage" ng-src="{{ selected.image_645_430_url }}" alt="{{ selected.image_645_430_url }}">
-          <md-button class="md-primary md-raised" ui-sref="groupsPropsShow({ id: groupsHome.group.id, listing_id: selected.listing_id })">Show Property</md-button>
-        </md-grid-list>
+    <div class="groupsHomePropertiesContainer row">
+      <md-card ng-repeat="selected in groupsHome.selected.listing" ng-animate="'animate'">
+        <div style="background-image:url('{{ selected.image_645_430_url }}')" class="zooplaImage"></div>
+
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{ selected.displayable_address }}</span>
+          </md-card-title-text>
+        </md-card-title>
+
+        <md-card-content>
+          <h3><strong>Address: </strong>{{ selected.displayable_address }}</h3>
+          <h3><strong>Price Per Month: </strong>£{{ selected.rental_prices.per_month | number : fractionSize }}</h3>
+          <h3><strong>Bedrooms: </strong>{{ selected.num_bedrooms }}</h3>
+          <h3><strong>Property Type: </strong>{{ selected.property_type }}</h3>
+        </md-card-content>
+
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button
+            class="md-primary md-raised"
+            ui-sref="groupsPropsShow({ id: groupsHome.group.id, listing_id: selected.listing_id })"
+            >
+            More Info
+          </md-button>
+        </md-card-actions>
       </md-card>
-    </md-content>
+    </div>
   </md-card>
 </md-content>

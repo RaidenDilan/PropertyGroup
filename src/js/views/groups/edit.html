@@ -105,9 +105,11 @@
 
       <div
         class="col s6 chosenGroupUsers"
+        ng-if="user.group && user.id !== main.currentUserId"
         ng-repeat="user in groupsEdit.group.users track by $index"
+        ng-show="(groupsEdit.group.users.length > 0 && groupsEdit.group.users.includes(user) === true)"
         >
-        <div class="">
+        <div>
           <img
             ng-src="{{ user.profileImageSRC }}"
             alt="{{ user.profileImageSRC }}"

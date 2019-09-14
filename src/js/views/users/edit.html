@@ -3,7 +3,6 @@
     <md-card-title>
       <md-card-title-text>
         <span class="md-headline">Edit Your Profile</span>
-        <md-divider ng-if="!$last"></md-divider>
       </md-card-title-text>
     </md-card-title>
 
@@ -21,7 +20,7 @@
           <label for="username">Username</label>
           <input
             id="username"
-            type="text"
+            type="username"
             name="username"
             ng-model="usersEdit.user.username"
             ng-required="true"

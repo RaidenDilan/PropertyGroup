@@ -4,6 +4,7 @@ const users       = require('../controllers/users');
 const imageUpload = require('../lib/imageUpload');
 const oauth       = require('../controllers/oauth');
 const groups      = require('../controllers/groups');
+const properties  = require('../controllers/properties');
 const crimes      = require('../lib/crimes');
 const secureRoute = require('../lib/secureRoute');
 const zooplas     = require('../lib/zooplas');
@@ -44,9 +45,9 @@ router.route('/groups')
 router.route('/groups/:id')
   .all(secureRoute)
   .get(groups.show)
-  .put(groups.update) // we are working on this
+  .put(groups.update)
   .delete(groups.delete)
-  .post(secureRoute, groups.addProperty);
+  .post(secureRoute, properties.addProperty);
 
 router.route('/groups/:id/users')
   .all(secureRoute)
@@ -56,6 +57,7 @@ router.route('/groups/:id/users/:userId')
   .all(secureRoute)
   .delete(groups.deleteUser);
 
+// PROPERTIES
 router.route('/groups/:id/properties')
   .all(secureRoute)
   .get(zooplas.selectedProp);
@@ -63,31 +65,38 @@ router.route('/groups/:id/properties')
 router.route('/groups/:id/properties/:listingId')
   .all(secureRoute)
   .get(zooplas.selectedProp)
-  .delete(groups.deleteProperty);
+  .delete(properties.deleteProperty);
 
 router.route('/groups/:id/properties/:listingId/notes')
-  .post(secureRoute, groups.addNote);
+  .post(secureRoute, properties.addNote);
 
 router.route('/groups/:id/properties/:listingId/notes/:noteId')
-  .delete(secureRoute, groups.deleteNote);
+  .delete(secureRoute, properties.deleteNote);
 
 router.route('/groups/:id/properties/:listingId/images')
-  .post(secureRoute, imageUpload, groups.addImage);
+  .post(secureRoute, imageUpload, properties.addImage);
 
 router.route('/groups/:id/properties/:listingId/images/:imageId')
-  .delete(secureRoute, groups.deleteImage);
+  .delete(secureRoute, properties.deleteImage);
 
 router.route('/groups/:id/properties/:listingId/ratings')
-  .post(secureRoute, groups.addRating);
+  .post(secureRoute, properties.addRating);
 
 router.route('/groups/:id/properties/:listingId/ratings/:ratingId')
-  .delete(secureRoute, groups.deleteRating);
+  .delete(secureRoute, properties.deleteRating);
 
-router.route('/groups/:id/properties/:listingId/upvote')
-  .put(secureRoute, groups.upvote);
+router.route('/groups/:id/properties/:listingId/likes')
+  .post(secureRoute, properties.addLike);
 
-router.route('/groups/:id/properties/:listingId/downvote')
-  .put(secureRoute, groups.downvote);
+router.route('/groups/:id/properties/:listingId/likes/:likeId')
+  // .put(secureRoute, properties.addVote)
+  .delete(secureRoute, properties.deleteLike);
+
+// router.route('/groups/:id/properties/:listingId/upvote')
+//   .put(secureRoute, properties.upvote);
+//
+// router.route('/groups/:id/properties/:listingId/downvote')
+//   .put(secureRoute, properties.downvote);
 
 // AUTH
 router.route('/login')

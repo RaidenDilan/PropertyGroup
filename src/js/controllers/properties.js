@@ -1,10 +1,10 @@
 angular
   .module('pncApp')
-  .controller('PropsIndexCtrl', PropsIndexCtrl)
-  .controller('PropsShowCtrl', PropsShowCtrl);
+  .controller('PropertiesIndexCtrl', PropertiesIndexCtrl)
+  .controller('PropertiesShowCtrl', PropertiesShowCtrl);
 
-PropsIndexCtrl.$inject = ['$scope', '$http', '$uibModal', '$mdDialog', '$moment'];
-function PropsIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
+PropertiesIndexCtrl.$inject = ['$scope', '$http', '$uibModal', '$mdDialog', '$moment'];
+function PropertiesIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
   const vm = this;
 
   vm.results         = [];
@@ -23,18 +23,8 @@ function PropsIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
     // console.log('vm.originatorEvent', vm.originatorEvent);
   };
 
-  vm.maxNum = (integer) => {
-    vm.toShow = integer;
-    // console.log('vm.toShow', vm.toShow);
-  };
-
-  vm.sortMethod = (sortType) => {
-    vm.sortBy = sortType;
-    // console.log('vm.sortBy', vm.sortBy);
-  };
-
   vm.getProperties = () => {
-    if(vm.propsIndexForm.$valid) {
+    if(vm.propertiesIndexForm.$valid) {
       $http
         .get('/api/properties', { params: { area: vm.area, minimum_beds: vm.beds, maximum_beds: vm.beds }})
         .then((response) => {
@@ -50,9 +40,18 @@ function PropsIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
           }
         });
 
-        vm.propsIndexForm.$setUntouched();
-        vm.propsIndexForm.$setPristine();
+        vm.propertiesIndexForm.$setUntouched();
+        vm.propertiesIndexForm.$setPristine();
       }
+  };
+
+  vm.maxNum = (integer) => {
+    vm.toShow = integer;
+    // console.log('vm.toShow', vm.toShow);
+  };
+
+  vm.sortMethod = (sortType) => {
+    vm.sortBy = sortType;
   };
 
   vm.loadMore = () => {
@@ -65,13 +64,13 @@ function PropsIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
 
   vm.showProperty = (thisProperty) => {
     $mdDialog.show({
-      controller: PropsShowCtrl,
+      controller: PropertiesShowCtrl,
       controllerAs: 'propsShow',
-      templateUrl: 'js/views/props/show.html',
+      templateUrl: 'js/views/properties/show.html',
       parent: angular.element(document.body),
       targetEvent: thisProperty,
       clickOutsideToClose: true,
-      fullscreen: vm.fullscreen || true,
+      fullscreen: vm.fullscreen,
       resolve: {
         selectedProperty: () => {
           return thisProperty;
@@ -100,17 +99,39 @@ function PropsIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
   }
 }
 
-PropsShowCtrl.$inject = ['GroupProperty', 'selectedProperty', '$mdDialog'];
-function PropsShowCtrl(GroupProperty, selectedProperty, $mdDialog) {
+PropertiesShowCtrl.$inject = ['$state', '$auth', 'User', 'GroupProperty', 'selectedProperty', '$mdDialog'];
+function PropertiesShowCtrl($state, $auth, User, GroupProperty, selectedProperty, $mdDialog) {
   const vm = this;
 
   vm.selected = selectedProperty;
-  vm.alert    = null;
+  vm.userId   = $auth.getPayload().userId;
+  // vm.user     = null;
+  // vm.alert    = null;
 
-  vm.store = () => {
-    const newProperty = {
-      listingId: vm.selected.listing_id
-    };
+  User
+    .get({ id: vm.userId })
+    .$promise
+    .then((user) => {
+      if(!user) return false;
+
+      vm.user = user;
+      return vm.user;
+    });
+
+  vm.storeAndView = () => {
+    const newProperty = { listingId: vm.selected.listing_id };
+
+    GroupProperty
+    .save(newProperty)
+    .$promise
+    .then(() => {
+      $state.go('groupsHome', { id: vm.user.group.id });
+      vm.newProperty = {};
+    });
+  };
+
+  vm.storeAndContinue = () => {
+    const newProperty = { listingId: vm.selected.listing_id };
 
     GroupProperty
       .save(newProperty)

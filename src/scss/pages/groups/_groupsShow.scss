@@ -1,35 +1,407 @@
+md-content.groupsShowProp {
+  background: $brand-color;
+
+  md-card-header {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+  md-card {
+    md-card-actions {
+      button {
+        width: 100%;
+      }
+    }
+  }
+  md-card-content {
+    md-card-title {
+      md-card-title-text {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+
+  md-card.groupsShowPropCard {
+    background: transparent;
+    box-shadow: none;
+
+    md-card-content.propertyDesc {
+      padding: 16px 0;
+    }
+    md-card-actions {
+      md-card-icon-actions {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    div.groupsShowPropCardDiv {
+      width: 100%;
+
+      md-card.groupsPropsShowTitle {
+        margin: 0 8px 2.5rem 8px;
+        overflow: hidden;
+        display: flex;
+        flex-flow: row nowrap;
+
+        div {
+          padding: 16px;
+
+          .propertyImage {
+            border-radius: 15px;
+            width: 100%;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+          }
+        }
+
+        md-card-title {
+          flex: 0 0 auto;
+        }
+
+        // md-divider {
+        //   margin: 1rem 0;
+        // }
+
+        ul:not(:last-child) {
+          display: flex;
+          flex-flow: column nowrap;
+
+          li {
+            &:last-child span {
+              color: rgba(106, 27, 154, 1);
+              font-weight: 900;
+            }
+          }
+        }
+        ul:not(:first-child) {
+          display: flex;
+          flex-flow: column nowrap;
+          justify-content: center;
+          align-items: center;
+
+          li {
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+
+            a {
+              color: rgba(255, 87, 34, 1);
+            }
+
+            md-icon {
+              margin: 0;
+            }
+          }
+        }
+
+        ul {
+          li {
+            padding: 5px 0;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-start;
+            align-items: center;
+
+            md-icon {
+              margin: 0 10px 0 0;
+            }
+          }
+        }
+        .agencyLogo {
+          max-width: 120px;
+        }
+        div {
+          width: 50%;
+          padding-right: 1rem;
+        }
+      }
+      md-card.propertyTabs {
+        margin: 0 8px 2.5rem 8px;
+        border-radius: 15px;
+        overflow: hidden;
+
+        .tabsdemoDynamicHeight md-content h1:first-child {
+          margin-top: 0;
+        }
+        md-tabs {
+          canvas {
+            width: 250px;
+            height: auto;
+          }
+        }
+        md-tabs:not(.md-no-tab-content):not(.md-dynamic-height) {
+          min-height: 500px;
+        }
+        p {
+          font-size: 16px;
+        }
+      }
+
+      md-card.propertyAddRating {
+        margin: 0 8px 2.5rem 8px;
+
+        md-card-title {
+          text-align: center;
+        }
+        .ratingForm {
+          display: flex;
+          flex-flow: column nowrap;
+
+          div:not(:last-child) {
+            width: 100%;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+          }
+          div:not(:first-child) {
+            width: 100%;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: center;
+            align-items: center;
+          }
+
+          md-input-container {
+            padding: 0;
+            margin: 6px 8px;
+          }
+
+          #rating {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+          }
+
+          .ratingBox {
+            width: 15%;
+            margin: 0 auto;
+            border: 1px solid #000000;
+            border-radius: 15px;
+            padding: 0.5rem;
+          }
+          .md-button {
+            width: 15%;
+            margin: 0.5rem auto;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+
+            md-icon {
+              margin: 0;
+            }
+          }
+        }
+      }
+      md-card.propertyRatings {
+        margin: 0 8px 2.5rem 8px;
+
+        md-card-title {
+          text-align: center;
+        }
+        .userRatings {
+          margin: 1rem 0;
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: center;
+          align-items: center;
+
+          .userRatingImage {
+            width: 40px;
+          }
+
+          .userRatingOpinion {
+            padding: 0 1rem;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: center;
+            align-items: center;
+          }
+          smart-confirm {
+            margin: 0;
+
+            div {
+              display: flex;
+              flex-flow: row nowrap;
+            }
+            .md-button {
+              display: flex;
+              flex-flow: row nowrap;
+              justify-content: center;
+              align-items: center;
+              width: 25px;
+              min-width: 25px;
+              height: 25px;
+              min-height: 25px;
+              margin: 0 0.25rem;
+
+              md-icon {
+                font-size: 18px;
+                height: auto;
+                width: auto;
+                min-height: auto;
+                min-width: auto;
+              }
+            }
+          }
+        }
+      }
+
+      md-card.propertyAddImage {
+        margin: 0 8px 2.5rem 8px;
+
+        .addImageForm {
+          display: flex;
+          flex-flow: column nowrap;
+          justify-content: center;
+          align-items: center;
+
+          .uploadPhoto label, button {
+            // width: auto;
+            // margin: 6px 8px;
+          }
+        }
+      }
+      md-card.propertyImages {
+        margin: 0 8px 2.5rem 8px;
+
+        md-card-title {
+          text-align: center;
+        }
+
+        .groupsPropsShowUserImages {
+          md-card {
+            padding: 15px;
+
+            .userImages {
+              width: 100%;
+              height: 200px;
+              background-repeat: no-repeat;
+              background-position: center;
+              background-size: cover;
+              border-radius: 15px;
+            }
+
+            smart-confirm {
+              margin: 0;
+
+              div {
+                width: 20%;
+                margin: 0 auto;
+                display: flex;
+                flex-flow: row nowrap;
+              }
+              .md-button {
+                margin: 1rem auto 0 auto;
+                width: 100%;
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: center;
+                width: 25px;
+                min-width: 25px;
+                height: 25px;
+                min-height: 25px;
+
+                md-icon {
+                  font-size: 18px;
+                  height: auto;
+                  width: auto;
+                  min-height: auto;
+                  min-width: auto;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      md-card.propertyAddReview {
+        margin: 0 8px 2.5rem 8px;
+
+        .addComment {
+
+          .comment-list {
+            smart-confirm {
+              display: flex;
+              flex-flow: row nowrap;
+            }
+          }
+          form {
+            width: 50%;
+            margin: 0 auto;
+          }
+        }
+      }
+      md-card.propertyReviews {
+        margin: 0 8px 2.5rem 8px;
+
+        md-card-title {
+          text-align: center;
+        }
+
+        .comment-list {
+
+          md-list-item {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: center;
+            align-items: center;
+          }
+
+          smart-confirm {
+            // margin: 0;
+
+            div {
+              // width: 20%;
+              // margin: 0 auto;
+              display: flex;
+              flex-flow: row nowrap;
+            }
+            .md-button {
+              margin: 1rem 6px;
+              width: 100%;
+              display: flex;
+              flex-flow: row nowrap;
+              justify-content: center;
+              align-items: center;
+              width: 25px;
+              min-width: 25px;
+              height: 25px;
+              min-height: 25px;
+
+              md-icon {
+                font-size: 18px;
+                height: auto;
+                width: auto;
+                min-height: auto;
+                min-width: auto;
+              }
+            }
+          }
+          // smart-confirm {
+          //   display: flex;
+          //   flex-flow: row nowrap;
+          // }
+        }
+      }
+    }
+  }
+}
+
 .chart, canvas, canvas.chart, .chart-doughnut {
   width: 250px;
   height: auto;
-}
-
-.groupsPropsShowUserImages {
-  md-card {
-    padding: 15px;
-
-    .md-button {
-      margin: 0.25rem 0 !important;
-    }
-  }
-
-  a {
-    // margin: 0.5rem 0;
-    width: 100%;
-  }
-
-  md-card-actions {
-    button {
-      // margin: 0.5rem 0;
-      width: 100%;
-    }
-  }
-}
-.userImages {
-  width: 100%;
-  height: 200px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
 }
 
 .google-map {
@@ -43,259 +415,4 @@
   width: 100%;
   text-align: center;
   margin-bottom: 50px;
-}
-
-md-card-header {
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-}
-
-md-card {
-  md-card-actions {
-    button {
-      width: 100%;
-    }
-  }
-}
-
-md-card-content {
-  md-card-title {
-    md-card-title-text {
-      display: flex;
-      flex-flow: column nowrap;
-      justify-content: center;
-      align-items: center;
-    }
-  }
-}
-
-.rating {}
-
-.ratingForm {
-  display: flex;
-  flex-flow: column nowrap;
-
-  div:not(:last-child) {
-    width: 100%;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-  }
-  div:not(:first-child) {
-    width: 100%;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-  }
-
-  md-input-container {
-    padding: 0;
-    width: 100%;
-    margin: 6px 8px;
-  }
-
-  #rating {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .ratingBox {
-    width: 15%;
-    margin: 0 auto;
-    border: 1px solid #000000;
-    border-radius: 2px;
-    padding: 0.5rem;
-  }
-}
-
-.userRatings {
-  margin: 1rem 0;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-
-  .userRatingImage {
-    width: 40px;
-  }
-
-  .userRatingOpinion {
-    padding: 0 1rem;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-  }
-}
-
-.addComment {
-
-  .comment-list {
-    smart-confirm {
-      display: flex;
-      flex-flow: row nowrap;
-    }
-  }
-
-  // md-card {
-  //   padding: 16px;
-  // }
-  // md-card-content {
-  //   // padding: 0;
-  //   word-break: break-all;
-  // }
-  // md-card-header {
-  //   // padding: 0;
-  //   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  // }
-  // md-card-actions {
-  //   // padding: 0;
-  //
-  //   // button, a {
-  //   //   margin: 6px 0;
-  //   //   width: 100%;
-  //   // }
-  // }
-  form {
-    width: 50%;
-    margin: 0 auto;
-  }
-}
-
-.groupsShowProp {
-
-  md-card {
-    md-card-content.propertyDesc {
-      padding: 16px 0;
-    }
-
-    md-card-actions {
-      // margin: 0.5rem 0;
-      margin: 16px 0;
-      // padding: 17px 0;
-
-
-      button, a {
-        // margin: 6px 0;
-        width: 100%;
-      }
-
-      md-card-icon-actions {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: center;
-        align-items: center;
-      }
-    }
-
-    md-tabs {
-      canvas {
-        width: 250px;
-        height: auto;
-      }
-    }
-    .propertyTabs {
-      margin: 1rem 0;
-
-      .tabsdemoDynamicHeight md-content h1:first-child {
-        margin-top: 0;
-      }
-
-      md-tabs:not(.md-no-tab-content):not(.md-dynamic-height) {
-        min-height: 500px;
-      }
-    }
-
-    .groupsPropsShow_title {
-      width: 100%;
-      display: flex;
-      flex-flow: row nowrap;
-
-      .propertyImage {
-        width: 100%;
-        height: 100%;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-      }
-
-      md-card-title {
-        flex: 0 0 auto;
-      }
-
-      md-divider {
-        margin: 1rem 0;
-      }
-
-      ul:not(:last-child) {
-        display: flex;
-        flex-flow: column nowrap;
-
-        li {
-          &:last-child span {
-            color: rgba(106, 27, 154, 1);
-            font-weight: 900;
-          }
-        }
-      }
-      ul:not(:first-child) {
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: center;
-        align-items: center;
-
-        li {
-          display: flex;
-          flex-flow: row nowrap;
-          align-items: center;
-
-          a {
-            color: rgba(255, 87, 34, 1);
-          }
-
-          md-icon {
-            margin: 0;
-          }
-        }
-      }
-
-      ul {
-        li {
-          padding: 5px 0;
-          display: flex;
-          flex-flow: row nowrap;
-          justify-content: flex-start;
-          align-items: center;
-
-          md-icon {
-            margin: 0 10px 0 0;
-          }
-        }
-      }
-      .agencyLogo {
-        max-width: 120px;
-      }
-      div {
-        width: 50%;
-        padding-right: 1rem;
-      }
-    }
-  }
-}
-
-.addImageForm {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
-
-  .uploadPhoto label, button {
-    width: auto;
-    margin: 6px 8px;
-  }
 }

@@ -6,9 +6,13 @@ md-content {
   overflow: unset;
 }
 
-// md-button {
-//   margin: 0 4px;
-// }
+md-card {
+  border-radius: 15px;
+}
+
+.md-button {
+  border-radius: 15px;
+}
 
 // md-card .md-actions:not(.layout-column) .md-button:not(.md-icon-button):first-of-type,
 // md-card md-card-actions:not(.layout-column) .md-button:not(.md-icon-button):first-of-type {
@@ -22,3 +26,12 @@ strong {
 // md-card md-card-header md-card-header-text {
 //   flex: none;
 // }
+
+.toastdemoCustomUsage #custom-toast-container {
+  height: 300px;
+  padding: 25px;
+}
+.toastdemoCustomUsage #custom-toast-container .md-button.md-raised {
+  padding-left: 10px;
+  padding-right: 10px;
+}

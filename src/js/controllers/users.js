@@ -6,14 +6,14 @@ angular
 UsersShowCtrl.$inject = ['User', '$stateParams', '$state', '$auth'];
 function UsersShowCtrl(User, $stateParams, $state, $auth) {
   const vm = this;
+
   vm.user = User.get($stateParams);
 
   vm.delete = () => {
-    // $auth.logout(); // USER DELETE - Doesn't work here
     vm.user
       .$remove()
       .then((user) => {
-        $auth.logout();  // USER DELETE - Works here
+        $auth.logout();
         $state.go('login');
       });
   };
@@ -22,16 +22,14 @@ function UsersShowCtrl(User, $stateParams, $state, $auth) {
 UsersEditCtrl.$inject = ['User', '$stateParams', '$state'];
 function UsersEditCtrl(User, $stateParams, $state) {
   const vm = this;
+
   vm.user = User.get($stateParams);
 
   vm.update = () => {
     if(vm.usersEditForm.$valid) {
       vm.user
         .$update()
-        .then((user) => {
-          $state.go('usersShow', $stateParams);
-          console.log('user', user);
-        });
+        .then((user) => $state.go('usersShow', $stateParams));
 
       vm.usersEditForm.$setUntouched();
       vm.usersEditForm.$setPristine();

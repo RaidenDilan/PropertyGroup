@@ -1,13 +1,14 @@
 .usersShow {
-  width: 100%;
+  // width: 100%;
   // height: calc(100vh - 50px);
-  height: 100%;
-  min-width: 100%;
-  min-height: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
+  // height: 100%;
+  // min-width: 100%;
+  // min-height: 100%;
+  // display: flex;
+  // flex-flow: column nowrap;
+  // justify-content: center;
+  // align-items: center;
+  background: $brand-color;
 
   md-card .md-actions:not(.layout-column) .md-button:not(.md-icon-button),
   md-card md-card-actions:not(.layout-column) .md-button:not(.md-icon-button) {
@@ -16,6 +17,8 @@
 
   md-card {
     width: 50%;
+    margin: 0 auto;
+    padding: 1.5rem;
 
     img {
       width: 25%;
@@ -27,13 +30,55 @@
     }
     md-card-content {
       padding: 30px;
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: center;
-      align-items: center;
+      // display: flex;
+      // margin: auto;
+      // flex-flow: column nowrap;
+      // justify-content: center;
+      // align-items: center;
+
+      // .basicInformation, .propertyInformation {
+      //   margin-bottom: 3rem;
+      // }
+
 
       div {
-        margin: 0 auto;
+        margin: auto;
+        width: 75%;
+        // display: flex;
+        // flex-flow: column wrap;
+        // justify-content: space-between;
+        // // align-items: center;
+
+        &:not(:last-child) {
+          margin-bottom: 3rem;
+        }
+        &:last-child {
+          // margin-top: 1rem;
+        }
+
+        h2 {
+          padding-bottom: 2.5rem;
+          color: #999999;
+        }
+        h3 {
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: space-between;
+
+          span {
+            // padding-right: 10px;
+            a {
+              color: #9c27b0;
+
+              // &:hover {
+              //   color: #9c27b0;
+              // }
+            }
+          }
+          span:first-child {
+            // font-weight: 600;
+          }
+        }
       }
     }
     md-card-actions {

@@ -10,7 +10,7 @@ function smartConfirm($compile) {
 			'confirm': '&'
 		},
 		transclude: true,
-    templateUrl: 'js/views/templates/confirm.html',
+    templateUrl: 'js/views/modals/confirm.html',
 		link(scope, element, attrs) {}
 	};
   return directive;

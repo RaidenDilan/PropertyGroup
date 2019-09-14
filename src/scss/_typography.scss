@@ -4,29 +4,30 @@
   padding: 0;
 }
 
+html {
+  height: 100%;
+}
+
+body {
+  // font: 78% / 130% arial, helvetica, sans-serif;
+  font-family: $lato-font;
+  background-color: $brand-color;
+  height: 100vh; /* Avoid the IE 10-11 `min-height` bug. */
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  background-color: $brand-color;
+  flex: 5 0 auto; /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
+  // height: auto;
+}
+
 a {
-  color: #000000;
+  color: $black;
   text-decoration: none;
 
   &:active {
     text-decoration: none;
   }
 }
-
-body {
-  // font: 78% / 130% arial, helvetica, sans-serif;
-  font-family: $lato-font;
-}
-
-// h1 {
-//   font-weight: 600;
-//   font-family: $heading-font;
-// }
-//
-// h2,h3,h4,h5,h6 {
-//   font-weight: 100;
-// }
-//
-// html, body {
-//   font-size: 14px;
-// }

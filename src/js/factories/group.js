@@ -6,7 +6,8 @@ angular
   .factory('GroupPropertyImage', GroupPropertyImage)
   .factory('GroupPropertyNote', GroupPropertyNote)
   .factory('GroupPropertyLike', GroupPropertyLike)
-  .factory('GroupPropertyDislike', GroupPropertyDislike)
+  // .factory('GroupPropertyUpvote', GroupPropertyUpvote)
+  // .factory('GroupPropertyDownvote', GroupPropertyDownvote)
   .factory('GroupPropertyRating', GroupPropertyRating);
 
 Group.$inject = ['$resource'];
@@ -53,14 +54,21 @@ function GroupPropertyRating($resource) {
 
 GroupPropertyLike.$inject = ['$resource'];
 function GroupPropertyLike($resource) {
-  return new $resource('/api/groups/:id/properties/:listingId/upvote', { id: '@id' }, {
+  return new $resource('/api/groups/:id/properties/:listingId/likes/:likeId', { id: '@id' }, {
     update: { method: 'PUT' }
   });
 }
 
-GroupPropertyDislike.$inject = ['$resource'];
-function GroupPropertyDislike($resource) {
-  return new $resource('/api/groups/:id/properties/:listingId/downvote', { id: '@id' }, {
-    update: { method: 'PUT' }
-  });
-}
+// GroupPropertyUpvote.$inject = ['$resource'];
+// function GroupPropertyUpvote($resource) {
+//   return new $resource('/api/groups/:id/properties/:listingId/upvote', { id: '@id' }, {
+//     update: { method: 'PUT' }
+//   });
+// }
+//
+// GroupPropertyDownvote.$inject = ['$resource'];
+// function GroupPropertyDownvote($resource) {
+//   return new $resource('/api/groups/:id/properties/:listingId/downvote', { id: '@id' }, {
+//     update: { method: 'PUT' }
+//   });
+// }

@@ -1,10 +1,10 @@
 // const mongoose = require('mongoose');
 //
 // const voteSchema = new mongoose.Schema({
-//   // vote: { type: String, trim: true, required: true },
+//   like: { type: Boolean },
 //   user: { type: mongoose.Schema.ObjectId, ref: 'User' }
 // },{
 //   timestamps: true
 // });
 //
-// module.exports = mongoose.model('Vote', voteSchema);
+// module.exports = mongoose.model('Like', voteSchema);

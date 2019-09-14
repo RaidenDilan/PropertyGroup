@@ -1,0 +1,223 @@
+md-content.propsIndex {
+  background: $brand-color;
+
+  md-card-title {
+    md-card-title-text {
+      span.md-headline {
+        text-align: center;
+      }
+    }
+  }
+  md-card.searchProperties {
+    width: 50%;
+    margin: 0 auto;
+
+    md-card-title {
+      padding: 24px 0;
+
+      .md-headline {
+        color: $brand-color;
+        font-size: 20px;
+        font-weight: 900;
+      }
+    }
+    form {
+      // width: 40%;
+      // margin: 0 auto;
+      // display: flex;
+      // flex-flow: column nowrap;
+
+      label, md-select {
+        line-height: normal;
+        margin: 0;
+      }
+
+      md-input-container {
+        // width: 50%;
+        // margin: 18px;
+
+        // input {
+        //   margin: 0;
+        // }
+      }
+
+      div.propertiesSearch {
+        // display: flex;
+        // flex-flow: column nowrap;
+
+        md-input-container {
+          // width: 50%;
+          // height: 100%;
+          // margin: 18px;
+
+          // input, md-select {
+          //   height: 28px;
+          // }
+          // .md-select-value {
+          //   border-color: #9e9e9e;
+          // }
+        }
+      }
+
+      md-card-actions {
+        .md-button {
+          margin-top: 2.5rem;
+        }
+      }
+    }
+  }
+  md-card.propsIndexCard {
+    margin: 8px;
+    // padding: 0;
+    background: transparent;
+    box-shadow: none;
+
+    div.propsIndexCardContent {
+      color: $white;
+      display: flex;
+      flex-flow: row wrap;
+
+      div {
+        margin-bottom: 0.5rem;
+
+        &:first-child {
+          padding: 0;
+
+          md-menu-container, .md-menu-container {
+            align-items: flex-start;
+
+            md-menu button {
+              margin: 0;
+              border-radius: 5px;
+            }
+          }
+        }
+        &:last-child {
+          padding: 0;
+
+          md-menu-container, .md-menu-container {
+            align-items: flex-end;
+
+            md-menu button {
+              margin: 0;
+              border-radius: 5px;
+            }
+          }
+        }
+      }
+    }
+    div.propsIndexContainer {
+      // width: 100%;
+      // display: flex;
+      // flex-flow: row wrap;
+
+      md-card {
+        // width: calc(100% / 4.5);
+        width: 298px;
+        padding: 16px;
+        min-height: 600px;
+        display: flex;
+        flex-flow: column nowrap;
+
+        md-card-title {
+          padding: 24px 0 0;
+
+          .md-headline {
+            color: $brand-color;
+            font-size: 18px;
+            font-weight: 900;
+          }
+        }
+        .zooplaImage {
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          height: 200px;
+          border-radius: 10px;
+        }
+        .searchResultsCard {
+          // height: 500px;
+          // background: $brand-color;
+          // display: flex;
+          // flex-flow: row wrap;
+
+          h3 {
+            font-size: 15px;
+          }
+        }
+        md-card-content {
+          padding: 24px 0 0;
+
+          h3 {
+            padding: 4px 0;
+            line-height: 20px;
+          }
+        }
+        md-card-actions {
+          padding: 24px 0 0;
+          margin: 0;
+        }
+      }
+    }
+    div.foundListings {
+      margin: auto;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem 0;
+
+      .listings {
+        color: $white;
+        font-size: 15px;
+        font-weight: 500;
+      }
+    }
+  }
+  md-card.loadMore {
+    width: 100%;
+    margin: 0;
+    background-color: $brand-color;
+    box-shadow: none;
+
+    .md-button {
+      background-color: $white;
+      color: $black;
+    }
+  }
+
+}
+
+@include breakpoint(iPhoneSE) {
+  md-select-menu-container, .md-select-menu-container {
+    left: 18px !important;
+  }
+
+  .propsIndex {
+    md-card.searchProperties {
+      width: 100%;
+
+      form {
+        .propertiesSearch {
+          display: flex;
+          flex-flow: column nowrap;
+          align-items: center;
+
+          md-input-container {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    md-card-actions.loadMore {
+      display: flex;
+      justify-content: center;
+      margin: 0;
+
+      button {
+        margin: 1.25rem auto 0 auto;
+      }
+    }
+  }
+}

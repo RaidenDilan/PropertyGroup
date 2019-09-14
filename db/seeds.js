@@ -66,18 +66,18 @@ User
         owner: users[0],
         properties: [{
   				listingId: '50639974',
-  				rating: [{
-            stars: 5,
-            createdBy: users[0]
-          }],
-  				notes: [{
-            text: 'MEOW!',
-            createdBy: users[1]
-          }],
-  				images: [{
-            file: 'https://www.searchpng.com/wp-content/uploads/2019/02/Profile-ICon.png',
-            createdBy: users[1]
-          }],
+  				// ratings: [{
+          //   stars: 5,
+          //   createdBy: users[0]
+          // }],
+  				// notes: [{
+          //   text: 'MEOW!',
+          //   createdBy: users[1]
+          // }],
+  				// images: [{
+          //   file: 'https://www.searchpng.com/wp-content/uploads/2019/02/Profile-ICon.png',
+          //   createdBy: users[1]
+          // }],
           // upvotes: [
           //   users[1],
           //   users[2]
@@ -89,10 +89,10 @@ User
           createdBy: users[0]
 			  }],
         users: [
-          users[0],
-          users[1],
-          users[2],
-          users[3]
+          users[0]
+          // users[1],
+          // users[2],
+          // users[3]
         ]
       }]);
   })
@@ -119,7 +119,7 @@ User
 //         owner: users[0],
 //         properties: [{
 //   				listingId: '50639974',
-//   				rating: [{
+//   				ratings: [{
 //             opinion: 5,
 //             createdBy: users[0]
 //           }],

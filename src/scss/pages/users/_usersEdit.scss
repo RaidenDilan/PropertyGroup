@@ -7,6 +7,7 @@
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+  background: $brand-color;
 
   md-card {
     width: 50%;
@@ -35,7 +36,7 @@
 
 @include breakpoint(iPhoneSE) {
   .usersEdit {
-    
+
     md-card {
       width: 100%;
     }

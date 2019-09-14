@@ -1,14 +1,26 @@
 footer {
-  text-align: center;
-  letter-spacing: 3px;
-  color: #FFFFFF;
+  flex-shrink: 0; /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
+  // flex: 1 1 auto;
+  letter-spacing: 1px;
+  color: $white;
+  line-height: 3;
 
   div {
-    font-size: 10px;
-    min-height: 30px;
-  }
-}
+    font-size: 12px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 
-md-toolbar {
-  min-height: 30px;
+    span {
+      padding: 0 5px;
+    }
+  }
+
+  md-toolbar.md-default-theme.md-hue-2:not(.md-menu-toolbar), md-toolbar.md-hue-2:not(.md-menu-toolbar) {
+    min-height: auto;
+    margin: 0;
+    padding: 0;
+  }
 }

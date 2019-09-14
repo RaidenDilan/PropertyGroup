@@ -1,12 +1,12 @@
 const Promise = require('bluebird');
 const Group   = require('../models/group');
 const User    = require('../models/user');
-const Vote    = require('../models/vote');
 
 function indexGroup(req, res, next) {
   Group
     .find()
     .populate('users')
+    // .populate('users properties.images.createdBy properties.notes.createdBy properties.rating.createdBy')
     .exec()
     .then((groups) => {
       if(!groups) res.notFound('Group not found');
@@ -18,7 +18,8 @@ function indexGroup(req, res, next) {
 function showGroup(req, res, next) {
   Group
   .findById(req.params.id)
-  .populate('users properties.images.createdBy properties.notes.createdBy properties.rating.createdBy')
+  .populate('users properties.images.createdBy properties.notes.createdBy properties.ratings.createdBy')
+  // .populate('users')
   .exec()
   .then((group) => {
     if(!group) return res.notFound('Group not found');
@@ -93,12 +94,13 @@ function addUserToGroup(req, res, next) {
           if(!user) res.status(404).json({ message: `User not found` });
           return user
             .save()
-            .then((user) => res.status(200).json({ message: `${user.username} added to ${group.groupName}` }));
+            .then((user) => res.status(200).json(user));
+            // .then((user) => res.status(200).json({ message: `${user.username} added to ${group.groupName}` }));
         })
         .catch(next);
     })
-    .then(() => res.status(200).json({ message: `Group updated` }))
-    // .then(() => res.status(204).end())
+    // .then(() => res.status(200).json({ message: `Group updated` }))
+    .then(() => res.status(204).end())
     .catch(next);
 }
 
@@ -131,332 +133,12 @@ function deleteUserFromGroup(req, res, next) {
     .catch(next);
 }
 
-function addPropertyRoute(req, res, next) {
-  req.body.createdBy = req.user;
-  // req.body.groupId   = req.user.group;
-
-  Group
-    .findById(req.body.group)
-    // .findByIdAndUpdate(req.user.group, { $addToSet: { properties: req.body }}, { new: true })
-    .populate('users')
-    .exec()
-    .then((group) => {
-      if(!group) return res.notFound('Group not found');
-
-      const property = group.properties.create(req.body);
-      group.properties.push(property);
-      // group.properties.concat(property); // this uses $set so no problems
-
-      return group
-        .save()
-        .then(() => res.json(property));
-    })
-    .then(() => res.status(204).end())
-    .catch(next);
-}
-
-function deletePropertyRoute(req, res, next) {
-  // console.log('req.params -------------------', req.params);
-  // console.log('req.user.group -------------------', req.user.group);
-
-  Group
-    .findById(req.user.group)
-    // .findByIdAndRemove(req.params.listingId)
-    // .findByIdAndUpdate(req.params.id, { $pull: { properties: req.params.listingId }}, { safe: true, upsert: true })
-    // .findByIdAndUpdate(req.user.group, { $pull: { properties: req.params.listingId }}, { multi: true })
-    .exec()
-    .then((group) => {
-      if(!group) return res.notFound('Group not found');
-
-      const property = group.properties.find((property) => {
-        return property.listingId === req.params.listingId;
-      });
-
-      property.remove();
-
-      return group
-        .save();
-        // .then(() => res.json(property));
-    })
-    .then(() => res.status(204).end())
-    .catch(next);
-
-}
-
-function addPropertyNote(req, res, next) {
-  req.body.createdBy = req.user;
-
-  Group
-    .findById(req.params.id)
-    .populate('users')
-    .exec()
-    .then((group) => {
-      if(!group) return res.notFound('Group not found');
-
-      const prop = group.properties.find((property) => {
-        return property.listingId === req.params.listingId;
-      });
-
-      const note = prop.notes.create(req.body);
-      prop.notes.push(note);
-
-      return group
-        .save()
-        .then(() => res.json(note));
-    })
-    .catch(next);
-}
-
-function deletePropertyNote(req, res, next) {
-  Group
-    .findById(req.params.id)
-    .exec()
-    .then((group) => {
-      if(!group) return res.notFound('Group not found');
-
-      const prop = group.properties.find((property) => {
-        return property.listingId === req.params.listingId;
-      });
-
-      const note = prop.notes.id(req.params.noteId);
-
-      note.remove();
-
-      return group
-        .save()
-        .then(() => res.json(note));
-    })
-    .then(() => res.status(204).end())
-    .catch(next);
-}
-
-function addPropertyImage(req, res, next) {
-  req.body.createdBy = req.user;
-  if(req.file) req.body.file = req.file.filename;
-
-  Group
-    .findById(req.params.id)
-    .populate('users')
-    .exec()
-    .then((group) => {
-      if(!group) return res.notFound('Group not found');
-
-      const prop = group.properties.find((property) => {
-        return property.listingId === req.params.listingId;
-      });
-
-      const image = prop.images.create(req.body);
-      prop.images.push(image);
-
-      return group
-        .save()
-        .then(() => res.json(image));
-    })
-    .catch(next);
-}
-
-function deletePropertyImage(req, res, next) {
-  Group
-    .findById(req.params.id)
-    .exec()
-    .then((group) => {
-      if(!group) return res.notFound('Group not found');
-
-      const prop = group.properties.find((property) => {
-        return property.listingId === req.params.listingId;
-      });
-
-      const image = prop.images.id(req.params.imageId);
-
-      return image
-        .remove()
-        .then(() => {
-          return group
-            .save()
-            .then(() => res.json(image));
-        });
-    })
-    .then(() => res.status(204).end())
-    .catch(next);
-}
-
-function addPropertyRating(req, res, next) {
-  req.body.createdBy = req.user;
-
-  Group
-    .findById(req.params.id)
-    .populate('users')
-    .exec()
-    .then((group) => {
-      if(!group) return res.notFound('Group not found');
-
-      const prop = group.properties.find((property) => {
-        return property.listingId === req.params.listingId;
-      });
-
-      const rating = prop.rating.create(req.body);
-      prop.rating.push(rating);
-
-      return group
-        .save()
-        .then(() => res.json(rating));
-    })
-    .catch(next);
-}
-
-function deletePropertyRating(req, res, next) {
-  Group
-    .findById(req.params.id)
-    .exec()
-    .then((group) => {
-      if(!group) return res.notFound('Group not found');
-
-      const prop = group.properties.find((property) => {
-        return property.listingId === req.params.listingId;
-      });
-
-      const rating = prop.rating.id(req.params.ratingId);
-      rating.remove();
-
-      return group
-        .save()
-        .then(() => res.json(rating));
-    })
-    .then(() => res.status(204).end())
-    .catch(next);
-}
-
-
-
-// 1. GET GROUP
-// 2. GET PROPERTIES
-// 3. FIND SELECTED PROPERTY
-// 4. ADD LIKE OR DISLIKE TO PROPERTY
-function addPropertyLike(req, res, next) {
-  // req.body.createdBy = req.user;
-  Group
-    .findById(req.params.id)
-    .populate('users')
-    .exec()
-    .then((group) => {
-      const prop = group.properties.find((property) => {
-        return property.listingId === req.params.listingId;
-      });
-
-      if(prop.upvotes.indexOf(req.user.id) === -1) {
-        prop.upvotes.push(req.user.id);
-
-        return group
-          .save()
-          .then((group) => res.json(group));
-      }
-      else if(prop.upvotes.indexOf(req.user.id) !== -1) res.json({ message: `User has voted already` });
-  })
-  .then(() => res.status(204).end())
-  .catch(next);
-
-  // Group
-  //   .findById(req.params.id)
-  //   // .findByIdAndUpdate(req.params.id, { $addToSet: { downvotes: req.user.id }}, { new: true })
-  //   // .findByIdAndUpdate(req.params.id, { $push: { downvotes: req.user.id }}, { new: true })
-  //   .populate('users properties')
-  //   .exec()
-  //   .then((group) => {
-  //     if(!group) return res.notFound('Group not found');
-  //
-  //     const prop = group.properties.find((property) => {
-  //       return property.listingId === req.params.listingId;
-  //     });
-  //
-  //     if(prop.upvotes.indexOf(req.user.id) === -1) {
-  //       console.log('VOTE ALREADY EXISTS --->', prop.upvotes.indexOf(req.user.id) === -1);
-  //
-  //       const vote = prop.upvotes.create(req.body);
-  //       prop.upvotes.push(vote);
-  //
-  //       return group.save();
-  //
-  //       // return Vote
-  //       //   .create(req.body)
-  //       //   .then((vote) => {
-  //       //     if(!vote) return res.notFound('Vote not found');
-  //       //     // console.log('vote --------------------------->>>>>>>>>', vote);
-  //       //     // prop.upvotes.push(vote);
-  //       //     return res.status(200).json(vote);
-  //       //   })
-  //       //   .catch(next);
-  //     }
-  //     // else res.json({ message: `User already voted` });
-  //   })
-  //   .then(() => res.status(200).json(group))
-  //   // .then(() => res.status(204).end())
-  //   .catch(next);
-}
-
-function deletePropertyLike(req, res, next) {
-  // req.body.createdBy = req.user;
-
-  Group
-    .findById(req.params.id)
-    .populate('users')
-    .exec()
-    .then((group) => {
-      const prop = group.properties.find((property) => {
-        return property.listingId === req.params.listingId;
-      });
-
-      if(prop.downvotes.indexOf(req.user.id) === -1) {
-        prop.downvotes.push(req.user.id);
-
-        return group
-          .save()
-          .then((group) => res.json(group));
-      }
-      else if(prop.downvotes.indexOf(req.user.id) !== -1) res.json({ message: `User has voted already` });
-  })
-  .then(() => res.status(204).end())
-  .catch(next);
-
-  // Group
-  //   .findById(req.params.id)
-  //   // .findByIdAndUpdate(req.params.id, { $addToSet: { downvotes: req.user.id }}, { new: true })
-  //   // .findByIdAndUpdate(req.params.id, { $push: { downvotes: req.user.id }}, { new: true })
-  //   .populate('users')
-  //   .exec()
-  //   .then((group) => {
-  //     if(!group) return res.notFound('Group not found');
-  //
-  //     const prop = group.properties.find((property) => {
-  //       return property.listingId === req.params.listingId;
-  //     });
-  //
-  //     const vote = prop.downvotes.create(req.body);
-  //     prop.downvotes.push(vote);
-  //
-  //     return group
-  //       .save()
-  //       .then(() => res.json(vote));
-  //   })
-  //   .then(() => res.status(204).end())
-  //   .catch(next);
-}
-
 module.exports = {
   index: indexGroup,
-  create: createGroup,
   show: showGroup,
+  create: createGroup,
+  delete: deleteGroup,
   update: updateGroup,
   addUser: addUserToGroup,
-  deleteUser: deleteUserFromGroup,
-  delete: deleteGroup,
-  addProperty: addPropertyRoute,
-  deleteProperty: deletePropertyRoute,
-  addNote: addPropertyNote,
-  deleteNote: deletePropertyNote,
-  addImage: addPropertyImage,
-  deleteImage: deletePropertyImage,
-  addRating: addPropertyRating,
-  deleteRating: deletePropertyRating,
-  upvote: addPropertyLike,
-  downvote: deletePropertyLike
+  deleteUser: deleteUserFromGroup
 };
