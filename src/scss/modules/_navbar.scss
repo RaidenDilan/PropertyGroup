@@ -1,6 +1,13 @@
+md-toolbar.md-default-theme.md-hue-2:not(.md-menu-toolbar),
+md-toolbar.md-hue-2:not(.md-menu-toolbar) {
+  // background-color: transparent;
+}
 md-toolbar.navBar {
-  // height: 30px;
-  // min-height: 60px;
+  min-height: 54px;
+
+  .md-toolbar-tools {
+    height: 54px;
+  }
 
   a:hover, a:focus {
     color: rgba(255, 255, 255, 0.87);

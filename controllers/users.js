@@ -8,7 +8,7 @@ function indexUser(req, res, next) {
     .then((users) => res.json(users))
     .catch((err, next) => {
       if (err.status) return res.status(err.status).json({ message: err.message });
-      else return res.status(500).json({ message: err.message });
+      return res.status(500).json({ message: err.message });
     });
 }
 
@@ -19,7 +19,7 @@ function showUser(req, res, next) {
     .exec()
     .then((user) => {
       if(!user) return res.notFound('User not found');
-      else return res.json(user);
+      return res.json(user);
     })
     .catch(next);
 }

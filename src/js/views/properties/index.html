@@ -59,9 +59,9 @@
         </md-input-container>
       </div>
 
-      <md-card-actions>
+      <!-- <md-card-actions> -->
         <md-button class="md-raised md-primary md-button md-ink-ripple search" ng-click="propertiesIndex.getProperties()">Search</md-button>
-      </md-card-actions>
+      <!-- </md-card-actions> -->
     </form>
 
   </md-card>
@@ -116,15 +116,15 @@
               <md-menu-item>
                 <md-button ng-click="propertiesIndex.sortMethod('-price')">Price - High to Low</md-button>
               </md-menu-item>
-              <md-menu-item>
+              <!-- <md-menu-item>
                 <md-button ng-click="propertiesIndex.sortMethod('-popular')">Popular</md-button>
-              </md-menu-item>
+              </md-menu-item> -->
               <md-menu-divider></md-menu-divider>
               <md-menu-item>
-                <md-button ng-click="propertiesIndex.sortMethod('-createdAt')">Newest First</md-button>
+                <md-button ng-click="propertiesIndex.sortMethod('-first_published_date')">Newest First</md-button>
               </md-menu-item>
               <md-menu-item>
-                <md-button ng-click="propertiesIndex.sortMethod('createdAt')">Oldest First</md-button>
+                <md-button ng-click="propertiesIndex.sortMethod('first_published_date')">Oldest First</md-button>
               </md-menu-item>
             </md-menu-content>
           </md-menu>
@@ -134,8 +134,8 @@
 
     <div class="propsIndexContainer row">
       <md-card
-        class="searchResultsCard col l5"
-        ng-repeat="props in propertiesIndex.results.listing | orderBy: propertiesIndex.sortBy"
+        class="searchResultsCard"
+        ng-repeat="props in propertiesIndex.results.listing | limitTo: propertiesIndex.limit | orderBy: propertiesIndex.sortBy"
         ng-animate="'animate'"
         ng-show="$index < propertiesIndex.toShow"
         >
@@ -167,6 +167,12 @@
   </md-card>
 
   <md-card class="loadMore" ng-show="propertiesIndex.showResults()">
-    <md-button class="md-raised md-primary md-button md-ink-ripple" ng-if="propertiesIndex.results.listing" ng-click="propertiesIndex.loadMore()">Load More</md-button>
+    <md-button
+      class="md-raised md-primary md-button md-ink-ripple"
+      ng-if="propertiesIndex.results.listing"
+      ng-click="propertiesIndex.loadMore()"
+      >
+      Load More
+    </md-button>
   </md-card>
 </md-content>

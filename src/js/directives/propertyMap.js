@@ -60,11 +60,13 @@ function propertyMap($window, mapStyles) {
 
         const htmlElement =
           `<div id="infoWindow">
-            <img src="${property.image_50_38_url}">
-            <p>${property.listingId}</p>
-         </div>`;
+            <img src="${property.image_354_255_url}">
+            <p>${property.displayable_address}</p>
+          </div>`;
 
-        google.maps.event.addListener(marker, 'click', function() {
+        google.maps.event.addListener(marker, 'click', function(event) {
+          console.log('event', event);
+
           if(infoWindow) infoWindow.close();
 
           infoWindow = new google.maps.InfoWindow({ content: htmlElement });

@@ -1,58 +1,53 @@
 const mongoose = require('mongoose');
 const s3       = require('../lib/s3');
 const Promise  = require('bluebird');
-// const ObjectId = mongoose.Schema.ObjectId;
+const ObjectId = mongoose.Schema.ObjectId;
 
-// ---> EMBEDDED SCHEMAS
+// Embedded Document
 const userImageSchema = new mongoose.Schema({
   file: { type: String },
-  createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' }
-}, {
-  timestamps: { createdAt: true, updatedAt: false }
-});
+  createdBy: { type: ObjectId, ref: 'User' }
+}, { timestamps: { createdAt: true, updatedAt: false }});
 
 const userNoteSchema = new mongoose.Schema({
   text: { type: String, required: true },
-  createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' }
-}, {
-  timestamps: { createdAt: true, updatedAt: false }
-});
+  createdBy: { type: ObjectId, ref: 'User' }
+}, { timestamps: { createdAt: true, updatedAt: false }});
 
 const userRatingSchema = new mongoose.Schema({
   stars: { type: Number, required: true },
-  createdBy: { type: mongoose.Schema.ObjectId, ref: 'User', unique: true }
-}, {
-  timestamps: { createdAt: true, updatedAt: false }
+  createdBy: { type: ObjectId, ref: 'User' }
+}, { timestamps: { createdAt: true, updatedAt: false }});
+
+const likeSchema = new mongoose.Schema({
+  // like: { type: Number, default: 0 },
+  // user: { type: ObjectId, ref: 'User', index: true }
+  user: { type: ObjectId, ref: 'User' }
 });
 
-const voteSchema = new mongoose.Schema({
-  like: { type: Number, default: 0 },
-  user: { type: mongoose.Schema.ObjectId, ref: 'User' }
-});
+// likeSchema.index({ user: 1 }, { unique: true });
 
 const propertySchema = new mongoose.Schema({
   listingId: { type: String },
-  images: [ userImageSchema ], // ---> EMBEDDED REFERENCES
-  notes: [ userNoteSchema ], // ---> EMBEDDED REFERENCES
-  ratings: [ userRatingSchema ], // ---> EMBEDDED REFERENCES
-  votes: [ voteSchema ], // ---> EMBEDDED REFERENCES
-  createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' }
-
-  // likes: [{ type: mongoose.Schema.ObjectId, ref: 'Vote', default: 0 }],
-  // upvotes: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
-  // downvotes: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
-}, {
-  timestamps: { createdAt: true, updatedAt: false }
-});
+  images: [ userImageSchema ], // Embedded reference
+  notes: [ userNoteSchema ],
+  ratings: [ userRatingSchema ],
+  likes: [ likeSchema ],
+  createdBy: { type: ObjectId, ref: 'User' }
+}, { timestamps: { createdAt: true, updatedAt: false }});
 
 const groupSchema = new mongoose.Schema({
   properties: [ propertySchema ],
   groupName: { type: String, required: true },
-  owner: { type: mongoose.Schema.ObjectId, ref: 'User' }
+  owner: { type: ObjectId, ref: 'User' }
 }, {
-  usePushEach: true, // equivalent of $push with $each array of documents
+  usePushEach: true, // equivalent of $push with $each array of documents, ALSO what is it really?
   timestamps: { createdAt: true, updatedAt: true }
 });
+
+// propertySchema.createIndex({ industry: 1, staff_id: 1}, { unique: true, sparse: true });
+// likeSchema.createIndex({ 'user': 1 }, { unique: true });
+// likeSchema.index({ 'user': 1 }, { unique: true });
 
 groupSchema
   .virtual('users', {
@@ -64,6 +59,7 @@ groupSchema
     this._users = users;
   });
 
+// pre-hook - save(); also available are update(); and remove();
 groupSchema.pre('save', function addGroupToUsers(next) {
   this
     .model('User')
@@ -100,40 +96,5 @@ userImageSchema.pre('remove', function deleteImage(next) {
   if(this.file) return s3.deleteObject({ Key: this.file }, next);
   return next();
 });
-
-// groupSchema.pre('update', function updateGroupUsers(next) {
-//   this.model('User')
-//     .find({ _id: this._users })
-//     .exec()
-//     .then((users) => {
-//       const promises = users.map((user) => {
-//         // user.group = this.id;
-//         user.group = null;
-//         user.save();
-//       });
-//
-//       return Promise.all(promises);
-//     })
-//     .then(next)
-//     .catch(next);
-// });
-
-// groupSchema.pre('remove', function removeGroupFromUsers(next) {
-//   this
-//     .model('User')
-//     .find({ _id: this._users }) // mongoose ObjectId aka it's hexString
-//     .exec()
-//     .then((users) => {
-//       const promises = users.map((user) => {
-//         console.log('user --------------------------', user);
-//         user.group = null; // this refers to the group object
-//         return user.save();
-//       });
-//
-//       return Promise.all(promises);
-//     })
-//     .then(next)
-//     .catch(next);
-// });
 
 module.exports = mongoose.model('Group', groupSchema);

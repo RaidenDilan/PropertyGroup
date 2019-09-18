@@ -17,12 +17,14 @@
 // }
 
 .alert-info {
-  // background-color: rgba(106, 27, 154, 0);
-  // color: $white;
-  color: $black;
+  background-color: #ff0000;
+  color: $white;
+  // color: $black;
   text-transform: uppercase;
   width: 25%;
   margin: 0 auto;
   border: 0;
   text-align: center;
 }
+
+.info-window {}

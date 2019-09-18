@@ -32,6 +32,7 @@ function LoginCtrl($auth, $state, $stateParams) {
       $auth
         .login(vm.credentials)
         .then(() => $state.go('usersShow', { id: $auth.getPayload().userId }));
+        // .then(() => $state.go('groupsHome', { id: vm.user.group.id }));
 
       vm.loginForm.$setUntouched();
       vm.loginForm.$setPristine();

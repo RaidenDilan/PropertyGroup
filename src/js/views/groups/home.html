@@ -21,17 +21,12 @@
         >
         Search Properties
       </md-button>
-      <!-- <code>{{ main.user.id }}</code> -->
-      <!-- <code>{{ main.currentUserId }}</code> -->
-      <!-- <code>{{ groupsHome.currentGroup.users.includes(main.currentUserId) }}</code> -->
       <md-button
-        ng-if="main.user.group.id === groupsHome.currentGroup"
+        ng-if="(main.currentUserId !== groupsHome.group.owner) && (main.user.group.id === groupsHome.group.id)"
+        ng-show="(main.currentUserId !== groupsHome.group.owner) && (main.user.group.id === groupsHome.group.id)"
         ng-click="groupsHome.leaveGroup(main.currentUserId)"
         class="md-raised md-warn md-button md-ink-ripple"
         >
-        <!-- ng-if="groupsHome.group.owner || groupsHome.includes(main.currentUserId) === true" -->
-        <!-- ng-if="groupsHome.group.users.includes(main.currentUserId) === true" -->
-        <!-- ng-show="groupsHome.currentGroup.users.includes(main.currentUserId) === true" -->
         Leave
       </md-button>
       <md-button
@@ -50,12 +45,6 @@
         >
         Delete
       </md-button>
-
-      <!-- <md-card-icon-actions>
-        <md-button class="md-icon-button" aria-label="toggle">
-          <md-icon md-svg-icon="md-toggle-arrow"></md-icon>
-        </md-button>
-      </md-card-icon-actions> -->
     </div>
   </md-card>
 
@@ -66,7 +55,7 @@
       </md-card-title-text>
     </md-card-title>
 
-    <md-divider ng-if="!$last"></md-divider>
+    <md-divider></md-divider>
 
     <md-card-content layout="row" layout-align="center center">
 
@@ -79,10 +68,6 @@
             >
           </div>
           <h5 style="text-transform: uppercase;">{{ user.username }}</h5>
-
-          <!-- <md-dialog-actions layout="row" layout-align="center center">
-            <md-button class="md-primary md-raised" ng-click="groupsHome.showGroupUser(user)">View</md-button>
-          </md-dialog-actions> -->
         </div>
       </div>
     </md-card-content>

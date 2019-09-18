@@ -1,8 +1,9 @@
 const mongoose  = require('mongoose');
 const bcrypt    = require('bcrypt');
 const s3        = require('../lib/s3');
+const ObjectId  = mongoose.Schema.ObjectId;
+const avatar    = 'https://www.searchpng.com/wp-content/uploads/2019/02/Profile-ICon.png';
 // const validator = require('validator');
-const avatar = 'https://www.searchpng.com/wp-content/uploads/2019/02/Profile-ICon.png';
 
 const userSchema = new mongoose.Schema({
   username: { type: String, unique: true, trim: true, required: true },
@@ -11,11 +12,8 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   profileImage: { type: String, default: avatar, required: true },
   githubId: { type: Number },
-  group: { type: mongoose.Schema.ObjectId, ref: 'Group', default: null } // ---> REFERENCED SCHEMA
+  group: { type: ObjectId, ref: 'Group', default: null } // Referenced Document
 });
-
-// The raw value of `email` is lowercased
-// userSchema.get('email', null, { getters: false }); // 'test@gmail.com'
 
 userSchema
   .path('profileImage')
@@ -54,6 +52,18 @@ userSchema.pre('validate', function checkPassword(next) {
   next();
 });
 
+userSchema.pre('save', function hashPassword(next) {
+  if(this.isModified('password')) this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(11));
+  next();
+});
+
+userSchema.methods.validatePassword = function validatePassword(password) {
+  return bcrypt.compareSync(password, this.password);
+};
+
+// The raw value of `email` is lowercased
+// userSchema.get('email', null, { getters: false }); // 'test@gmail.com'
+
 // userSchema
 //   .path('email')
 //   .validate(validateEmail);
@@ -75,14 +85,5 @@ userSchema.pre('validate', function checkPassword(next) {
 //   if(!validator.isEmail(email)) return this.invalidate('email', 'Email must be valid email address');
 //   next();
 // });
-
-userSchema.pre('save', function hashPassword(next) {
-  if(this.isModified('password')) this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(11));
-  next();
-});
-
-userSchema.methods.validatePassword = function validatePassword(password) {
-  return bcrypt.compareSync(password, this.password);
-};
 
 module.exports = mongoose.model('User', userSchema);

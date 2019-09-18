@@ -3,7 +3,8 @@ md-content.groupsShowProp {
 
   md-card-header {
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
+    justify-content: center;
     align-items: center;
   }
   md-card {
@@ -71,6 +72,7 @@ md-content.groupsShowProp {
         // }
 
         ul:not(:last-child) {
+          padding-bottom: 1rem;
           display: flex;
           flex-flow: column nowrap;
 
@@ -82,6 +84,7 @@ md-content.groupsShowProp {
           }
         }
         ul:not(:first-child) {
+          padding: 1rem 0;
           display: flex;
           flex-flow: column nowrap;
           justify-content: center;
@@ -170,24 +173,25 @@ md-content.groupsShowProp {
             align-items: center;
           }
 
-          md-input-container {
-            padding: 0;
-            margin: 6px 8px;
-          }
+          // md-input-container {
+          //   padding: 0;
+          //   margin: 6px 8px;
+          // }
 
-          #rating {
+          .ratingBox {
             display: flex;
             flex-flow: row nowrap;
             justify-content: center;
             align-items: center;
-          }
-
-          .ratingBox {
             width: 15%;
             margin: 0 auto;
-            border: 1px solid #000000;
+            border: 1px solid $brand-color;
             border-radius: 15px;
             padding: 0.5rem;
+
+            span {
+              color: $brand-color;
+            }
           }
           .md-button {
             width: 15%;
@@ -198,7 +202,7 @@ md-content.groupsShowProp {
             align-items: center;
 
             md-icon {
-              margin: 0;
+              margin: 0 6px 0 0;
             }
           }
         }
@@ -207,10 +211,11 @@ md-content.groupsShowProp {
         margin: 0 8px 2.5rem 8px;
 
         md-card-title {
+          padding: 0 16px 16px;
           text-align: center;
         }
         .userRatings {
-          margin: 1rem 0;
+          margin: 2.5rem 0;
           display: flex;
           flex-flow: row nowrap;
           justify-content: center;
@@ -226,6 +231,15 @@ md-content.groupsShowProp {
             flex-flow: column nowrap;
             justify-content: center;
             align-items: center;
+
+            span {
+              color: $brand-color;
+
+              i {
+                cursor: default;
+                outline: none;
+              }
+            }
           }
           smart-confirm {
             margin: 0;
@@ -263,12 +277,18 @@ md-content.groupsShowProp {
         .addImageForm {
           display: flex;
           flex-flow: column nowrap;
-          justify-content: center;
-          align-items: center;
 
-          .uploadPhoto label, button {
-            // width: auto;
-            // margin: 6px 8px;
+          .md-button {
+            width: 15%;
+            margin: 0.5rem auto;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: center;
+            align-items: center;
+
+            md-icon {
+              margin: 0 6px 0 0;
+            }
           }
         }
       }
@@ -276,33 +296,45 @@ md-content.groupsShowProp {
         margin: 0 8px 2.5rem 8px;
 
         md-card-title {
+          padding: 0 16px 16px;
           text-align: center;
         }
 
         .groupsPropsShowUserImages {
           md-card {
-            padding: 15px;
+            // padding: 15px;
+
+            md-card-avatar {
+              width: auto;
+              height: auto;
+            }
 
             .userImages {
               width: 100%;
-              height: 200px;
+              // height: auto;
+              padding: 50px 0;
               background-repeat: no-repeat;
               background-position: center;
               background-size: cover;
-              border-radius: 15px;
+              border-radius: 0;
+              border: 0;
+            }
+
+            div.md-card-actions {
+              display: flex;
+              flex-flow: row nowrap;
+              justify-content: center;
+              align-items: center;
             }
 
             smart-confirm {
               margin: 0;
 
               div {
-                width: 20%;
-                margin: 0 auto;
                 display: flex;
                 flex-flow: row nowrap;
               }
               .md-button {
-                margin: 1rem auto 0 auto;
                 width: 100%;
                 display: flex;
                 flex-flow: row nowrap;
@@ -330,16 +362,48 @@ md-content.groupsShowProp {
         margin: 0 8px 2.5rem 8px;
 
         .addComment {
+          .addNoteForm {
+            display: flex;
+            flex-flow: column nowrap;
 
-          .comment-list {
-            smart-confirm {
+            md-input-container {
+              margin: 16px 0 0 0;
+
+              label {
+                // bottom: auto;
+                left: 1rem;
+                // left: auto;
+                // padding-left: 1rem;
+
+                &:focus {
+                  bottom: 100%;
+                }
+              }
+              textarea.md-input {
+                border-bottom: 1px solid $brand-color;
+                border-right: 1px solid $brand-color;
+                border-left: 1px solid $brand-color;
+                border-radius: 3px;
+                min-height: 60px;
+              }
+            }
+            md-card-actions {
+              margin: 0;
+            }
+
+
+            .md-button {
+              width: 15%;
+              margin: 0.5rem auto;
               display: flex;
               flex-flow: row nowrap;
+              justify-content: center;
+              align-items: center;
+
+              md-icon {
+                margin: 0 6px 0 0;
+              }
             }
-          }
-          form {
-            width: 50%;
-            margin: 0 auto;
           }
         }
       }
@@ -347,9 +411,9 @@ md-content.groupsShowProp {
         margin: 0 8px 2.5rem 8px;
 
         md-card-title {
+          padding: 0 16px 16px;
           text-align: center;
         }
-
         .comment-list {
 
           md-list-item {
@@ -416,3 +480,14 @@ md-content.groupsShowProp {
   text-align: center;
   margin-bottom: 50px;
 }
+
+
+/* A working example can be found at the bottom of this page. */
+.my-element.ng-hide-add, .my-element.ng-hide-remove {
+  transition: all 0.5s linear;
+}
+
+.my-element.ng-hide-add {}
+.my-element.ng-hide-add.ng-hide-add-active {}
+.my-element.ng-hide-remove {}
+.my-element.ng-hide-remove.ng-hide-remove-active {}

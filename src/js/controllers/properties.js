@@ -7,47 +7,42 @@ PropertiesIndexCtrl.$inject = ['$scope', '$http', '$uibModal', '$mdDialog', '$mo
 function PropertiesIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
   const vm = this;
 
-  vm.results         = [];
+  vm.limit           = 10; // loadMore Limit
+  vm.toShow          = 49; // Filtering and  sorting
   vm.area            = null;
   vm.beds            = null;
-  vm.limit           = 10; // loadMore Limit
-  vm.fullscreen      = true; // $mdDialog option
   vm.originatorEvent = null; // Menu functionality
-  vm.toShow          = 49; // Filtering and  sorting
-  vm.sortBy          = '-createdAt'; // Filtering and  sorting
-
-  vm.openMenu = ($mdMenu, e) => {
-    // set max number of properties to be shown
-    vm.originatorEvent = e;
-    $mdMenu.open(e);
-    // console.log('vm.originatorEvent', vm.originatorEvent);
-  };
+  vm.results         = [];
+  vm.sortBy          = '-first_published_date'; // Filtering and  sorting
 
   vm.getProperties = () => {
     if(vm.propertiesIndexForm.$valid) {
       $http
-        .get('/api/properties', { params: { area: vm.area, minimum_beds: vm.beds, maximum_beds: vm.beds }})
-        .then((response) => {
-          propertyUpdater(response.data);
-          vm.results = response.data;
-        })
-        .then(() => {
-          var x = vm.results;
-          // var moment = $moment().format('ddd, hA');
+      .get('/api/properties', { params: { area: vm.area, minimum_beds: vm.beds, maximum_beds: vm.beds }})
+      .then((response) => {
+        propertyUpdater(response.data);
+        vm.results = response.data;
+      })
+      .then(() => {
+        // var moment = $moment().format('ddd, hA');
+        var x = vm.results.listing;
+        for (var i = 0; i < x.length; i++) {
+          x[i].sinceWhen = $moment(x[i].first_published_date).fromNow();
+        }
+      });
 
-          for (var i = 0; i < x.length; i++) {
-            x[i].sinceWhen = $moment(x[i].createdAt).fromNow();
-          }
-        });
+      vm.propertiesIndexForm.$setUntouched();
+      vm.propertiesIndexForm.$setPristine();
+    }
+  };
 
-        vm.propertiesIndexForm.$setUntouched();
-        vm.propertiesIndexForm.$setPristine();
-      }
+  vm.openMenu = ($mdMenu, e) => {
+    vm.originatorEvent = e;
+    $mdMenu.open(e);
   };
 
   vm.maxNum = (integer) => {
     vm.toShow = integer;
-    // console.log('vm.toShow', vm.toShow);
   };
 
   vm.sortMethod = (sortType) => {
@@ -70,7 +65,7 @@ function PropertiesIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
       parent: angular.element(document.body),
       targetEvent: thisProperty,
       clickOutsideToClose: true,
-      fullscreen: vm.fullscreen,
+      fullscreen: true,
       resolve: {
         selectedProperty: () => {
           return thisProperty;
@@ -82,11 +77,12 @@ function PropertiesIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
   function propertyUpdater(properties) {
     if (typeof(properties) !== 'object') throw 'Properties should be an object';
     for (var i = 0; i < properties.length; i++) {
-      properties[i].createdAt = createdOnParser(properties[i].createdAt);
-      properties[i].price     = properties[i].like.length - properties[i].dislike.length;
-      properties[i].popular   = properties[i].like + properties[i].dislike;
+      properties[i].first_published_date = createdOnParser(properties[i].first_published_date);
+      // properties[i].price = properties[i].like.length - properties[i].dislike.length;
+      // properties[i].popular = properties[i].like + properties[i].dislike;
 
-      console.log('createdAt', properties[i]);
+      // console.log('properties', properties);
+      // console.log('first_published_date', properties[i]);
     }
   }
 

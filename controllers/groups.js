@@ -18,7 +18,7 @@ function indexGroup(req, res, next) {
 function showGroup(req, res, next) {
   Group
   .findById(req.params.id)
-  .populate('users properties.images.createdBy properties.notes.createdBy properties.ratings.createdBy')
+  .populate('users properties.images.createdBy properties.notes.createdBy properties.ratings.createdBy properties.likes.createdBy')
   // .populate('users')
   .exec()
   .then((group) => {
