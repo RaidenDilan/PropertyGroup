@@ -1,6 +1,6 @@
 <center><h1>GA WDI London - Project 3 March 2017</h1></center>
 
-<center><h1>Project 3: pNc</h1></center>
+<center><h1>Project 3: propertyGroup</h1></center>
 
 <center>[Launch Application!](https://pnc-app.herokuapp.com/login)</center>
 
@@ -8,7 +8,7 @@
 
 #####Team: Raiden Dilan, Mark Davis & Omar Harvey-Phillips
 
-pNc is a RESTful MEAN stack app which allows users to create a group and talk to each other. The users are able to search for properties using the Zoopla API and store them in the group they're in. Users are able to upload images of the properties they visited, give feedback and view crime statistics provided by the Police API. In this project myself and my two teammates predominantly pair-coded the front-end and sorted out the numerous requests that were being sent to the zoopla API.
+propertyGroup is a RESTful MEAN stack app which allows users to create a group and talk to each other. The users are able to search for properties using the Zoopla API and store them in the group they're in. Users are able to upload images of the properties they visited, give feedback and view crime statistics provided by the Police API. In this project myself and my two teammates predominantly pair-coded the front-end and sorted out the numerous requests that were being sent to the zoopla API.
 
 The app has been built following the RESTful model in both the back end, which was built in Express, and the Front end, built in AngularJS. Several APIs have been consumed in order to add functionality to the app, these are Google Maps, Autocomplete, Google Places, Zoople API and Police Crime API to provide the informations required by this app. The app requires the users to register and log in and uses JWT to complete the authentication, additionally OAuth is available via Github. Image upload has been implemented using AWS.
 
@@ -24,7 +24,7 @@ In addition to wire framing, planning each of the tasks was done in Trello in or
 
 <center><h1>Technologies used</h1></center>
 
-* pNc is a MEAN stack application.
+* propertyGroup is a MEAN stack application.
 * The API is built in Node.js with Express.
 * A mongo database was used to store the data, with mongoose used to create models within express.
 * Pictures are base64 encoded and stored using the AWS S3 service.
@@ -44,7 +44,7 @@ In addition to wire framing, planning each of the tasks was done in Trello in or
 
 The user flow through the site is as follows;
 
-The homepage is a login page, from here the user can either login is already registered or click on register to use the site. Registration 
+The homepage is a login page, from here the user can either login is already registered or click on register to use the site. Registration
 
 Once logged in, or registered the the user is redirected to their User profile page.
 
@@ -76,4 +76,4 @@ Writing the group function for creating a group and populating it users was very
 <br>
 <br>
 
-<center><strong>Copyright © pNc</strong></center>
+<center><strong>Copyright © propertyGroup</strong></center>

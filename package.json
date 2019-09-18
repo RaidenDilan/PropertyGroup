@@ -1,6 +1,6 @@
 {
-  "name": "project-3",
-  "version": "2.0.0",
+  "name": "propertyGroup",
+  "version": "3.0.0",
   "description": "",
   "main": "server.js",
   "engines": {
@@ -13,9 +13,9 @@
   "author": "Raiden Dilan <raiden18@me.com> (https://github.com/raidendilan)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/raidendilan/pNc-App/issues"
+    "url": "https://github.com/raidendilan/propertyGroup/issues"
   },
-  "homepage": "https://github.com/raidendilan/pNc-App#readme",
+  "homepage": "https://github.com/raidendilan/propertyGroup#readme",
   "gulp": {
     "srcDir": "src/",
     "destDir": "public/",

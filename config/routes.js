@@ -89,6 +89,7 @@ router.route('/groups/:id/properties/:listingId/likes')
   .post(secureRoute, properties.addLike);
 
 router.route('/groups/:id/properties/:listingId/likes/:likeId')
+  .put(secureRoute, properties.updateLike)
   .delete(secureRoute, properties.deleteLike);
 
 // AUTH

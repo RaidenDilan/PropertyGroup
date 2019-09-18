@@ -201,8 +201,9 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
   vm.listingLat          = null;
   vm.listingLon          = null;
   vm.latlng              = null;
-  // vm.userLike            = null;
+  vm.isVisible           = null;
   vm.listingId           = $stateParams.listing_id;
+  vm.likeId              = null;
   vm.loggedInUser        = $auth.getPayload().userId;
   vm.labels              = ['Anti Social Behaviour', 'Burglary', 'Bike Theft', 'Drugs', 'Robbery', 'Vehicle Crimes', 'Violent Crimes'];
   vm.crimes              = [];
@@ -218,38 +219,24 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
     }
   };
 
-  $scope.isVisible = false;
+  // console.log('$stateParams', $stateParams);
 
-  // vm.isVisible = -1;
-
-  Group
+  vm.property = Group
     .get($stateParams)
     .$promise
     .then((data) => {
       vm.group = data;
       getGroupProperty();
 
+      console.log('vm.group.properties[0], ', vm.group.properties[0]);
       if (vm.group && vm.group.properties.length > 0) vm.prop = vm.group.properties.find(obj => obj.listingId === vm.listingId);
-      if (vm.prop && vm.prop.likes.length > 0) vm.userLike = vm.prop.likes.find(obj => {
-        // console.log('obj', obj);
-        return obj.user === $auth.getPayload().userId;
-      });
-
-      console.log('vm.prop.likes', vm.prop.likes);
-
-      // $scope.liked = vm.prop.likes.indexOf(vm.userLike);
-
-      // console.log('indexOf of user: ', vm.prop.likes.indexOf(vm.userLike));
-      // console.log('indexOf of user:  === -1', vm.prop.likes.indexOf(vm.userLike) === -1);
-      // console.log('indexOf of user: === 0', vm.prop.likes.indexOf(vm.userLike) === 0);
-      // console.log('indexOf of user: !== -1', vm.prop.likes.indexOf(vm.userLike) !== -1);
-      // console.log('indexOf of user: > -1', vm.prop.likes.indexOf(vm.userLike) > -1);
+      if (vm.prop.likes.length > 0) vm.likeId = vm.prop.likes.find(obj => obj.user === vm.loggedInUser);
+      // vm.liked = vm.prop.likes.indexOf(vm.likeId);
+      console.log('vm.prop --->', vm.prop);
+      console.log('vm.likeId --->', vm.likeId);
     });
 
   // $scope.$watch(() => vm.listingLat, getGroupProperty);
-  // $scope.$watch(() => vm.listingLat, getPropertyLocation);
-  // $scope.$watch(() => vm.listingLat, getCrimes);
-  // $scope.$watch(() => vm.listingLat, getLikes);
 
   function getGroupProperty() {
     $http
@@ -293,27 +280,105 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       });
   }
 
-  $scope.toggle = () => {
-    $scope.liked = !$scope.liked;
-  };
-  // function getLikes() {
-  //   // if(!vm.listingLikes) return false;
+  // vm.upVote = (property) => {
+  //   // console.log('property - upVote --->', property);
+  //   // property.likes++;
+  //   var listingId = vm.listingId;
+  //   var likeId    = vm.likeId;
+  //   // console.log('likeId    - upVote --->', likeId);
+  //   // console.log('listingId - upVote --->', listingId);
+  //   updateVote(listingId, likeId);
+  // };
   //
-  //   Group
-  //     .get($stateParams)
+  // vm.downVote = (property) => {
+  //   // console.log('property - downVote --->', property);
+  //   // property.likes--;
+  //   var listingId = vm.listingId;
+  //   var likeId    = vm.likeId;
+  //   // console.log('likeId    - downVote --->', likeId);
+  //   // console.log('listingId - downVote --->', listingId);
+  //   updateVote(listingId, likeId);
+  // };
+  //
+  // function updateVote(listingId, likeId) {
+  //   console.log('listingId    - updateVote --->', listingId);
+  //   console.log('likeId       - updateVote --->', likeId);
+  //   // console.log('vm.listingId - updateVote --->', vm.listingId);
+  //   // console.log('$stateParams - updateVote --->', $stateParams);
+  //
+  //   GroupPropertyLike
+  //     .update({ id: vm.group.id, listingId: listingId, likeId: likeId.id })
   //     .$promise
-  //     .then((data) => {
-  //       vm.group = data;
-  //       if (vm.group && vm.group.properties.length > 0) vm.prop = vm.group.properties.find(obj => obj.listingId === vm.listingId);
-  //       console.log('32323', vm.userLike);
+  //     .then((like) => {
+  //       console.log('update LIKE --->', like);
+  //
+  //       // like.
+  //       // like.update({ likeId: likeId }, likeId);
+  //
+  //       // const index = vm.prop.likes.indexOf(like);
+  //       // return vm.prop.likes.splice(index, 1);
   //     });
+  //
+  //   // GroupPropertyLike
+  //   //   .update({ id: vm.group.id, listingId: listingId, likeId: likeId })
+  //   //   .$promise
+  //   //   .then((vote) => {
+  //   //     console.log('vote', vote);
+  //   //     // vote.articlevotes = likes;
+  //   //     // vote.$update();
+  //   //   });
+  //
+  //   // var vote = GroupPropertyLike
+  //   //   .get({ likeId: vm.likeId.id })
+  //   //   // .update({ id: vm.group.id, listingId: vm.listingId, likeId: vm.likeId })
+  //   //   .$promise
+  //   //   .then((like) => {
+  //   //     console.log('like', like);
+  //   //
+  //   //     vote.property = likes;
+  //   //     console.log('vote.property', vote.property);
+  //   //     vote.$update();
+  //   //   });
   // }
+
+  // vm.toggle = () => {
+  //   vm.isVisible = !vm.isVisible;
+  // };
 
   // vm.showHide = () => {
   //   console.log('vm.isVisible', vm.isVisible);
-  //   if (vm.prop.likes.indexOf(vm.userLike) === -1) vm.isVisible = 0;
-  //   else if (vm.prop.likes.indexOf(vm.userLike) === 0) vm.isVisible = -1;
+  //   if (vm.prop.likes.indexOf(vm.likeId) === -1) vm.isVisible = 0;
+  //   else if (vm.prop.likes.indexOf(vm.likeId) === 0) vm.isVisible = -1;
   // };
+
+  vm.addLike = () => {
+    if(vm.prop.likes.indexOf(vm.likeId) === -1) {
+      GroupPropertyLike
+        .save({ id: vm.group.id, listingId: vm.listingId }, $auth.getPayload())
+        .$promise
+        .then((like) => {
+          // console.log('addLike --->', like);
+          vm.prop.likes.push(like);
+          vm.newLike = {};
+          // vm.isVisible = true;
+        });
+    }
+  };
+
+  vm.deleteLike = (like) => {
+    if(vm.prop.likes.indexOf(vm.likeId) !== -1) {
+      GroupPropertyLike
+        .delete({ id: vm.group.id, listingId: vm.listingId, likeId: like.id })
+        .$promise
+        .then((like) => {
+          // console.log('deleteLike --->', like);
+
+          const index = vm.prop.likes.indexOf(like);
+          // vm.isVisible = false;
+          return vm.prop.likes.splice(index, 1);
+        });
+    }
+  };
 
   vm.addNote = () => {
     GroupPropertyNote
@@ -407,35 +472,6 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       }
     });
   };
-
-  vm.addLike = () => {
-    if(vm.prop.likes.indexOf(vm.userLike) === -1) {
-      GroupPropertyLike
-      .save({ id: vm.group.id, listingId: vm.listingId }, $auth.getPayload())
-      .$promise
-      .then((like) => {
-        console.log('addLike --->', like);
-        vm.prop.likes.push(like);
-        $scope.toggle = true;
-        vm.newLike = {};
-      });
-    }
-  };
-
-  vm.deleteLike = (like) => {
-    if(vm.prop.likes.indexOf(vm.userLike) !== -1) {
-      GroupPropertyLike
-        .delete({ id: vm.group.id, listingId: vm.listingId, likeId: like.id })
-        .$promise
-        .then((like) => {
-          console.log('deleteLike --->', like);
-
-          $scope.toggle = false;
-          const index = vm.prop.likes.indexOf(like);
-          return vm.prop.likes.splice(index, 1);
-        });
-    }
-  };
 }
 
 UserImageModalCtrl.$inject = ['selectedImage', '$mdDialog'];
@@ -493,8 +529,8 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
     GroupUser
       .update({ id: vm.group.id, userId: user.id })
       .$promise
-      .then((group) => {
-        console.log('------> group <------', group);
+      .then((user) => { // group
+        console.log('------> group <------', user); // group
         // ------> not sure how I'm using the group object query here <------
         vm.group.users.push(user); // vm.group.users.push(group);
         user.group = vm.group.id; // <--- OR ---> user.group.push(vm.group.id);

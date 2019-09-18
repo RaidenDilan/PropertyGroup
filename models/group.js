@@ -22,7 +22,7 @@ const userRatingSchema = new mongoose.Schema({
 const likeSchema = new mongoose.Schema({
   // like: { type: Number, default: 0 },
   // user: { type: ObjectId, ref: 'User', index: true }
-  user: { type: ObjectId, ref: 'User' }
+  user: { type: ObjectId, ref: 'User', unique: true }
 });
 
 // likeSchema.index({ user: 1 }, { unique: true });
@@ -32,7 +32,7 @@ const propertySchema = new mongoose.Schema({
   images: [ userImageSchema ], // Embedded reference
   notes: [ userNoteSchema ],
   ratings: [ userRatingSchema ],
-  likes: [ likeSchema ],
+  likes: [ likeSchema ], // likes: [{ type: ObjectId, ref: 'User' }],
   createdBy: { type: ObjectId, ref: 'User' }
 }, { timestamps: { createdAt: true, updatedAt: false }});
 

@@ -2,6 +2,7 @@
   <md-card class="groupsShowPropCard">
     <div class="groupsShowPropCardDiv" ng-repeat="property in groupsPropsShow.properties.listing">
 
+
       <md-card class="groupsPropsShowTitle">
         <div>
           <div class="md-card-image propertyImage" style="background-image:url('{{ property.image_645_430_url }}');"></div>
@@ -35,43 +36,57 @@
           <md-card-actions class="propertyActions" layout="row" layout-align="start center">
             <!-- property-like
               property="groupsPropsShow.prop"
-              like="groupsPropsShow.userLike"
+              like="groupsPropsShow.likeId"
               visibility="isVisible"
               user="main.user"
               ng-class="{ 'visibile': isVisible }" -->
-              <!-- ng-if="groupsPropsShow.prop.likes.includes(groupsPropsShow.userLike) === false" -->
+              <!-- ng-if="groupsPropsShow.prop.likes.includes(groupsPropsShow.likeId) === false" -->
 
-            <md-button
+              <div class="votingButton" ng-click="groupsPropsShow.upVote(groupsPropsShow.prop)">
+                <i class="glyphicon glyphicon-chevron-up"></i>
+              </div>
+              <div class="votingLikes">
+                <div>{{ groupsPropsShow.prop.likes.length }}</div>
+              </div>
+              <div class="votingButton" ng-click="groupsPropsShow.downVote(groupsPropsShow.prop)">
+                <i class="glyphicon glyphicon-chevron-down"></i>
+              </div>
+
+            <!-- <code>{{ groupsPropsShow.likeId }}</code> -->
+
+            <!-- <md-button
               class="md-raised md-primary md-button md-ink-ripple"
-              ng-show="groupsPropsShow.prop.likes.includes(groupsPropsShow.userLike) === false"
+              ng-if="groupsPropsShow.prop.likes.includes(groupsPropsShow.likeId) === false"
               ng-click="groupsPropsShow.addLike()"
               aria-label="Like"
               >
               <md-icon class="material-icons">favorite_border</md-icon>
               <span>{{ groupsPropsShow.prop.likes.length }}</span>
-            </md-button>
+            </md-button> -->
+
             <!-- property-like
               property="groupsPropsShow.prop"
-              like="groupsPropsShow.userLike"
+              like="groupsPropsShow.likeId"
               visibility="isVisible"
               user="main.user"
               ng-class="{ 'visibile': isVisible }" -->
-              <!-- ng-if="!groupsPropsShow.prop.likes.includes(groupsPropsShow.userLike) === false" -->
-            <md-button
+              <!-- ng-if="!groupsPropsShow.prop.likes.includes(groupsPropsShow.likeId) === false" -->
+
+            <!-- <md-button
               class="md-raised md-primary md-button md-ink-ripple"
-              ng-show="groupsPropsShow.prop.likes.includes(groupsPropsShow.userLike) === true"
-              ng-click="groupsPropsShow.deleteLike(groupsPropsShow.userLike)"
+              ng-if="groupsPropsShow.prop.likes.includes(groupsPropsShow.likeId) === true"
+              ng-click="groupsPropsShow.deleteLike(groupsPropsShow.likeId)"
               aria-label="Unlike"
               >
               <md-icon class="material-icons">favorite</md-icon>
               <span>{{ groupsPropsShow.prop.likes.length }}</span>
-            </md-button>
+            </md-button> -->
             <md-button class="md-raised md-warn md-button md-ink-ripple">Email Agent</md-button>
             <md-button class="md-raised md-primary md-button md-ink-ripple" ng-click="groupsPropsShow.deleteProperty(property)" ng-if="main.isAuthenticated()">Delete Property</md-button>
           </md-card-actions>
 
           <!-- <code>{{ main.currentUserId }}</code> -->
-          <!-- <code>{{ groupsPropsShow.prop.likes.indexOf(groupsPropsShow.userLike) !== -1 }}</code> -->
+          <!-- <code>{{ groupsPropsShow.prop.likes.indexOf(groupsPropsShow.likeId) !== -1 }}</code> -->
 
           <!-- <md-card-actions layout="row" layout-align="start center">
             <md-card-icon-actions>

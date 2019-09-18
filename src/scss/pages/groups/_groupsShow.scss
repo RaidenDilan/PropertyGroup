@@ -481,13 +481,31 @@ md-content.groupsShowProp {
   margin-bottom: 50px;
 }
 
+.votingLikes {
+  width: auto !important;
+  border: 1px solid $brand-color;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px !important;
 
-/* A working example can be found at the bottom of this page. */
-.my-element.ng-hide-add, .my-element.ng-hide-remove {
-  transition: all 0.5s linear;
+  div {
+    width: auto !important;
+    padding: 0 !important;
+  }
 }
 
-.my-element.ng-hide-add {}
-.my-element.ng-hide-add.ng-hide-add-active {}
-.my-element.ng-hide-remove {}
-.my-element.ng-hide-remove.ng-hide-remove-active {}
+.votingButton {
+  width: auto !important;
+}
+
+// /* A working example can be found at the bottom of this page. */
+// .my-element.ng-hide-add, .my-element.ng-hide-remove {
+//   transition: all 0.5s linear;
+// }
+//
+// .my-element.ng-hide-add {}
+// .my-element.ng-hide-add.ng-hide-add-active {}
+// .my-element.ng-hide-remove {}
+// .my-element.ng-hide-remove.ng-hide-remove-active {}

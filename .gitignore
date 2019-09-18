@@ -1,5 +1,4 @@
-/bower_components
-/node_modules
-/public
-/archive
-/lib/mail.js
+bower_components
+node_modules
+public
+archive

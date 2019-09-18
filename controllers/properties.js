@@ -12,8 +12,6 @@ function addPropertyRoute(req, res, next) {
     .then((group) => {
       if(!group) return res.notFound('Group not found');
 
-      console.log('req.body', req.body);
-
       const property = group.properties.create(req.body);
       group.properties.push(property);
       // group.properties.concat(property); // this uses $set so no problems
@@ -256,6 +254,37 @@ function deletePropertyLike(req, res, next) {
   .catch(next);
 }
 
+function updatePropertyLike(req, res, next) {
+  req.body.owner = req.user;
+  console.log('req.params------------------>>>', req.params);
+
+  Group
+    // .findByIdAndUpdate(req.params.id, { $addToSet: { users: req.body.users } }, { new: true }) // The $pullAll operator removes all instances of the specified values from an existing array. Unlike the $pull operator that removes elements by specifying a query, $pullAll removes elements that match the listed values.
+    .findById(req.params.id)
+    .populate('users')
+    .exec()
+    .then((group) => {
+      if(!group) return res.notFound('Group not found');
+
+      const prop = group.properties.find((property) => {
+        return property.listingId === req.params.listingId;
+      });
+      const like = prop.likes.id(req.params.likeId);
+
+      // if (like.id === req.params.likeId) {
+        // console.log('UPDATE VOTE ---------->>>', like.id === req.params.likeId);
+      like.update();
+
+      return group
+        .save()
+        .then(() => res.json(like));
+      // }
+      // return group.save();
+    })
+    .then(() => res.status(204).end())
+    .catch(next);
+}
+
 module.exports = {
   addProperty: addPropertyRoute,
   deleteProperty: deletePropertyRoute,
@@ -266,7 +295,8 @@ module.exports = {
   addRating: addPropertyRating,
   deleteRating: deletePropertyRating,
   addLike: addPropertyLike,
-  deleteLike: deletePropertyLike
+  deleteLike: deletePropertyLike,
+  updateLike: updatePropertyLike
 };
 
 // function addPropertyVote(req, res, next) {

@@ -1,61 +1,26 @@
 <section class="home">
-  <h1>Properties and Crimes</h1>
+  <h1>Properties and Group</h1>
 
   <h2>
-    The anonymous way to collect suggestions from
+    The perfect home
     <typer
-      words="['your employees', 'your friends', 'your members', 'the public']"
-      type-time="80"
-      backspace-time="100"
-      start-delay="1500"
+      words="['to buy', 'to rent', 'with your friends', 'in the UK']"
+      type-time="60"
+      backspace-time="50"
+      start-delay="2000"
       >
     </typer>
   </h2>
 
-  <section class="account" layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-    <md-button
-      class="md-raised md-primary md-button md-ink-ripple"
-      ng-hide="main.user"
-      ui-sref="register"
-      >
-      Register
-    </md-button>
-    <md-button
-      class="md-raised md-primary md-button md-ink-ripple"
-      ng-hide="main.user"
-      ui-sref="login"
-      >
-      Login
-    </md-button>
+  <section
+    class="account"
+    ng-if="!main.isAuthenticated()"
+    layout="row"
+    layout-sm="column"
+    layout-align="center center"
+    layout-wrap
+    >
+    <md-button class="md-raised md-primary md-button md-ink-ripple" ui-sref="register">Register</md-button>
+    <md-button class="md-raised md-primary md-button md-ink-ripple" ui-sref="login">Login</md-button>
   </section>
-
-  <!-- <div class="info">
-    <div class="container">
-      <div class="row">
-        <h2>Why PNC?</h2>
-        <br>
-      </div>
-
-      <div class="row">
-        <div class="col-md-6">
-            <h3>As an employer</h3>
-            <br>
-            <ul class="list-unstyled">
-            <h4>Recieve honest, valuable feedback from employees and customers.</h4>
-            <h4>Boost employee participation and retention.</h4>
-            <h4>Use our analysis tools to easily track popular ideas.</h4>
-          </ul>
-        </div>
-
-        <div class="col-md-6">
-            <h3>As an employee</h3>
-            <br>
-            <ul class="list-unstyled">
-            <h4>Put forward your ideas to be seen and voted on company wide.</h4>
-            <h4>Make your voice heard, anonymously.</h4>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div> -->
 </section>

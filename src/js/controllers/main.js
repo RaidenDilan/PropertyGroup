@@ -17,8 +17,17 @@ function MainCtrl($rootScope, $timeout, $state, $auth, User, $window, $mdSidenav
     'usersEdit',
     'propertiesIndex'
   ];
+
+  // vm.isDlgOpen;
+  // vm.backspaceTime = 50;    // set the time for each character to be typed out, defaults to 250ms
+  // vm.startDelay    = 2000;  // set the time for each character to be deleted, defaults to type-time
+  // vm.typeTime      = 60;    // set the time before the first action happens, defaults to 500ms
+  // vm.startTrigger  = true;  // Set a boolean variable on the directive that will start the directive when the variable changes to true
+  // vm.repeat        = false; // set whether to continuously loop over the words, defaults to true
+  // vm.startTyping   = true;  // Set whether the directives first animation is either the type or delete/highlight
+
   var message = 'Custom toast';
-  var isDlgOpen;
+  // var isDlgOpen;
   var ACTION_RESOLVE = 'undo';
   var UNDO_KEY       = 'z';
   var DIALOG_KEY     = 'd';
@@ -49,7 +58,7 @@ function MainCtrl($rootScope, $timeout, $state, $auth, User, $window, $mdSidenav
     if(!$auth.isAuthenticated() && protectedStates.includes(toState.name)) {
       event.preventDefault();
       $state.go('home');
-      vm.message = 'You must be logged in to go there!';
+      vm.message = 'You must be logged in to view web contents!';
     }
   }
 

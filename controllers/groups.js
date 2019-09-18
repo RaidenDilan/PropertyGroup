@@ -17,15 +17,15 @@ function indexGroup(req, res, next) {
 
 function showGroup(req, res, next) {
   Group
-  .findById(req.params.id)
-  .populate('users properties.images.createdBy properties.notes.createdBy properties.ratings.createdBy properties.likes.createdBy')
-  // .populate('users')
-  .exec()
-  .then((group) => {
-    if(!group) return res.notFound('Group not found');
-    return res.status(200).json(group);
-  })
-  .catch(next);
+    .findById(req.params.id)
+    .populate('users properties.images.createdBy properties.notes.createdBy properties.ratings.createdBy properties.likes')
+    // .populate('users')
+    .exec()
+    .then((group) => {
+      if(!group) return res.notFound('Group not found');
+      return res.status(200).json(group);
+    })
+    .catch(next);
 }
 
 function createGroup(req, res, next) {
