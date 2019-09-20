@@ -19,8 +19,8 @@ function GroupsIndexCtrl(Group) {
     .then((response) => vm.all = response);
 }
 
-GroupsNewCtrl.$inject = ['$state', '$auth', '$scope', 'Group', 'User', 'filterFilter'];
-function GroupsNewCtrl($state, $auth, $scope, Group, User, filterFilter) {
+GroupsNewCtrl.$inject = ['$state', '$auth', '$scope', 'Group', 'User', 'filterFilter', 'ToastAlertService'];
+function GroupsNewCtrl($state, $auth, $scope, Group, User, filterFilter, ToastAlertService) {
   const vm = this;
 
   vm.group       = {};
@@ -62,9 +62,9 @@ function GroupsNewCtrl($state, $auth, $scope, Group, User, filterFilter) {
       Group
         .save(vm.group)
         .$promise
-        .then(() => {
+        .then((group) => {
           $state.go('propertiesIndex');
-          console.log('vm.create group - Array of user Obj ids', vm.group);
+          ToastAlertService.customToast(`${group.groupName} created`, '3000', 'top right');
         });
     }
   };
@@ -102,8 +102,8 @@ function GroupsNewCtrl($state, $auth, $scope, Group, User, filterFilter) {
   });
 }
 
-GroupsHomeCtrl.$inject = ['$scope', '$state', '$http', '$auth', 'Group', 'GroupUser', 'GroupProperty', '$stateParams', '$mdDialog'];
-function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupProperty, $stateParams, $mdDialog) {
+GroupsHomeCtrl.$inject = ['$scope', '$state', '$http', '$auth', 'Group', 'GroupUser', 'GroupProperty', '$stateParams', '$mdDialog', 'ToastAlertService'];
+function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupProperty, $stateParams, $mdDialog, ToastAlertService) {
   const vm = this;
   const authUserId = $auth.getPayload().userId;
 
@@ -129,6 +129,8 @@ function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupPro
           .get('/api/groups/:id/properties', { params: { id: vm.group.id, listingId: propIds } })
           .then((response) => vm.selected = response.data);
       }
+
+      console.log('vm.group', vm.group);
     });
 
     vm.delete = () => {
@@ -140,7 +142,10 @@ function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupPro
     vm.update = () => {
       vm.group
         .$update()
-        .then(() => $state.go('groupsNew'));
+        .then((group) => {
+          $state.go('groupsNew');
+          ToastAlertService.customToast(`${group.groupName} updated`, '3000', 'top right');
+        });
     };
 
     vm.showGroupUser = (user) => {
@@ -190,8 +195,8 @@ function GroupsHomeUser($scope, $mdDialog, selectedUser) {
   vm.showUserId = (userId) => $mdDialog.hide(userId);
 }
 
-GroupsPropsShowCtrl.$inject = ['$stateParams', '$state', '$http', '$scope', '$auth', 'API', 'Group', 'GroupProperty', 'GroupPropertyNote', 'GroupPropertyImage', 'GroupPropertyRating', 'GroupPropertyLike', 'Crimes', '$uibModal', '$mdDialog', 'GeoCoder', '$moment'];
-function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Group, GroupProperty, GroupPropertyNote, GroupPropertyImage, GroupPropertyRating, GroupPropertyLike, Crimes, $uibModal, $mdDialog, GeoCoder, $moment) {
+GroupsPropsShowCtrl.$inject = ['$stateParams', '$state', '$http', '$scope', '$auth', 'API', 'Group', 'GroupProperty', 'GroupPropertyNote', 'GroupPropertyImage', 'GroupPropertyRating', 'GroupPropertyLike', 'Crimes', '$uibModal', '$mdDialog', 'GeoCoder', '$moment', 'ToastAlertService'];
+function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Group, GroupProperty, GroupPropertyNote, GroupPropertyImage, GroupPropertyRating, GroupPropertyLike, Crimes, $uibModal, $mdDialog, GeoCoder, $moment, ToastAlertService) {
   const vm = this;
 
   vm.max                 = 5;
@@ -201,8 +206,8 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
   vm.listingLat          = null;
   vm.listingLon          = null;
   vm.latlng              = null;
-  vm.isVisible           = null;
   vm.listingId           = $stateParams.listing_id;
+  // vm.groupId             = $stateParams.id;
   vm.likeId              = null;
   vm.loggedInUser        = $auth.getPayload().userId;
   vm.labels              = ['Anti Social Behaviour', 'Burglary', 'Bike Theft', 'Drugs', 'Robbery', 'Vehicle Crimes', 'Violent Crimes'];
@@ -219,21 +224,22 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
     }
   };
 
-  // console.log('$stateParams', $stateParams);
 
-  vm.property = Group
+  Group
     .get($stateParams)
     .$promise
     .then((data) => {
       vm.group = data;
       getGroupProperty();
 
-      console.log('vm.group.properties[0], ', vm.group.properties[0]);
-      if (vm.group && vm.group.properties.length > 0) vm.prop = vm.group.properties.find(obj => obj.listingId === vm.listingId);
-      if (vm.prop.likes.length > 0) vm.likeId = vm.prop.likes.find(obj => obj.user === vm.loggedInUser);
+      vm.prop = vm.group.properties.find(obj => obj.listingId === vm.listingId);
+      vm.likeId = vm.prop.likes.find(obj => obj.user === vm.loggedInUser);
+
+      vm.liked = vm.prop.likes.includes(vm.likeId);
       // vm.liked = vm.prop.likes.indexOf(vm.likeId);
-      console.log('vm.prop --->', vm.prop);
-      console.log('vm.likeId --->', vm.likeId);
+      // console.log('vm.prop --->', vm.prop);
+      // console.log('vm.liked --->', vm.liked);
+      // console.log('vm.likeId --->', vm.likeId);
     });
 
   // $scope.$watch(() => vm.listingLat, getGroupProperty);
@@ -342,42 +348,48 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
   // }
 
   // vm.toggle = () => {
-  //   vm.isVisible = !vm.isVisible;
+  //   vm.liked = !vm.liked;
   // };
 
   // vm.showHide = () => {
-  //   console.log('vm.isVisible', vm.isVisible);
-  //   if (vm.prop.likes.indexOf(vm.likeId) === -1) vm.isVisible = 0;
-  //   else if (vm.prop.likes.indexOf(vm.likeId) === 0) vm.isVisible = -1;
+  //   console.log('vm.liked', vm.liked);
+  //   if (vm.prop.likes.indexOf(vm.likeId) === -1) vm.liked = 0;
+  //   else if (vm.prop.likes.indexOf(vm.likeId) === 0) vm.liked = -1;
   // };
 
+  // $scope.$watch(() => vm.liked, vm.addLike);
+  // $scope.$watch(() => vm.liked, vm.deleteLike);
+
   vm.addLike = () => {
-    if(vm.prop.likes.indexOf(vm.likeId) === -1) {
+    // if(vm.prop.likes.includes(vm.likeId) === false) {
       GroupPropertyLike
-        .save({ id: vm.group.id, listingId: vm.listingId }, $auth.getPayload())
+        .save({ id: vm.group.id, listingId: vm.listingId }, $auth.getPayload().userId)
         .$promise
         .then((like) => {
-          // console.log('addLike --->', like);
+          console.log('addLike --->', like);
+          console.log('vm.liked 1 --->', vm.liked);
+
           vm.prop.likes.push(like);
           vm.newLike = {};
-          // vm.isVisible = true;
+          vm.liked = true;
         });
-    }
+    // }
   };
 
   vm.deleteLike = (like) => {
-    if(vm.prop.likes.indexOf(vm.likeId) !== -1) {
+    // if(vm.prop.likes.includes(vm.likeId) === true) {
       GroupPropertyLike
         .delete({ id: vm.group.id, listingId: vm.listingId, likeId: like.id })
         .$promise
         .then((like) => {
-          // console.log('deleteLike --->', like);
+          console.log('deleteLike --->', like);
+          console.log('vm.liked 2 --->', vm.liked);
 
           const index = vm.prop.likes.indexOf(like);
-          // vm.isVisible = false;
+          vm.liked = false;
           return vm.prop.likes.splice(index, 1);
         });
-    }
+    // }
   };
 
   vm.addNote = () => {
@@ -389,6 +401,8 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
         vm.prop.notes.push(note);
         vm.newNote = {};
       });
+
+      ToastAlertService.customToast('Comment posted', '3000', 'top right');
   };
 
   vm.deleteNote = (note) => {
@@ -399,6 +413,8 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
         const index = vm.prop.notes.indexOf(note);
         return vm.prop.notes.splice(index, 1);
       });
+
+      ToastAlertService.customToast('Commend deleted', '3000', 'top right');
   };
 
   vm.addImage = () => {
@@ -409,6 +425,8 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
         vm.prop.images.push(image);
         vm.newImage = {};
       });
+
+      ToastAlertService.customToast('Image uploaded', '3000', 'top right');
   };
 
   vm.deleteImage = (image) => {
@@ -419,6 +437,8 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
         const index = vm.prop.images.indexOf(image);
         return vm.prop.images.splice(index, 1);
       });
+
+      ToastAlertService.customToast('Image deleted', '3000', 'top right');
   };
 
   vm.addRating = () => {
@@ -429,6 +449,8 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
         vm.prop.ratings.push(rating);
         vm.newRating = {};
       });
+
+      ToastAlertService.customToast('Rating posted', '3000', 'top right');
   };
 
   vm.deleteRating = (rating) => {
@@ -439,21 +461,21 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
         const index = vm.prop.ratings.indexOf(rating);
         return vm.prop.ratings.splice(index, 1);
       });
+
+      ToastAlertService.customToast('Rating deleted', '3000', 'top right');
   };
 
   vm.deleteProperty = (property) => {
-    console.log('property', property);
-    console.log('vm.group', vm.group);
-
-    // .delete({ listingId: vm.listingId, id: vm.group.id })
     GroupProperty
       .delete({ id: vm.group.id, listingId: vm.listingId })
       .$promise
       .then(() => {
         const index = vm.group.properties.indexOf(property);
         vm.group.properties.splice(index, 1);
+        ToastAlertService.customToast(`${property.listing_id} deleted from ${vm.group.groupName} group`, '3000', 'top right');
         return $state.go('groupsHome', { id: vm.group.id });
       });
+
   };
 
   vm.showUserImage = (thisImage) => {
@@ -485,8 +507,8 @@ function UserImageModalCtrl(selectedImage, $mdDialog) {
   vm.showUserId = (userId) => $mdDialog.hide(userId);
 }
 
-GroupsEditCtrl.$inject = ['$stateParams', '$auth', '$state', '$scope', 'Group', 'GroupUser', 'User', 'filterFilter', '$uibModal'];
-function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, User, filterFilter, $uibModal) {
+GroupsEditCtrl.$inject = ['$stateParams', '$auth', '$state', '$scope', 'Group', 'GroupUser', 'User', 'filterFilter', '$uibModal', 'ToastAlertService'];
+function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, User, filterFilter, $uibModal, ToastAlertService) {
   const vm = this;
 
   vm.group       = Group.get($stateParams);
@@ -553,7 +575,11 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
     if(vm.groupsEditForm.$valid) {
       vm.group
         .$update()
-        .then(() => $state.go('groupsHome', $stateParams));
+        .then((group) => {
+          $state.go('groupsHome', $stateParams);
+          ToastAlertService.customToast(`${group.data.message}`, '3000', 'top right');
+        });
+
         // console.log('vm.create group - Array of user Obj ids', vm.group);
         // $rootScope.$broadcast('userAddedToGroup');
     }

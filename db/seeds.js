@@ -62,11 +62,21 @@ User
 
     return Group
       .create([{
-        groupName: 'Group One',
+        groupName: 'The Boys',
         owner: users[0],
         properties: [{
-  				listingId: '50639974',
-  				// ratings: [{
+          listingId: '52693074',
+          createdBy: users[0]
+			  },{
+          listingId: '52637876',
+          createdBy: users[0]
+        },{
+          listingId: '52314423',
+          createdBy: users[0]
+        },{
+          listingId: '52509811',
+          createdBy: users[0]
+          // ratings: [{
           //   stars: 5,
           //   createdBy: users[0]
           // }],
@@ -86,14 +96,8 @@ User
           //   users[3],
           //   users[4]
           // ],
-          createdBy: users[0]
-			  }],
-        users: [
-          users[0]
-          // users[1],
-          // users[2],
-          // users[3]
-        ]
+        }],
+        users: [users[0]]
       }]);
   })
   .then((groups) => console.log(`${groups.length} Group(s) created`))

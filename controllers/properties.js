@@ -5,16 +5,16 @@ const User    = require('../models/user');
 
 function addPropertyRoute(req, res, next) {
   req.body.createdBy = req.user;
+
   Group
-    .findByIdAndUpdate(req.user.group, { $addToSet: { properties: req.body }}, { new: true })
+    .findById(req.user.group) // .findByIdAndUpdate(req.user.group, { $set: { properties: req.body }}, { new: true })
     .populate('users')
     .exec()
     .then((group) => {
       if(!group) return res.notFound('Group not found');
 
       const property = group.properties.create(req.body);
-      group.properties.push(property);
-      // group.properties.concat(property); // this uses $set so no problems
+      group.properties.push(property); // group.properties.concat(property); // this uses $set so no problems
 
       return group
         .save()
@@ -25,7 +25,6 @@ function addPropertyRoute(req, res, next) {
 }
 
 function deletePropertyRoute(req, res, next) {
-  console.log('req.params', req.params);
   Group
     .findById(req.params.id)
     .populate('users properties')
@@ -36,10 +35,6 @@ function deletePropertyRoute(req, res, next) {
       const prop = group.properties.find((property) => {
         return property.listingId === req.params.listingId;
       });
-      console.log('prop', prop);
-
-      // const accomodation = prop.properties.id(req.params.listingId);
-      // console.log('accomodation', accomodation);
 
       prop.remove();
 
@@ -209,18 +204,19 @@ function addPropertyLike(req, res, next) {
         return property.listingId === req.params.listingId;
       });
 
-        const like = prop.likes.create(req.body);
-        // if (like.id === req.params.likeId) {
-        if(prop.likes.indexOf(req.user.id) === -1) {
-          console.log('ADD VOTE ---------->>>', prop.likes.indexOf(req.user.id) === -1);
-          // console.log('ADD VOTE ---------->>>', like.id === req.params.likeId);
-          // vote.like = !vote.like; // TOGGLE LIKE NUMERIC VALUE
-          prop.likes.push(like);
+      const like = prop.likes.create(req.user);
 
-          return group
-            .save()
-            .then(() => res.json(like));
-      }
+      // if (like.id === req.params.likeId) {
+      // if(prop.likes.indexOf(req.user.id) === -1) {
+        console.log('ADD VOTE ---------->>>', like);
+        // console.log('ADD VOTE ---------->>>', like.id === req.params.likeId);
+        // vote.like = !vote.like; // TOGGLE LIKE NUMERIC VALUE
+        prop.likes.push(like);
+
+        return group
+          .save()
+          .then(() => res.json(like));
+      // }
     })
     .catch(next);
 }
@@ -242,7 +238,7 @@ function deletePropertyLike(req, res, next) {
       const like = prop.likes.id(req.params.likeId);
 
       if (like.id === req.params.likeId) {
-        console.log('DELETE VOTE ---------->>>', like.id === req.params.likeId);
+        console.log('DELETE VOTE ---------->>>', like);
         like.remove();
 
         return group

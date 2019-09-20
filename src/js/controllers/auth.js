@@ -3,8 +3,8 @@ angular
   .controller('RegisterCtrl', RegisterCtrl)
   .controller('LoginCtrl', LoginCtrl);
 
-RegisterCtrl.$inject = ['$auth', '$state'];
-function RegisterCtrl($auth, $state) {
+RegisterCtrl.$inject = ['$auth', '$state', 'ToastAlertService'];
+function RegisterCtrl($auth, $state, ToastAlertService) {
   const vm = this;
 
   vm.user = {};
@@ -13,7 +13,11 @@ function RegisterCtrl($auth, $state) {
     if(vm.registerForm.$valid) {
       $auth
         .signup(vm.user)
-        .then(() => $state.go('login'));
+        .then((user) => {
+          $state.go('login');
+          ToastAlertService.customToast(`${user.data.message}`, '3000', 'top right');
+          // ToastAlertService.customToast('Register Complete', '3000', 'top right');
+        });
 
       vm.registerForm.$setUntouched();
       vm.registerForm.$setPristine();
@@ -21,8 +25,8 @@ function RegisterCtrl($auth, $state) {
   };
 }
 
-LoginCtrl.$inject = ['$auth', '$state', '$stateParams'];
-function LoginCtrl($auth, $state, $stateParams) {
+LoginCtrl.$inject = ['$auth', '$state', '$stateParams', 'ToastAlertService'];
+function LoginCtrl($auth, $state, $stateParams, ToastAlertService) {
   const vm = this;
 
   vm.credentials = {};
@@ -31,8 +35,10 @@ function LoginCtrl($auth, $state, $stateParams) {
     if(vm.loginForm.$valid) {
       $auth
         .login(vm.credentials)
-        .then(() => $state.go('usersShow', { id: $auth.getPayload().userId }));
-        // .then(() => $state.go('groupsHome', { id: vm.user.group.id }));
+        .then((user) => {
+          $state.go('usersShow', { id: $auth.getPayload().userId });
+          ToastAlertService.customToast(`${user.data.message}`, '3000', 'top right');
+        });
 
       vm.loginForm.$setUntouched();
       vm.loginForm.$setPristine();
@@ -42,6 +48,9 @@ function LoginCtrl($auth, $state, $stateParams) {
   vm.authenticate = (provider) => {
     $auth
       .authenticate(provider)
-      .then(() => $state.go('usersShow', { id: $auth.getPayload().userId }));
+      .then(() => {
+        $state.go('usersShow', { id: $auth.getPayload().userId });
+        ToastAlertService.customToast('You\'re now logged in', '5000', 'top right');
+      });
   };
 }

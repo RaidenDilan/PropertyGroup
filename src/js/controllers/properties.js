@@ -95,8 +95,8 @@ function PropertiesIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
   }
 }
 
-PropertiesShowCtrl.$inject = ['$state', '$auth', 'User', 'GroupProperty', 'selectedProperty', '$mdDialog'];
-function PropertiesShowCtrl($state, $auth, User, GroupProperty, selectedProperty, $mdDialog) {
+PropertiesShowCtrl.$inject = ['$state', '$auth', 'User', 'GroupProperty', 'selectedProperty', '$mdDialog', '$mdToast', 'ToastAlertService'];
+function PropertiesShowCtrl($state, $auth, User, GroupProperty, selectedProperty, $mdDialog, $mdToast, ToastAlertService) {
   const vm = this;
 
   vm.selected = selectedProperty;
@@ -118,12 +118,14 @@ function PropertiesShowCtrl($state, $auth, User, GroupProperty, selectedProperty
     const newProperty = { listingId: vm.selected.listing_id };
 
     GroupProperty
-    .save(newProperty)
-    .$promise
-    .then(() => {
-      $state.go('groupsHome', { id: vm.user.group.id });
-      vm.newProperty = {};
-    });
+      .save(newProperty)
+      .$promise
+      .then((property) => {
+        $state.go('groupsHome', { id: vm.user.group.id });
+        vm.newProperty = {};
+      });
+
+      ToastAlertService.customToast(`${newProperty.listingId} stored in ${vm.user.group.groupName} group`, '3000', 'top right');
   };
 
   vm.storeAndContinue = () => {
@@ -132,7 +134,11 @@ function PropertiesShowCtrl($state, $auth, User, GroupProperty, selectedProperty
     GroupProperty
       .save(newProperty)
       .$promise
-      .then(() => vm.newProperty = {});
+      .then(() => {
+        vm.newProperty = {};
+      });
+
+      ToastAlertService.customToast(`${newProperty.listingId} stored in ${vm.user.group.groupName} group`, '3000', 'top right');
   };
 
   vm.hide = () => $mdDialog.hide();

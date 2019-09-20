@@ -35,3 +35,17 @@ strong {
   padding-left: 10px;
   padding-right: 10px;
 }
+
+md-toast {
+  position: fixed;
+}
+
+.md-toast-content {
+  md-icon {
+    color: #FFFFFF;
+  }
+
+  .md-button {
+    border-radius: 2px;
+  }
+}

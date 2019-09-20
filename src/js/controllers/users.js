@@ -3,8 +3,8 @@ angular
   .controller('UsersShowCtrl', UsersShowCtrl)
   .controller('UsersEditCtrl', UsersEditCtrl);
 
-UsersShowCtrl.$inject = ['User', '$stateParams', '$state', '$auth'];
-function UsersShowCtrl(User, $stateParams, $state, $auth) {
+UsersShowCtrl.$inject = ['User', '$stateParams', '$state', '$auth', 'ToastAlertService'];
+function UsersShowCtrl(User, $stateParams, $state, $auth, ToastAlertService) {
   const vm = this;
 
   vm.user = User.get($stateParams);
@@ -15,12 +15,14 @@ function UsersShowCtrl(User, $stateParams, $state, $auth) {
       .then((user) => {
         $auth.logout();
         $state.go('login');
+        ToastAlertService.customToast(`${user.data.message}`, '3000', 'top right');
+        // ToastAlertService.customToast(`${user.data.message}`, '3000', 'top right');
       });
   };
 }
 
-UsersEditCtrl.$inject = ['User', '$stateParams', '$state'];
-function UsersEditCtrl(User, $stateParams, $state) {
+UsersEditCtrl.$inject = ['User', '$stateParams', '$state', 'ToastAlertService'];
+function UsersEditCtrl(User, $stateParams, $state, ToastAlertService) {
   const vm = this;
 
   vm.user = User.get($stateParams);
@@ -29,7 +31,10 @@ function UsersEditCtrl(User, $stateParams, $state) {
     if(vm.usersEditForm.$valid) {
       vm.user
         .$update()
-        .then((user) => $state.go('usersShow', $stateParams));
+        .then(() => {
+          $state.go('usersShow', $stateParams);
+          ToastAlertService.customToast(`${vm.user.username} updated`, '3000', 'top right');
+        });
 
       vm.usersEditForm.$setUntouched();
       vm.usersEditForm.$setPristine();

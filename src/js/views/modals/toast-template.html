@@ -1,7 +1,13 @@
 <md-toast role="alert" aria-relevant="all">
-  <span class="md-toast-text" flex>{{ main.toastMessage }}</span>
-  <span class="md-visually-hidden">Press Escape to dismiss. Press Control-"{{ main.dialogKey }}" for</span>
-  <md-button class="md-highlight" ng-click="main.openMoreInfo($event)">More info</md-button>
-  <span class="md-visually-hidden">Press Control-"{{ main.undoKey }}" to</span>
-  <md-button ng-click="main.closeToast()">Undo</md-button>
+  <span class="md-toast-text" flex>{{ toast.toastMessage }}</span>
+
+  <span class="md-visually-hidden">Press Escape to dismiss. Press Control-"{{ toast.dialogKey }}" for</span>
+
+  <md-button class="md-highlight" ng-click="toast.openMoreInfo($event)">
+    <md-icon class="material-icons">more_horiz</md-icon>
+  </md-button>
+
+  <span class="md-visually-hidden">Press Control-"{{ toast.hideKey }}" to</span>
+
+  <md-button ng-click="toast.closeToast()">Hide</md-button>
 </md-toast>

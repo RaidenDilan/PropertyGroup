@@ -31,6 +31,7 @@ section.home {
       padding: 4rem 0 0 0;
 
       .md-button, a {
+        min-width: 125px;
         box-shadow: 0 2px 5px 0 rgba(255, 255, 255, 0.26);
         background-color: $white;
         color: $black;

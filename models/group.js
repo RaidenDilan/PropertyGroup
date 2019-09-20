@@ -21,11 +21,8 @@ const userRatingSchema = new mongoose.Schema({
 
 const likeSchema = new mongoose.Schema({
   // like: { type: Number, default: 0 },
-  // user: { type: ObjectId, ref: 'User', index: true }
-  user: { type: ObjectId, ref: 'User', unique: true }
+  user: { type: ObjectId, ref: 'User', unique: true, index: true }
 });
-
-// likeSchema.index({ user: 1 }, { unique: true });
 
 const propertySchema = new mongoose.Schema({
   listingId: { type: String },

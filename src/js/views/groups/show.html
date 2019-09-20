@@ -42,7 +42,7 @@
               ng-class="{ 'visibile': isVisible }" -->
               <!-- ng-if="groupsPropsShow.prop.likes.includes(groupsPropsShow.likeId) === false" -->
 
-              <div class="votingButton" ng-click="groupsPropsShow.upVote(groupsPropsShow.prop)">
+              <!-- <div class="votingButton" ng-click="groupsPropsShow.upVote(groupsPropsShow.prop)">
                 <i class="glyphicon glyphicon-chevron-up"></i>
               </div>
               <div class="votingLikes">
@@ -50,19 +50,19 @@
               </div>
               <div class="votingButton" ng-click="groupsPropsShow.downVote(groupsPropsShow.prop)">
                 <i class="glyphicon glyphicon-chevron-down"></i>
-              </div>
+              </div> -->
 
             <!-- <code>{{ groupsPropsShow.likeId }}</code> -->
 
-            <!-- <md-button
+            <md-button
               class="md-raised md-primary md-button md-ink-ripple"
-              ng-if="groupsPropsShow.prop.likes.includes(groupsPropsShow.likeId) === false"
+              ng-show="!groupsPropsShow.liked"
               ng-click="groupsPropsShow.addLike()"
               aria-label="Like"
               >
               <md-icon class="material-icons">favorite_border</md-icon>
               <span>{{ groupsPropsShow.prop.likes.length }}</span>
-            </md-button> -->
+            </md-button>
 
             <!-- property-like
               property="groupsPropsShow.prop"
@@ -72,15 +72,16 @@
               ng-class="{ 'visibile': isVisible }" -->
               <!-- ng-if="!groupsPropsShow.prop.likes.includes(groupsPropsShow.likeId) === false" -->
 
-            <!-- <md-button
+            <md-button
               class="md-raised md-primary md-button md-ink-ripple"
-              ng-if="groupsPropsShow.prop.likes.includes(groupsPropsShow.likeId) === true"
+              ng-show="groupsPropsShow.liked"
               ng-click="groupsPropsShow.deleteLike(groupsPropsShow.likeId)"
               aria-label="Unlike"
               >
               <md-icon class="material-icons">favorite</md-icon>
               <span>{{ groupsPropsShow.prop.likes.length }}</span>
-            </md-button> -->
+            </md-button>
+
             <md-button class="md-raised md-warn md-button md-ink-ripple">Email Agent</md-button>
             <md-button class="md-raised md-primary md-button md-ink-ripple" ng-click="groupsPropsShow.deleteProperty(property)" ng-if="main.isAuthenticated()">Delete Property</md-button>
           </md-card-actions>
