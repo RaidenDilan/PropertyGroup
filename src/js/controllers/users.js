@@ -15,7 +15,7 @@ function UsersShowCtrl(User, $stateParams, $state, $auth, ToastAlertService) {
       .then((user) => {
         $auth.logout();
         $state.go('login');
-        ToastAlertService.customToast(`${user.data.message}`, '3000', 'top right');
+        ToastAlertService.customToast(`${user.data.message}`, '3000', 'success');
         // ToastAlertService.customToast(`${user.data.message}`, '3000', 'top right');
       });
   };
@@ -33,7 +33,7 @@ function UsersEditCtrl(User, $stateParams, $state, ToastAlertService) {
         .$update()
         .then(() => {
           $state.go('usersShow', $stateParams);
-          ToastAlertService.customToast(`${vm.user.username} updated`, '3000', 'top right');
+          ToastAlertService.customToast(`${vm.user.username} updated`, '3000', 'success');
         });
 
       vm.usersEditForm.$setUntouched();

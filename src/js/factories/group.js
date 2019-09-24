@@ -4,7 +4,7 @@ angular
   .factory('GroupUser', GroupUser)
   .factory('GroupProperty', GroupProperty)
   .factory('GroupPropertyImage', GroupPropertyImage)
-  .factory('GroupPropertyNote', GroupPropertyNote)
+  .factory('GroupPropertyComment', GroupPropertyComment)
   .factory('GroupPropertyLike', GroupPropertyLike)
   // .factory('GroupPropertyUpvote', GroupPropertyUpvote)
   // .factory('GroupPropertyDownvote', GroupPropertyDownvote)
@@ -38,9 +38,9 @@ function GroupPropertyImage($resource) {
   });
 }
 
-GroupPropertyNote.$inject = ['$resource'];
-function GroupPropertyNote($resource) {
-  return new $resource('/api/groups/:id/properties/:listingId/notes/:noteId', { id: '@id' }, {
+GroupPropertyComment.$inject = ['$resource'];
+function GroupPropertyComment($resource) {
+  return new $resource('/api/groups/:id/properties/:listingId/comments/:commentId', { id: '@id' }, {
     update: { method: 'PUT' }
   });
 }
@@ -55,7 +55,10 @@ function GroupPropertyRating($resource) {
 GroupPropertyLike.$inject = ['$resource'];
 function GroupPropertyLike($resource) {
   return new $resource('/api/groups/:id/properties/:listingId/likes/:likeId', { id: '@id' }, {
-    update: { method: 'PUT' }
+    update: {
+      method: 'PUT'
+      // isArray: true
+    }
   });
 }
 

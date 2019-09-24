@@ -64,7 +64,7 @@ function GroupsNewCtrl($state, $auth, $scope, Group, User, filterFilter, ToastAl
         .$promise
         .then((group) => {
           $state.go('propertiesIndex');
-          ToastAlertService.customToast(`${group.groupName} created`, '3000', 'top right');
+          ToastAlertService.customToast(`${group.message}`, 3000, 'success');
         });
     }
   };
@@ -109,6 +109,7 @@ function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupPro
 
   vm.group      = {};
   vm.listingIds = [];
+  vm.toastDelay = 3000;
   // vm.status     = '';
 
   Group
@@ -136,7 +137,11 @@ function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupPro
     vm.delete = () => {
       vm.group
         .$remove()
-        .then(() => $state.go('groupsNew'));
+        .then((group) => {
+          console.log('group', group);
+          $state.go('groupsNew');
+          ToastAlertService.customToast(`${group.message}`, vm.toastDelay, 'success');
+        });
     };
 
     vm.update = () => {
@@ -144,7 +149,8 @@ function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupPro
         .$update()
         .then((group) => {
           $state.go('groupsNew');
-          ToastAlertService.customToast(`${group.groupName} updated`, '3000', 'top right');
+          ToastAlertService.customToast(`${group.groupName}`, vm.toastDelay, 'top right', 'success');
+          // ToastAlertService.customToast(`${group.data.message}`, '3000', 'top right');
         });
     };
 
@@ -195,24 +201,28 @@ function GroupsHomeUser($scope, $mdDialog, selectedUser) {
   vm.showUserId = (userId) => $mdDialog.hide(userId);
 }
 
-GroupsPropsShowCtrl.$inject = ['$stateParams', '$state', '$http', '$scope', '$auth', 'API', 'Group', 'GroupProperty', 'GroupPropertyNote', 'GroupPropertyImage', 'GroupPropertyRating', 'GroupPropertyLike', 'Crimes', '$uibModal', '$mdDialog', 'GeoCoder', '$moment', 'ToastAlertService'];
-function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Group, GroupProperty, GroupPropertyNote, GroupPropertyImage, GroupPropertyRating, GroupPropertyLike, Crimes, $uibModal, $mdDialog, GeoCoder, $moment, ToastAlertService) {
+GroupsPropsShowCtrl.$inject = ['$stateParams', '$state', '$http', '$scope', '$auth', 'API', 'Group', 'GroupProperty', 'GroupPropertyComment', 'GroupPropertyImage', 'GroupPropertyRating', 'GroupPropertyLike', 'Crimes', '$uibModal', '$mdDialog', 'GeoCoder', '$moment', 'ToastAlertService'];
+function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Group, GroupProperty, GroupPropertyComment, GroupPropertyImage, GroupPropertyRating, GroupPropertyLike, Crimes, $uibModal, $mdDialog, GeoCoder, $moment, ToastAlertService) {
   const vm = this;
 
-  vm.max                 = 5;
-  vm.isReadonly          = true;
-  vm.isReadonlyfalse     = false;
-  vm.fullscreen          = false;
-  vm.listingLat          = null;
-  vm.listingLon          = null;
-  vm.latlng              = null;
-  vm.listingId           = $stateParams.listing_id;
-  // vm.groupId             = $stateParams.id;
-  vm.likeId              = null;
-  vm.loggedInUser        = $auth.getPayload().userId;
-  vm.labels              = ['Anti Social Behaviour', 'Burglary', 'Bike Theft', 'Drugs', 'Robbery', 'Vehicle Crimes', 'Violent Crimes'];
-  vm.crimes              = [];
-  vm.crimes.pieCrimeData = [];
+  vm.max              = 5;
+  vm.isReadonly       = true;
+  vm.isReadonlyfalse  = false;
+  vm.fullscreen       = false;
+  vm.listingLat       = null;
+  vm.listingLon       = null;
+  vm.latlng           = null;
+  vm.listingId        = $stateParams.listing_id;
+  // vm.groupId          = $stateParams.id;
+  vm.userLike         = {};
+  vm.loggedInUserId   = $auth.getPayload().userId;
+  vm.labels           = ['Anti Social Behaviour', 'Burglary', 'Bike Theft', 'Drugs', 'Robbery', 'Vehicle Crimes', 'Violent Crimes'];
+  vm.crimes           = [];
+  vm.crimes.crimeData = [];
+  vm.toastDelay       = 3000;
+  vm.toastStatus      = 'success';
+  vm.liked            = true;
+
   vm.chartOptions = {
     responsive: true, // set to false to remove responsiveness. Default responsive value is true.
     legend: {
@@ -224,7 +234,6 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
     }
   };
 
-
   Group
     .get($stateParams)
     .$promise
@@ -233,16 +242,36 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       getGroupProperty();
 
       vm.prop = vm.group.properties.find(obj => obj.listingId === vm.listingId);
-      vm.likeId = vm.prop.likes.find(obj => obj.user === vm.loggedInUser);
 
-      vm.liked = vm.prop.likes.includes(vm.likeId);
-      // vm.liked = vm.prop.likes.indexOf(vm.likeId);
+      // console.log('group', vm.group);
+      // console.log('prop', vm.prop);
+
+      // if(vm.prop.likes.includes($auth.getPayload().userId)) {
+      //   console.log('prop.likes.includes($auth.getPayload().userId)', vm.prop.likes.indexOf($auth.getPayload().userId));
+      //   vm.userLike = vm.prop.likes.find(obj => obj.user === vm.loggedInUserId);
+      //   console.log('vm.userLike', vm.userLike);
+      //   // vm.userLike = vm.prop.likes.find(obj => {
+      //   //   if (!obj) {
+      //   //     console.log('------- NO OBJ -------');
+      //   //     vm.newLike = { user: vm.loggedInUserId ? vm.loggedInUserId : null };
+      //   //     return vm.newLike;
+      //   //   }
+      //   //   else {
+      //   //     console.log('------- YES OBJ -------');
+      //   //     return obj.id === vm.loggedInUserId;
+      //   //   }
+      //   // });
+      // }
+
+      // vm.liked = vm.prop.likes.includes(vm.userLike);
+      // vm.liked = vm.prop.likes.indexOf(vm.userLike);
       // console.log('vm.prop --->', vm.prop);
       // console.log('vm.liked --->', vm.liked);
-      // console.log('vm.likeId --->', vm.likeId);
+      // console.log('vm.userLike --->', vm.userLike);
     });
 
   // $scope.$watch(() => vm.listingLat, getGroupProperty);
+  // $scope.$watch(() => vm.likeId, getLikes);
 
   function getGroupProperty() {
     $http
@@ -286,135 +315,93 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       });
   }
 
-  // vm.upVote = (property) => {
-  //   // console.log('property - upVote --->', property);
-  //   // property.likes++;
-  //   var listingId = vm.listingId;
-  //   var likeId    = vm.likeId;
-  //   // console.log('likeId    - upVote --->', likeId);
-  //   // console.log('listingId - upVote --->', listingId);
-  //   updateVote(listingId, likeId);
-  // };
-  //
-  // vm.downVote = (property) => {
-  //   // console.log('property - downVote --->', property);
-  //   // property.likes--;
-  //   var listingId = vm.listingId;
-  //   var likeId    = vm.likeId;
-  //   // console.log('likeId    - downVote --->', likeId);
-  //   // console.log('listingId - downVote --->', listingId);
-  //   updateVote(listingId, likeId);
-  // };
-  //
-  // function updateVote(listingId, likeId) {
-  //   console.log('listingId    - updateVote --->', listingId);
-  //   console.log('likeId       - updateVote --->', likeId);
-  //   // console.log('vm.listingId - updateVote --->', vm.listingId);
-  //   // console.log('$stateParams - updateVote --->', $stateParams);
-  //
-  //   GroupPropertyLike
-  //     .update({ id: vm.group.id, listingId: listingId, likeId: likeId.id })
-  //     .$promise
-  //     .then((like) => {
-  //       console.log('update LIKE --->', like);
-  //
-  //       // like.
-  //       // like.update({ likeId: likeId }, likeId);
-  //
-  //       // const index = vm.prop.likes.indexOf(like);
-  //       // return vm.prop.likes.splice(index, 1);
-  //     });
-  //
-  //   // GroupPropertyLike
-  //   //   .update({ id: vm.group.id, listingId: listingId, likeId: likeId })
-  //   //   .$promise
-  //   //   .then((vote) => {
-  //   //     console.log('vote', vote);
-  //   //     // vote.articlevotes = likes;
-  //   //     // vote.$update();
-  //   //   });
-  //
-  //   // var vote = GroupPropertyLike
-  //   //   .get({ likeId: vm.likeId.id })
-  //   //   // .update({ id: vm.group.id, listingId: vm.listingId, likeId: vm.likeId })
-  //   //   .$promise
-  //   //   .then((like) => {
-  //   //     console.log('like', like);
-  //   //
-  //   //     vote.property = likes;
-  //   //     console.log('vote.property', vote.property);
-  //   //     vote.$update();
-  //   //   });
-  // }
+  vm.toggleLike = (like) => {
+    if (!like) {
+      console.log('------- DEFAULT LIKE -------', vm.userLike);
+      vm.newLike = {};
 
-  // vm.toggle = () => {
-  //   vm.liked = !vm.liked;
-  // };
-
-  // vm.showHide = () => {
-  //   console.log('vm.liked', vm.liked);
-  //   if (vm.prop.likes.indexOf(vm.likeId) === -1) vm.liked = 0;
-  //   else if (vm.prop.likes.indexOf(vm.likeId) === 0) vm.liked = -1;
-  // };
-
-  // $scope.$watch(() => vm.liked, vm.addLike);
-  // $scope.$watch(() => vm.liked, vm.deleteLike);
-
-  vm.addLike = () => {
-    // if(vm.prop.likes.includes(vm.likeId) === false) {
       GroupPropertyLike
-        .save({ id: vm.group.id, listingId: vm.listingId }, $auth.getPayload().userId)
+        .save({ id: vm.group.id, listingId: vm.listingId }, vm.newLike)
         .$promise
         .then((like) => {
-          console.log('addLike --->', like);
-          console.log('vm.liked 1 --->', vm.liked);
+          console.log('save --->', like);
 
+          like.like = !like.like;
+          vm.prop.likeCount++;
           vm.prop.likes.push(like);
-          vm.newLike = {};
-          vm.liked = true;
+          // vm.newLike = {};
+          // vm.liked = vm.liked === true ? false : true;
+          // like.user = vm.loggedInUserId;
+          // vm.prop.likes.push(like);
         });
-    // }
-  };
+    } else if(like) {
+      console.log('------- LIKED -------', vm.userLike);
+      console.log('------- LIKED -------', like);
 
-  vm.deleteLike = (like) => {
-    // if(vm.prop.likes.includes(vm.likeId) === true) {
       GroupPropertyLike
-        .delete({ id: vm.group.id, listingId: vm.listingId, likeId: like.id })
+        .update({ id: vm.group.id, listingId: vm.listingId, likeId: like.id })
         .$promise
         .then((like) => {
-          console.log('deleteLike --->', like);
-          console.log('vm.liked 2 --->', vm.liked);
-
-          const index = vm.prop.likes.indexOf(like);
-          vm.liked = false;
-          return vm.prop.likes.splice(index, 1);
+          console.log('update --->', like);
+          like = !liked;
+          vm.prop.likeCount++;
+          // vm.liked = vm.liked === true ? false : true;
+          // like.user = vm.loggedInUserId;
+          vm.prop.likes.push(like);
         });
-    // }
+      }
   };
 
-  vm.addNote = () => {
-    GroupPropertyNote
-      .save({ id: vm.group.id, listingId: vm.listingId }, vm.newNote)
+  // vm.addLike = (like) => {
+  //   console.log('like --->', like);
+  //   // if(vm.prop.likes.includes(vm.likeId) === false) {
+  //     GroupPropertyLike
+  //       .save({ id: vm.group.id, listingId: vm.listingId }, { user: vm.loggedInUserId })
+  //       .$promise
+  //       .then((like) => {
+  //         console.log('addLike --->', like);
+  //         vm.prop.likes.push(like);
+  //         vm.liked = false;
+  //       });
+  //   // }
+  // };
+  // vm.deleteLike = (like) => {
+  //   // if(vm.prop.likes.includes(vm.likeId) === true) {
+  //     GroupPropertyLike
+  //       .delete({ id: vm.group.id, listingId: vm.listingId, likeId: like.id })
+  //       .$promise
+  //       .then((like) => {
+  //         console.log('deleteLike --->', like);
+  //         const index = vm.prop.likes.indexOf(like);
+  //         vm.liked = true;
+  //         return vm.prop.likes.splice(index, 1);
+  //       });
+  //   // }
+  // };
+
+  vm.addComment = () => {
+    GroupPropertyComment
+      .save({ id: vm.group.id, listingId: vm.listingId }, vm.newComment)
       .$promise
-      .then((note) => {
-        note.createdAt = $moment(this.newNote.createdAt).fromNow();
-        vm.prop.notes.push(note);
-        vm.newNote = {};
+      .then((comment) => {
+        comment.createdAt = $moment(this.newComment.createdAt).fromNow();
+        vm.prop.comments.push(comment);
+        vm.newComment = {};
       });
 
-      ToastAlertService.customToast('Comment posted', '3000', 'top right');
+    ToastAlertService.customToast('Comment posted', vm.toastDelay, vm.toastStatus);
   };
 
-  vm.deleteNote = (note) => {
-    GroupPropertyNote
-      .delete({ id: vm.group.id, listingId: vm.listingId, noteId: note.id })
+  vm.deleteComment = (comment) => {
+    GroupPropertyComment
+      .delete({ id: vm.group.id, listingId: vm.listingId, commentId: comment.id })
       .$promise
       .then(() => {
-        const index = vm.prop.notes.indexOf(note);
-        return vm.prop.notes.splice(index, 1);
+        const index = vm.prop.comments.indexOf(comment);
+        return vm.prop.comments.splice(index, 1);
       });
 
-      ToastAlertService.customToast('Commend deleted', '3000', 'top right');
+    ToastAlertService.customToast('Commend deleted', vm.toastDelay, vm.toastStatus);
   };
 
   vm.addImage = () => {
@@ -426,7 +413,7 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
         vm.newImage = {};
       });
 
-      ToastAlertService.customToast('Image uploaded', '3000', 'top right');
+    ToastAlertService.customToast('Image uploaded', vm.toastDelay, vm.toastStatus);
   };
 
   vm.deleteImage = (image) => {
@@ -438,7 +425,7 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
         return vm.prop.images.splice(index, 1);
       });
 
-      ToastAlertService.customToast('Image deleted', '3000', 'top right');
+    ToastAlertService.customToast('Image deleted', vm.toastDelay, vm.toastStatus);
   };
 
   vm.addRating = () => {
@@ -450,7 +437,7 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
         vm.newRating = {};
       });
 
-      ToastAlertService.customToast('Rating posted', '3000', 'top right');
+    ToastAlertService.customToast('Rating posted', vm.toastDelay, vm.toastStatus);
   };
 
   vm.deleteRating = (rating) => {
@@ -462,7 +449,7 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
         return vm.prop.ratings.splice(index, 1);
       });
 
-      ToastAlertService.customToast('Rating deleted', '3000', 'top right');
+    ToastAlertService.customToast('Rating deleted', vm.toastDelay, vm.toastStatus);
   };
 
   vm.deleteProperty = (property) => {
@@ -472,10 +459,10 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       .then(() => {
         const index = vm.group.properties.indexOf(property);
         vm.group.properties.splice(index, 1);
-        ToastAlertService.customToast(`${property.listing_id} deleted from ${vm.group.groupName} group`, '3000', 'top right');
         return $state.go('groupsHome', { id: vm.group.id });
       });
 
+    ToastAlertService.customToast(`${property.listing_id} deleted from ${vm.group.groupName} group`, vm.toastDelay, vm.toastStatus);
   };
 
   vm.showUserImage = (thisImage) => {
@@ -494,6 +481,80 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       }
     });
   };
+
+  // function updateVote(listingId, likeId) {
+  //   console.log('listingId    - updateVote --->', listingId);
+  //   console.log('likeId       - updateVote --->', likeId);
+  //   // console.log('vm.listingId - updateVote --->', vm.listingId);
+  //   // console.log('$stateParams - updateVote --->', $stateParams);
+  //
+  //   GroupPropertyLike
+  //   .update({ id: vm.group.id, listingId: listingId, likeId: likeId.id })
+  //   .$promise
+  //   .then((like) => {
+  //     console.log('update LIKE --->', like);
+  //
+  //     like.
+  //     like.update({ likeId: likeId }, likeId);
+  //
+  //     const index = vm.prop.likes.indexOf(like);
+  //     return vm.prop.likes.splice(index, 1);
+  //   });
+  //
+  //   GroupPropertyLike
+  //   .update({ id: vm.group.id, listingId: listingId, likeId: likeId })
+  //   .$promise
+  //   .then((vote) => {
+  //     console.log('vote', vote);
+  //     // vote.articlevotes = likes;
+  //     // vote.$update();
+  //   });
+  //
+  //   var vote = GroupPropertyLike
+  //   .get({ likeId: vm.likeId.id })
+  //   // .update({ id: vm.group.id, listingId: vm.listingId, likeId: vm.likeId })
+  //   .$promise
+  //   .then((like) => {
+  //     console.log('like', like);
+  //
+  //     vote.property = likes;
+  //     console.log('vote.property', vote.property);
+  //     vote.$update();
+  //   });
+  // }
+  // vm.upVote = (property) => {
+  //   // console.log('property - upVote --->', property);
+  //   // property.likes++;
+  //   var listingId = vm.listingId;
+  //   var likeId    = vm.likeId;
+  //   // console.log('likeId    - upVote --->', likeId);
+  //   // console.log('listingId - upVote --->', listingId);
+  //   updateVote(listingId, likeId);
+  // };
+  // vm.downVote = (property) => {
+  //   // console.log('property - downVote --->', property);
+  //   // property.likes--;
+  //   var listingId = vm.listingId;
+  //   var likeId    = vm.likeId;
+  //   // console.log('likeId    - downVote --->', likeId);
+  //   // console.log('listingId - downVote --->', listingId);
+  //   updateVote(listingId, likeId);
+  // };
+  // vm.toggle = () => {
+  //   vm.liked = !vm.liked;
+  // };
+  // vm.showHide = () => {
+  //   console.log('vm.liked', vm.liked);
+  //   if (vm.prop.likes.indexOf(vm.likeId) === -1) vm.liked = 0;
+  //   else if (vm.prop.likes.indexOf(vm.likeId) === 0) vm.liked = -1;
+  // };
+
+  // vm.hasLike = (like) => {
+  //   var indexOfLike = vm.prop.likes.indexOf(like); // or whatever your object is instead of $scope.roles
+  //   if (indexOfLike === -1) vm.liked = true;
+  //   else vm.liked = false;
+  //   return vm.liked;
+  // };
 }
 
 UserImageModalCtrl.$inject = ['selectedImage', '$mdDialog'];
@@ -514,15 +575,20 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
   vm.group       = Group.get($stateParams);
   vm.allUsers    = User.query();
   vm.groupUsers  = [];
-  vm.chosenUsers = [];
+  // vm.chosenUsers = [];
   vm.search      = null;
+  vm.toastDelay  = 3000;
+  vm.toastStatus = 'success';
 
   const authUserId = $auth.getPayload().userId;
 
   Group
     .get($stateParams)
     .$promise
-    .then((group) => group.users.forEach((user) => vm.groupUsers.push(user)));
+    .then((group) => {
+      // group.users.forEach((user) => vm.groupUsers.push(user));
+      vm.groupUsers = group.users;
+    });
 
   function filterUsers() {
     const params = { username: vm.q };
@@ -552,10 +618,15 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
       .update({ id: vm.group.id, userId: user.id })
       .$promise
       .then((user) => { // group
-        console.log('------> group <------', user); // group
+        // console.log('------> group <------', user); // group
         // ------> not sure how I'm using the group object query here <------
-        vm.group.users.push(user); // vm.group.users.push(group);
+
         user.group = vm.group.id; // <--- OR ---> user.group.push(vm.group.id);
+
+        vm.group.users.push(user); // vm.group.users.push(group);
+
+        // user.group = vm.group.id; // <--- OR ---> user.group.push(vm.group.id);
+
         vm.q = ''; // reset input value after query
         vm.filtered = {}; // reset filtered so users input list disappear after selecting a add
       });
@@ -577,11 +648,8 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
         .$update()
         .then((group) => {
           $state.go('groupsHome', $stateParams);
-          ToastAlertService.customToast(`${group.data.message}`, '3000', 'top right');
+          ToastAlertService.customToast(`${group.message}`, vm.toastDelay, vm.toastStatus);
         });
-
-        // console.log('vm.create group - Array of user Obj ids', vm.group);
-        // $rootScope.$broadcast('userAddedToGroup');
     }
   };
 
@@ -623,7 +691,7 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
     console.error('Search function not yet implemented');
   };
 
-  // to focus on input element after it appears
+  // To focus on input element after it appears
   $scope.$watch(() => {
     return document.querySelector('#search-bar:not(.ng-hide)');
   }, function() {

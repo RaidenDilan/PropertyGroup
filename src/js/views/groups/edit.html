@@ -76,12 +76,19 @@
       <md-divider></md-divider>
       <br>
 
+      <!-- ng-if="user.group && user.id !== main.currentUserId" -->
+      <!-- ng-if="(user.group && user.id !== main.currentUserId)" -->
       <div
         class="col s6 groupUsersToAdd"
-        ng-if="(!user.group && user.id !== main.currentUserId)"
         ng-repeat="user in groupsEdit.filtered"
-        ng-show="(groupsEdit.q.length > 0 && groupsEdit.chosenUsers.includes(user) !== true)"
+        ng-show="groupsEdit.q.length > 0 && groupsEdit.group.users.includes(user) === false"
         >
+        <!-- <code>{{ groupsEdit.groupUsers }}</code> -->
+        <!-- <code>{{ (groupsEdit.group.users.length > 0 && groupsEdit.group.users.includes(user) === true) }}</code> -->
+        <!-- ng-show="groupsEdit.group.users.indexOf(user) === -1" -->
+        <!-- <code>{{ groupsEdit.q.length > 0 }}</code> -->
+        <!-- <code>{{ groupsEdit.group.users.indexOf(user) === -1 }}</code> -->
+        <!-- <code>{{ groupsEdit.group.users.includes(user) !== true }}</code> -->
         <div
           ng-click="groupsEdit.addUser(user)"
           class="userSearchResults"

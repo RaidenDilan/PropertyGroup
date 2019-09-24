@@ -4,47 +4,44 @@ const Promise  = require('bluebird');
 const ObjectId = mongoose.Schema.ObjectId;
 
 // Embedded Document
+const userLikeSchema = new mongoose.Schema({
+  likeCount: { type: Number, default: 0 },
+  user: { type: ObjectId, ref: 'User', unique: true, index: true }
+});
+
 const userImageSchema = new mongoose.Schema({
   file: { type: String },
-  createdBy: { type: ObjectId, ref: 'User' }
+  createdBy: { type: ObjectId, ref: 'User', required: true }
 }, { timestamps: { createdAt: true, updatedAt: false }});
 
-const userNoteSchema = new mongoose.Schema({
+const userCommentSchema = new mongoose.Schema({
   text: { type: String, required: true },
-  createdBy: { type: ObjectId, ref: 'User' }
+  createdBy: { type: ObjectId, ref: 'User', required: true }
 }, { timestamps: { createdAt: true, updatedAt: false }});
 
 const userRatingSchema = new mongoose.Schema({
   stars: { type: Number, required: true },
-  createdBy: { type: ObjectId, ref: 'User' }
+  createdBy: { type: ObjectId, ref: 'User', required: true }
 }, { timestamps: { createdAt: true, updatedAt: false }});
-
-const likeSchema = new mongoose.Schema({
-  // like: { type: Number, default: 0 },
-  user: { type: ObjectId, ref: 'User', unique: true, index: true }
-});
 
 const propertySchema = new mongoose.Schema({
   listingId: { type: String },
-  images: [ userImageSchema ], // Embedded reference
-  notes: [ userNoteSchema ],
+  likeCount: { type: Number, default: 0 },
+  likes: [ userLikeSchema ],
   ratings: [ userRatingSchema ],
-  likes: [ likeSchema ], // likes: [{ type: ObjectId, ref: 'User' }],
-  createdBy: { type: ObjectId, ref: 'User' }
+  images: [ userImageSchema ],
+  comments: [ userCommentSchema ],
+  createdBy: { type: ObjectId, ref: 'User', required: true }
 }, { timestamps: { createdAt: true, updatedAt: false }});
 
 const groupSchema = new mongoose.Schema({
-  properties: [ propertySchema ],
   groupName: { type: String, required: true },
-  owner: { type: ObjectId, ref: 'User' }
+  properties: [ propertySchema ],
+  createdBy: { type: ObjectId, ref: 'User', required: true }
 }, {
-  usePushEach: true, // equivalent of $push with $each array of documents, ALSO what is it really?
+  usePushEach: true, // $push operator with $each instead. This forces the use of $pushAll - MongoDB 3.6
   timestamps: { createdAt: true, updatedAt: true }
 });
-
-// propertySchema.createIndex({ industry: 1, staff_id: 1}, { unique: true, sparse: true });
-// likeSchema.createIndex({ 'user': 1 }, { unique: true });
-// likeSchema.index({ 'user': 1 }, { unique: true });
 
 groupSchema
   .virtual('users', {
@@ -56,7 +53,7 @@ groupSchema
     this._users = users;
   });
 
-// pre-hook - save(); also available are update(); and remove();
+// pre-hook - save(); also available are update(); and remove(); but actually update() is deprecated. Use save() to update();
 groupSchema.pre('save', function addGroupToUsers(next) {
   this
     .model('User')
@@ -64,7 +61,7 @@ groupSchema.pre('save', function addGroupToUsers(next) {
     .exec()
     .then((users) => {
       const promises = users.map((user) => {
-        user.group = this.id; // 'this.id' refers to the group object id
+        user.group = this.id;
         return user.save();
       });
 
@@ -74,10 +71,8 @@ groupSchema.pre('save', function addGroupToUsers(next) {
     .catch(next);
 });
 
-groupSchema.pre('save', function addGroupOwner(next) {
-  this
-    .model('User')
-    .findByIdAndUpdate(this.owner, { $push: { group: this._id } }, next);
+groupSchema.pre('save', function addGroupToUser(next) {
+  if(this.createdBy) this.model('User').findByIdAndUpdate(this.createdBy.id, { group: this.id }, next);
   return next();
 });
 
@@ -90,8 +85,14 @@ userImageSchema
   });
 
 userImageSchema.pre('remove', function deleteImage(next) {
+  console.log('this.file', this.file);
   if(this.file) return s3.deleteObject({ Key: this.file }, next);
   return next();
 });
+
+// userCommentSchema.methods.belongsTo = function commentBelongsTo(user) {
+//   if(typeof this.createdBy.id === 'string') return this.createdBy.id === user.id;
+//   return user.id === this.createdBy.toString();
+// };
 
 module.exports = mongoose.model('Group', groupSchema);

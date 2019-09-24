@@ -30,14 +30,14 @@ function login(req, res, next) {
       if (!user || !user.validatePassword(req.body.password)) return res.status(401).json({ message: `Incorrect username or password provided` }); // return res.unauthorized();
 
       // const token = jwt.sign({ userId: user.id }, secret, { expiresIn: 60 * 60 * 24 }); // expiresIn 24 HOURS
-      // const token = jwt.sign({ userId: user.id }, secret, { expiresIn: 60 * 60 * 24 * 7 }); // expiresIn 1 WEEK
+      const token = jwt.sign({ userId: user.id }, secret, { expiresIn: 60 * 60 * 24 * 7 }); // expiresIn 1 WEEK
       // const token = jwt.sign({ userId: user.id }, secret, { expiresIn: 60 * 60 }); // expiresIn 1 HOUR
       // const token = jwt.sign({ userId: user.id }, secret, { expiresIn: 60 * 2 }); // expiresIn 2 MINUTES
-      const token = jwt.sign({ userId: user.id }, secret, { expiresIn: '1hr' }); // expiresIn 1 HOUR
+      // const token = jwt.sign({ userId: user.id }, secret, { expiresIn: '1hr' }); // expiresIn 1 HOUR
       return res.status(200).json({ token, message: `Welcome back ${user.username}` });
     })
     .catch((err, next) => {
-      if (err) return res.status(500).json({ message: 'something went wrong with authenticating user login' });
+      if (err) return res.status(500).json({ message: 'something went wrong with authenticating user login', err });
       return next();
     });
 }

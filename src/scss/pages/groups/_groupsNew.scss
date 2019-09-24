@@ -85,9 +85,13 @@
             text-transform: uppercase;
           }
           .md-button {
-            // width: 30px;
-            min-width: 35px;
-            font-size: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 25px;
+            min-width: 25px;
+            height: 25px;
+            min-height: 25px;
             // max-width: 25px;
             // height: 25px;
             // min-height: 25px;
@@ -96,15 +100,16 @@
             // padding: 0 0 0 1rem;
             // text-transform: uppercase;
 
+            md-icon {
+              font-size: 18px;
+              height: auto;
+              width: auto;
+              min-height: auto;
+              min-width: auto;
+            }
             // .material-icons {
             //   font-size: 20px;
             //
-            //   .md-icon {
-            //     height: 20px;
-            //     width: 20px;
-            //     min-height: 20px;
-            //     min-width: 20px;
-            //   }
             // }
           }
         }

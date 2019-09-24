@@ -67,11 +67,11 @@ router.route('/groups/:id/properties/:listingId')
   .get(zooplas.selectedProp)
   .delete(properties.deleteProperty);
 
-router.route('/groups/:id/properties/:listingId/notes')
-  .post(secureRoute, properties.addNote);
+router.route('/groups/:id/properties/:listingId/comments')
+  .post(secureRoute, properties.addComment);
 
-router.route('/groups/:id/properties/:listingId/notes/:noteId')
-  .delete(secureRoute, properties.deleteNote);
+router.route('/groups/:id/properties/:listingId/comments/:commentId')
+  .delete(secureRoute, properties.deleteComment);
 
 router.route('/groups/:id/properties/:listingId/images')
   .post(secureRoute, imageUpload, properties.addImage);
@@ -89,8 +89,8 @@ router.route('/groups/:id/properties/:listingId/likes')
   .post(secureRoute, properties.addLike);
 
 router.route('/groups/:id/properties/:listingId/likes/:likeId')
-  .put(secureRoute, properties.updateLike)
-  .delete(secureRoute, properties.deleteLike);
+  .put(secureRoute, properties.updateLike);
+  // .delete(secureRoute, properties.deleteLike);
 
 // AUTH
 router.route('/login')

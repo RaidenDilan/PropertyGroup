@@ -2,3 +2,8 @@ bower_components
 node_modules
 public
 archive
+randomName.js
+tokenService.js
+current-user.js
+vote.js
+property.js

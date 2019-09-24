@@ -1,9 +1,16 @@
-<md-toast role="alert" aria-relevant="all">
+<!-- template: '<md-toast class="md-toast ' + type +'">' + msg + '</md-toast>' -->
+<!-- ng-class="{ success: typeToDisplay === 'success', error: typeToDisplay === 'error' }" -->
+<!-- ng-class="{ success: typeToDisplay === 'success', warning: typeToDisplay === 'warning', error: typeToDisplay === 'error' }" -->
+
+<md-toast
+  role="alert"
+  aria-relevant="all"
+  >
   <span class="md-toast-text" flex>{{ toast.toastMessage }}</span>
 
   <span class="md-visually-hidden">Press Escape to dismiss. Press Control-"{{ toast.dialogKey }}" for</span>
 
-  <md-button class="md-highlight" ng-click="toast.openMoreInfo($event)">
+  <md-button class="md-highlight" ng-show="toast" ng-click="toast.openMoreInfo($event)">
     <md-icon class="material-icons">more_horiz</md-icon>
   </md-button>
 

@@ -6,11 +6,7 @@ ToastCtrl.$inject = ['$mdToast', '$mdDialog', '$document', '$scope'];
 function ToastCtrl($mdToast, $mdDialog, $document, $scope) {
   const vm = this;
 
-  vm.isDlgOpen     = null;
-  vm.hideKey       = 'z';
-  vm.dialogKey     = 'd';
-  vm.actionResolve = 'hide';
-  vm.keyListConfig = false;
+  // console.log('ToastCtrl instance 1', vm);
 
   setupActionKeyListener();
 
@@ -26,12 +22,11 @@ function ToastCtrl($mdToast, $mdDialog, $document, $scope) {
     if (vm.isDlgOpen) return;
     vm.isDlgOpen = true;
 
-    $mdDialog
-      .show(
-        $mdDialog
+    $mdDialog.show(
+      $mdDialog
         .alert()
-        .title('More info goes here.')
-        .textContent('Something witty.')
+        .title('Hello 🤪') // object name/id
+        .textContent('Nothing to see here. 🤫') // object content
         .ariaLabel('More info')
         .ok('Got it')
         .targetEvent(e)
@@ -42,8 +37,8 @@ function ToastCtrl($mdToast, $mdDialog, $document, $scope) {
   /** @param { KeyboardEvent } event to handle */
   function handleKeyDown(event) {
     if (event.key === 'Escape') $mdToast.hide(false);
-    if (event.key === vm.hideKey && event.vmKey) $mdToast.hide('key');
-    if (event.key === vm.dialogKey && event.vmKey) vm.openMoreInfo(event);
+    if (event.key === vm.hideKey && event.key) $mdToast.hide('key');
+    if (event.key === vm.dialogKey && event.key) vm.openMoreInfo(event);
   }
 
   function setupActionKeyListener() {

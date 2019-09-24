@@ -1,24 +1,23 @@
-const Promise = require('bluebird');
-const Group   = require('../models/group');
-const User    = require('../models/user');
+const Promise  = require('bluebird');
+const Group    = require('../models/group');
+const User     = require('../models/user');
+// const Property = require('../models/property');
 // const Vote    = require('../models/vote');
 
 function addPropertyRoute(req, res, next) {
-  req.body.createdBy = req.user;
+  req.body.createdBy = req.user.id;
+  req.body.group = req.user.group;
 
   Group
-    .findById(req.user.group) // .findByIdAndUpdate(req.user.group, { $set: { properties: req.body }}, { new: true })
-    .populate('users')
+    .findById(req.user.group)
+    // .findByIdAndUpdate(req.user.group, { $set: { properties: req.body }}, { new: true })
     .exec()
     .then((group) => {
       if(!group) return res.notFound('Group not found');
 
       const property = group.properties.create(req.body);
-      group.properties.push(property); // group.properties.concat(property); // this uses $set so no problems
-
-      return group
-        .save()
-        .then(() => res.json(property));
+      group.properties.push(property); // group.properties.concat(property); // usePushEach: true, // $push operator with $each instead. This forces the use of $pushAll - MongoDB 3.6
+      return group.save().then(() => res.json(property));
     })
     .then(() => res.status(204).end())
     .catch(next);
@@ -27,15 +26,11 @@ function addPropertyRoute(req, res, next) {
 function deletePropertyRoute(req, res, next) {
   Group
     .findById(req.params.id)
-    .populate('users properties')
     .exec()
     .then((group) => {
       if(!group) return res.notFound('Group not found');
 
-      const prop = group.properties.find((property) => {
-        return property.listingId === req.params.listingId;
-      });
-
+      const prop = group.properties.find((property) => property.listingId === req.params.listingId);
       prop.remove();
 
       return group
@@ -47,68 +42,59 @@ function deletePropertyRoute(req, res, next) {
 
 }
 
-function addPropertyNote(req, res, next) {
-  req.body.createdBy = req.user;
+function addPropertyComment(req, res, next) {
+  if(req.body) req.body.createdBy = req.user;
 
   Group
     .findById(req.params.id)
-    .populate('users')
     .exec()
     .then((group) => {
       if(!group) return res.notFound('Group not found');
 
-      const prop = group.properties.find((property) => {
-        return property.listingId === req.params.listingId;
-      });
-
-      const note = prop.notes.create(req.body);
-      prop.notes.push(note);
+      var query     = req.params.id;
+      const options = { new: true, upsert: true };
+      const prop = group.properties.find((property) => property.listingId === req.params.listingId);
+      const comment = prop.comments.create(req.body);
+      prop.comments.push(comment);
 
       return group
         .save()
-        .then(() => res.json(note));
+        .then(() => res.json(comment));
     })
+    .then(() => res.status(204).end())
     .catch(next);
 }
 
-function deletePropertyNote(req, res, next) {
+function deletePropertyComment(req, res, next) {
   Group
     .findById(req.params.id)
     .exec()
     .then((group) => {
       if(!group) return res.notFound('Group not found');
 
-      const prop = group.properties.find((property) => {
-        return property.listingId === req.params.listingId;
-      });
-
-      const note = prop.notes.id(req.params.noteId);
-
-      note.remove();
+      const prop = group.properties.find((property) => property.listingId === req.params.listingId);
+      const comment = prop.comments.id(req.params.commentId);
+      comment.remove();
 
       return group
         .save()
-        .then(() => res.json(note));
+        .then(() => res.json(comment));
     })
     .then(() => res.status(204).end())
     .catch(next);
 }
 
 function addPropertyImage(req, res, next) {
-  req.body.createdBy = req.user;
+  if(req.body) req.body.createdBy = req.user;
   if(req.file) req.body.file = req.file.filename;
 
   Group
     .findById(req.params.id)
-    .populate('users')
     .exec()
     .then((group) => {
       if(!group) return res.notFound('Group not found');
 
-      const prop = group.properties.find((property) => {
-        return property.listingId === req.params.listingId;
-      });
-
+      const prop = group.properties.find((property) => property.listingId === req.params.listingId);
       const image = prop.images.create(req.body);
       prop.images.push(image);
 
@@ -116,20 +102,19 @@ function addPropertyImage(req, res, next) {
         .save()
         .then(() => res.json(image));
     })
+    .then(() => res.status(204).end())
     .catch(next);
 }
 
 function deletePropertyImage(req, res, next) {
   Group
     .findById(req.params.id)
+    // .populate('users properties.images')
     .exec()
     .then((group) => {
       if(!group) return res.notFound('Group not found');
 
-      const prop = group.properties.find((property) => {
-        return property.listingId === req.params.listingId;
-      });
-
+      const prop = group.properties.find((property) => property.listingId === req.params.listingId);
       const image = prop.images.id(req.params.imageId);
 
       return image
@@ -145,19 +130,15 @@ function deletePropertyImage(req, res, next) {
 }
 
 function addPropertyRating(req, res, next) {
-  req.body.createdBy = req.user;
+  if(req.body) req.body.createdBy = req.user;
 
   Group
     .findById(req.params.id)
-    .populate('users')
     .exec()
     .then((group) => {
       if(!group) return res.notFound('Group not found');
 
-      const prop = group.properties.find((property) => {
-        return property.listingId === req.params.listingId;
-      });
-
+      const prop = group.properties.find((property) => property.listingId === req.params.listingId);
       const rating = prop.ratings.create(req.body);
       prop.ratings.push(rating);
 
@@ -165,6 +146,7 @@ function addPropertyRating(req, res, next) {
         .save()
         .then(() => res.json(rating));
     })
+    .then(() => res.status(204).end())
     .catch(next);
 }
 
@@ -175,10 +157,7 @@ function deletePropertyRating(req, res, next) {
     .then((group) => {
       if(!group) return res.notFound('Group not found');
 
-      const prop = group.properties.find((property) => {
-        return property.listingId === req.params.listingId;
-      });
-
+      const prop = group.properties.find((property) => property.listingId === req.params.listingId);
       const rating = prop.ratings.id(req.params.ratingId);
       rating.remove();
 
@@ -191,26 +170,27 @@ function deletePropertyRating(req, res, next) {
 }
 
 function addPropertyLike(req, res, next) {
-  req.body.user = req.user;
+  if (req.body) req.body.user = req.user;
+  console.log('addPropertyLike - req.body --->>>', req.body);
 
   Group
     .findById(req.params.id)
-    .populate('users')
     .exec()
     .then((group) => {
+      console.log('addPropertyLike group ---+++--->>>', group);
+
       if(!group) return res.notFound('Group not found');
 
-      const prop = group.properties.find((property) => {
-        return property.listingId === req.params.listingId;
-      });
-
-      const like = prop.likes.create(req.user);
+      const prop = group.properties.find((property) => property.listingId === req.params.listingId);
+      console.log('addPropertyLike prop ---+++--->>>', prop);
+      const like = prop.likes.create(req.body);
 
       // if (like.id === req.params.likeId) {
       // if(prop.likes.indexOf(req.user.id) === -1) {
-        console.log('ADD VOTE ---------->>>', like);
+        console.log('addPropertyLike like ---+++--->>>', like);
         // console.log('ADD VOTE ---------->>>', like.id === req.params.likeId);
         // vote.like = !vote.like; // TOGGLE LIKE NUMERIC VALUE
+        // prop.set();
         prop.likes.push(like);
 
         return group
@@ -221,82 +201,127 @@ function addPropertyLike(req, res, next) {
     .catch(next);
 }
 
-function deletePropertyLike(req, res, next) {
-  // const options = { new: true, upsert: true };
-  // .findByIdAndUpdate(req.params.id, { $addToSet: { likes: req.body }}, options)
-
-  Group
-    .findById(req.params.id)
-    .populate('users')
-    .exec()
-    .then((group) => {
-      if(!group) return res.notFound('Group not found');
-
-      const prop = group.properties.find((property) => {
-        return property.listingId === req.params.listingId;
-      });
-      const like = prop.likes.id(req.params.likeId);
-
-      if (like.id === req.params.likeId) {
-        console.log('DELETE VOTE ---------->>>', like);
-        like.remove();
-
-        return group
-          .save()
-          .then(() => res.json(like));
-      }
-  })
-  .then(() => res.status(204).end())
-  .catch(next);
-}
-
 function updatePropertyLike(req, res, next) {
-  req.body.owner = req.user;
-  console.log('req.params------------------>>>', req.params);
+  if(req.body) req.body.user = req.user;
+  console.log('updatePropertyLike - req.body --->>>', req.body);
+
+  console.log('req.params ---+--->>>', req.params);
+
+  // var query   = {};
+  var query   = req.params.id;
+  // var update  = { $set: { likes: req.user.id }}, { new: true };
+  var filter  = { arrayFilters: [{ 'prop._id': req.params.likeId }] };
+  var options = { upsert: true, new: true, setDefaultsOnInsert: true };
+
+  // var update  = { $push: { 'properties.likes': req.body } };
+  // var filter  = { arrayFilters: [{ 'prop._id': req.params.likeId }] };
+  // var options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
   Group
-    // .findByIdAndUpdate(req.params.id, { $addToSet: { users: req.body.users } }, { new: true }) // The $pullAll operator removes all instances of the specified values from an existing array. Unlike the $pull operator that removes elements by specifying a query, $pullAll removes elements that match the listed values.
     .findById(req.params.id)
-    .populate('users')
+    // .findByIdAndUpdate(req.params.id, { $set: { 'properties.0.likes': { user: req.user.id } }}, { upsert: true, new: true })
+    // .findByIdAndUpdate(query, update, options) // The $pullAll operator removes all instances of the specified values from an existing array. Unlike the $pull operator that removes elements by specifying a query, $pullAll removes elements that match the listed values.
+    // .findOneAndUpdate(query, update, options) // The $pullAll operator removes all instances of the specified values from an existing array. Unlike the $pull operator that removes elements by specifying a query, $pullAll removes elements that match the listed values.
+    // .findOneAndUpdate(
+    //   // req.params.id
+    //   { _id: req.params.id, 'properties.listingId': req.params.listingId, 'likes.id': req.params.likeId },
+    //   // { _id: req.params.id, 'properties.listingId': req.params.listingId },
+    //   { $set: { 'properties.0.likes': { user: req.user, likeCount: 1 } } },
+    //   { upsert: true, new: true }
+    // )
+    // .populate('users')
+    // .populate('users properties.images.createdBy properties.comments.createdBy properties.ratings.createdBy')
     .exec()
     .then((group) => {
+      // console.log('group ---+++--->>>', group);
       if(!group) return res.notFound('Group not found');
 
-      const prop = group.properties.find((property) => {
-        return property.listingId === req.params.listingId;
-      });
-      const like = prop.likes.id(req.params.likeId);
+      const prop = group.properties.find((property) => property.listingId === req.params.listingId);
+      // const like = prop.likes.find((like) => like.id === req.params.likeId);
 
-      // if (like.id === req.params.likeId) {
-        // console.log('UPDATE VOTE ---------->>>', like.id === req.params.likeId);
-      like.update();
+      // if (!prop.likes.indexOf(req.params.likeId)) {
+      //   const like = prop.likes.create(req.body);
+      //   prop.likes.push(like); // prop.likes.set(like);
+      //   return group.save().then(() => res.json(like));
+      // }
+
+      // if (!prop.likes.id(req.params.likeId)) {
+      //   const like = prop.likes.create(req.body);
+      //   prop.likes.push(like); // prop.likes.set(like);
+      //   return group.save().then(() => res.json(like));
+      // }
+
+      // if (!req.params.likeId) console.log('!req.params.likeId', !req.params.likeId);
+
+      const like = prop.likes.find((like) => {
+        console.log('like.user ----------->>>', like.user);
+        console.log('req.user.id ----------->>>', req.user.id);
+        return like.user === req.user.id;
+      });
+      console.log('like ----------->>>', like);
+
+      // if (prop.likes.indexOf(req.params.likeId)) {}
+      // const like = prop.likes.id(req.params.likeId);
+      // like.user.set(req.user.id);
+      // like.user = req.user;
+      // prop.likeCount++;
+      // like.likeCount = !like.likeCount;
+      prop.likes.push(like);
 
       return group
         .save()
         .then(() => res.json(like));
-      // }
-      // return group.save();
     })
-    .then(() => res.status(204).end())
+    // .then((group) => res.json(group))
+    // .then(() => res.status(204).end())
     .catch(next);
 }
+
+// function deletePropertyLike(req, res, next) {
+//   // const options = { new: true, upsert: true };
+//   // .findByIdAndUpdate(req.params.id, { $addToSet: { likes: req.body }}, options)
+//
+//   Group
+//     .findById(req.params.id)
+//     .populate('users')
+//     .exec()
+//     .then((group) => {
+//       if(!group) return res.notFound('Group not found');
+//
+//       const prop = group.properties.find((property) => {
+//         return property.listingId === req.params.listingId;
+//       });
+//       const like = prop.likes.id(req.params.likeId);
+//
+//       if (like.id === req.params.likeId) {
+//         console.log('DELETE VOTE ---------->>>', like);
+//         like.remove();
+//
+//         return group
+//           .save()
+//           .then(() => res.json(like));
+//       }
+//   })
+//   .then(() => res.status(204).end())
+//   .catch(next);
+// }
 
 module.exports = {
   addProperty: addPropertyRoute,
   deleteProperty: deletePropertyRoute,
-  addNote: addPropertyNote,
-  deleteNote: deletePropertyNote,
+  addComment: addPropertyComment,
+  deleteComment: deletePropertyComment,
   addImage: addPropertyImage,
   deleteImage: deletePropertyImage,
   addRating: addPropertyRating,
   deleteRating: deletePropertyRating,
   addLike: addPropertyLike,
-  deleteLike: deletePropertyLike,
+  // deleteLike: deletePropertyLike,
   updateLike: updatePropertyLike
 };
 
 // function addPropertyVote(req, res, next) {
-//   req.body.createdBy = req.user;
+//   req.body.createdBy = req.user.id;
 //
 //   Group
 //     // .findByIdAndUpdate(req.params.id, { $push: { votes: req.body }}, { safe: true, upsert: true })
@@ -353,7 +378,7 @@ module.exports = {
 //       .catch(next);
 // }
 // function addPropertyUpvote(req, res, next) {
-//   req.body.createdBy = req.user;
+//   req.body.createdBy = req.user.id;
 //
 //   Group
 //     .findById(req.params.id)

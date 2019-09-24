@@ -3,7 +3,7 @@ const User = require('../models/user');
 function indexUser(req, res, next) {
   User
     .find()
-    .populate('group')
+    .populate('group.id') // .populate('group')
     .exec()
     .then((users) => res.json(users))
     .catch((err, next) => {
@@ -29,7 +29,7 @@ function updateUser(req, res, next) {
 
   User
     .findById(req.params.id)
-    .populate('group')
+    .populate('group.id') // .populate('group')
     .exec()
     .then((user) => {
       if(!user) return res.notFound('User not found');
@@ -49,7 +49,8 @@ function updateUser(req, res, next) {
 function deleteUser(req, res, next) {
   User
     .findById(req.params.id)
-    .populate('group')
+    // .populate('group')
+    .populate('group.id')
     .exec()
     .then((user) => {
       if(!user) return res.notFound('User not found');

@@ -9,6 +9,7 @@ angular
     const protectedStates = ['groupsIndex', 'groupsNew', 'groupsHome', 'groupsEdit', 'groupsEdit', 'groupsPropsShow', 'usersShow', 'usersEdit', 'propertiesIndex'];
 
     vm.isAuthenticated = $auth.isAuthenticated;
+    vm.toastDelay = 3000;
 
     // vm.backspaceTime = 50;    // set the time for each character to be typed out, defaults to 250ms
     // vm.startDelay    = 2000;  // set the time for each character to be deleted, defaults to type-time
@@ -17,7 +18,7 @@ angular
     // vm.repeat        = false; // set whether to continuously loop over the words, defaults to true
     // vm.startTyping   = true;  // Set whether the directives first animation is either the type or delete/highlight
 
-    vm.toggleLeft    = buildToggler('left');
+    vm.toggleLeft = buildToggler('left');
     vm.menu = [
       { 'name': 'Search Properties', 'icon': 'search' },
       { 'name': 'My Group', 'icon': 'group_work' },
@@ -30,17 +31,18 @@ angular
 
     function stateErrors(event, err) {
       vm.stateHasChanged = false;
-      vm.message         = err.data.message; // var errMsg = vm.message.toString();
+      vm.message = err.data.message; // OR vm.message.toString()
+      ToastAlertService.customToast(vm.message, false, 'error');
       if(err.status === 401) $state.go('login');
     }
 
     function secureState(event, toState) {
       vm.message = null;
-
       if(!$auth.isAuthenticated() && protectedStates.includes(toState.name)) {
         event.preventDefault();
-        $state.go('home');
+        $state.go('login');
         vm.message = 'You must be logged in to view web contents!';
+        ToastAlertService.customToast(vm.message, vm.toastDelay, 'warning');
       }
     }
 
@@ -48,26 +50,28 @@ angular
       // vm.currentUserGroupId = null;
       if(vm.stateHasChanged) vm.message = null;
       if(!vm.stateHasChanged) vm.stateHasChanged = true;
-      // if(vm.stateHasChanged)
-      document.body.scrollTop = document.documentElement.scrollTop = 0;
+      if(vm.stateHasChanged) document.body.scrollTop = document.documentElement.scrollTop = 0; // BUG????
 
       if($auth.getPayload()) {
-      vm.currentUserId = $auth.getPayload().userId;
+        vm.currentUserId = $auth.getPayload().userId;
 
-      return User
-        .get({ id: vm.currentUserId }) // OR ===> .query()
-        .$promise
-        .then((user) => {
-          vm.user = user; // OR with query() ===> // vm.user = users.find(obj => obj.id === vm.currentUserId);
+        return User
+          // .query()
+          .get({ id: vm.currentUserId })
+          .$promise
+          .then((user) => {
+            vm.user = user;
+            // vm.user = users.find(obj => obj.id === vm.currentUserId);
 
-          if((toState.name === 'propertiesIndex' && vm.user.group === null || undefined) && protectedStates.includes(toState.name)) {
-            event.preventDefault();
-            $state.go('groupsNew');
-            vm.message = 'You must create a group before searching for properties';
-          }
+            if((toState.name === 'propertiesIndex' && vm.user.group === null || undefined) && protectedStates.includes(toState.name)) {
+              event.preventDefault();
+              $state.go('groupsNew');
+              vm.message = 'You must create a group before searching for properties';
+              ToastAlertService.customToast(vm.message, vm.toastDelay, 'warning');
+            }
 
-          return !vm.user.group ? vm.currentUserGroupId = null : vm.currentUserGroupId = vm.user.group.id;
-        });
+            return !vm.user.group ? vm.currentUserGroupId = null : vm.currentUserGroupId = vm.user.group.id;
+          });
       }
     }
 
@@ -98,7 +102,7 @@ angular
         .then(() => {
           // $window.localStorage.clear();
           $state.go('home');
-          ToastAlertService.customToast('Logged out', '3000', 'top right');
+          ToastAlertService.customToast(`Logged out successfully`, vm.toastDelay, 'success');
         });
         // remove user from local storage and clear http auth header
         // delete $localStorage.currentUser;

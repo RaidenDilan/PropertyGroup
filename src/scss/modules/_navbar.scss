@@ -7,6 +7,24 @@ md-toolbar.navBar {
 
   .md-toolbar-tools {
     height: 54px;
+    // display: flex;
+    // flex-flow: row nowrap;
+    // justify-content: center;
+    // align-items: center;
+
+    .md-button {
+      md-icon {
+        height: 22px;
+        min-height: 22px;
+      }
+    }
+
+    // a {
+    //   display: flex;
+    //   flex-flow: column nowrap;
+    //   justify-content: center;
+    //   align-items: center;
+    // }
   }
 
   a:hover, a:focus {

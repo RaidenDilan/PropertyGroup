@@ -40,6 +40,26 @@
       //   margin-bottom: 3rem;
       // }
 
+      .propertyInformation {
+        span:not(:first-child) {
+          color: $brand-color;
+          font-weight: 700;
+        }
+      }
+
+      .groupInformation {
+        .user_group {
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: center;
+          align-items: center;
+
+          md-icon {
+            margin-right: 6px;
+          }
+        }
+      }
+
 
       div {
         margin: auto;

@@ -22,16 +22,16 @@
         Search Properties
       </md-button>
       <md-button
-        ng-if="(main.currentUserId !== groupsHome.group.owner) && (main.user.group.id === groupsHome.group.id)"
-        ng-show="(main.currentUserId !== groupsHome.group.owner) && (main.user.group.id === groupsHome.group.id)"
+        ng-if="(main.currentUserId !== groupsHome.group.createdBy) && (main.user.group.id === groupsHome.group.id)"
+        ng-show="(main.currentUserId !== groupsHome.group.createdBy) && (main.user.group.id === groupsHome.group.id)"
         ng-click="groupsHome.leaveGroup(main.currentUserId)"
         class="md-raised md-warn md-button md-ink-ripple"
         >
         Leave
       </md-button>
       <md-button
-        ng-if="(main.isAuthenticated && main.currentUserId === groupsHome.group.owner)"
-        ng-show="(main.isAuthenticated && groupsHome.group.owner === main.currentUserId)"
+        ng-if="(main.isAuthenticated && main.currentUserId === groupsHome.group.createdBy)"
+        ng-show="(main.isAuthenticated && groupsHome.group.createdBy === main.currentUserId)"
         md-nav-sref="groupsEdit({ id: main.currentUserGroupId })"
         ui-sref="groupsEdit({ id: main.currentUserGroupId })"
         class="md-raised md-primary md-button md-ink-ripple"
@@ -39,7 +39,7 @@
         Edit
       </md-button>
       <md-button
-        ng-if="main.currentUserId === groupsHome.group.owner"
+        ng-if="main.currentUserId === groupsHome.group.createdBy"
         ng-click="groupsHome.delete()"
         class="md-raised md-warn md-button md-ink-ripple"
         >
@@ -65,6 +65,7 @@
             class="groupUser"
             style="background-image:url('{{ user.profileImageSRC }}'); outline: none;"
             ng-click="groupsHome.showGroupUser(user)"
+            title="Show more info"
             >
           </div>
           <h5 style="text-transform: uppercase;">{{ user.username }}</h5>

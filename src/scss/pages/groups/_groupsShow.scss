@@ -67,6 +67,12 @@ md-content.groupsShowProp {
           flex: 0 0 auto;
         }
 
+        // .md-card-content {
+        //   span.per_month {
+        //     color: $black;
+        //   }
+        // }
+
         // md-divider {
         //   margin: 1rem 0;
         // }
@@ -78,8 +84,13 @@ md-content.groupsShowProp {
 
           li {
             &:last-child span {
-              color: rgba(106, 27, 154, 1);
+              color: $brand-color;
               font-weight: 900;
+              // padding-right: 6px; // space beween price and per month
+            }
+
+            span.per_month {
+              color: $black;
             }
           }
         }
@@ -362,7 +373,7 @@ md-content.groupsShowProp {
         margin: 0 8px 2.5rem 8px;
 
         .addComment {
-          .addNoteForm {
+          .addCommentForm {
             display: flex;
             flex-flow: column nowrap;
 

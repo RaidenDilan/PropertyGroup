@@ -33,7 +33,11 @@
         </md-button>
 
         <!-- <h2 ui-sref="propertiesIndex"><span>PNC</span></h2> -->
-        <a ui-sref="home" aria-label="Home"><h2><span>PNC</span></h2></a>
+        <a ui-sref="home" aria-label="Go to: Home">
+          <h2>
+            <span>PNC</span>
+          </h2>
+        </a>
         <span flex></span>
 
         <md-button
@@ -172,7 +176,7 @@
       </md-content> -->
 
     </section>
-    <div class="message alert alert-info" ng-if="main.message">{{ main.message }}</div>
+    <!-- <div class="message alert alert-info" ng-if="main.message">{{ main.message }}</div> -->
 
     <main ui-view class="site-content"></main>
 

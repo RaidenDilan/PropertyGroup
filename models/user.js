@@ -32,12 +32,12 @@ userSchema
 
 userSchema.pre('save', function checkPreviousProfileImage(next) {
   if(this.isModified('profileImage') && this._profileImage) return s3.deleteObject({ Key: this._profileImage }, next);
-  next();
+  return next();
 });
 
 userSchema.pre('remove', function deleteImage(next) {
   if(this.profileImage) return s3.deleteObject({ Key: this.profileImage}, next);
-  next();
+  return next();
 });
 
 userSchema
@@ -49,12 +49,12 @@ userSchema
 userSchema.pre('validate', function checkPassword(next) {
   if(!this.password && !this.githubId) this.invalidate('password', 'required');
   if(this.isModified('password') && this._passwordConfirmation !== this.password)this.invalidate('passwordConfirmation', 'does not match');
-  next();
+  return next();
 });
 
 userSchema.pre('save', function hashPassword(next) {
   if(this.isModified('password')) this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(11));
-  next();
+  return next();
 });
 
 userSchema.methods.validatePassword = function validatePassword(password) {
