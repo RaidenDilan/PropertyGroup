@@ -5,12 +5,13 @@ const User     = require('../models/user');
 // const Vote    = require('../models/vote');
 
 function addPropertyRoute(req, res, next) {
-  req.body.createdBy = req.user.id;
-  req.body.group = req.user.group;
+  req.body.createdBy = req.user;
+  // req.body.group = req.user.group;
 
   Group
+    // .findById(req.params.id) // there is no group id in params as we are calling /api/properties/
     .findById(req.user.group)
-    // .findByIdAndUpdate(req.user.group, { $set: { properties: req.body }}, { new: true })
+    // .findByIdAndUpdate(req.user.group, { $push: { properties: req.body }}, { new: true })
     .exec()
     .then((group) => {
       if(!group) return res.notFound('Group not found');
@@ -43,7 +44,7 @@ function deletePropertyRoute(req, res, next) {
 }
 
 function addPropertyComment(req, res, next) {
-  if(req.body) req.body.createdBy = req.user;
+  req.body.createdBy = req.user;
 
   Group
     .findById(req.params.id)
@@ -85,8 +86,8 @@ function deletePropertyComment(req, res, next) {
 }
 
 function addPropertyImage(req, res, next) {
-  if(req.body) req.body.createdBy = req.user;
   if(req.file) req.body.file = req.file.filename;
+  req.body.createdBy = req.user;
 
   Group
     .findById(req.params.id)
@@ -130,10 +131,14 @@ function deletePropertyImage(req, res, next) {
 }
 
 function addPropertyRating(req, res, next) {
-  if(req.body) req.body.createdBy = req.user;
+  if(req.user) req.body.createdBy = req.user;
+
+  console.log('req.body.createdBy ------>>', req.body.createdBy);
 
   Group
     .findById(req.params.id)
+    // .populate('users properties')
+    .populate('users properties.images.createdBy properties.comments.createdBy properties.ratings.createdBy')
     .exec()
     .then((group) => {
       if(!group) return res.notFound('Group not found');
@@ -141,6 +146,8 @@ function addPropertyRating(req, res, next) {
       const prop = group.properties.find((property) => property.listingId === req.params.listingId);
       const rating = prop.ratings.create(req.body);
       prop.ratings.push(rating);
+
+      console.log('rating ------>>', rating);
 
       return group
         .save()
@@ -170,8 +177,8 @@ function deletePropertyRating(req, res, next) {
 }
 
 function addPropertyLike(req, res, next) {
-  if (req.body) req.body.user = req.user;
   console.log('addPropertyLike - req.body --->>>', req.body);
+  if (req.user) req.body.user = req.user;
 
   Group
     .findById(req.params.id)
@@ -202,7 +209,7 @@ function addPropertyLike(req, res, next) {
 }
 
 function updatePropertyLike(req, res, next) {
-  if(req.body) req.body.user = req.user;
+  if(req.user) req.body.user = req.user;
 
   console.log('updatePropertyLike - req.body --->>>', req.body);
   console.log('req.params ---+--->>>', req.params);

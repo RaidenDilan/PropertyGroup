@@ -3,7 +3,6 @@ const User = require('../models/user');
 function indexUser(req, res, next) {
   User
     .find()
-    .populate('group')
     .exec()
     .then((users) => res.json(users))
     .catch((err, next) => {
@@ -26,11 +25,10 @@ function showUser(req, res, next) {
 
 function updateUser(req, res, next) {
   if(req.file) req.body.profileImage = req.file.filename;
-  if(req.body) req.body.group = req.user.group;
+  if(typeof req.user.group === 'object' || req.user.group instanceof Object) req.body.group = req.user.group;
 
   User
     .findById(req.params.id)
-    .populate('group')
     .exec()
     .then((user) => {
       if(!user) return res.notFound('User not found');

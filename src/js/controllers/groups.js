@@ -213,7 +213,6 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
   vm.listingLon       = null;
   vm.latlng           = null;
   vm.listingId        = $stateParams.listing_id;
-  // vm.groupId          = $stateParams.id;
   vm.userLike         = {};
   vm.loggedInUserId   = $auth.getPayload().userId;
   vm.labels           = ['Anti Social Behaviour', 'Burglary', 'Bike Theft', 'Drugs', 'Robbery', 'Vehicle Crimes', 'Violent Crimes'];
@@ -351,6 +350,7 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
           // like.user = vm.loggedInUserId;
           vm.prop.likes.push(like);
         });
+        // .then(() => ToastAlertService.customToast('Property liked/unliked', vm.toastDelay, vm.toastStatus));
       // }
   };
 
@@ -365,21 +365,24 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
           vm.prop.likes.push(like);
           vm.liked = false;
         });
+        // .then(() => ToastAlertService.customToast('Property Liked', vm.toastDelay, vm.toastStatus));
     // }
   };
-  // vm.deleteLike = (like) => {
-  //   // if(vm.prop.likes.includes(vm.likeId) === true) {
-  //     GroupPropertyLike
-  //       .delete({ id: vm.group.id, listingId: vm.listingId, likeId: like.id })
-  //       .$promise
-  //       .then((like) => {
-  //         console.log('deleteLike --->', like);
-  //         const index = vm.prop.likes.indexOf(like);
-  //         vm.liked = true;
-  //         return vm.prop.likes.splice(index, 1);
-  //       });
-  //   // }
-  // };
+
+  vm.deleteLike = (like) => {
+    // if(vm.prop.likes.includes(vm.likeId) === true) {
+      GroupPropertyLike
+        .delete({ id: vm.group.id, listingId: vm.listingId, likeId: like.id })
+        .$promise
+        .then((like) => {
+          console.log('deleteLike --->', like);
+          const index = vm.prop.likes.indexOf(like);
+          vm.liked = true;
+          return vm.prop.likes.splice(index, 1);
+        });
+        // .then(() => ToastAlertService.customToast('Property Unliked', vm.toastDelay, vm.toastStatus));
+    // }
+  };
 
   vm.addComment = () => {
     GroupPropertyComment
@@ -389,9 +392,8 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
         comment.createdAt = $moment(this.newComment.createdAt).fromNow();
         vm.prop.comments.push(comment);
         vm.newComment = {};
-      });
-
-    ToastAlertService.customToast('Comment posted', vm.toastDelay, vm.toastStatus);
+      })
+      .then(() => ToastAlertService.customToast('Comment posted', vm.toastDelay, vm.toastStatus));
   };
 
   vm.deleteComment = (comment) => {
@@ -401,9 +403,8 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       .then(() => {
         const index = vm.prop.comments.indexOf(comment);
         return vm.prop.comments.splice(index, 1);
-      });
-
-    ToastAlertService.customToast('Commend deleted', vm.toastDelay, vm.toastStatus);
+      })
+      .then(() => ToastAlertService.customToast('Commend deleted', vm.toastDelay, vm.toastStatus));
   };
 
   vm.addImage = () => {
@@ -413,9 +414,8 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       .then((image) => {
         vm.prop.images.push(image);
         vm.newImage = {};
-      });
-
-    ToastAlertService.customToast('Image uploaded', vm.toastDelay, vm.toastStatus);
+      })
+      .then((image) => ToastAlertService.customToast('Image uploaded', vm.toastDelay, vm.toastStatus));
   };
 
   vm.deleteImage = (image) => {
@@ -425,9 +425,8 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       .then(() => {
         const index = vm.prop.images.indexOf(image);
         return vm.prop.images.splice(index, 1);
-      });
-
-    ToastAlertService.customToast('Image deleted', vm.toastDelay, vm.toastStatus);
+      })
+      .then(() => ToastAlertService.customToast('Image deleted', vm.toastDelay, vm.toastStatus));
   };
 
   vm.addRating = () => {
@@ -437,9 +436,8 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       .then((rating) => {
         vm.prop.ratings.push(rating);
         vm.newRating = {};
-      });
-
-    ToastAlertService.customToast('Rating posted', vm.toastDelay, vm.toastStatus);
+      })
+      .then((rating) => ToastAlertService.customToast('Rating posted', vm.toastDelay, vm.toastStatus));
   };
 
   vm.deleteRating = (rating) => {
@@ -449,9 +447,8 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       .then(() => {
         const index = vm.prop.ratings.indexOf(rating);
         return vm.prop.ratings.splice(index, 1);
-      });
-
-    ToastAlertService.customToast('Rating deleted', vm.toastDelay, vm.toastStatus);
+      })
+      .then(() => ToastAlertService.customToast('Rating deleted', vm.toastDelay, vm.toastStatus));
   };
 
   vm.deleteProperty = (property) => {
@@ -462,9 +459,8 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
         const index = vm.group.properties.indexOf(property);
         vm.group.properties.splice(index, 1);
         return $state.go('groupsHome', { id: vm.group.id });
-      });
-
-    ToastAlertService.customToast(`${property.listing_id} deleted from ${vm.group.groupName} group`, vm.toastDelay, vm.toastStatus);
+      })
+      .then(() => ToastAlertService.customToast(`${property.listing_id} deleted from ${vm.group.groupName} group`, vm.toastDelay, vm.toastStatus));
   };
 
   vm.showUserImage = (thisImage) => {

@@ -9,6 +9,8 @@ function UsersShowCtrl(User, $stateParams, $state, $auth, ToastAlertService) {
 
   vm.user = User.get($stateParams);
 
+  console.log('vm.user', vm.user);
+
   vm.delete = () => {
     vm.user
       .$remove()
@@ -25,6 +27,8 @@ function UsersEditCtrl(User, $stateParams, $state, ToastAlertService) {
   const vm = this;
 
   vm.user = User.get($stateParams);
+
+  // console.log('vm.user', vm.user);
 
   vm.update = () => {
     if(vm.usersEditForm.$valid) {

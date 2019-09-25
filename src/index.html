@@ -43,9 +43,9 @@
         <md-button
           class="md-icon-button"
           name="usersShow"
-          ng-if="main.isAuthenticated() && main.currentUserGroupId"
-          md-nav-sref="groupsHome({ id: main.currentUserGroupId })"
-          ui-sref="groupsHome({ id: main.currentUserGroupId })"
+          ng-if="main.isAuthenticated() && main.currentGroupId"
+          md-nav-sref="groupsHome({ id: main.currentGroupId })"
+          ui-sref="groupsHome({ id: main.currentGroupId })"
           aria-label="Favorite"
           >
           <!-- ui-sref="usersShow({ id: main.currentUserId })" -->
@@ -90,10 +90,10 @@
             </md-list-item>
             <md-list-item
               name="groupsHome"
-              ng-if="(main.isAuthenticated() && main.currentUserGroupId)"
+              ng-if="(main.isAuthenticated() && main.currentGroupId)"
               ng-click="main.close()"
-              md-nav-sref="groupsHome({ id: main.currentUserGroupId })"
-              ui-sref="groupsHome({ id: main.currentUserGroupId })"
+              md-nav-sref="groupsHome({ id: main.currentGroupId })"
+              ui-sref="groupsHome({ id: main.currentGroupId })"
               sref-opts="{ reload: true, notify: true }"
               >
               <md-icon md-font-set="material-icons" aria-label="My Group">group_work</md-icon>
@@ -103,7 +103,7 @@
             </md-list-item>
             <md-list-item
               name="groupsNew"
-              ng-if="main.isAuthenticated() && !main.currentUserGroupId"
+              ng-if="main.isAuthenticated() && !main.currentGroupId"
               md-nav-sref="groupsNew"
               ui-sref="groupsNew"
               sref-opts="{ reload: true, notify: true }"

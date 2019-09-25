@@ -32,8 +32,8 @@
       <md-button
         ng-if="(main.isAuthenticated && main.currentUserId === groupsHome.group.createdBy)"
         ng-show="(main.isAuthenticated && groupsHome.group.createdBy === main.currentUserId)"
-        md-nav-sref="groupsEdit({ id: main.currentUserGroupId })"
-        ui-sref="groupsEdit({ id: main.currentUserGroupId })"
+        md-nav-sref="groupsEdit({ id: main.currentGroupId })"
+        ui-sref="groupsEdit({ id: main.currentGroupId })"
         class="md-raised md-primary md-button md-ink-ripple"
         >
         Edit

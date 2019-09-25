@@ -37,6 +37,7 @@ const propertySchema = new mongoose.Schema({
 const groupSchema = new mongoose.Schema({
   groupName: { type: String, required: true },
   properties: [ propertySchema ],
+  // properties: [{ type: ObjectId, ref: 'Property' }],
   createdBy: { type: ObjectId, ref: 'User', required: true }
 }, {
   usePushEach: true, // $push operator with $each instead. This forces the use of $pushAll - MongoDB 3.6
@@ -53,11 +54,10 @@ groupSchema
     this._users = users;
   });
 
-// pre-hook - save(); also available are update(); and remove(); but actually update() is deprecated. Use save() to update();
 groupSchema.pre('save', function addGroupToUsers(next) {
   this
     .model('User')
-    .find({ _id: this._users }) // mongoose ObjectId AKA it's hexString
+    .find({ _id: this._users })
     .exec()
     .then((users) => {
       const promises = users.map((user) => {
@@ -71,18 +71,27 @@ groupSchema.pre('save', function addGroupToUsers(next) {
     .catch(next);
 });
 
-groupSchema.pre('save', function addGroupToUser(next) {
-  if(this.createdBy) this.model('User').findByIdAndUpdate(this.createdBy, { group: this.id }, next);
-  return next();
-});
+// groupSchema.pre('remove', function addGroupToUsers(next) {
+//   this
+//     .model('User')
+//     .find({ _id: this._users }) // mongoose ObjectId AKA it's hexString
+//     .exec()
+//     .then((users) => {
+//       const promises = users.map((user) => {
+//         user.group = null; // set Group ObjectId back to default 'null' on selected users
+//         return user.save();
+//       });
+//       return Promise.all(promises);
+//     })
+//     .then(next)
+//     .catch(next);
+// });
 
-userImageSchema
-  .virtual('imageSRC')
-  .get(function getImageSRC() {
-    if(!this.file) return null;
-    if(this.file.match(/^http/)) return (this.file);
-    return `https://s3-eu-west-1.amazonaws.com/${process.env.AWS_BUCKET_NAME}/${this.file}`;
-  });
+userImageSchema.virtual('imageSRC').get(function getImageSRC() {
+  if(!this.file) return null;
+  if(this.file.match(/^http/)) return (this.file);
+  return `https://s3-eu-west-1.amazonaws.com/${process.env.AWS_BUCKET_NAME}/${this.file}`;
+});
 
 userImageSchema.pre('remove', function deleteImage(next) {
   console.log('this.file', this.file);

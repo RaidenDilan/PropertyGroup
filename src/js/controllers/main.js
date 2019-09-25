@@ -47,7 +47,7 @@ angular
     }
 
     function authenticateState(event, toState) {
-      // vm.currentUserGroupId = null;
+      // vm.currentGroupId = null;
       if(vm.stateHasChanged) vm.message = null;
       if(!vm.stateHasChanged) vm.stateHasChanged = true;
       if(vm.stateHasChanged) document.body.scrollTop = document.documentElement.scrollTop = 0; // BUG????
@@ -69,8 +69,7 @@ angular
               vm.message = 'You must create a group before searching for properties';
               ToastAlertService.customToast(vm.message, vm.toastDelay, 'warning');
             }
-
-            return !vm.user.group ? vm.currentUserGroupId = null : vm.currentUserGroupId = vm.user.group.id;
+            return !vm.user.group ? vm.currentGroupId = null : vm.currentGroupId = vm.user.group.id;
           });
       }
     }

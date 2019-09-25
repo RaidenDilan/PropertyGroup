@@ -27,7 +27,7 @@ function showGroup(req, res, next) {
 }
 
 function createGroup(req, res, next) {
-  req.body.createdBy = req.user;
+  if(req.user) req.body.createdBy = req.user.id;
 
   Group
     .create(req.body)
@@ -36,10 +36,6 @@ function createGroup(req, res, next) {
       return res.status(200).json({ message: `${group.groupName} created` });
     })
     .catch(next);
-    // .catch((err, next) => {
-    //   if (err) return res.status(500).json({ message: 'Something went wrong trying update group' });
-    //   return next();
-    // });
 }
 
 function deleteGroup(req, res, next) {
@@ -55,12 +51,12 @@ function deleteGroup(req, res, next) {
 }
 
 function updateGroup(req, res, next) {
-  req.body.createdBy = req.user.id;
-  // req.body.groupName = req.body.groupName;
+  if(req.user) req.body.createdBy = req.user.id;
 
   Group
     .findByIdAndUpdate(req.params.id, { $set: { groupName: req.body.groupName } })
-    .populate('users properties.images.createdBy properties.comments.createdBy properties.ratings.createdBy')
+    .populate('users')
+    // .populate('users properties.images.createdBy properties.comments.createdBy properties.ratings.createdBy')
     .exec()
     .then((group) => {
       if(!group) return res.notFound('Group not found');
@@ -70,13 +66,14 @@ function updateGroup(req, res, next) {
 }
 
 function addUserToGroup(req, res, next) {
-  req.body.createdBy = req.user.id;
+  if(req.user) req.body.createdBy = req.user.id;
 
   Group
     .findById(req.params.id)
     // .findByIdAndUpdate(req.params.id, { $addToSet: { users: req.body.userId } }, { new: true }) // The $pullAll operator removes all instances of the specified values from an existing array. Unlike the $pull operator that removes elements by specifying a query, $pullAll removes elements that match the listed values.
     // .findByIdAndUpdate(req.params.id, { $set: { users: req.body.userId } }, { new: true }) // The $pullAll operator removes all instances of the specified values from an existing array. Unlike the $pull operator that removes elements by specifying a query, $pullAll removes elements that match the listed values.
-    .populate('users properties.images.createdBy properties.comments.createdBy properties.ratings.createdBy')
+    .populate('users')
+    // .populate('users properties.images.createdBy properties.comments.createdBy properties.ratings.createdBy')
     .exec()
     .then((group) => {
       if(!group) return res.notFound('Group not found');
@@ -101,13 +98,14 @@ function addUserToGroup(req, res, next) {
 }
 
 function deleteUserFromGroup(req, res, next) {
-  req.body.createdBy = req.user.id;
+  if(req.user) req.body.createdBy = req.user.id;
 
   Group
     .findById(req.params.id)
     // .findByIdAndUpdate(req.params.id, { $push: { values: { $each: [2, 3] }}}, { new: true }) // The $pullAll operator removes all instances of the specified values from an existing array. Unlike the $pull operator that removes elements by specifying a query, $pullAll removes elements that match the listed values.
     // .findByIdAndUpdate(req.params.id, { $pullAll: { users: req.params.userId } }, { new: true }) // The $pullAll operator removes all instances of the specified values from an existing array. Unlike the $pull operator that removes elements by specifying a query, $pullAll removes elements that match the listed values.
-    .populate('users properties.images.createdBy properties.comments.createdBy properties.ratings.createdBy')
+    // .populate('users')
+    // .populate('users properties.images.createdBy properties.comments.createdBy properties.ratings.createdBy')
     .exec()
     .then((group) => {
       if (!group) return res.notFound('Group not found'); // if (group.users.indexOf(req.params.userId) > -1) console.log(req.params.userId + ' exists in the group collection.');
