@@ -1,6 +1,5 @@
 const mongoose   = require('mongoose');
 mongoose.Promise = require('bluebird');
-// const async      = require('async');
 const User       = require('../models/user');
 const Group      = require('../models/group');
 // const Property   = require('../models/property');
@@ -32,9 +31,9 @@ User
         users: [ users[0] ],
         properties: [{
           createdBy: users[0],
-          listingId: '52509811',
-          ratings: [{ stars: 5, createdBy: users[0] }],
-          comments: [{ text: 'YOYO!', createdBy: users[0] }]
+          listingId: '52509811'
+          // ratings: [{ stars: 5, createdBy: users[0] }],
+          // comments: [{ text: 'YOYO!', createdBy: users[0] }]
         }]
       }]);
   })

@@ -4,25 +4,10 @@ const Promise  = require('bluebird');
 const ObjectId = mongoose.Schema.ObjectId;
 
 // Embedded Document
-const userLikeSchema = new mongoose.Schema({
-  likeCount: { type: Number, default: 0 },
-  user: { type: ObjectId, ref: 'User', unique: true, index: true }
-});
-
-const userImageSchema = new mongoose.Schema({
-  file: { type: String },
-  createdBy: { type: ObjectId, ref: 'User', required: true }
-}, { timestamps: { createdAt: true, updatedAt: false }});
-
-const userCommentSchema = new mongoose.Schema({
-  text: { type: String, required: true },
-  createdBy: { type: ObjectId, ref: 'User', required: true }
-}, { timestamps: { createdAt: true, updatedAt: false }});
-
-const userRatingSchema = new mongoose.Schema({
-  stars: { type: Number, required: true },
-  createdBy: { type: ObjectId, ref: 'User', required: true }
-}, { timestamps: { createdAt: true, updatedAt: false }});
+const userLikeSchema = new mongoose.Schema({ user: { type: ObjectId, ref: 'User', unique: true, index: true }});
+const userImageSchema = new mongoose.Schema({ file: { type: String }, createdBy: { type: ObjectId, ref: 'User', required: true }}, { timestamps: { createdAt: true, updatedAt: false }});
+const userRatingSchema = new mongoose.Schema({ stars: { type: Number, required: true }, createdBy: { type: ObjectId, ref: 'User', required: true }}, { timestamps: { createdAt: true, updatedAt: false }});
+const userCommentSchema = new mongoose.Schema({ text: { type: String, required: true }, createdBy: { type: ObjectId, ref: 'User', required: true }}, { timestamps: { createdAt: true, updatedAt: false }});
 
 const propertySchema = new mongoose.Schema({
   listingId: { type: String },
@@ -36,13 +21,33 @@ const propertySchema = new mongoose.Schema({
 
 const groupSchema = new mongoose.Schema({
   groupName: { type: String, required: true },
-  properties: [ propertySchema ],
-  // properties: [{ type: ObjectId, ref: 'Property' }],
+  properties: [ propertySchema ], // properties: [{ type: ObjectId, ref: 'Property' }],
   createdBy: { type: ObjectId, ref: 'User', required: true }
 }, {
-  usePushEach: true, // $push operator with $each instead. This forces the use of $pushAll - MongoDB 3.6
-  timestamps: { createdAt: true, updatedAt: true }
+  timestamps: { createdAt: true, updatedAt: true },
+  usePushEach: true // $push operator with $each instead. This forces the use of $pushAll - MongoDB 3.6
 });
+
+// propertySchema.methods.addVote = function(user) {
+//   const prop = Group.findById(this.group).exec().then((group) => group.properties.find((property) => property.listingId === req.params.listingId));
+//
+//   // if (!election) {}
+//
+//   const votedUsers = prop.likes.toObject();
+//   const hasVoted = _.find(votedUsers, { user: user._id });
+//
+//   // if (hasVoted) {}
+//
+//   // const like = { user: req.user };
+//   // const vote = new Vote({ like: like, properties: this.id });
+//
+//   const vote = prop.like.create(req.body);
+//
+//   prop.likes.push(vote);
+//   return prop.save();
+//   // const savedVote = vote.save();
+//   // return savedVote;
+// };
 
 groupSchema
   .virtual('users', {

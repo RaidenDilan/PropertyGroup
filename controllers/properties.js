@@ -52,8 +52,6 @@ function addPropertyComment(req, res, next) {
     .then((group) => {
       if(!group) return res.notFound('Group not found');
 
-      var query     = req.params.id;
-      const options = { new: true, upsert: true };
       const prop = group.properties.find((property) => property.listingId === req.params.listingId);
       const comment = prop.comments.create(req.body);
       prop.comments.push(comment);
@@ -133,10 +131,9 @@ function deletePropertyImage(req, res, next) {
 function addPropertyRating(req, res, next) {
   if(req.user) req.body.createdBy = req.user;
 
-  console.log('req.body.createdBy ------>>', req.body.createdBy);
-
   Group
     .findById(req.params.id)
+    // .findByIdAndUpdate(req.params.id, { $push: { properties: req.body }}, { new: true })
     // .populate('users properties')
     .populate('users properties.images.createdBy properties.comments.createdBy properties.ratings.createdBy')
     .exec()
@@ -146,8 +143,6 @@ function addPropertyRating(req, res, next) {
       const prop = group.properties.find((property) => property.listingId === req.params.listingId);
       const rating = prop.ratings.create(req.body);
       prop.ratings.push(rating);
-
-      console.log('rating ------>>', rating);
 
       return group
         .save()
@@ -176,116 +171,116 @@ function deletePropertyRating(req, res, next) {
     .catch(next);
 }
 
-function addPropertyLike(req, res, next) {
-  console.log('addPropertyLike - req.body --->>>', req.body);
-  if (req.user) req.body.user = req.user;
-
-  Group
-    .findById(req.params.id)
-    .exec()
-    .then((group) => {
-      console.log('addPropertyLike group ---+++--->>>', group);
-
-      if(!group) return res.notFound('Group not found');
-
-      const prop = group.properties.find((property) => property.listingId === req.params.listingId);
-      console.log('addPropertyLike prop ---+++--->>>', prop);
-      const like = prop.likes.create(req.body);
-
-      // if (like.id === req.params.likeId) {
-      // if(prop.likes.indexOf(req.user.id) === -1) {
-        console.log('addPropertyLike like ---+++--->>>', like);
-        // console.log('ADD VOTE ---------->>>', like.id === req.params.likeId);
-        // vote.like = !vote.like; // TOGGLE LIKE NUMERIC VALUE
-        // prop.set();
-        prop.likes.push(like);
-
-        return group
-          .save()
-          .then(() => res.json(like));
-      // }
-    })
-    .catch(next);
-}
-
-function updatePropertyLike(req, res, next) {
-  if(req.user) req.body.user = req.user;
-
-  console.log('updatePropertyLike - req.body --->>>', req.body);
-  console.log('req.params ---+--->>>', req.params);
-
-  var query   = req.params.id;
-  // var update  = { $set: { likes: req.user.id }}, { new: true };
-  var filter  = { arrayFilters: [{ 'prop._id': req.params.likeId }] };
-  var options = { upsert: true, new: true, setDefaultsOnInsert: true };
-
-  // var update  = { $push: { 'properties.likes': req.body } };
-  // var filter  = { arrayFilters: [{ 'prop._id': req.params.likeId }] };
-  // var options = { upsert: true, new: true, setDefaultsOnInsert: true };
-
-  Group
-    .findById(req.params.id)
-    // .findByIdAndUpdate(req.params.id, { $set: { 'properties.0.likes': { user: req.user.id } }}, { upsert: true, new: true })
-    // .findByIdAndUpdate(query, update, options) // The $pullAll operator removes all instances of the specified values from an existing array. Unlike the $pull operator that removes elements by specifying a query, $pullAll removes elements that match the listed values.
-    // .findOneAndUpdate(query, update, options) // The $pullAll operator removes all instances of the specified values from an existing array. Unlike the $pull operator that removes elements by specifying a query, $pullAll removes elements that match the listed values.
-    // .findOneAndUpdate(
-    //   // req.params.id
-    //   { _id: req.params.id, 'properties.listingId': req.params.listingId, 'likes.id': req.params.likeId },
-    //   // { _id: req.params.id, 'properties.listingId': req.params.listingId },
-    //   { $set: { 'properties.0.likes': { user: req.user, likeCount: 1 } } },
-    //   { upsert: true, new: true }
-    // )
-    .populate('users properties.images.createdBy properties.comments.createdBy properties.ratings.createdBy')
-    .exec()
-    .then((group) => {
-      // console.log('group ---+++--->>', group);
-      if(!group) return res.notFound('Group not found');
-
-      const prop = group.properties.find((property) => property.listingId === req.params.listingId);
-      // const like = prop.likes.find((like) => like.id === req.params.likeId);
-      const like = prop.likes.id(req.params.likeId);
-
-      console.log('like ---+++--->>', like);
-      // like.user = !like.user;
-      like.save();
-
-      // if (!prop.likes.indexOf(req.params.likeId)) {
-      //   const like = prop.likes.create(req.body);
-      //   prop.likes.push(like); // prop.likes.set(like);
-      //   return group.save().then(() => res.json(like));
-      // }
-
-      // if (!prop.likes.id(req.params.likeId)) {
-      //   const like = prop.likes.create(req.body);
-      //   prop.likes.push(like); // prop.likes.set(like);
-      //   return group.save().then(() => res.json(like));
-      // }
-
-      // if (!req.params.likeId) console.log('!req.params.likeId', !req.params.likeId);
-
-      // const like = prop.likes.find((like) => {
-      //   console.log('like.user ----------->>>', like.user);
-      //   console.log('req.user.id ----------->>>', req.user.id);
-      //   return like.user === req.user.id;
-      // });
-      // console.log('like ----------->>>', like);
-
-      // if (prop.likes.indexOf(req.params.likeId)) {}
-      // const like = prop.likes.id(req.params.likeId);
-      // like.user.set(req.user.id);
-      // like.user = req.user;
-      // prop.likeCount++;
-      // like.likeCount = !like.likeCount;
-      // prop.likes.push(like);
-
-      return group
-        .save()
-        .then(() => res.json(like));
-    })
-    .then(() => res.status(204).end())
-    .catch(next);
-}
-
+// function addPropertyLike(req, res, next) {
+//   console.log('addPropertyLike - req.body --->>>', req.body);
+//   if (req.user) req.body.user = req.user;
+//
+//   Group
+//     .findById(req.params.id)
+//     .exec()
+//     .then((group) => {
+//       console.log('addPropertyLike group ---+++--->>>', group);
+//
+//       if(!group) return res.notFound('Group not found');
+//
+//       const prop = group.properties.find((property) => property.listingId === req.params.listingId);
+//       console.log('addPropertyLike prop ---+++--->>>', prop);
+//       const like = prop.likes.create(req.body);
+//
+//       // if (like.id === req.params.likeId) {
+//       // if(prop.likes.indexOf(req.user.id) === -1) {
+//         console.log('addPropertyLike like ---+++--->>>', like);
+//         // console.log('ADD VOTE ---------->>>', like.id === req.params.likeId);
+//         // vote.like = !vote.like; // TOGGLE LIKE NUMERIC VALUE
+//         // prop.set();
+//         prop.likes.push(like);
+//
+//         return group
+//           .save()
+//           .then(() => res.json(like));
+//       // }
+//     })
+//     .catch(next);
+// }
+//
+// function updatePropertyLike(req, res, next) {
+//   if(req.user) req.body.user = req.user;
+//
+//   console.log('updatePropertyLike - req.body --->>>', req.body);
+//   console.log('req.params ---+--->>>', req.params);
+//
+//   var query   = req.params.id;
+//   // var update  = { $set: { likes: req.user.id }}, { new: true };
+//   var filter  = { arrayFilters: [{ 'prop._id': req.params.likeId }] };
+//   var options = { upsert: true, new: true, setDefaultsOnInsert: true };
+//
+//   // var update  = { $push: { 'properties.likes': req.body } };
+//   // var filter  = { arrayFilters: [{ 'prop._id': req.params.likeId }] };
+//   // var options = { upsert: true, new: true, setDefaultsOnInsert: true };
+//
+//   Group
+//     .findById(req.params.id)
+//     // .findByIdAndUpdate(req.params.id, { $set: { 'properties.0.likes': { user: req.user.id } }}, { upsert: true, new: true })
+//     // .findByIdAndUpdate(query, update, options) // The $pullAll operator removes all instances of the specified values from an existing array. Unlike the $pull operator that removes elements by specifying a query, $pullAll removes elements that match the listed values.
+//     // .findOneAndUpdate(query, update, options) // The $pullAll operator removes all instances of the specified values from an existing array. Unlike the $pull operator that removes elements by specifying a query, $pullAll removes elements that match the listed values.
+//     // .findOneAndUpdate(
+//     //   // req.params.id
+//     //   { _id: req.params.id, 'properties.listingId': req.params.listingId, 'likes.id': req.params.likeId },
+//     //   // { _id: req.params.id, 'properties.listingId': req.params.listingId },
+//     //   { $set: { 'properties.0.likes': { user: req.user, likeCount: 1 } } },
+//     //   { upsert: true, new: true }
+//     // )
+//     .populate('users properties.images.createdBy properties.comments.createdBy properties.ratings.createdBy')
+//     .exec()
+//     .then((group) => {
+//       // console.log('group ---+++--->>', group);
+//       if(!group) return res.notFound('Group not found');
+//
+//       const prop = group.properties.find((property) => property.listingId === req.params.listingId);
+//       // const like = prop.likes.find((like) => like.id === req.params.likeId);
+//       const like = prop.likes.id(req.params.likeId);
+//
+//       console.log('like ---+++--->>', like);
+//       // like.user = !like.user;
+//       like.save();
+//
+//       // if (!prop.likes.indexOf(req.params.likeId)) {
+//       //   const like = prop.likes.create(req.body);
+//       //   prop.likes.push(like); // prop.likes.set(like);
+//       //   return group.save().then(() => res.json(like));
+//       // }
+//
+//       // if (!prop.likes.id(req.params.likeId)) {
+//       //   const like = prop.likes.create(req.body);
+//       //   prop.likes.push(like); // prop.likes.set(like);
+//       //   return group.save().then(() => res.json(like));
+//       // }
+//
+//       // if (!req.params.likeId) console.log('!req.params.likeId', !req.params.likeId);
+//
+//       // const like = prop.likes.find((like) => {
+//       //   console.log('like.user ----------->>>', like.user);
+//       //   console.log('req.user.id ----------->>>', req.user.id);
+//       //   return like.user === req.user.id;
+//       // });
+//       // console.log('like ----------->>>', like);
+//
+//       // if (prop.likes.indexOf(req.params.likeId)) {}
+//       // const like = prop.likes.id(req.params.likeId);
+//       // like.user.set(req.user.id);
+//       // like.user = req.user;
+//       // prop.likeCount++;
+//       // like.likeCount = !like.likeCount;
+//       // prop.likes.push(like);
+//
+//       return group
+//         .save()
+//         .then(() => res.json(like));
+//     })
+//     .then(() => res.status(204).end())
+//     .catch(next);
+// }
+//
 // function deletePropertyLike(req, res, next) {
 //   // const options = { new: true, upsert: true };
 //   // .findByIdAndUpdate(req.params.id, { $addToSet: { likes: req.body }}, options)
@@ -323,10 +318,10 @@ module.exports = {
   addImage: addPropertyImage,
   deleteImage: deletePropertyImage,
   addRating: addPropertyRating,
-  deleteRating: deletePropertyRating,
-  addLike: addPropertyLike,
+  deleteRating: deletePropertyRating
+  // addLike: addPropertyLike,
   // deleteLike: deletePropertyLike,
-  updateLike: updatePropertyLike
+  // updateLike: updatePropertyLike
 };
 
 // function addPropertyVote(req, res, next) {

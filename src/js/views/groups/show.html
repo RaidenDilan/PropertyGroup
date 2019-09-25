@@ -64,9 +64,22 @@
               class="md-raised md-primary md-button md-ink-ripple"
               aria-label="Like"
               >
-              <md-icon ng-show="groupsPropsShow.liked" ng-click="groupsPropsShow.toggleLike(groupsPropsShow.userLike)" class="material-icons">favorite</md-icon>
-              <md-icon ng-show="!groupsPropsShow.liked" ng-click="groupsPropsShow.addLike()" class="material-icons">favorite_border</md-icon>
-              <span>{{ groupsPropsShow.prop.likes.length }}</span>
+              <!-- ng-model="groupsPropsShow.action" -->
+              <md-icon
+                ng-show="groupsPropsShow.liked"
+                ng-click="groupsPropsShow.deleteLike(groupsPropsShow.userLike)"
+                class="material-icons"
+                >
+                favorite
+              </md-icon>
+              <md-icon
+                ng-show="!groupsPropsShow.liked"
+                ng-click="groupsPropsShow.addLike()"
+                class="material-icons"
+                >
+                favorite_border
+              </md-icon>
+              <span>{{ groupsPropsShow.prop.likeCount }}</span>
             </md-button>
 
             <!-- <md-button
@@ -102,6 +115,7 @@
             <md-button class="md-raised md-warn md-button md-ink-ripple">Email Agent</md-button>
             <md-button class="md-raised md-primary md-button md-ink-ripple" ng-click="groupsPropsShow.deleteProperty(property)" ng-if="main.isAuthenticated()">Delete Property</md-button>
           </md-card-actions>
+          <span>LIKES: {{ groupsPropsShow.prop.likes }}</span>
 
           <!-- <code>{{ main.currentUserId }}</code> -->
           <!-- <code>{{ groupsPropsShow.prop.likes.indexOf(groupsPropsShow.likeId) !== -1 }}</code> -->

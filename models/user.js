@@ -64,6 +64,50 @@ function validateEmail(email) {
 // The raw value of `email` is lowercased
 // userSchema.get('email', null, { getters: false }); // 'test@gmail.com'
 
+// // Validate empty email
+// userSchema
+//   .path('email')
+//   .validate(function(email) {
+//     if (authTypes.indexOf(this.provider) !== -1) return true;
+//     return email.length;
+//   }, 'Email cannot be blank');
+
+// // Validate empty password
+// userSchema
+//   .path('password')
+//   .validate(function (password) {
+//     if (authTypes.indexOf(this.provider) !== -1) return true;
+//     return password.length;
+//   }, 'Password cannot be blank');
+
+// // Validate email is not taken
+// userSchema
+//   .path('email')
+//   .validate({
+//     isAsync: true,
+//     validator(value, respond) {
+//       var self = this;
+//
+//       this
+//         .model('User')
+//         .findOne({ email: value })
+//         .exec()
+//         .then((user) => {
+//           if (user) {
+//             if (self.id === user.id) return respond(false);
+//             console.log('user =-=-=-=-=-=-=-=-=-=->>>', user);
+//             return respond(true);
+//           }
+//           return respond(true);
+//         })
+//         .catch((err) => {
+//           if (err) throw err;
+//           return respond(true);
+//         });
+//       },
+//       message: 'The specified email address is already in use.'
+//   });
+
 // userSchema
 //   .path('email')
 //   .validate(validateEmail);

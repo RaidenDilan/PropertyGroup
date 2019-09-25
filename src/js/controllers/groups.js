@@ -220,7 +220,6 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
   vm.crimes.crimeData = [];
   vm.toastDelay       = 3000;
   vm.toastStatus      = 'success';
-  vm.liked            = true;
 
   vm.chartOptions = {
     responsive: true, // set to false to remove responsiveness. Default responsive value is true.
@@ -241,9 +240,11 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       getGroupProperty();
 
       vm.prop = vm.group.properties.find(obj => obj.listingId === vm.listingId);
+      vm.userLike = vm.prop.likes.find(obj => obj.user === vm.loggedInUserId);
+      vm.liked = vm.prop.likes.includes(vm.userLike);
 
-      // console.log('group', vm.group);
-      // console.log('prop', vm.prop);
+      // console.log('vm.prop', vm.prop);
+      // console.log('vm.userLike', vm.userLike);
 
       // if(vm.prop.likes.includes($auth.getPayload().userId)) {
       //   console.log('prop.likes.includes($auth.getPayload().userId)', vm.prop.likes.indexOf($auth.getPayload().userId));
@@ -314,74 +315,77 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       });
   }
 
-  vm.toggleLike = (like) => {
-    // if (!like) {
-    //   console.log('------- DEFAULT LIKE -------', vm.userLike);
-    //   vm.newLike = {};
-    //
-    //   GroupPropertyLike
-    //     .update({ id: vm.group.id, listingId: vm.listingId }, vm.newLike)
-    //     .$promise
-    //     .then((like) => {
-    //       console.log('save --->', like);
-    //
-    //       like.like = !like.like;
-    //       vm.prop.likeCount++;
-    //       vm.prop.likes.push(like);
-    //       // vm.newLike = {};
-    //       // vm.liked = vm.liked === true ? false : true;
-    //       // like.user = vm.loggedInUserId;
-    //       // vm.prop.likes.push(like);
-    //     });
-    // }
-    // else if(like) {
-      vm.userLike = vm.prop.likes.find(obj => obj.user === vm.loggedInUserId);
-      console.log('------- LIKED -------', vm.userLike.id);
-      console.log('------- LIKED -------', like);
+  // vm.toggleLike = (like) => {
+  //   // if (!like) {
+  //   //   console.log('------- DEFAULT LIKE -------', vm.userLike);
+  //   //   vm.newLike = {};
+  //   //
+  //   //   GroupPropertyLike
+  //   //     .update({ id: vm.group.id, listingId: vm.listingId }, vm.newLike)
+  //   //     .$promise
+  //   //     .then((like) => {
+  //   //       console.log('save --->', like);
+  //   //
+  //   //       like.like = !like.like;
+  //   //       vm.prop.likeCount++;
+  //   //       vm.prop.likes.push(like);
+  //   //       // vm.newLike = {};
+  //   //       // vm.liked = vm.liked === true ? false : true;
+  //   //       // like.user = vm.loggedInUserId;
+  //   //       // vm.prop.likes.push(like);
+  //   //     });
+  //   // }
+  //   // else if(like) {
+  //     vm.userLike = vm.prop.likes.find(obj => obj.user === vm.loggedInUserId);
+  //     console.log('------- LIKED -------', vm.userLike.id);
+  //     console.log('------- LIKED -------', like);
+  //
+  //     GroupPropertyLike
+  //       .update({ id: vm.group.id, listingId: vm.listingId, likeId: vm.userLike.id })
+  //       .$promise
+  //       .then((like) => {
+  //         console.log('update --->', like);
+  //         // like = !liked;
+  //         vm.prop.likeCount++;
+  //         // vm.liked = vm.liked === true ? false : true;
+  //         // like.user = vm.loggedInUserId;
+  //         vm.prop.likes.push(like);
+  //       });
+  //       // .then(() => ToastAlertService.customToast('Property liked/unliked', vm.toastDelay, vm.toastStatus));
+  //     // }
+  // };
 
-      GroupPropertyLike
-        .update({ id: vm.group.id, listingId: vm.listingId, likeId: vm.userLike.id })
-        .$promise
-        .then((like) => {
-          console.log('update --->', like);
-          // like = !liked;
-          vm.prop.likeCount++;
-          // vm.liked = vm.liked === true ? false : true;
-          // like.user = vm.loggedInUserId;
-          vm.prop.likes.push(like);
-        });
-        // .then(() => ToastAlertService.customToast('Property liked/unliked', vm.toastDelay, vm.toastStatus));
-      // }
-  };
+  vm.addLike = () => {
+    // if(vm.prop.likes.includes(vm.likeId) === false) {}
+    console.log('vm.prop.likes.includes(vm.userLike); LIKE --->>', vm.prop.likes.includes(vm.userLike));
 
-  vm.addLike = (like) => {
-    console.log('like --->', like);
-    // if(vm.prop.likes.includes(vm.likeId) === false) {
-      GroupPropertyLike
-        .save({ id: vm.group.id, listingId: vm.listingId }, { user: vm.loggedInUserId })
-        .$promise
-        .then((like) => {
-          console.log('addLike --->', like);
-          vm.prop.likes.push(like);
-          vm.liked = false;
-        });
-        // .then(() => ToastAlertService.customToast('Property Liked', vm.toastDelay, vm.toastStatus));
-    // }
+    GroupPropertyLike
+      .save({ id: vm.group.id, listingId: vm.listingId }, { user: vm.loggedInUserId })
+      .$promise
+      .then((like) => {
+        vm.prop.likes.push(like);
+      })
+      .then(() => {
+        vm.liked = false;
+        ToastAlertService.customToast('Property Liked', vm.toastDelay, vm.toastStatus);
+      });
   };
 
   vm.deleteLike = (like) => {
-    // if(vm.prop.likes.includes(vm.likeId) === true) {
-      GroupPropertyLike
-        .delete({ id: vm.group.id, listingId: vm.listingId, likeId: like.id })
-        .$promise
-        .then((like) => {
-          console.log('deleteLike --->', like);
-          const index = vm.prop.likes.indexOf(like);
-          vm.liked = true;
-          return vm.prop.likes.splice(index, 1);
-        });
-        // .then(() => ToastAlertService.customToast('Property Unliked', vm.toastDelay, vm.toastStatus));
-    // }
+    // if(vm.prop.likes.includes(vm.likeId) === true) {}
+    console.log('vm.prop.likes.includes(vm.userLike); UNLIKE --->>', vm.prop.likes.includes(vm.userLike));
+
+    GroupPropertyLike
+      .delete({ id: vm.group.id, listingId: vm.listingId, likeId: like.id })
+      .$promise
+      .then((like) => {
+        const index = vm.prop.likes.indexOf(like);
+        return vm.prop.likes.splice(index, 1);
+      })
+      .then(() => {
+        vm.liked = true;
+        ToastAlertService.customToast('Property Unliked', vm.toastDelay, vm.toastStatus);
+      });
   };
 
   vm.addComment = () => {
@@ -480,6 +484,29 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
     });
   };
 
+  vm.toggle = () => {
+    console.log('vm.liked BEFORE', vm.liked);
+    vm.liked = !vm.liked;
+    console.log('vm.liked AFTER', vm.liked);
+  };
+
+  vm.showHideLikeBtn = () => {
+    if (vm.prop.likes.indexOf(vm.userLike) === -1) {
+      console.log('vm.liked', vm.liked);
+      vm.liked = true;
+    } else if (vm.prop.likes.indexOf(vm.userLike) !== -1) {
+      console.log('vm.liked', vm.liked);
+      vm.liked = false;
+    }
+  };
+
+  // vm.hasLike = (like) => {
+  //   var indexOfLike = vm.prop.likes.indexOf(like); // or whatever your object is instead of $scope.roles
+  //   if (indexOfLike === -1) vm.liked = true;
+  //   else vm.liked = false;
+  //   return vm.liked;
+  // };
+
   // function updateVote(listingId, likeId) {
   //   console.log('listingId    - updateVote --->', listingId);
   //   console.log('likeId       - updateVote --->', likeId);
@@ -520,39 +547,6 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
   //     vote.$update();
   //   });
   // }
-  // vm.upVote = (property) => {
-  //   // console.log('property - upVote --->', property);
-  //   // property.likes++;
-  //   var listingId = vm.listingId;
-  //   var likeId    = vm.likeId;
-  //   // console.log('likeId    - upVote --->', likeId);
-  //   // console.log('listingId - upVote --->', listingId);
-  //   updateVote(listingId, likeId);
-  // };
-  // vm.downVote = (property) => {
-  //   // console.log('property - downVote --->', property);
-  //   // property.likes--;
-  //   var listingId = vm.listingId;
-  //   var likeId    = vm.likeId;
-  //   // console.log('likeId    - downVote --->', likeId);
-  //   // console.log('listingId - downVote --->', listingId);
-  //   updateVote(listingId, likeId);
-  // };
-  // vm.toggle = () => {
-  //   vm.liked = !vm.liked;
-  // };
-  // vm.showHide = () => {
-  //   console.log('vm.liked', vm.liked);
-  //   if (vm.prop.likes.indexOf(vm.likeId) === -1) vm.liked = 0;
-  //   else if (vm.prop.likes.indexOf(vm.likeId) === 0) vm.liked = -1;
-  // };
-
-  // vm.hasLike = (like) => {
-  //   var indexOfLike = vm.prop.likes.indexOf(like); // or whatever your object is instead of $scope.roles
-  //   if (indexOfLike === -1) vm.liked = true;
-  //   else vm.liked = false;
-  //   return vm.liked;
-  // };
 }
 
 UserImageModalCtrl.$inject = ['selectedImage', '$mdDialog'];
