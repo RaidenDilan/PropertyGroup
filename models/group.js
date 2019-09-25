@@ -72,7 +72,7 @@ groupSchema.pre('save', function addGroupToUsers(next) {
 });
 
 groupSchema.pre('save', function addGroupToUser(next) {
-  if(this.createdBy) this.model('User').findByIdAndUpdate(this.createdBy.id, { group: this.id }, next);
+  if(this.createdBy) this.model('User').findByIdAndUpdate(this.createdBy, { group: this.id }, next);
   return next();
 });
 

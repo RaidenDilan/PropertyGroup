@@ -96,6 +96,7 @@ angular
     };
 
     // vm.message = 'Sorry to see you leaving and we hope to see you again soon.😃';
+
     vm.logout = () => {
       $auth
         .logout() // .removeToken()

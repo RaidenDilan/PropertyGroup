@@ -16,7 +16,6 @@ function UsersShowCtrl(User, $stateParams, $state, $auth, ToastAlertService) {
         $auth.logout();
         $state.go('login');
         ToastAlertService.customToast(`${user.data.message}`, '3000', 'success');
-        // ToastAlertService.customToast(`${user.data.message}`, '3000', 'top right');
       });
   };
 }

@@ -203,11 +203,10 @@ function addPropertyLike(req, res, next) {
 
 function updatePropertyLike(req, res, next) {
   if(req.body) req.body.user = req.user;
-  console.log('updatePropertyLike - req.body --->>>', req.body);
 
+  console.log('updatePropertyLike - req.body --->>>', req.body);
   console.log('req.params ---+--->>>', req.params);
 
-  // var query   = {};
   var query   = req.params.id;
   // var update  = { $set: { likes: req.user.id }}, { new: true };
   var filter  = { arrayFilters: [{ 'prop._id': req.params.likeId }] };
@@ -229,15 +228,19 @@ function updatePropertyLike(req, res, next) {
     //   { $set: { 'properties.0.likes': { user: req.user, likeCount: 1 } } },
     //   { upsert: true, new: true }
     // )
-    // .populate('users')
-    // .populate('users properties.images.createdBy properties.comments.createdBy properties.ratings.createdBy')
+    .populate('users properties.images.createdBy properties.comments.createdBy properties.ratings.createdBy')
     .exec()
     .then((group) => {
-      // console.log('group ---+++--->>>', group);
+      // console.log('group ---+++--->>', group);
       if(!group) return res.notFound('Group not found');
 
       const prop = group.properties.find((property) => property.listingId === req.params.listingId);
       // const like = prop.likes.find((like) => like.id === req.params.likeId);
+      const like = prop.likes.id(req.params.likeId);
+
+      console.log('like ---+++--->>', like);
+      // like.user = !like.user;
+      like.save();
 
       // if (!prop.likes.indexOf(req.params.likeId)) {
       //   const like = prop.likes.create(req.body);
@@ -253,12 +256,12 @@ function updatePropertyLike(req, res, next) {
 
       // if (!req.params.likeId) console.log('!req.params.likeId', !req.params.likeId);
 
-      const like = prop.likes.find((like) => {
-        console.log('like.user ----------->>>', like.user);
-        console.log('req.user.id ----------->>>', req.user.id);
-        return like.user === req.user.id;
-      });
-      console.log('like ----------->>>', like);
+      // const like = prop.likes.find((like) => {
+      //   console.log('like.user ----------->>>', like.user);
+      //   console.log('req.user.id ----------->>>', req.user.id);
+      //   return like.user === req.user.id;
+      // });
+      // console.log('like ----------->>>', like);
 
       // if (prop.likes.indexOf(req.params.likeId)) {}
       // const like = prop.likes.id(req.params.likeId);
@@ -266,14 +269,13 @@ function updatePropertyLike(req, res, next) {
       // like.user = req.user;
       // prop.likeCount++;
       // like.likeCount = !like.likeCount;
-      prop.likes.push(like);
+      // prop.likes.push(like);
 
       return group
         .save()
         .then(() => res.json(like));
     })
-    // .then((group) => res.json(group))
-    // .then(() => res.status(204).end())
+    .then(() => res.status(204).end())
     .catch(next);
 }
 

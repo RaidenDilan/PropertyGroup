@@ -4,7 +4,5 @@ angular
 
 User.$inject = ['$resource'];
 function User($resource) {
-  return new $resource('/api/users/:id', { id: '@id' }, {
-    update: { method: 'PUT' }
-  });
+  return new $resource('/api/users/:id', { id: '@id' }, { update: { method: 'PUT' } });
 }

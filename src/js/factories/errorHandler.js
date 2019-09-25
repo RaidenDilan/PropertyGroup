@@ -3,9 +3,9 @@ angular
   .factory('ErrorHandler', ErrorHandler);
 
 ErrorHandler.$inject = ['$rootScope'];
-function ErrorHandler($rootScope){
+function ErrorHandler($rootScope) {
   return {
-    responseError: function(err) {
+    responseError(err) {
       $rootScope.$broadcast('error', err);
     }
   };

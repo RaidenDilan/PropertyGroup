@@ -62,11 +62,10 @@
 
             <md-button
               class="md-raised md-primary md-button md-ink-ripple"
-              ng-click="groupsPropsShow.toggleLike(groupsPropsShow.userLike)"
               aria-label="Like"
               >
-              <md-icon ng-show="groupsPropsShow.liked" class="material-icons">favorite</md-icon>
-              <md-icon ng-show="!groupsPropsShow.liked" class="material-icons">favorite_border</md-icon>
+              <md-icon ng-show="groupsPropsShow.liked" ng-click="groupsPropsShow.toggleLike(groupsPropsShow.userLike)" class="material-icons">favorite</md-icon>
+              <md-icon ng-show="!groupsPropsShow.liked" ng-click="groupsPropsShow.addLike()" class="material-icons">favorite_border</md-icon>
               <span>{{ groupsPropsShow.prop.likes.length }}</span>
             </md-button>
 

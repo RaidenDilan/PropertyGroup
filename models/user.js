@@ -5,11 +5,27 @@ const ObjectId  = mongoose.Schema.ObjectId;
 const avatar    = 'https://www.searchpng.com/wp-content/uploads/2019/02/Profile-ICon.png';
 // const validator = require('validator');
 
+// var validateEmail = function(email) {
+//   var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+//   return re.test(email);
+// };
+
 const userSchema = new mongoose.Schema({
   username: { type: String, unique: true, trim: true, required: true },
-  email: { type: String, unique: true, trim: true, required: true },
-  budget: { type: Number , required: true },
-  password: { type: String, required: true },
+  email: {
+    type: String,
+    unique: true,
+    trim: true,
+    required: true, // required: 'Email address is required',
+    lowercase: true
+    // validate: value => {
+    //   if (!validator.isEmail(value)) throw new Error({ error: 'Invalid Email address' });
+    // }
+    // validate: [validateEmail, 'Please fill a valid email address'],
+    // match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
+  },
+  budget: { type: Number, required: true },
+  password: { type: String, required: true,  minLength: 1 },
   profileImage: { type: String, default: avatar, required: true },
   githubId: { type: Number },
   group: { type: ObjectId, ref: 'Group', default: null } // Referenced Document

@@ -5,7 +5,8 @@ const secret       = process.env.SECRET || 'I bet you never even look at this!';
 const mongoOptions = {
   useMongoClient: true
   // useCreateIndex: true,
-  // useNewUrlParser: true
+  // useNewUrlParser: true,
+  // useFindAndModify: true,
   // autoIndex: false, // Don't build indexes
   // reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
   // reconnectInterval: 500, // Reconnect every 500ms

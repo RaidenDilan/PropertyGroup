@@ -4,10 +4,10 @@ angular
   .controller('GroupsNewCtrl', GroupsNewCtrl)
   .controller('GroupsHomeCtrl', GroupsHomeCtrl)
   .controller('GroupsEditCtrl', GroupsEditCtrl)
-  .controller('GroupsPropsShowCtrl', GroupsPropsShowCtrl)
+  .controller('GroupsHomeUserCtrl', GroupsHomeUserCtrl)
   .controller('GroupUserModalCtrl', GroupUserModalCtrl)
   .controller('UserImageModalCtrl', UserImageModalCtrl)
-  .controller('GroupsHomeUser', GroupsHomeUser);
+  .controller('GroupsPropsShowCtrl', GroupsPropsShowCtrl);
 
 GroupsIndexCtrl.$inject = ['Group'];
 function GroupsIndexCtrl(Group) {
@@ -156,7 +156,7 @@ function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupPro
 
     vm.showGroupUser = (user) => {
       $mdDialog.show({
-        controller: GroupsHomeUser,
+        controller: GroupsHomeUserCtrl,
         controllerAs: 'groupsHomeUser',
         templateUrl: 'js/views/modals/user.html',
         parent: angular.element(document.body),
@@ -190,8 +190,8 @@ function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupPro
     };
 }
 
-GroupsHomeUser.$inject = ['$scope', '$mdDialog', 'selectedUser'];
-function GroupsHomeUser($scope, $mdDialog, selectedUser) {
+GroupsHomeUserCtrl.$inject = ['$scope', '$mdDialog', 'selectedUser'];
+function GroupsHomeUserCtrl($scope, $mdDialog, selectedUser) {
   const vm = this;
 
   vm.selected = selectedUser;
@@ -248,7 +248,7 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
 
       // if(vm.prop.likes.includes($auth.getPayload().userId)) {
       //   console.log('prop.likes.includes($auth.getPayload().userId)', vm.prop.likes.indexOf($auth.getPayload().userId));
-      //   vm.userLike = vm.prop.likes.find(obj => obj.user === vm.loggedInUserId);
+        // vm.userLike = vm.prop.likes.find(obj => obj.user === vm.loggedInUserId);
       //   console.log('vm.userLike', vm.userLike);
       //   // vm.userLike = vm.prop.likes.find(obj => {
       //   //   if (!obj) {
@@ -316,55 +316,57 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
   }
 
   vm.toggleLike = (like) => {
-    if (!like) {
-      console.log('------- DEFAULT LIKE -------', vm.userLike);
-      vm.newLike = {};
-
-      GroupPropertyLike
-        .save({ id: vm.group.id, listingId: vm.listingId }, vm.newLike)
-        .$promise
-        .then((like) => {
-          console.log('save --->', like);
-
-          like.like = !like.like;
-          vm.prop.likeCount++;
-          vm.prop.likes.push(like);
-          // vm.newLike = {};
-          // vm.liked = vm.liked === true ? false : true;
-          // like.user = vm.loggedInUserId;
-          // vm.prop.likes.push(like);
-        });
-    } else if(like) {
-      console.log('------- LIKED -------', vm.userLike);
+    // if (!like) {
+    //   console.log('------- DEFAULT LIKE -------', vm.userLike);
+    //   vm.newLike = {};
+    //
+    //   GroupPropertyLike
+    //     .update({ id: vm.group.id, listingId: vm.listingId }, vm.newLike)
+    //     .$promise
+    //     .then((like) => {
+    //       console.log('save --->', like);
+    //
+    //       like.like = !like.like;
+    //       vm.prop.likeCount++;
+    //       vm.prop.likes.push(like);
+    //       // vm.newLike = {};
+    //       // vm.liked = vm.liked === true ? false : true;
+    //       // like.user = vm.loggedInUserId;
+    //       // vm.prop.likes.push(like);
+    //     });
+    // }
+    // else if(like) {
+      vm.userLike = vm.prop.likes.find(obj => obj.user === vm.loggedInUserId);
+      console.log('------- LIKED -------', vm.userLike.id);
       console.log('------- LIKED -------', like);
 
       GroupPropertyLike
-        .update({ id: vm.group.id, listingId: vm.listingId, likeId: like.id })
+        .update({ id: vm.group.id, listingId: vm.listingId, likeId: vm.userLike.id })
         .$promise
         .then((like) => {
           console.log('update --->', like);
-          like = !liked;
+          // like = !liked;
           vm.prop.likeCount++;
           // vm.liked = vm.liked === true ? false : true;
           // like.user = vm.loggedInUserId;
           vm.prop.likes.push(like);
         });
-      }
+      // }
   };
 
-  // vm.addLike = (like) => {
-  //   console.log('like --->', like);
-  //   // if(vm.prop.likes.includes(vm.likeId) === false) {
-  //     GroupPropertyLike
-  //       .save({ id: vm.group.id, listingId: vm.listingId }, { user: vm.loggedInUserId })
-  //       .$promise
-  //       .then((like) => {
-  //         console.log('addLike --->', like);
-  //         vm.prop.likes.push(like);
-  //         vm.liked = false;
-  //       });
-  //   // }
-  // };
+  vm.addLike = (like) => {
+    console.log('like --->', like);
+    // if(vm.prop.likes.includes(vm.likeId) === false) {
+      GroupPropertyLike
+        .save({ id: vm.group.id, listingId: vm.listingId }, { user: vm.loggedInUserId })
+        .$promise
+        .then((like) => {
+          console.log('addLike --->', like);
+          vm.prop.likes.push(like);
+          vm.liked = false;
+        });
+    // }
+  };
   // vm.deleteLike = (like) => {
   //   // if(vm.prop.likes.includes(vm.likeId) === true) {
   //     GroupPropertyLike
@@ -647,6 +649,7 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
       vm.group
         .$update()
         .then((group) => {
+          console.log('update group', group);
           $state.go('groupsHome', $stateParams);
           ToastAlertService.customToast(`${group.message}`, vm.toastDelay, vm.toastStatus);
         });
