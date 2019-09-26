@@ -1,5 +1,5 @@
 const rp         = require('request-promise');
-const oauth     = require('../config/oauth');
+const oauth      = require('../config/oauth');
 const User       = require('../models/user');
 const jwt        = require('jsonwebtoken');
 const { secret } = require('../config/environment');

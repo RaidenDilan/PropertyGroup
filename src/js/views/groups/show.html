@@ -38,117 +38,38 @@
           </md-card-content>
 
           <md-card-actions class="propertyActions" layout="row" layout-align="start center">
-            <!-- property-like
-              property="groupsPropsShow.prop"
-              like="groupsPropsShow.likeId"
-              visibility="isVisible"
-              user="main.user"
-              ng-class="{ 'visibile': isVisible }" -->
-              <!-- ng-if="groupsPropsShow.prop.likes.includes(groupsPropsShow.likeId) === false" -->
-
-              <!-- <div class="votingButton" ng-click="groupsPropsShow.upVote(groupsPropsShow.prop)">
-                <i class="glyphicon glyphicon-chevron-up"></i>
-              </div>
-              <div class="votingLikes">
-                <div>{{ groupsPropsShow.prop.likes.length }}</div>
-              </div>
-              <div class="votingButton" ng-click="groupsPropsShow.downVote(groupsPropsShow.prop)">
-                <i class="glyphicon glyphicon-chevron-down"></i>
-              </div> -->
-
-            <!-- <code>{{ groupsPropsShow.likeId }}</code> -->
-            <!-- ng-show="groupsPropsShow.isVisible === true" -->
-            <!-- ng-show="groupsPropsShow.hasLike(groupsPropsShow.likeId) === false" -->
-
-            <md-button
-              class="md-raised md-primary md-button md-ink-ripple"
-              aria-label="Like"
-              >
-              <!-- ng-model="groupsPropsShow.action" -->
+            <!-- <md-button class="md-raised md-primary md-button md-ink-ripple" aria-label="Like">
               <md-icon
-                ng-show="groupsPropsShow.liked"
-                ng-click="groupsPropsShow.deleteLike(groupsPropsShow.userLike)"
                 class="material-icons"
-                >
-                favorite
-              </md-icon>
-              <md-icon
-                ng-show="!groupsPropsShow.liked"
+                ng-show="!groupsPropsShow.hasVoted"
                 ng-click="groupsPropsShow.addLike()"
-                class="material-icons"
                 >
                 favorite_border
               </md-icon>
-              <span>{{ groupsPropsShow.prop.likeCount }}</span>
-            </md-button>
-
-            <!-- <md-button
-              class="md-raised md-primary md-button md-ink-ripple"
-              ng-if="groupsPropsShow.hasLike(groupsPropsShow.likeId)"
-              ng-click="groupsPropsShow.addLike(groupsPropsShow.likeId)"
-              aria-label="Like"
-              >
-              <md-icon class="material-icons">favorite_border</md-icon>
-              <span>{{ groupsPropsShow.prop.likes.length }}</span>
-            </md-button> -->
-
-            <!-- property-like
-              property="groupsPropsShow.prop"
-              like="groupsPropsShow.likeId"
-              visibility="isVisible"
-              user="main.user"
-              ng-class="{ 'visibile': isVisible }" -->
-              <!-- ng-if="!groupsPropsShow.prop.likes.includes(groupsPropsShow.likeId) === false" -->
-              <!-- ng-show="!groupsPropsShow.isVisible === true" -->
-              <!-- ng-show="groupsPropsShow.hasLike(groupsPropsShow.likeId) === true" -->
-
-            <!-- <md-button
-              class="md-raised md-primary md-button md-ink-ripple"
-              ng-if="!groupsPropsShow.hasLike(groupsPropsShow.likeId)"
-              ng-click="groupsPropsShow.deleteLike(groupsPropsShow.likeId)"
-              aria-label="Unlike"
-              >
-              <md-icon class="material-icons">favorite</md-icon>
+              <md-icon
+                class="material-icons"
+                ng-show="groupsPropsShow.hasVoted"
+                ng-click="groupsPropsShow.deleteLike(groupsPropsShow.userLike)"
+                >
+                favorite
+              </md-icon>
               <span>{{ groupsPropsShow.prop.likes.length }}</span>
             </md-button> -->
 
             <md-button class="md-raised md-warn md-button md-ink-ripple">Email Agent</md-button>
             <md-button class="md-raised md-primary md-button md-ink-ripple" ng-click="groupsPropsShow.deleteProperty(property)" ng-if="main.isAuthenticated()">Delete Property</md-button>
           </md-card-actions>
-          <span>LIKES: {{ groupsPropsShow.prop.likes }}</span>
-
-          <!-- <code>{{ main.currentUserId }}</code> -->
-          <!-- <code>{{ groupsPropsShow.prop.likes.indexOf(groupsPropsShow.likeId) !== -1 }}</code> -->
-
-          <!-- <md-card-actions layout="row" layout-align="start center">
-            <md-card-icon-actions>
-              <md-button
-                class="md-raised md-primary md-button md-ink-ripple"
-                ng-click="groupsPropsShow.addLike()"
-                ng-show="groupsPropsShow.prop.likes.includes(main.currentUserId) === -1"
-                aria-label="Like"
-                >
-                <md-icon class="material-icons">favorite_border</md-icon>
-                <span ng-model="groupsPropsShow.newVote.like">{{ groupsPropsShow.prop.likes.length }}</span>
-              </md-button>
-              <md-button
-                class="md-raised md-primary md-button md-ink-ripple"
-                ng-click="groupsPropsShow.deleteLike(groupsPropsShow.currentUserVote.id)"
-                ng-show="groupsPropsShow.prop.likes.includes(main.currentUserId) !== -1"
-                aria-label="Dislike"
-                >
-                <md-icon class="material-icons">favorite</md-icon>
-                <span>{{ groupsPropsShow.prop.likes.length }}</span>
-              </md-button>
-
-              <md-button class="md-icon-button" aria-label="Share">
-                <md-icon class="material-icons">share</md-icon>
-              </md-button>
-
-            </md-card-icon-actions>
-          </md-card-actions> -->
         </div>
       </md-card>
+
+      <!-- <md-card layout-padding>
+        <code>VOTED {{ groupsPropsShow.voted === true }}</code>
+        <code>!VOTED {{ groupsPropsShow.voted === false }}</code>
+        <br>
+        <span>LIKES: {{ groupsPropsShow.prop.likes }}</span>
+        <span>LIKES LENGTH: {{ groupsPropsShow.prop.likes.length }}</span>
+        <span>LIKECOUNT: {{ groupsPropsShow.prop.likeCount }}</span>
+      </md-card> -->
 
       <md-card class="propertyTabs">
         <md-tabs class="md-primary" md-center-tabs="" md-dynamic-height md-border-bottom>
@@ -192,7 +113,6 @@
         <div class="ratings">
           <form class="ratingForm" ng-submit="groupsPropsShow.addRating()" ng-if="main.isAuthenticated()">
             <md-input-container class="md-block">
-              <!-- <md-icon class="material-icons">group_work</md-icon> -->
               <label for="rating"></label>
               <span
                 class="ratingBox"
@@ -213,8 +133,7 @@
               ng-click="groupsPropsShow.addRating()"
               ng-disabled="!groupsPropsShow.newRating.stars"
               >
-              <md-icon class="material-icons">create</md-icon>
-              Add Rating
+              <md-icon class="material-icons" aria-label="Leave a review">stars</md-icon>
             </md-button>
           </form>
         </div>
@@ -281,7 +200,7 @@
             class="md-raised md-primary md-button md-ink-ripple addimage"
             ng-click="groupsPropsShow.addImage()"
             >
-            Upload Image
+            <md-icon class="material-icons" aria-label="Upload image">cloud_upload</md-icon>
           </md-button>
         </form>
       </md-card>
@@ -313,7 +232,6 @@
 
                 <md-card-header-text>
                   <span class="md-title">{{ image.createdBy.username }}</span>
-                  <!-- <span class="md-subhead">{{ image.createdAt }}</span> -->
                 </md-card-header-text>
 
               </md-card-header>
@@ -341,12 +259,11 @@
             <form class="addCommentForm" ng-submit="groupsPropsShow.addComment()" ng-if="main.isAuthenticated()">
               <div class="col s12">
                 <md-input-container class="md-block">
-                  <!-- <md-icon class="material-icons">group_work</md-icon> -->
                   <textarea
                     ng-model="groupsPropsShow.newComment.text"
                     md-maxlength="150"
                     maxlength="150"
-                    placeholder="Post a review.."
+                    placeholder="Right a comment..."
                     aria-label="Review (required)"
                     style="width:100%;"
                     >
@@ -362,7 +279,7 @@
                   ng-disabled="!groupsPropsShow.newComment.text"
                   aria-label="Close"
                   >
-                  Post
+                  <md-icon class="material-icons" aria-label="Right a comment">mode_comment</md-icon>
                 </md-button>
               </md-card-actions>
             </form>
@@ -380,15 +297,12 @@
         <md-divider></md-divider>
 
         <md-list class="comment-list">
-          <md-list-item
-            class="md-3-line"
-            ng-repeat="comment in groupsPropsShow.prop.comments track by $index"
-            >
+          <md-list-item class="md-3-line" ng-repeat="comment in groupsPropsShow.prop.comments track by $index">
             <img ng-src="{{ comment.createdBy.profileImageSRC }}" class="md-avatar" alt="{{ comment.createdBy.profileImageSRC }}" />
+
             <div class="md-list-item-text" layout="column">
               <h3>{{ comment.createdBy.username }}</h3>
               <h4>{{ comment.createdAt }}</h4>
-              <!-- <h4>{{ comment.createdAt | amDateFormat: 'dddd, MMMM D, h:mm a' }}</h4> -->
               <p>{{ comment.text }}</p>
             </div>
 

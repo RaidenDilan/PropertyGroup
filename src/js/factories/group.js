@@ -3,7 +3,7 @@ angular
   .factory('Group', Group)
   .factory('GroupUser', GroupUser)
   .factory('GroupProperty', GroupProperty)
-  .factory('GroupPropertyLike', GroupPropertyLike)
+  // .factory('GroupPropertyLike', GroupPropertyLike)
   .factory('GroupPropertyImage', GroupPropertyImage)
   .factory('GroupPropertyRating', GroupPropertyRating)
   .factory('GroupPropertyComment', GroupPropertyComment);
@@ -23,15 +23,15 @@ function GroupProperty($resource) {
   return new $resource('/api/groups/:id/properties/:listingId', { id: '@id' }, { update: { method: 'PUT' } });
 }
 
-GroupPropertyLike.$inject = ['$resource'];
-function GroupPropertyLike($resource) {
-  return new $resource('/api/groups/:id/properties/:listingId/likes/:likeId', { id: '@id' }, {
-    update: {
-      method: 'PUT'
-      // isArray: true
-    }
-  });
-}
+// GroupPropertyLike.$inject = ['$resource'];
+// function GroupPropertyLike($resource) {
+//   return new $resource('/api/groups/:id/properties/:listingId/likes/:likeId', { id: '@id' }, {
+//     update: {
+//       method: 'PUT'
+//       // isArray: true
+//     }
+//   });
+// }
 
 GroupPropertyImage.$inject = ['$resource'];
 function GroupPropertyImage($resource) {

@@ -4,7 +4,7 @@ const Promise  = require('bluebird');
 const ObjectId = mongoose.Schema.ObjectId;
 
 // Embedded Document
-const userLikeSchema = new mongoose.Schema({ user: { type: ObjectId, ref: 'User', unique: true, index: true }});
+// const userLikeSchema = new mongoose.Schema({ user: { type: ObjectId, ref: 'User', unique: true, index: true }});
 const userImageSchema = new mongoose.Schema({ file: { type: String }, createdBy: { type: ObjectId, ref: 'User', required: true }}, { timestamps: { createdAt: true, updatedAt: false }});
 const userRatingSchema = new mongoose.Schema({ stars: { type: Number, required: true }, createdBy: { type: ObjectId, ref: 'User', required: true }}, { timestamps: { createdAt: true, updatedAt: false }});
 const userCommentSchema = new mongoose.Schema({ text: { type: String, required: true }, createdBy: { type: ObjectId, ref: 'User', required: true }}, { timestamps: { createdAt: true, updatedAt: false }});
@@ -12,7 +12,7 @@ const userCommentSchema = new mongoose.Schema({ text: { type: String, required: 
 const propertySchema = new mongoose.Schema({
   listingId: { type: String },
   likeCount: { type: Number, default: 0 },
-  likes: [ userLikeSchema ],
+  // likes: [ userLikeSchema ],
   ratings: [ userRatingSchema ],
   images: [ userImageSchema ],
   comments: [ userCommentSchema ],

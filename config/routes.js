@@ -1,15 +1,15 @@
 const router      = require('express').Router();
 const auth        = require('../controllers/auth');
 const users       = require('../controllers/users');
-const imageUpload = require('../lib/imageUpload');
 const oauth       = require('../controllers/oauth');
 const groups      = require('../controllers/groups');
 const properties  = require('../controllers/properties');
-const likes       = require('../controllers/likes');
-const crimes      = require('../lib/crimes');
+// const likes       = require('../controllers/likes');
+const imageUpload = require('../lib/imageUpload');
+const crimes      = require('../lib/crimeRoute');
 const secureRoute = require('../lib/secureRoute');
-const zooplas     = require('../lib/zooplas');
-const geoCoder    = require('../lib/geoCoder');
+const zooplas     = require('../lib/zooplaRoutes');
+const geoCoder    = require('../lib/geoCoderRoutes');
 
 // API
 router.route('/location')
@@ -86,12 +86,12 @@ router.route('/groups/:id/properties/:listingId/ratings')
 router.route('/groups/:id/properties/:listingId/ratings/:ratingId')
   .delete(secureRoute, properties.deleteRating);
 
-router.route('/groups/:id/properties/:listingId/likes')
-  .post(secureRoute, likes.addLike);
-
-router.route('/groups/:id/properties/:listingId/likes/:likeId')
-  .put(secureRoute, likes.updateLike)
-  .delete(secureRoute, likes.deleteLike);
+// router.route('/groups/:id/properties/:listingId/likes')
+//   .post(secureRoute, likes.addLike);
+//
+// router.route('/groups/:id/properties/:listingId/likes/:likeId')
+//   .put(secureRoute, likes.updateLike)
+//   .delete(secureRoute, likes.deleteLike);
 
 // AUTH
 router.route('/login')

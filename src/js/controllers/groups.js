@@ -32,8 +32,6 @@ function GroupsNewCtrl($state, $auth, $scope, Group, User, filterFilter, ToastAl
   const authUserId = $auth.getPayload().userId;
 
   function filterUsers() {
-    // Array: vm.allUsers
-    // Params: params variable/obj - const params = { username: vm.q };
     const params = { username: vm.q };
     vm.filtered = filterFilter(vm.allUsers, params);
   }
@@ -64,14 +62,10 @@ function GroupsNewCtrl($state, $auth, $scope, Group, User, filterFilter, ToastAl
         .$promise
         .then((group) => {
           $state.go('propertiesIndex');
-          ToastAlertService.customToast(`${group.message}`, 3000, 'success');
+          return ToastAlertService.customToast(`${group.message}`, 3000, 'success');
         });
     }
   };
-
-  // vm.delete = function(user) {
-	// 	vm.chosenUsers.splice(vm.chosenUsers.indexOf(user), 1);
-	// };
 
   vm.showPreSearchBar = () => {
     return vm.search === null;
@@ -140,7 +134,7 @@ function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupPro
         .then((group) => {
           console.log('group', group);
           $state.go('groupsNew');
-          ToastAlertService.customToast(`${group.message}`, vm.toastDelay, 'success');
+          return ToastAlertService.customToast(`${group.message}`, vm.toastDelay, 'success');
         });
     };
 
@@ -149,8 +143,7 @@ function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupPro
         .$update()
         .then((group) => {
           $state.go('groupsNew');
-          ToastAlertService.customToast(`${group.groupName}`, vm.toastDelay, 'top right', 'success');
-          // ToastAlertService.customToast(`${group.data.message}`, '3000', 'top right');
+          return ToastAlertService.customToast(`${group.groupName}`, vm.toastDelay, 'top right', 'success');
         });
     };
 
@@ -205,6 +198,7 @@ GroupsPropsShowCtrl.$inject = ['$stateParams', '$state', '$http', '$scope', '$au
 function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Group, GroupProperty, GroupPropertyComment, GroupPropertyImage, GroupPropertyRating, GroupPropertyLike, Crimes, $uibModal, $mdDialog, GeoCoder, $moment, ToastAlertService) {
   const vm = this;
 
+  vm.group            = Group.get($stateParams);
   vm.max              = 5;
   vm.isReadonly       = true;
   vm.isReadonlyfalse  = false;
@@ -213,7 +207,6 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
   vm.listingLon       = null;
   vm.latlng           = null;
   vm.listingId        = $stateParams.listing_id;
-  vm.userLike         = {};
   vm.loggedInUserId   = $auth.getPayload().userId;
   vm.labels           = ['Anti Social Behaviour', 'Burglary', 'Bike Theft', 'Drugs', 'Robbery', 'Vehicle Crimes', 'Violent Crimes'];
   vm.crimes           = [];
@@ -232,46 +225,22 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
     }
   };
 
-  Group
-    .get($stateParams)
-    .$promise
-    .then((data) => {
-      vm.group = data;
-      getGroupProperty();
+  if(vm.group) getGroup();
 
-      vm.prop = vm.group.properties.find(obj => obj.listingId === vm.listingId);
-      vm.userLike = vm.prop.likes.find(obj => obj.user === vm.loggedInUserId);
-      vm.liked = vm.prop.likes.includes(vm.userLike);
-
-      // console.log('vm.prop', vm.prop);
-      // console.log('vm.userLike', vm.userLike);
-
-      // if(vm.prop.likes.includes($auth.getPayload().userId)) {
-      //   console.log('prop.likes.includes($auth.getPayload().userId)', vm.prop.likes.indexOf($auth.getPayload().userId));
-        // vm.userLike = vm.prop.likes.find(obj => obj.user === vm.loggedInUserId);
-      //   console.log('vm.userLike', vm.userLike);
-      //   // vm.userLike = vm.prop.likes.find(obj => {
-      //   //   if (!obj) {
-      //   //     console.log('------- NO OBJ -------');
-      //   //     vm.newLike = { user: vm.loggedInUserId ? vm.loggedInUserId : null };
-      //   //     return vm.newLike;
-      //   //   }
-      //   //   else {
-      //   //     console.log('------- YES OBJ -------');
-      //   //     return obj.id === vm.loggedInUserId;
-      //   //   }
-      //   // });
-      // }
-
-      // vm.liked = vm.prop.likes.includes(vm.userLike);
-      // vm.liked = vm.prop.likes.indexOf(vm.userLike);
-      // console.log('vm.prop --->', vm.prop);
-      // console.log('vm.liked --->', vm.liked);
-      // console.log('vm.userLike --->', vm.userLike);
-    });
-
-  // $scope.$watch(() => vm.listingLat, getGroupProperty);
-  // $scope.$watch(() => vm.likeId, getLikes);
+  function getGroup() {
+    Group
+      .get($stateParams)
+      .$promise
+      .then((data) => {
+        vm.group = data;
+        getGroupProperty();
+        vm.prop = vm.group.properties.find(obj => obj.listingId === vm.listingId);
+        vm.prop.createdAt = $moment(vm.prop.createdAt).fromNow();
+        vm.prop.ratings.forEach((rating) => rating.createdAt = $moment(rating.createdAt).fromNow());
+        vm.prop.images.forEach((image) => image.createdAt = $moment(image.createdAt).fromNow());
+        vm.prop.comments.forEach((comment) => comment.createdAt = $moment(comment.createdAt).fromNow());
+      });
+  }
 
   function getGroupProperty() {
     $http
@@ -281,11 +250,9 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
         vm.listingLat = vm.properties.listing[0].latitude;
         vm.listingLon = vm.properties.listing[0].longitude;
         vm.latlng     = `${vm.listingLat},${vm.listingLon}`;
-
+        getPropertyCrimes();
         // getPropertyLocation(vm.listingLat, vm.listingLon);
-        // getCrimes(vm.listingLat, vm.listingLon);
-        getCrimes();
-        // getLikes();
+        // getPropertyCrimes(vm.listingLat, vm.listingLon);
       });
   }
 
@@ -294,17 +261,14 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
     if(!vm.listingLat) return false;
 
     GeoCoder
-      .getLocation(lat, lng)
-      // .getLocation(vm.listingLat, vm.listingLon)
+      .getLocation(lat, lng) // .getLocation(vm.listingLat, vm.listingLon)
       .then((response) => {
-        // console.log('CONTROLLER', response);
         vm.property = response;
-
         return vm.property;
       });
   }
 
-  function getCrimes() {
+  function getPropertyCrimes() {
     if(!vm.listingLat) return false;
 
     Crimes
@@ -314,79 +278,6 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
         return vm.crimes;
       });
   }
-
-  // vm.toggleLike = (like) => {
-  //   // if (!like) {
-  //   //   console.log('------- DEFAULT LIKE -------', vm.userLike);
-  //   //   vm.newLike = {};
-  //   //
-  //   //   GroupPropertyLike
-  //   //     .update({ id: vm.group.id, listingId: vm.listingId }, vm.newLike)
-  //   //     .$promise
-  //   //     .then((like) => {
-  //   //       console.log('save --->', like);
-  //   //
-  //   //       like.like = !like.like;
-  //   //       vm.prop.likeCount++;
-  //   //       vm.prop.likes.push(like);
-  //   //       // vm.newLike = {};
-  //   //       // vm.liked = vm.liked === true ? false : true;
-  //   //       // like.user = vm.loggedInUserId;
-  //   //       // vm.prop.likes.push(like);
-  //   //     });
-  //   // }
-  //   // else if(like) {
-  //     vm.userLike = vm.prop.likes.find(obj => obj.user === vm.loggedInUserId);
-  //     console.log('------- LIKED -------', vm.userLike.id);
-  //     console.log('------- LIKED -------', like);
-  //
-  //     GroupPropertyLike
-  //       .update({ id: vm.group.id, listingId: vm.listingId, likeId: vm.userLike.id })
-  //       .$promise
-  //       .then((like) => {
-  //         console.log('update --->', like);
-  //         // like = !liked;
-  //         vm.prop.likeCount++;
-  //         // vm.liked = vm.liked === true ? false : true;
-  //         // like.user = vm.loggedInUserId;
-  //         vm.prop.likes.push(like);
-  //       });
-  //       // .then(() => ToastAlertService.customToast('Property liked/unliked', vm.toastDelay, vm.toastStatus));
-  //     // }
-  // };
-
-  vm.addLike = () => {
-    // if(vm.prop.likes.includes(vm.likeId) === false) {}
-    console.log('vm.prop.likes.includes(vm.userLike); LIKE --->>', vm.prop.likes.includes(vm.userLike));
-
-    GroupPropertyLike
-      .save({ id: vm.group.id, listingId: vm.listingId }, { user: vm.loggedInUserId })
-      .$promise
-      .then((like) => {
-        vm.prop.likes.push(like);
-      })
-      .then(() => {
-        vm.liked = false;
-        ToastAlertService.customToast('Property Liked', vm.toastDelay, vm.toastStatus);
-      });
-  };
-
-  vm.deleteLike = (like) => {
-    // if(vm.prop.likes.includes(vm.likeId) === true) {}
-    console.log('vm.prop.likes.includes(vm.userLike); UNLIKE --->>', vm.prop.likes.includes(vm.userLike));
-
-    GroupPropertyLike
-      .delete({ id: vm.group.id, listingId: vm.listingId, likeId: like.id })
-      .$promise
-      .then((like) => {
-        const index = vm.prop.likes.indexOf(like);
-        return vm.prop.likes.splice(index, 1);
-      })
-      .then(() => {
-        vm.liked = true;
-        ToastAlertService.customToast('Property Unliked', vm.toastDelay, vm.toastStatus);
-      });
-  };
 
   vm.addComment = () => {
     GroupPropertyComment
@@ -399,7 +290,6 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       })
       .then(() => ToastAlertService.customToast('Comment posted', vm.toastDelay, vm.toastStatus));
   };
-
   vm.deleteComment = (comment) => {
     GroupPropertyComment
       .delete({ id: vm.group.id, listingId: vm.listingId, commentId: comment.id })
@@ -421,7 +311,6 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       })
       .then((image) => ToastAlertService.customToast('Image uploaded', vm.toastDelay, vm.toastStatus));
   };
-
   vm.deleteImage = (image) => {
     GroupPropertyImage
       .delete({ id: vm.group.id, listingId: vm.listingId, imageId: image.id })
@@ -443,7 +332,6 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       })
       .then((rating) => ToastAlertService.customToast('Rating posted', vm.toastDelay, vm.toastStatus));
   };
-
   vm.deleteRating = (rating) => {
     GroupPropertyRating
       .delete({ id: vm.group.id, listingId: vm.listingId, ratingId: rating.id })
@@ -483,70 +371,6 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       }
     });
   };
-
-  vm.toggle = () => {
-    console.log('vm.liked BEFORE', vm.liked);
-    vm.liked = !vm.liked;
-    console.log('vm.liked AFTER', vm.liked);
-  };
-
-  vm.showHideLikeBtn = () => {
-    if (vm.prop.likes.indexOf(vm.userLike) === -1) {
-      console.log('vm.liked', vm.liked);
-      vm.liked = true;
-    } else if (vm.prop.likes.indexOf(vm.userLike) !== -1) {
-      console.log('vm.liked', vm.liked);
-      vm.liked = false;
-    }
-  };
-
-  // vm.hasLike = (like) => {
-  //   var indexOfLike = vm.prop.likes.indexOf(like); // or whatever your object is instead of $scope.roles
-  //   if (indexOfLike === -1) vm.liked = true;
-  //   else vm.liked = false;
-  //   return vm.liked;
-  // };
-
-  // function updateVote(listingId, likeId) {
-  //   console.log('listingId    - updateVote --->', listingId);
-  //   console.log('likeId       - updateVote --->', likeId);
-  //   // console.log('vm.listingId - updateVote --->', vm.listingId);
-  //   // console.log('$stateParams - updateVote --->', $stateParams);
-  //
-  //   GroupPropertyLike
-  //   .update({ id: vm.group.id, listingId: listingId, likeId: likeId.id })
-  //   .$promise
-  //   .then((like) => {
-  //     console.log('update LIKE --->', like);
-  //
-  //     like.
-  //     like.update({ likeId: likeId }, likeId);
-  //
-  //     const index = vm.prop.likes.indexOf(like);
-  //     return vm.prop.likes.splice(index, 1);
-  //   });
-  //
-  //   GroupPropertyLike
-  //   .update({ id: vm.group.id, listingId: listingId, likeId: likeId })
-  //   .$promise
-  //   .then((vote) => {
-  //     console.log('vote', vote);
-  //     // vote.articlevotes = likes;
-  //     // vote.$update();
-  //   });
-  //
-  //   var vote = GroupPropertyLike
-  //   .get({ likeId: vm.likeId.id })
-  //   // .update({ id: vm.group.id, listingId: vm.listingId, likeId: vm.likeId })
-  //   .$promise
-  //   .then((like) => {
-  //     console.log('like', like);
-  //
-  //     vote.property = likes;
-  //     console.log('vote.property', vote.property);
-  //     vote.$update();
-  //   });
-  // }
 }
 
 UserImageModalCtrl.$inject = ['selectedImage', '$mdDialog'];
@@ -567,7 +391,6 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
   vm.group       = Group.get($stateParams);
   vm.allUsers    = User.query();
   vm.groupUsers  = [];
-  // vm.chosenUsers = [];
   vm.search      = null;
   vm.toastDelay  = 3000;
   vm.toastStatus = 'success';
@@ -577,33 +400,14 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
   Group
     .get($stateParams)
     .$promise
-    .then((group) => {
-      // group.users.forEach((user) => vm.groupUsers.push(user));
-      vm.groupUsers = group.users;
-    });
+    .then((group) => vm.groupUsers = group.users);
 
   function filterUsers() {
     const params = { username: vm.q };
     vm.filtered = filterFilter(vm.allUsers, params);
   }
 
-  // Let’s take a look at the code for $rootscope.watch().
-  // This is its signature: function(watchExp, listener, objectEquality, prettyPrintExpression).
-  //                      : function(vm.q, filterUsers, objectEquality, prettyPrintExpression).
-  // In details, its four parameters:
-  $scope.$watch(() => vm.q, filterUsers); // $scope.$watchGroup(() => vm.q, filterUsers, true);
-
-  // // Function for searching and filtering through users
-  // function filterUsers() {
-  //   vm.filtered = filterFilter(vm.all, vm.q);
-  //   vm.filtered = orderByFilter(vm.filtered, vm.sort);
-  // }
-
-  // $scope.$watchGroup([
-  //   () => vm.q,
-  //   () => vm.sort
-  // ], filterUsers);
-  // filterUsers(); // USEAGE in a
+  $scope.$watch(() => vm.q, filterUsers);
 
   vm.addUser = (user) => {
     GroupUser
@@ -699,22 +503,6 @@ function GroupUserModalCtrl(selectedUser, User, Group, GroupUser, $uibModalInsta
   vm.selected = selectedUser;
   vm.group    = Group.get($stateParams);
 
-  // vm.removeUser = (user) => {
-  //   console.log('user ===>', user);
-  //
-  //   GroupUser
-  //     .delete({ id: vm.group.id, userId: vm.selected.id })
-  //     .$promise
-  //     .then((group) => {
-  //       const index = vm.group.users.indexOf(user);
-  //
-  //       vm.group.users.splice(index, 1);
-  //
-  //       $state.go($state.current, {}, { reload: true });
-  //     });
-  // };
-
   vm.closeModal = () => $uibModalInstance.close(vm.selected);
-
   vm.cancelModal = () => $uibModalInstance.dismiss(vm.selected);
 }

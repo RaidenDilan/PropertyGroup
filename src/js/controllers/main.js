@@ -32,7 +32,8 @@ angular
     function stateErrors(event, err) {
       vm.stateHasChanged = false;
       vm.message = err.data.message; // OR vm.message.toString()
-      ToastAlertService.customToast(vm.message, false, 'error');
+      ToastAlertService.customToast(vm.message, 5000, 'error');
+      // ToastAlertService.customToast(vm.message, false, 'error');
       if(err.status === 401) $state.go('login');
     }
 
