@@ -15,11 +15,12 @@ Group.collection.drop();
 
 User
   .create([
-    { firstname: 'Raiden', username: 'raidendilan', email: 'raiden18@me.com', budget: 1000, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
-    { firstname: 'Luca', username: 'lucaancelotti', email: 'luca@me.com', budget: 1500, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
-    { firstname: 'Rawand', username: 'rawanddilan', email: 'rawand@me.com', budget: 2000, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
-    { firstname: 'Omario', username: 'omariojones', email: 'omario@me.com', budget: 2000, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
-    { firstname: 'Frederick', username: 'frederickroshandel', email: 'frederick@me.com', budget: 3000, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' }
+    { username: 'Raiden', email: 'raiden@me.com', budget: 1000, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
+    { username: 'Luca', email: 'luca@me.com', budget: 1500, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
+    { username: 'Rawand', email: 'rawand@me.com', budget: 2000, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
+    { username: 'Omario', email: 'omario@me.com', budget: 2000, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
+    { username: 'Frederick', email: 'frederick@me.com', budget: 3000, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
+    { username: 'Lanja', email: 'lanja@me.com', budget: 2000, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' }
   ])
   .then((users) => {
     console.log(`${users.length} Users(s) created`);

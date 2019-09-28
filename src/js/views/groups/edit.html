@@ -80,8 +80,9 @@
       <!-- ng-if="(user.group && user.id !== main.currentUserId)" -->
       <div
         class="col s6 groupUsersToAdd"
+        ng-if="user.id !== main.currentUserId"
         ng-repeat="user in groupsEdit.filtered"
-        ng-show="groupsEdit.q.length > 0 && groupsEdit.group.users.includes(user) === false"
+        ng-show="groupsEdit.q.length > 0 && !groupsEdit.group.users.includes(user)"
         >
         <!-- <code>{{ groupsEdit.groupUsers }}</code> -->
         <!-- <code>{{ (groupsEdit.group.users.length > 0 && groupsEdit.group.users.includes(user) === true) }}</code> -->
@@ -112,9 +113,9 @@
 
       <div
         class="col s6 chosenGroupUsers"
-        ng-if="user.group && user.id !== main.currentUserId"
+        ng-if="user.id !== main.currentUserId"
         ng-repeat="user in groupsEdit.group.users track by $index"
-        ng-show="(groupsEdit.group.users.length > 0 && groupsEdit.group.users.includes(user) === true)"
+        ng-show="groupsEdit.group.users.includes(user)"
         >
         <div>
           <img

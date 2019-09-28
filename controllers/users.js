@@ -25,10 +25,11 @@ function showUser(req, res, next) {
 
 function updateUser(req, res, next) {
   if(req.file) req.body.profileImage = req.file.filename;
-  if(typeof req.user.group === 'object' || req.user.group instanceof Object) req.body.group = req.user.group;
+  if(req.user.group && typeof req.user.group === 'object' || req.user.group instanceof Object) req.body.group = req.user.group;
 
   User
     .findById(req.params.id)
+    .populate('group')
     .exec()
     .then((user) => {
       if(!user) return res.notFound('User not found');
@@ -39,7 +40,7 @@ function updateUser(req, res, next) {
 
       return user.save();
     })
-    .then((user) => res.json(user))
+    .then((user) => res.json({ user, message: `${user.username} Updated` }))
     .catch(next);
 }
 

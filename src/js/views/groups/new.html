@@ -42,9 +42,7 @@
       </div>
 
       <div class="col s6 searchUsers">
-        <!-- Pre-Search Bar -->
         <div id="search-bar" ng-show="groupsNew.showPreSearchBar()" class="md-toolbar-tools">
-          <!-- Search button (initiates search) -->
           <md-button ng-click="groupsNew.initiateSearch()">
             <md-icon>search</md-icon>
             <span>Search Users</span>
@@ -52,16 +50,12 @@
 
         </div>
 
-        <!-- Search bar -->
         <div ng-show="groupsNew.showSearchBar()" class="md-toolbar-tools search-bar">
-
           <md-button class="md-icon-button" ng-click="groupsNew.submit()">
             <md-icon>search</md-icon>
           </md-button>
 
-          <!-- Input Text -->
           <md-input-container flex>
-            <!-- <label for="search">Search</label> -->
             <input
               id="search-input"
               type="text"
@@ -84,15 +78,8 @@
         ng-repeat="user in groupsNew.filtered"
         ng-show="(groupsNew.q.length > 0 && groupsNew.chosenUsers.includes(user) !== true)"
         >
-        <div
-          ng-click="groupsNew.addUser(user)"
-          class="userSearchResults"
-          >
-          <img
-            ng-src="{{ user.profileImageSRC }}"
-            alt="{{ user.username }}"
-            class="addUserImage"
-            >
+        <div ng-click="groupsNew.addUser(user)" class="userSearchResults">
+          <img ng-src="{{ user.profileImageSRC }}" alt="{{ user.username }}" class="addUserImage">
           <h5>{{ user.username }}</h5>
         </div>
       </div>
@@ -103,31 +90,10 @@
         <md-divider></md-divider>
       </div>
 
-      <div
-        class="col s6 chosenGroupUsers"
-        ng-repeat="user in groupsNew.chosenUsers"
-        >
-        <div class="">
-          <img
-            ng-src="{{ user.profileImageSRC }}"
-            alt="{{ user.profileImageSRC }}"
-            class="chosenUsersImage"
-            >
+      <div class="col s6 chosenGroupUsers" ng-repeat="user in groupsNew.chosenUsers">
+        <div>
+          <img ng-src="{{ user.profileImageSRC }}" alt="{{ user.profileImageSRC }}" class="chosenUsersImage">
           <h5>{{ user.username }}</h5>
-          <!-- <md-button
-            ng-click="groupsNew.removeUser(user)"
-            class="md-raised md-warn md-button md-ink-ripple"
-            >
-            x
-            <md-icon class="material-icons">close</md-icon>
-          </md-button> -->
-
-        <!-- <md-button
-          class="md-raised md-warn md-button md-ink-ripple"
-          confirm="groupsNew.removeUser(user)"
-          >
-          <md-icon class="material-icons">close</md-icon>
-        </md-button> -->
           <smart-confirm confirm="groupsNew.removeUser(user)">
             <md-icon class="material-icons">close</md-icon>
           </smart-confirm>

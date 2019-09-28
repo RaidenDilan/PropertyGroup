@@ -28,27 +28,6 @@ const groupSchema = new mongoose.Schema({
   usePushEach: true // $push operator with $each instead. This forces the use of $pushAll - MongoDB 3.6
 });
 
-// propertySchema.methods.addVote = function(user) {
-//   const prop = Group.findById(this.group).exec().then((group) => group.properties.find((property) => property.listingId === req.params.listingId));
-//
-//   // if (!election) {}
-//
-//   const votedUsers = prop.likes.toObject();
-//   const hasVoted = _.find(votedUsers, { user: user._id });
-//
-//   // if (hasVoted) {}
-//
-//   // const like = { user: req.user };
-//   // const vote = new Vote({ like: like, properties: this.id });
-//
-//   const vote = prop.like.create(req.body);
-//
-//   prop.likes.push(vote);
-//   return prop.save();
-//   // const savedVote = vote.save();
-//   // return savedVote;
-// };
-
 groupSchema
   .virtual('users', {
     ref: 'User',
@@ -76,21 +55,25 @@ groupSchema.pre('save', function addGroupToUsers(next) {
     .catch(next);
 });
 
-// groupSchema.pre('remove', function addGroupToUsers(next) {
-//   this
-//     .model('User')
-//     .find({ _id: this._users }) // mongoose ObjectId AKA it's hexString
-//     .exec()
-//     .then((users) => {
-//       const promises = users.map((user) => {
-//         user.group = null; // set Group ObjectId back to default 'null' on selected users
-//         return user.save();
-//       });
-//       return Promise.all(promises);
-//     })
-//     .then(next)
-//     .catch(next);
-// });
+groupSchema.pre('remove', function removeGroupFromUsers(next) {
+  this
+    .model('User')
+    .find({ _id: this.users }) // this.users refers to req.body.users
+    .populate('group')
+    .exec()
+    .then((users) => {
+      const promises = users.map((user) => {
+        user.group = null;
+
+        console.log('SHOULD REMOVE THID GROUP ID FROM USERS IN ARRAY OF USERS', user.group);
+        return user.save();
+      });
+
+      return Promise.all(promises);
+    })
+    .then(next)
+    .catch(next);
+});
 
 userImageSchema.virtual('imageSRC').get(function getImageSRC() {
   if(!this.file) return null;
@@ -99,7 +82,6 @@ userImageSchema.virtual('imageSRC').get(function getImageSRC() {
 });
 
 userImageSchema.pre('remove', function deleteImage(next) {
-  console.log('this.file', this.file);
   if(this.file) return s3.deleteObject({ Key: this.file }, next);
   return next();
 });
@@ -107,6 +89,27 @@ userImageSchema.pre('remove', function deleteImage(next) {
 // userCommentSchema.methods.belongsTo = function commentBelongsTo(user) {
 //   if(typeof this.createdBy.id === 'string') return this.createdBy.id === user.id;
 //   return user.id === this.createdBy.toString();
+// };
+
+// propertySchema.methods.addVote = function(user) {
+//   const prop = Group.findById(this.group).exec().then((group) => group.properties.find((property) => property.listingId === req.params.listingId));
+//
+//   // if (!election) {}
+//
+//   const votedUsers = prop.likes.toObject();
+//   const hasVoted = _.find(votedUsers, { user: user._id });
+//
+//   // if (hasVoted) {}
+//
+//   // const like = { user: req.user };
+//   // const vote = new Vote({ like: like, properties: this.id });
+//
+//   const vote = prop.like.create(req.body);
+//
+//   prop.likes.push(vote);
+//   return prop.save();
+//   // const savedVote = vote.save();
+//   // return savedVote;
 // };
 
 module.exports = mongoose.model('Group', groupSchema);

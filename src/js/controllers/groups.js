@@ -80,13 +80,13 @@ function GroupsNewCtrl($state, $auth, $scope, Group, User, filterFilter, ToastAl
   };
 
   vm.endSearch = () => {
-    // return vm.search == null;
     vm.search = null;
+    vm.q = '';
   };
 
-  vm.submit = () => {
-    console.error('Search function not yet implemented');
-  };
+  // vm.submitSearch = () => {
+  //   return console.log('Search function not yet implemented');
+  // };
 
   // to focus on input element after it appears
   $scope.$watch(() => {
@@ -124,15 +124,12 @@ function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupPro
           .get('/api/groups/:id/properties', { params: { id: vm.group.id, listingId: propIds } })
           .then((response) => vm.selected = response.data);
       }
-
-      console.log('vm.group', vm.group);
     });
 
     vm.delete = () => {
       vm.group
         .$remove()
         .then((group) => {
-          console.log('group', group);
           $state.go('groupsNew');
           return ToastAlertService.customToast(`${group.message}`, vm.toastDelay, 'success');
         });
@@ -143,7 +140,7 @@ function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupPro
         .$update()
         .then((group) => {
           $state.go('groupsNew');
-          return ToastAlertService.customToast(`${group.groupName}`, vm.toastDelay, 'top right', 'success');
+          return ToastAlertService.customToast(`${group.groupName}`, vm.toastDelay, 'success');
         });
     };
 
@@ -157,7 +154,7 @@ function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupPro
         clickOutsideToClose: true,
         fullscreen: false, // Only for -xs, -sm breakpoints.
         // onComplete: afterShowAnimation,
-        // locals: { employee: $scope.userName },
+        // locals: { user: $scope.username },
         resolve: {
           selectedUser: () => {
             return user;
@@ -183,26 +180,14 @@ function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupPro
     };
 }
 
-GroupsHomeUserCtrl.$inject = ['$scope', '$mdDialog', 'selectedUser'];
-function GroupsHomeUserCtrl($scope, $mdDialog, selectedUser) {
-  const vm = this;
-
-  vm.selected = selectedUser;
-
-  vm.hide   = () => $mdDialog.hide();
-  vm.cancel = () => $mdDialog.cancel();
-  vm.showUserId = (userId) => $mdDialog.hide(userId);
-}
-
-GroupsPropsShowCtrl.$inject = ['$stateParams', '$state', '$http', '$scope', '$auth', 'API', 'Group', 'GroupProperty', 'GroupPropertyComment', 'GroupPropertyImage', 'GroupPropertyRating', 'GroupPropertyLike', 'Crimes', '$uibModal', '$mdDialog', 'GeoCoder', '$moment', 'ToastAlertService'];
-function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Group, GroupProperty, GroupPropertyComment, GroupPropertyImage, GroupPropertyRating, GroupPropertyLike, Crimes, $uibModal, $mdDialog, GeoCoder, $moment, ToastAlertService) {
+GroupsPropsShowCtrl.$inject = ['$stateParams', '$state', '$http', '$scope', '$auth', 'API', 'Group', 'GroupProperty', 'GroupPropertyComment', 'GroupPropertyImage', 'GroupPropertyRating', 'Crimes', '$uibModal', '$mdDialog', 'GeoCoder', '$moment', 'ToastAlertService'];
+function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Group, GroupProperty, GroupPropertyComment, GroupPropertyImage, GroupPropertyRating, Crimes, $uibModal, $mdDialog, GeoCoder, $moment, ToastAlertService) {
   const vm = this;
 
   vm.group            = Group.get($stateParams);
   vm.max              = 5;
   vm.isReadonly       = true;
   vm.isReadonlyfalse  = false;
-  vm.fullscreen       = false;
   vm.listingLat       = null;
   vm.listingLon       = null;
   vm.latlng           = null;
@@ -251,32 +236,27 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
         vm.listingLon = vm.properties.listing[0].longitude;
         vm.latlng     = `${vm.listingLat},${vm.listingLon}`;
         getPropertyCrimes();
-        // getPropertyLocation(vm.listingLat, vm.listingLon);
-        // getPropertyCrimes(vm.listingLat, vm.listingLon);
       });
   }
 
-  function getPropertyLocation(lat, lng) {
-    console.log('getPropertyLocation --->>', lat, lng);
-    if(!vm.listingLat) return false;
-
-    GeoCoder
-      .getLocation(lat, lng) // .getLocation(vm.listingLat, vm.listingLon)
-      .then((response) => {
-        vm.property = response;
-        return vm.property;
-      });
-  }
+  // function getPropertyLocation(lat, lng) {
+  //   console.log('getPropertyLocation --->>', lat, lng);
+  //   if(!vm.listingLat) return false;
+  //
+  //   GeoCoder
+  //     .getLocation(lat, lng)
+  //     .then((response) => {
+  //       vm.property = response;
+  //       return vm.property;
+  //     });
+  // }
 
   function getPropertyCrimes() {
     if(!vm.listingLat) return false;
 
     Crimes
       .getCrimes(vm.listingLat, vm.listingLon)
-      .then((data) => {
-        vm.crimes = data;
-        return vm.crimes;
-      });
+      .then((data) => vm.crimes = data);
   }
 
   vm.addComment = () => {
@@ -363,7 +343,7 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       parent: angular.element(document.body),
       targetEvent: thisImage,
       clickOutsideToClose: true,
-      fullscreen: vm.fullscreen,
+      fullscreen: false,
       resolve: {
         selectedImage: () => {
           return thisImage;
@@ -371,17 +351,6 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       }
     });
   };
-}
-
-UserImageModalCtrl.$inject = ['selectedImage', '$mdDialog'];
-function UserImageModalCtrl(selectedImage, $mdDialog) {
-  const vm = this;
-
-  vm.selected = selectedImage;
-
-  vm.hide   = () => $mdDialog.hide();
-  vm.cancel = () => $mdDialog.cancel();
-  vm.showUserId = (userId) => $mdDialog.hide(userId);
 }
 
 GroupsEditCtrl.$inject = ['$stateParams', '$auth', '$state', '$scope', 'Group', 'GroupUser', 'User', 'filterFilter', '$uibModal', 'ToastAlertService'];
@@ -409,22 +378,25 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
 
   $scope.$watch(() => vm.q, filterUsers);
 
+  // function fetchGroupUsers() {
+  //   return Group
+  //     .get($stateParams)
+  //     .$promise
+  //     .then((group) => vm.groupUsers = group.users);
+  // }
+  // $scope.$watch(() => vm.groupUsers, fetchGroupUsers);
+
   vm.addUser = (user) => {
     GroupUser
       .update({ id: vm.group.id, userId: user.id })
       .$promise
-      .then((user) => { // group
-        // console.log('------> group <------', user); // group
-        // ------> not sure how I'm using the group object query here <------
-
-        user.group = vm.group.id; // <--- OR ---> user.group.push(vm.group.id);
-
-        vm.group.users.push(user); // vm.group.users.push(group);
-
-        // user.group = vm.group.id; // <--- OR ---> user.group.push(vm.group.id);
-
+      .then((user) => {
+        // user.group = vm.group.id;
+        vm.group.users.push(user);
         vm.q = ''; // reset input value after query
         vm.filtered = {}; // reset filtered so users input list disappear after selecting a add
+
+        // return vm.group.users;
       });
   };
 
@@ -434,7 +406,7 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
       .$promise
       .then((group) => {
         const index = vm.group.users.indexOf(user);
-        vm.group.users.splice(index, 1);
+        return vm.group.users.splice(index, 1);
       });
   };
 
@@ -443,9 +415,8 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
       vm.group
         .$update()
         .then((group) => {
-          console.log('update group', group);
           $state.go('groupsHome', $stateParams);
-          ToastAlertService.customToast(`${group.message}`, vm.toastDelay, vm.toastStatus);
+          return ToastAlertService.customToast(`${group.message}`, vm.toastDelay, vm.toastStatus);
         });
     }
   };
@@ -480,13 +451,13 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
   };
 
   vm.endSearch = () => {
-    // return vm.search == null;
     vm.search = null;
+    vm.q = '';
   };
 
-  vm.submit = () => {
-    console.error('Search function not yet implemented');
-  };
+  // vm.submitSearch = () => {
+  //   console.log('Search function not yet implemented');
+  // };
 
   // To focus on input element after it appears
   $scope.$watch(() => {
@@ -494,6 +465,28 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
   }, function() {
     document.getElementById('search-input').focus();
   });
+}
+
+GroupsHomeUserCtrl.$inject = ['$scope', '$mdDialog', 'selectedUser'];
+function GroupsHomeUserCtrl($scope, $mdDialog, selectedUser) {
+  const vm = this;
+
+  vm.selected = selectedUser;
+
+  vm.hide   = () => $mdDialog.hide();
+  vm.cancel = () => $mdDialog.cancel();
+  vm.showUserId = (userId) => $mdDialog.hide(userId);
+}
+
+UserImageModalCtrl.$inject = ['selectedImage', '$mdDialog'];
+function UserImageModalCtrl(selectedImage, $mdDialog) {
+  const vm = this;
+
+  vm.selected = selectedImage;
+
+  vm.hide   = () => $mdDialog.hide();
+  vm.cancel = () => $mdDialog.cancel();
+  vm.showUserId = (userId) => $mdDialog.hide(userId);
 }
 
 GroupUserModalCtrl.$inject = ['selectedUser', 'User', 'Group', 'GroupUser', '$uibModalInstance', '$stateParams', '$auth', '$state'];

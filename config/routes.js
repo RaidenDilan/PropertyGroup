@@ -1,13 +1,13 @@
 const router      = require('express').Router();
+const secureRoute = require('../lib/secureRoute');
+const imageUpload = require('../lib/imageUpload');
 const auth        = require('../controllers/auth');
+// const oauth       = require('../controllers/oauth');
 const users       = require('../controllers/users');
-const oauth       = require('../controllers/oauth');
 const groups      = require('../controllers/groups');
 const properties  = require('../controllers/properties');
 // const likes       = require('../controllers/likes');
-const imageUpload = require('../lib/imageUpload');
 const crimes      = require('../lib/crimeRoute');
-const secureRoute = require('../lib/secureRoute');
 const zooplas     = require('../lib/zooplaRoutes');
 const geoCoder    = require('../lib/geoCoderRoutes');
 
@@ -100,8 +100,8 @@ router.route('/login')
 router.route('/register')
   .post(imageUpload, auth.register);
 
-router.route('/oauth/github')
-  .post(oauth.github);
+// router.route('/oauth/github')
+  // .post(oauth.github);
 
 router.all('/*', (req, res) => res.notFound());
 

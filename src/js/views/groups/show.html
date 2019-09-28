@@ -2,7 +2,6 @@
   <md-card class="groupsShowPropCard">
     <div class="groupsShowPropCardDiv" ng-repeat="property in groupsPropsShow.properties.listing">
 
-
       <md-card class="groupsPropsShowTitle">
         <div>
           <div class="md-card-image propertyImage" style="background-image:url('{{ property.image_645_430_url }}');"></div>
@@ -23,8 +22,6 @@
               <br>
               <li>
                 <span class="md-headline">£{{ property.rental_prices.per_month | number : fractionSize }}</span>
-                <!-- per month -->
-                <!-- <span class="per_month">per month</span> -->
               </li>
             </ul>
 
@@ -240,7 +237,7 @@
                 class="userImages img-fluid img-thumbnail"
                 ng-click="groupsPropsShow.showUserImage(image)"
                 style="background-image:url('{{ image.imageSRC }}')"
-                >
+                />
 
               <div class="md-card-actions">
                 <smart-confirm confirm="groupsPropsShow.deleteImage(image)">
