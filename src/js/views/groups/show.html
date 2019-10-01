@@ -35,21 +35,10 @@
           </md-card-content>
 
           <md-card-actions class="propertyActions" layout="row" layout-align="start center">
+
             <!-- <md-button class="md-raised md-primary md-button md-ink-ripple" aria-label="Like">
-              <md-icon
-                class="material-icons"
-                ng-show="!groupsPropsShow.hasVoted"
-                ng-click="groupsPropsShow.addLike()"
-                >
-                favorite_border
-              </md-icon>
-              <md-icon
-                class="material-icons"
-                ng-show="groupsPropsShow.hasVoted"
-                ng-click="groupsPropsShow.deleteLike(groupsPropsShow.userLike)"
-                >
-                favorite
-              </md-icon>
+              <md-icon class="material-icons" ng-show="!groupsPropsShow.hasVoted" ng-click="groupsPropsShow.addLike()">favorite_border</md-icon>
+              <md-icon class="material-icons" ng-show="groupsPropsShow.hasVoted" ng-click="groupsPropsShow.deleteLike(groupsPropsShow.userLike)">favorite</md-icon>
               <span>{{ groupsPropsShow.prop.likes.length }}</span>
             </md-button> -->
 
@@ -58,15 +47,6 @@
           </md-card-actions>
         </div>
       </md-card>
-
-      <!-- <md-card layout-padding>
-        <code>VOTED {{ groupsPropsShow.voted === true }}</code>
-        <code>!VOTED {{ groupsPropsShow.voted === false }}</code>
-        <br>
-        <span>LIKES: {{ groupsPropsShow.prop.likes }}</span>
-        <span>LIKES LENGTH: {{ groupsPropsShow.prop.likes.length }}</span>
-        <span>LIKECOUNT: {{ groupsPropsShow.prop.likeCount }}</span>
-      </md-card> -->
 
       <md-card class="propertyTabs">
         <md-tabs class="md-primary" md-center-tabs="" md-dynamic-height md-border-bottom>
@@ -146,11 +126,7 @@
 
           <md-divider></md-divider>
 
-          <div
-            class="userRatings"
-            ng-repeat="rating in groupsPropsShow.prop.ratings track by $index"
-            >
-
+          <div class="userRatings" ng-repeat="rating in groupsPropsShow.prop.ratings track by $index">
             <img class="md-card-image userRatingImage" ng-src="{{ rating.createdBy.profileImageSRC }}" alt="User Image">
 
             <div class="userRatingOpinion">
@@ -176,10 +152,7 @@
       <md-card class="md-padding propertyAddImage">
         <form class="addImageForm" ng-submit="groupsPropsShow.addImage()" ng-if="main.isAuthenticated()">
           <div class="uploadPhoto">
-            <label
-              for="base64"
-              class="md-raised md-accent md-button md-ink-ripple addimage"
-              >
+            <label for="base64" class="md-raised md-accent md-button md-ink-ripple addimage">
               <md-icon class="material-icons" aria-label="Add an image">add_a_photo</md-icon>
             </label>
             <input

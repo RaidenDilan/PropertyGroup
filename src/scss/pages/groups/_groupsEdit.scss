@@ -28,9 +28,13 @@
         width: 25px;
         height: 25px;
       }
-
+      md-divider {
+        // border-top-color: rgba(0, 0, 0, 1);
+        margin: 1rem 0;
+      }
     }
   }
+
   .md-toolbar-tools {
     padding: 0;
 
@@ -47,14 +51,11 @@
     }
   }
   .chosenUsers {
-    // width: 100%;
+    margin: 1rem 0;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    // text-align: center;
-    // margin: 0.5rem 0;
-    // padding: 0.5rem 0;
   }
   .chosenGroupUsers {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);

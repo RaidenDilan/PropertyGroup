@@ -21,7 +21,9 @@ const propertySchema = new mongoose.Schema({
 
 const groupSchema = new mongoose.Schema({
   groupName: { type: String, required: true },
-  properties: [ propertySchema ], // properties: [{ type: ObjectId, ref: 'Property' }],
+  properties: [ propertySchema ],
+  // properties: [{ type: ObjectId, ref: 'Property' }],
+  // users: [{ type: ObjectId, ref: 'User' }],
   createdBy: { type: ObjectId, ref: 'User', required: true }
 }, {
   timestamps: { createdAt: true, updatedAt: true },
@@ -34,6 +36,9 @@ groupSchema
     localField: '_id',
     foreignField: 'group'
   })
+  // .get(function getUsers(users) {
+  //   this._users = users;
+  // })
   .set(function setUsers(users) {
     this._users = users;
   });
@@ -41,13 +46,15 @@ groupSchema
 groupSchema.pre('save', function addGroupToUsers(next) {
   this
     .model('User')
-    .find({ _id: this._users })
+    .find({ _id: this._users }) // this._users refers to virtual users field
     .exec()
     .then((users) => {
       const promises = users.map((user) => {
         user.group = this.id;
+        console.log('user.id <---*** addGroupIdToUsers ***---> id:', user.id);
         return user.save();
       });
+
 
       return Promise.all(promises);
     })
@@ -64,10 +71,10 @@ groupSchema.pre('remove', function removeGroupFromUsers(next) {
     .then((users) => {
       const promises = users.map((user) => {
         user.group = null;
-
-        console.log('SHOULD REMOVE THID GROUP ID FROM USERS IN ARRAY OF USERS', user.group);
+        console.log('user.id <---*** removeGroupIdFromUsers ***---> id:', user.id);
         return user.save();
       });
+
 
       return Promise.all(promises);
     })

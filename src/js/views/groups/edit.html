@@ -8,13 +8,7 @@
       </md-card-title-text>
     </md-card-title>
 
-    <form
-      name="groupsEdit.groupsEditForm"
-      class="groupsEdit.groupsEditForm"
-      ng-submit="groupsEdit.update()"
-      novalidate
-      >
-
+    <form name="groupsEdit.groupsEditForm" class="groupsEdit.groupsEditForm" ng-submit="groupsEdit.update()" novalidate>
       <div class="col s6">
         <md-input-container class="md-block">
           <md-icon class="material-icons">group_work</md-icon>
@@ -23,23 +17,23 @@
             type="text"
             name="groupName"
             id="groupName"
+            md-minlength="4"
+            md-maxlength="20"
             ng-model="groupsEdit.group.groupName"
             ng-minlength="4"
+            ng-maxlength="20"
             ng-required="true"
             aria-label="Group name (required)"
             >
         </md-input-container>
 
-        <div
-          class="alert alert-danger"
-          role="alert"
-          ng-messages="groupsEdit.groupsEditForm.groupName.$error"
-          ng-show="(groupsEdit.groupsEditForm.$submitted || groupsEdit.groupsEditForm.groupName.$touched) && groupsEdit.groupsEditForm.groupName.$invalid"
-          >
+        <div class="alert alert-danger" role="alert" ng-messages="groupsEdit.groupsEditForm.groupName.$error" ng-show="(groupsEdit.groupsEditForm.$submitted || groupsEdit.groupsEditForm.groupName.$touched) && groupsEdit.groupsEditForm.groupName.$invalid">
           <div ng-message="required">Please enter a group name.</div>
           <div ng-message="minlength">Group name must be at least 4 characters.</div>
         </div>
       </div>
+
+      <md-divider></md-divider>
 
       <div class="col s6 searchUsers">
         <div id="search-bar" ng-show="groupsEdit.showPreSearchBar()" class="md-toolbar-tools">
@@ -52,19 +46,20 @@
 
         <div ng-show="groupsEdit.showSearchBar()" class="md-toolbar-tools search-bar">
 
-          <md-button class="md-icon-button" ng-click="groupsEdit.submit()">
-            <md-icon>search</md-icon>
+          <md-button class="md-icon-button" ng-click="groupsEdit.submitSearch()">
+            <md-icon class="material-icons" arial-label="Enter search bar">search</md-icon>
           </md-button>
 
           <md-input-container flex>
             <input
               id="search-input"
               type="text"
-              class="search"
-              name="groupsEdit.groupsSearchUsers"
-              ng-model="groupsEdit.q"
+              class="query"
+              name="groupsEdit"
+              ng-model="groupsEdit.query"
               placeholder="Search for users..."
-              >
+              />
+            <div class="md-char-counter">{{ groupsEdit.filtered.length }} / {{ groupsEdit.availableUsers.length }}</div>
           </md-input-container>
 
           <md-button class="md-icon-button" ng-click="groupsEdit.endSearch()">
@@ -74,55 +69,31 @@
       </div>
 
       <md-divider></md-divider>
-      <br>
 
-      <!-- ng-if="user.group && user.id !== main.currentUserId" -->
-      <!-- ng-if="(user.group && user.id !== main.currentUserId)" -->
       <div
         class="col s6 groupUsersToAdd"
-        ng-if="user.id !== main.currentUserId"
+        ng-if="(groupsEdit.query !== null) && user.id !== main.currentUserId"
         ng-repeat="user in groupsEdit.filtered"
-        ng-show="groupsEdit.q.length > 0 && !groupsEdit.group.users.includes(user)"
         >
-        <!-- <code>{{ groupsEdit.groupUsers }}</code> -->
-        <!-- <code>{{ (groupsEdit.group.users.length > 0 && groupsEdit.group.users.includes(user) === true) }}</code> -->
-        <!-- ng-show="groupsEdit.group.users.indexOf(user) === -1" -->
-        <!-- <code>{{ groupsEdit.q.length > 0 }}</code> -->
-        <!-- <code>{{ groupsEdit.group.users.indexOf(user) === -1 }}</code> -->
-        <!-- <code>{{ groupsEdit.group.users.includes(user) !== true }}</code> -->
-        <div
-          ng-click="groupsEdit.addUser(user)"
-          class="userSearchResults"
-          >
-          <img
-            ng-src="{{ user.profileImageSRC }}"
-            alt="{{ user.username }}"
-            class="addUserImage"
-            >
+        <div class="userSearchResults" ng-click="groupsEdit.addUser(user)">
+          <img class="addUserImage" ng-src="{{ user.profileImageSRC }}" alt="{{ user.username }}"/>
           <h5>{{ user.username }}</h5>
         </div>
       </div>
 
+
       <div class="chosenUsers">
         <span class="md-headline">Chosen Users:</span>
+        <!-- <md-divider></md-divider> -->
       </div>
-
-      <br>
-      <md-divider></md-divider>
-      <br>
 
       <div
         class="col s6 chosenGroupUsers"
-        ng-if="user.id !== main.currentUserId"
-        ng-repeat="user in groupsEdit.group.users track by $index"
-        ng-show="groupsEdit.group.users.includes(user)"
+        ng-if="user.group && user.id !== main.currentUserId"
+        ng-repeat="user in groupsEdit.groupUsers track by $index"
         >
         <div>
-          <img
-            ng-src="{{ user.profileImageSRC }}"
-            alt="{{ user.profileImageSRC }}"
-            class="chosenUsersImage"
-            >
+          <img class="chosenUsersImage" ng-src="{{ user.profileImageSRC }}" alt="{{ user.profileImageSRC }}"/>
           <h5>{{ user.username }}</h5>
           <smart-confirm confirm="groupsEdit.removeUser(user)">
             <md-icon class="material-icons">close</md-icon>
@@ -131,17 +102,10 @@
       </div>
 
       <div class="col s6 groupsEditButtons">
-        <md-button
-          class="md-raised md-primary md-button md-ink-ripple"
-          ng-click="groupsEdit.update()"
-          ng-disabled="groupsEdit.groupsEditForm.$invalid"
-          >
+        <md-button class="md-raised md-primary md-button md-ink-ripple" ng-click="groupsEdit.update()" ng-disabled="groupsEdit.groupsEditForm.$invalid">
           <i class="material-icons left"></i>Update
         </md-button>
-        <md-button
-          class="md-raised"
-          ng-click="groupsEdit.group.groupName = ''"
-          >
+        <md-button class="md-raised" ng-click="groupsEdit.group.groupName = ''">
           <i class="material-icons left"></i>Clear Form
         </md-button>
       </div>

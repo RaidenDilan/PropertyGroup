@@ -33,13 +33,17 @@
         </h3>
       </div>
 
-      <div class="groupInformation" ng-show="usersShow.user.group">
+      <div class="groupInformation">
         <h2>Group information</h2>
         <h3>
-          <span>Group Name </span>
-          <span class="user_group">
+          <span>Group </span>
+          <span class="user_group" ng-show="usersShow.user.group">
             <md-icon md-font-set="material-icons" title="{{ main.user.group.groupName }}" aria-label="My Group">group_work</md-icon>
             <a ui-sref="groupsHome({ id: main.currentGroupId })">{{ main.user.group.groupName }}</a>
+          </span>
+          <span class="user_group" ng-show="!usersShow.user.group">
+            <md-icon md-font-set="material-icons" title="{{ main.user.group.groupName }}" aria-label="My Group">group_work</md-icon>
+            <a ui-sref="groupsNew">Create Group</a>
           </span>
         </h3>
       </div>

@@ -51,7 +51,7 @@
         </div>
 
         <div ng-show="groupsNew.showSearchBar()" class="md-toolbar-tools search-bar">
-          <md-button class="md-icon-button" ng-click="groupsNew.submit()">
+          <md-button class="md-icon-button" ng-click="groupsNew.submitSearch()">
             <md-icon>search</md-icon>
           </md-button>
 
@@ -61,7 +61,7 @@
               type="text"
               class="search"
               name="groupsNew.groupsSearchUsers"
-              ng-model="groupsNew.q"
+              ng-model="groupsNew.query"
               placeholder="Search for users..."
               >
           </md-input-container>
@@ -76,7 +76,7 @@
         class="col s6 groupUsersToAdd"
         ng-if="(!user.group && user.id !== main.currentUserId)"
         ng-repeat="user in groupsNew.filtered"
-        ng-show="(groupsNew.q.length > 0 && groupsNew.chosenUsers.includes(user) !== true)"
+        ng-show="(groupsNew.query.length > 0 && groupsNew.chosenUsers.includes(user) !== true)"
         >
         <div ng-click="groupsNew.addUser(user)" class="userSearchResults">
           <img ng-src="{{ user.profileImageSRC }}" alt="{{ user.username }}" class="addUserImage">
