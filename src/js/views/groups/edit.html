@@ -59,7 +59,7 @@
               ng-model="groupsEdit.query"
               placeholder="Search for users..."
               />
-            <div class="md-char-counter">{{ groupsEdit.filtered.length }} / {{ groupsEdit.availableUsers.length }}</div>
+            <div ng-show="groupsEdit.filteredLength > 0" class="md-char-counter">{{ groupsEdit.filteredLength }} / {{ groupsEdit.availableUsersLength }}</div>
           </md-input-container>
 
           <md-button class="md-icon-button" ng-click="groupsEdit.endSearch()">
@@ -84,7 +84,6 @@
 
       <div class="chosenUsers">
         <span class="md-headline">Chosen Users:</span>
-        <!-- <md-divider></md-divider> -->
       </div>
 
       <div

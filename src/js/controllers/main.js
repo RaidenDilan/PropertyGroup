@@ -2,8 +2,8 @@ angular
   .module('pncApp')
   .controller('MainCtrl', MainCtrl);
 
-  MainCtrl.$inject = ['$rootScope', '$timeout', '$state', '$auth', 'User', '$window', '$mdSidenav', '$log', 'ToastAlertService'];
-  function MainCtrl($rootScope, $timeout, $state, $auth, User, $window, $mdSidenav, $log, ToastAlertService) {
+  MainCtrl.$inject = ['$rootScope', '$timeout', '$state', '$auth', 'ToastAlertService', 'User', '$window', '$mdSidenav', '$log'];
+  function MainCtrl($rootScope, $timeout, $state, $auth, ToastAlertService, User, $window, $mdSidenav, $log) {
     const vm = this;
 
     const protectedStates = ['groupsIndex', 'groupsNew', 'groupsHome', 'groupsEdit', 'groupsEdit', 'groupsPropsShow', 'usersShow', 'usersEdit', 'propertiesIndex'];

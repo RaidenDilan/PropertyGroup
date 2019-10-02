@@ -22,7 +22,7 @@ userSchema.path('profileImage').set(function getPreviousImage(profileImage) {
 
 userSchema.path('email').validate(validateEmail);
 
-userSchema.virtual('profileImageSRC').get(function getprofileImageSRC() {
+userSchema.virtual('profileImageSRC').get(function getProfileImageSRC() {
   if(!this.profileImage) return null;
   if(this.profileImage.match(/^http/)) return (this.profileImage);
   return `https://s3-eu-west-1.amazonaws.com/${process.env.AWS_BUCKET_NAME}/${this.profileImage}`;
