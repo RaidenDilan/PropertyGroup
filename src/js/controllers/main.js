@@ -2,22 +2,14 @@ angular
   .module('pncApp')
   .controller('MainCtrl', MainCtrl);
 
-  MainCtrl.$inject = ['$rootScope', '$timeout', '$state', '$auth', 'ToastAlertService', 'User', '$window', '$mdSidenav', '$log'];
-  function MainCtrl($rootScope, $timeout, $state, $auth, ToastAlertService, User, $window, $mdSidenav, $log) {
+  MainCtrl.$inject = ['$rootScope', '$state', '$auth', 'ToastAlertService', 'User', '$mdSidenav', '$log'];
+  function MainCtrl($rootScope, $state, $auth, ToastAlertService, User, $mdSidenav, $log) {
     const vm = this;
 
     const protectedStates = ['groupsIndex', 'groupsNew', 'groupsHome', 'groupsEdit', 'groupsEdit', 'groupsPropsShow', 'usersShow', 'usersEdit', 'propertiesIndex'];
 
     vm.isAuthenticated = $auth.isAuthenticated;
     vm.toastDelay = 3000;
-
-    // vm.backspaceTime = 50;    // set the time for each character to be typed out, defaults to 250ms
-    // vm.startDelay    = 2000;  // set the time for each character to be deleted, defaults to type-time
-    // vm.typeTime      = 60;    // set the time before the first action happens, defaults to 500ms
-    // vm.startTrigger  = true;  // Set a boolean variable on the directive that will start the directive when the variable changes to true
-    // vm.repeat        = false; // set whether to continuously loop over the words, defaults to true
-    // vm.startTyping   = true;  // Set whether the directives first animation is either the type or delete/highlight
-
     vm.toggleLeft = buildToggler('left');
     vm.menu = [
       { 'name': 'Search Properties', 'icon': 'search' },
@@ -31,43 +23,46 @@ angular
 
     function stateErrors(event, err) {
       vm.stateHasChanged = false;
-      vm.message = err.data.message; // OR vm.message.toString()
+      vm.message = err.data.message;
+
       ToastAlertService.customToast(vm.message, 5000, 'error');
-      // ToastAlertService.customToast(vm.message, false, 'error');
-      if(err.status === 401) $state.go('login');
+
+      if (err.status === 401) $state.go('login');
     }
 
     function secureState(event, toState) {
       vm.message = null;
-      if(!$auth.isAuthenticated() && protectedStates.includes(toState.name)) {
+
+      if (!$auth.isAuthenticated() && protectedStates.includes(toState.name)) {
         event.preventDefault();
+
         $state.go('login');
         vm.message = 'You must be logged in to view web contents!';
+
         ToastAlertService.customToast(vm.message, vm.toastDelay, 'warning');
       }
     }
 
     function authenticateState(event, toState) {
-      // vm.currentGroupId = null;
-      if(vm.stateHasChanged) vm.message = null;
-      if(!vm.stateHasChanged) vm.stateHasChanged = true;
-      if(vm.stateHasChanged) document.body.scrollTop = document.documentElement.scrollTop = 0; // BUG????
+      if (vm.stateHasChanged) vm.message = null;
+      if (!vm.stateHasChanged) vm.stateHasChanged = true;
+      if (vm.stateHasChanged) document.body.scrollTop = document.documentElement.scrollTop = 0; // BUG????
 
-      if($auth.getPayload()) {
+      if ($auth.getPayload()) {
         vm.currentUserId = $auth.getPayload().userId;
 
         return User
-          // .query()
           .get({ id: vm.currentUserId })
           .$promise
           .then((user) => {
             vm.user = user;
-            // vm.user = users.find(obj => obj.id === vm.currentUserId);
 
-            if((toState.name === 'propertiesIndex' && vm.user.group === null || undefined) && protectedStates.includes(toState.name)) {
+            if ((toState.name === 'propertiesIndex' && vm.user.group === null) && protectedStates.includes(toState.name)) {
               event.preventDefault();
+
               $state.go('groupsNew');
               vm.message = 'You must create a group before searching for properties';
+
               ToastAlertService.customToast(vm.message, vm.toastDelay, 'warning');
             }
             return !vm.user.group ? vm.currentGroupId = null : vm.currentGroupId = vm.user.group.id;
@@ -79,8 +74,8 @@ angular
       return () => {
         // Component lookup should always be available since we are not using `ng-if`
         $mdSidenav(navID)
-        .toggle()
-        .then(() => $log.debug('toggle ' + navID + ' is done'));
+          .toggle()
+          .then(() => $log.debug('toggle ' + navID + ' is done'));
       };
     }
 
@@ -99,7 +94,7 @@ angular
 
     vm.logout = () => {
       $auth
-        .logout() // .removeToken()
+        .logout() // OR .removeToken()
         .then(() => {
           // $window.localStorage.clear();
           $state.go('home');
@@ -163,3 +158,10 @@ angular
   //     .then(() => $log.log('Toast dismissed.'))
   //     .catch(() => $log.log('Toast failed or was forced to close early by another toast.'));
   // }
+
+  // vm.backspaceTime = 50;    // set the time for each character to be typed out, defaults to 250ms
+  // vm.startDelay    = 2000;  // set the time for each character to be deleted, defaults to type-time
+  // vm.typeTime      = 60;    // set the time before the first action happens, defaults to 500ms
+  // vm.startTrigger  = true;  // Set a boolean variable on the directive that will start the directive when the variable changes to true
+  // vm.repeat        = false; // set whether to continuously loop over the words, defaults to true
+  // vm.startTyping   = true;  // Set whether the directives first animation is either the type or delete/highlight

@@ -15,6 +15,10 @@ function autocomplete($window) {
         types: []
       };
 
+      // console.log('scope', scope);
+      // console.log('model', model);
+      // if (scope.geometry === null) return false;
+
       const autocomplete = new $window.google.maps.places.Autocomplete(element[0], options);
 
       autocomplete.addListener('place_changed', () => {

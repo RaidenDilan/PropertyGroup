@@ -47,7 +47,6 @@
             <md-icon>search</md-icon>
             <span>Search Users</span>
           </md-button>
-
         </div>
 
         <div ng-show="groupsNew.showSearchBar()" class="md-toolbar-tools search-bar">
@@ -63,7 +62,8 @@
               name="groupsNew.groupsSearchUsers"
               ng-model="groupsNew.query"
               placeholder="Search for users..."
-              >
+              />
+            <div ng-show="groupsNew.filteredLength > 0" class="md-char-counter">{{ groupsNew.filteredLength }} / {{ groupsNew.availableUsersLength }}</div>
           </md-input-container>
 
           <md-button class="md-icon-button" ng-click="groupsNew.endSearch()">
@@ -74,11 +74,11 @@
 
       <div
         class="col s6 groupUsersToAdd"
-        ng-if="(!user.group && user.id !== main.currentUserId)"
+        ng-if="(groupsEdit.query !== null) && user.id !== main.currentUserId"
         ng-repeat="user in groupsNew.filtered"
-        ng-show="(groupsNew.query.length > 0 && groupsNew.chosenUsers.includes(user) !== true)"
+        ng-show="!groupsNew.chosenUsers.includes(user)"
         >
-        <div ng-click="groupsNew.addUser(user)" class="userSearchResults">
+        <div class="userSearchResults" ng-click="groupsNew.addUser(user)">
           <img ng-src="{{ user.profileImageSRC }}" alt="{{ user.username }}" class="addUserImage">
           <h5>{{ user.username }}</h5>
         </div>
@@ -90,32 +90,28 @@
         <md-divider></md-divider>
       </div>
 
-      <div class="col s6 chosenGroupUsers" ng-repeat="user in groupsNew.chosenUsers">
+      <div
+        class="col s6 chosenGroupUsers"
+        ng-if="!user.group && user.id !== main.currentUserId"
+        ng-repeat="user in groupsNew.chosenUsers track by $index"
+        >
         <div>
           <img ng-src="{{ user.profileImageSRC }}" alt="{{ user.profileImageSRC }}" class="chosenUsersImage">
           <h5>{{ user.username }}</h5>
+
           <smart-confirm confirm="groupsNew.removeUser(user)">
             <md-icon class="material-icons">close</md-icon>
           </smart-confirm>
         </div>
       </div>
 
-      <div class="col s6 groupsNewButtons">
-        <md-button
-          class="md-raised md-primary md-button md-ink-ripple"
-          ng-click="groupsNew.create()"
-          ng-disabled="groupsNew.groupsNewForm.$invalid"
-          >
-          <i class="material-icons left"></i>Create
-        </md-button>
+      <div class="chosenUsersLength md-char-counter" ng-show="groupsNew.chosenUsers.length > 0">{{ groupsNew.chosenUsers.length }} Users</div>
 
-        <md-button
-          class="md-raised"
-          ng-click="groupsNew.group = {}"
-          >
-          <i class="material-icons left"></i>Clear Form
-        </md-button>
+      <div class="col s6 groupsNewButtons">
+        <md-button class="md-raised md-primary md-button md-ink-ripple" ng-click="groupsNew.create()" ng-disabled="groupsNew.groupsNewForm.$invalid"><i class="material-icons left"></i>Create</md-button>
+        <md-button class="md-raised" ng-click="groupsNew.group = {}"><i class="material-icons left"></i>Clear Form</md-button>
       </div>
+
     </form>
   </md-card>
 </md-content>

@@ -1,10 +1,6 @@
 md-content.groupsHome {
   background-color: $brand-color;
 
-  // md-card {
-  //   margin: 2.5rem auto;
-  // }
-
   md-card-header {
     margin: 0 auto;
   }
@@ -51,8 +47,6 @@ md-content.groupsHome {
   }
   md-card.groupsHomeProperties {
     padding: 0;
-    // margin: 1rem auto;
-    // margin: 2.5rem 8px;
     background: transparent;
     box-shadow: none;
 
@@ -125,18 +119,3 @@ md-content.groupsHome {
     }
   }
 }
-
-// .addImageForm {
-//   button {
-//     width: 100%;
-//     margin: 1rem 0;
-//     padding: 0;
-//   }
-// }
-// .uploadPhoto {
-//   label {
-//     width: 100%;
-//     margin: 1rem 0;
-//     padding: 0;
-//   }
-// }

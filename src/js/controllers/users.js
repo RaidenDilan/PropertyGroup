@@ -27,7 +27,7 @@ function UsersEditCtrl(User, $stateParams, $state, ToastAlertService) {
   vm.user = User.get($stateParams);
 
   vm.update = () => {
-    if(vm.usersEditForm.$valid) {
+    if (vm.usersEditForm.$valid) {
       vm.user
         .$update()
         .then((res) => {

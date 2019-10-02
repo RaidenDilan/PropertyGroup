@@ -3,18 +3,19 @@
 
     <md-card-title>
       <md-card-title-text>
+        <md-icon class="material-icons" aria-label="Property Logo">house</md-icon>
         <span class="md-headline">Search Properties</span>
       </md-card-title-text>
     </md-card-title>
 
     <form
       name="propertiesIndex.propertiesIndexForm"
-      lass="propertiesIndex.propertiesIndexForm"
+      class="propertiesIndex.propertiesIndexForm"
       novalidate
       >
       <div class="propertiesSearch">
         <md-input-container class="md-block">
-          <md-icon class="material-icons">search</md-icon>
+          <md-icon class="material-icons" aria-label="Search Logo">search</md-icon>
           <label for="area">Location: </label>
 
           <input
@@ -32,19 +33,99 @@
         </md-input-container>
 
         <md-input-container class="md-block">
-          <md-icon class="material-icons">single_bed</md-icon>
-          <label for="beds">Bedrooms</label>
+          <md-icon class="material-icons" aria-label="Filter Logo">house</md-icon>
+          <label for="propertyType">Property Type</label>
 
           <md-select
-            name="beds"
-            class="beds"
-            id="beds"
-            type="number"
-            ng-model="propertiesIndex.beds"
+            name="propertyType"
+            class="propertyType"
+            id="propertyType"
+            type="text"
+            ng-model="propertiesIndex.propertyType"
             ng-required="true"
-            aria-label="Bedroom (required)"
+            aria-label="Property Type : Houses | Flats"
             >
-            <md-option ng-value="any" ng-selected="true" ng-disabled="true">Any</md-option>
+            <md-option ng-value="" ng-selected="true">Show all</md-option>
+            <md-option ng-value="'houses'">Houses</md-option>
+            <md-option ng-value="'flats'">Flats</md-option>
+          </md-select>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <md-icon class="material-icons" aria-label="Sterling Logo">
+            attach_money
+            <!-- <i class="fas fa-pound-sign"></i> -->
+          </md-icon>
+          <label for="minimumPrice">Minimum Price</label>
+
+          <md-select
+            name="minimumPrice"
+            class="minimumPrice"
+            id="minimumPrice"
+            type="number"
+            ng-model="propertiesIndex.minimumPrice"
+            ng-required="true"
+            aria-label="Minimum Price (required)"
+            >
+            <md-option ng-value="" ng-selected="true">No min</md-option>
+            <md-option ng-value="1000">£1,000</md-option>
+            <md-option ng-value="2000">£2,000</md-option>
+            <md-option ng-value="3000">£3,000</md-option>
+            <md-option ng-value="4000">£4,000</md-option>
+            <md-option ng-value="5000">£5,000</md-option>
+            <md-option ng-value="6000">£6,000</md-option>
+            <md-option ng-value="7000">£7,000</md-option>
+            <md-option ng-value="8000">£8,000</md-option>
+            <md-option ng-value="9000">£9,000</md-option>
+            <md-option ng-value="10000">£10,000</md-option>
+          </md-select>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <md-icon class="material-icons" aria-label="Sterling Logo">
+            attach_money
+            <!-- <i class="fas fa-pound-sign"></i> -->
+          </md-icon>
+          <label for="maximumPrice">Maximum Price</label>
+
+          <md-select
+            name="maximumPrice"
+            class="maximumPrice"
+            id="maximumPrice"
+            type="number"
+            ng-model="propertiesIndex.maximumPrice"
+            ng-required="true"
+            aria-label="Minimum Price (required)"
+            >
+            <md-option ng-value="" ng-selected="true">No max</md-option>
+            <md-option ng-value="1000">£1,000</md-option>
+            <md-option ng-value="2000">£2,000</md-option>
+            <md-option ng-value="3000">£3,000</md-option>
+            <md-option ng-value="4000">£4,000</md-option>
+            <md-option ng-value="5000">£5,000</md-option>
+            <md-option ng-value="6000">£6,000</md-option>
+            <md-option ng-value="7000">£7,000</md-option>
+            <md-option ng-value="8000">£8,000</md-option>
+            <md-option ng-value="9000">£9,000</md-option>
+            <md-option ng-value="10000">£10,000</md-option>
+          </md-select>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <md-icon class="material-icons" aria-label="Bed Logo">single_bed</md-icon>
+          <label for="minimumBeds">Minimum Beds</label>
+
+          <md-select
+            name="minimumBeds"
+            class="minimumBeds"
+            id="minimumBeds"
+            type="number"
+            ng-model="propertiesIndex.minimumBeds"
+            ng-required="true"
+            aria-label="Minimum Beds (required)"
+            >
+            <md-option ng-value="" ng-selected="true">No min</md-option>
+            <md-option ng-value="0">Studio+</md-option>
             <md-option ng-value="1">1</md-option>
             <md-option ng-value="2">2</md-option>
             <md-option ng-value="3">3</md-option>
@@ -57,11 +138,74 @@
             <md-option ng-value="10">10</md-option>
           </md-select>
         </md-input-container>
+
+        <md-input-container class="md-block">
+          <md-icon class="material-icons" aria-label="Bed Logo">single_bed</md-icon>
+          <label for="maximumBeds">Maximum Beds</label>
+
+          <md-select
+            name="maximumBeds"
+            class="maximumBeds"
+            id="maximumBeds"
+            type="number"
+            ng-model="propertiesIndex.maximumBeds"
+            ng-required="true"
+            aria-label="Maximum Beds (required)"
+            >
+            <md-option ng-value="" ng-selected="true">No max</md-option>
+            <md-option ng-value="1">1</md-option>
+            <md-option ng-value="2">2</md-option>
+            <md-option ng-value="3">3</md-option>
+            <md-option ng-value="4">4</md-option>
+            <md-option ng-value="5">5</md-option>
+            <md-option ng-value="6">6</md-option>
+            <md-option ng-value="7">7</md-option>
+            <md-option ng-value="8">8</md-option>
+            <md-option ng-value="9">9</md-option>
+            <md-option ng-value="10">10</md-option>
+          </md-select>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <md-icon class="material-icons" aria-label="Filter Logo">filter_list</md-icon>
+          <label for="orderBy">Order By</label>
+
+          <md-select
+            name="orderBy"
+            class="orderBy"
+            id="orderBy"
+            type="text"
+            ng-model="propertiesIndex.orderBy"
+            ng-required="true"
+            aria-label="Order By : Price | Age"
+            >
+            <md-option ng-value="" ng-selected="true">No order</md-option>
+            <md-option ng-value="'price'">Price</md-option>
+            <md-option ng-value="'age'">Age</md-option>
+          </md-select>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <md-icon class="material-icons" aria-label="Filter Logo">filter_list</md-icon>
+          <label for="ordering">Sort By</label>
+
+          <md-select
+            name="ordering"
+            class="ordering"
+            id="ordering"
+            type="text"
+            ng-model="propertiesIndex.ordering"
+            ng-required="true"
+            aria-label="Sort by : Descending | Ascending"
+            >
+            <md-option ng-value="" ng-selected="true">No sort</md-option>
+            <md-option ng-value="'descending'">Descending</md-option>
+            <md-option ng-value="'ascending'">Ascending</md-option>
+          </md-select>
+        </md-input-container>
       </div>
 
-      <!-- <md-card-actions> -->
-        <md-button class="md-raised md-primary md-button md-ink-ripple search" ng-click="propertiesIndex.getProperties()">Search</md-button>
-      <!-- </md-card-actions> -->
+      <md-button class="md-raised md-primary md-button md-ink-ripple search" ng-click="propertiesIndex.getProperties()" ng-disabled="propertiesIndex.propertiesIndexForm.$invalid">Search</md-button>
     </form>
 
   </md-card>

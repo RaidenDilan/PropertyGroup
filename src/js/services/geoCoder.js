@@ -8,9 +8,8 @@ function GeoCoder($http) {
     return $http
       .get('/api/location', { params: { lat, lng }})
       .then((response) => {
-        // console.log('SERVICE', response.data);
+        console.log('<---*** response ***--->', response);
         // const latLon = response.data.results[0].geometry.latLng;
-        // return latLon;
         return response.data;
       });
   };

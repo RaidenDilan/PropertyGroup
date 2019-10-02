@@ -67,16 +67,6 @@ md-content.groupsShowProp {
           flex: 0 0 auto;
         }
 
-        // .md-card-content {
-        //   span.per_month {
-        //     color: $black;
-        //   }
-        // }
-
-        // md-divider {
-        //   margin: 1rem 0;
-        // }
-
         ul:not(:last-child) {
           padding-bottom: 1rem;
           display: flex;
@@ -86,7 +76,6 @@ md-content.groupsShowProp {
             &:last-child span {
               color: $brand-color;
               font-weight: 900;
-              // padding-right: 6px; // space beween price and per month
             }
 
             span.per_month {
@@ -183,11 +172,6 @@ md-content.groupsShowProp {
             justify-content: center;
             align-items: center;
           }
-
-          // md-input-container {
-          //   padding: 0;
-          //   margin: 6px 8px;
-          // }
 
           .ratingBox {
             display: flex;
@@ -313,8 +297,6 @@ md-content.groupsShowProp {
 
         .groupsPropsShowUserImages {
           md-card {
-            // padding: 15px;
-
             md-card-avatar {
               width: auto;
               height: auto;
@@ -322,7 +304,6 @@ md-content.groupsShowProp {
 
             .userImages {
               width: 100%;
-              // height: auto;
               padding: 50px 0;
               background-repeat: no-repeat;
               background-position: center;
@@ -381,10 +362,7 @@ md-content.groupsShowProp {
               margin: 16px 0 0 0;
 
               label {
-                // bottom: auto;
                 left: 1rem;
-                // left: auto;
-                // padding-left: 1rem;
 
                 &:focus {
                   bottom: 100%;
@@ -435,11 +413,7 @@ md-content.groupsShowProp {
           }
 
           smart-confirm {
-            // margin: 0;
-
             div {
-              // width: 20%;
-              // margin: 0 auto;
               display: flex;
               flex-flow: row nowrap;
             }
@@ -464,10 +438,6 @@ md-content.groupsShowProp {
               }
             }
           }
-          // smart-confirm {
-          //   display: flex;
-          //   flex-flow: row nowrap;
-          // }
         }
       }
     }
@@ -510,13 +480,3 @@ md-content.groupsShowProp {
 .votingButton {
   width: auto !important;
 }
-
-// /* A working example can be found at the bottom of this page. */
-// .my-element.ng-hide-add, .my-element.ng-hide-remove {
-//   transition: all 0.5s linear;
-// }
-//
-// .my-element.ng-hide-add {}
-// .my-element.ng-hide-add.ng-hide-add-active {}
-// .my-element.ng-hide-remove {}
-// .my-element.ng-hide-remove.ng-hide-remove-active {}

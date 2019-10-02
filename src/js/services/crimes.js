@@ -8,7 +8,8 @@ function Crimes($http) {
     return $http
       .get('/api/crimes', { params: { lat, lon }})
       .then((response) => {
-        // asb - anti social behaviour
+
+        // ASB - Anti Social Behaviour
         response.data.antiSocial = [];
         response.data.burglary   = [];
         response.data.bikeTheft  = [];

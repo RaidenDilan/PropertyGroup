@@ -7,34 +7,68 @@ PropertiesIndexCtrl.$inject = ['$scope', '$http', '$uibModal', '$mdDialog', '$mo
 function PropertiesIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
   const vm = this;
 
-  vm.limit           = 10; // loadMore Limit
-  vm.toShow          = 49; // Filtering and  sorting
-  vm.area            = null;
-  vm.beds            = null;
-  vm.originatorEvent = null; // Menu functionality
+
   vm.results         = [];
+
+  // ZOOPLA DEFAULTS
+  vm.area            = null;
+  vm.propertyType    = null;
+  vm.minimumBeds     = null;
+  vm.maximumBeds     = null;
+  vm.minimumPrice    = null;
+  vm.maximumPrice    = null;
+  vm.maximumPrice    = null;
+  vm.orderBy         = 'price';
+  vm.ordering        = 'descending';
+
+  vm.originatorEvent = null; // Menu functionality
+  vm.limit           = 10; // loadMore Limit
+  vm.toShow          = 100; // Filtering and sorting - was 49
   vm.sortBy          = '-first_published_date'; // Filtering and  sorting
 
   vm.getProperties = () => {
-    if(vm.propertiesIndexForm.$valid) {
+    if (vm.propertiesIndexForm.$valid) {
       $http
-      .get('/api/properties', { params: { area: vm.area, minimum_beds: vm.beds, maximum_beds: vm.beds }})
-      .then((response) => {
-        propertyUpdater(response.data);
-        vm.results = response.data;
-      })
-      .then(() => {
-        // var moment = $moment().format('ddd, hA');
-        var x = vm.results.listing;
-        for (var i = 0; i < x.length; i++) {
-          x[i].sinceWhen = $moment(x[i].first_published_date).fromNow();
-        }
-      });
+        .get('/api/properties', { params: {
+          area: vm.area,
+          property_type: vm.propertyType,
+          minimum_beds: vm.minimumBeds,
+          maximum_beds: vm.maximumBeds,
+          minimum_price: vm.minimumPrice,
+          maximum_price: vm.maximumPrice,
+          order_by: vm.orderBy,
+          ordering: vm.ordering
+        }})
+        .then((response) => {
+          propertyUpdater(response.data);
+          vm.results = response.data;
+          console.log('vm.results', vm.results);
+        })
+        .then(() => {
+          // var moment = $moment().format('ddd, hA');
+          var x = vm.results.listing;
+          for (var i = 0; i < x.length; i++) {
+            x[i].sinceWhen = $moment(x[i].first_published_date).fromNow();
+          }
+        });
 
-      vm.propertiesIndexForm.$setUntouched();
-      vm.propertiesIndexForm.$setPristine();
+        vm.propertiesIndexForm.$setUntouched();
+        vm.propertiesIndexForm.$setPristine();
     }
   };
+
+  // function getPropertyLocation(lat, lng) {
+  //   console.log('getPropertyLocation --->>', lat, lng);
+  //   // if(!vm.listingLat) return false;
+  //
+  //   GeoCoder
+  //     .getLocation(lat, lng)
+  //     .then((response) => {
+  //       console.log('<--- ^ response ^ --->', lat, lng);
+  //       vm.property = response;
+  //       return vm.property;
+  //     });
+  // }
 
   vm.openMenu = ($mdMenu, e) => {
     vm.originatorEvent = e;
@@ -100,20 +134,17 @@ function PropertiesShowCtrl($state, $auth, User, GroupProperty, selectedProperty
   const vm = this;
 
   vm.selected = selectedProperty;
-  vm.userId   = $auth.getPayload().userId;
-  // vm.user     = null;
-  // vm.alert    = null;
   vm.toastDelay  = 3000;
   vm.toastStatus = 'success';
 
+  const authUserId = $auth.getPayload().userId;
+
   User
-    .get({ id: vm.userId })
+    .get({ id: authUserId })
     .$promise
     .then((user) => {
-      if(!user) return false;
-
+      if (!user) return false;
       vm.user = user;
-      return vm.user;
     });
 
   vm.storeAndView = () => {

@@ -3,15 +3,13 @@ angular
   .controller('GroupsHomeCtrl', GroupsHomeCtrl)
   .controller('GroupsHomeUserCtrl', GroupsHomeUserCtrl);
 
-GroupsHomeCtrl.$inject = ['$scope', '$state', '$http', '$auth', 'Group', 'GroupUser', 'GroupProperty', '$stateParams', '$mdDialog', 'ToastAlertService'];
-function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupProperty, $stateParams, $mdDialog, ToastAlertService) {
+GroupsHomeCtrl.$inject = ['$scope', '$state', '$http', 'Group', 'GroupUser', '$stateParams', '$mdDialog', 'ToastAlertService'];
+function GroupsHomeCtrl($scope, $state, $http, Group, GroupUser, $stateParams, $mdDialog, ToastAlertService) {
   const vm = this;
-  const authUserId = $auth.getPayload().userId;
 
   vm.group      = {};
   vm.listingIds = [];
   vm.toastDelay = 3000;
-  // vm.status     = '';
 
   Group
     .get($stateParams)
@@ -51,7 +49,7 @@ function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupPro
         });
     };
 
-    vm.showGroupUser = (user) => {
+    vm.groupsUsersShow = (user) => {
       $mdDialog.show({
         controller: GroupsHomeUserCtrl,
         controllerAs: 'groupsHomeUser',
@@ -68,11 +66,6 @@ function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupPro
           }
         }
       });
-      // .then((userId) => {
-      //   vm.status = `You finished viewing ${userId}.`;
-      // }, () => {
-      //   vm.status = 'Actions Cancelled';
-      // });
     };
 
     vm.leaveGroup = (user) => {
@@ -82,18 +75,18 @@ function GroupsHomeCtrl($scope, $state, $http, $auth, Group, GroupUser, GroupPro
         .then((group) => {
           const index = vm.group.users.indexOf(user);
           vm.group.users.splice(index, 1);
+
           return $state.go('groupsNew');
         });
     };
 }
 
-GroupsHomeUserCtrl.$inject = ['$scope', '$mdDialog', 'selectedUser'];
-function GroupsHomeUserCtrl($scope, $mdDialog, selectedUser) {
+GroupsHomeUserCtrl.$inject = ['$scope', 'selectedUser', '$mdDialog'];
+function GroupsHomeUserCtrl($scope, selectedUser, $mdDialog) {
   const vm = this;
 
-  vm.selected = selectedUser;
-
-  vm.hide   = () => $mdDialog.hide();
-  vm.cancel = () => $mdDialog.cancel();
+  vm.selected   = selectedUser;
+  vm.hide       = () => $mdDialog.hide();
+  vm.cancel     = () => $mdDialog.cancel();
   vm.showUserId = (userId) => $mdDialog.hide(userId);
 }

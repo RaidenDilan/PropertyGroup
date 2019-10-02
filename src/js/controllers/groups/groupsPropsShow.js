@@ -3,8 +3,8 @@ angular
   .controller('GroupsPropsShowCtrl', GroupsPropsShowCtrl)
   .controller('UserImageModalCtrl', UserImageModalCtrl);
 
-GroupsPropsShowCtrl.$inject = ['$stateParams', '$state', '$http', '$scope', '$auth', 'API', 'Group', 'GroupProperty', 'GroupPropertyComment', 'GroupPropertyImage', 'GroupPropertyRating', 'Crimes', '$uibModal', '$mdDialog', 'GeoCoder', '$moment', 'ToastAlertService'];
-function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Group, GroupProperty, GroupPropertyComment, GroupPropertyImage, GroupPropertyRating, Crimes, $uibModal, $mdDialog, GeoCoder, $moment, ToastAlertService) {
+GroupsPropsShowCtrl.$inject = ['$stateParams', '$state', '$http', 'Group', 'GroupProperty', 'GroupPropertyComment', 'GroupPropertyImage', 'GroupPropertyRating', 'Crimes', '$uibModal', '$mdDialog', 'GeoCoder', '$moment', 'ToastAlertService'];
+function GroupsPropsShowCtrl($stateParams, $state, $http, Group, GroupProperty, GroupPropertyComment, GroupPropertyImage, GroupPropertyRating, Crimes, $uibModal, $mdDialog, GeoCoder, $moment, ToastAlertService) {
   const vm = this;
 
   vm.group            = Group.get($stateParams);
@@ -15,7 +15,6 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
   vm.listingLon       = null;
   vm.latlng           = null;
   vm.listingId        = $stateParams.listing_id;
-  vm.loggedInUserId   = $auth.getPayload().userId;
   vm.labels           = ['Anti Social Behaviour', 'Burglary', 'Bike Theft', 'Drugs', 'Robbery', 'Vehicle Crimes', 'Violent Crimes'];
   vm.crimes           = [];
   vm.crimes.crimeData = [];
@@ -28,7 +27,9 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, $scope, $auth, API, Gr
       display: true,
       position: 'right',
       fullWidth: false,
-      labels: { fontColor: 'rgb(255, 99, 132)' },
+      labels: {
+        fontColor: 'rgb(255, 99, 132)'
+      },
       onClick: (e) => e.stopPropagation(),
     }
   };
@@ -180,9 +181,8 @@ UserImageModalCtrl.$inject = ['selectedImage', '$mdDialog'];
 function UserImageModalCtrl(selectedImage, $mdDialog) {
   const vm = this;
 
-  vm.selected = selectedImage;
-
-  vm.hide   = () => $mdDialog.hide();
-  vm.cancel = () => $mdDialog.cancel();
+  vm.selected   = selectedImage;
+  vm.hide       = () => $mdDialog.hide();
+  vm.cancel     = () => $mdDialog.cancel();
   vm.showUserId = (userId) => $mdDialog.hide(userId);
 }

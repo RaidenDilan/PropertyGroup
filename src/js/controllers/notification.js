@@ -6,8 +6,6 @@ ToastCtrl.$inject = ['$mdToast', '$mdDialog', '$document', '$scope'];
 function ToastCtrl($mdToast, $mdDialog, $document, $scope) {
   const vm = this;
 
-  // console.log('ToastCtrl instance 1', vm);
-
   setupActionKeyListener();
 
   vm.closeToast = () => {

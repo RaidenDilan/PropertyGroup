@@ -8,7 +8,7 @@
       </md-card-title-text>
     </md-card-title>
 
-    <form name="groupsEdit.groupsEditForm" class="groupsEdit.groupsEditForm" ng-submit="groupsEdit.update()" novalidate>
+    <form name="groupsEdit.groupsEditForm" class="groupsEditForm" ng-submit="groupsEdit.update()" novalidate>
       <div class="col s6">
         <md-input-container class="md-block">
           <md-icon class="material-icons">group_work</md-icon>
@@ -33,15 +33,20 @@
         </div>
       </div>
 
-      <md-divider></md-divider>
+      <!-- <md-divider></md-divider> -->
+
+      <div class="search-bar-instruction">
+        <!-- <p>Search available users in real time to your group and stay connected.</p> -->
+        <p>* Search results are filtered in real time, adding/removing users will take effect in real time, be sure to click update when you're done.</p>
+      </div>
 
       <div class="col s6 searchUsers">
+
         <div id="search-bar" ng-show="groupsEdit.showPreSearchBar()" class="md-toolbar-tools">
           <md-button ng-click="groupsEdit.initiateSearch()">
             <md-icon>search</md-icon>
             <span>Search Users</span>
           </md-button>
-
         </div>
 
         <div ng-show="groupsEdit.showSearchBar()" class="md-toolbar-tools search-bar">
@@ -57,7 +62,6 @@
               class="query"
               name="groupsEdit"
               ng-model="groupsEdit.query"
-              placeholder="Search for users..."
               />
             <div ng-show="groupsEdit.filteredLength > 0" class="md-char-counter">{{ groupsEdit.filteredLength }} / {{ groupsEdit.availableUsersLength }}</div>
           </md-input-container>

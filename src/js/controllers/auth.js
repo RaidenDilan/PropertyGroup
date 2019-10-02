@@ -10,7 +10,7 @@ function RegisterCtrl($auth, $state, ToastAlertService) {
   vm.user = {};
 
   vm.submit = () => {
-    if(vm.registerForm.$valid) {
+    if (vm.registerForm.$valid) {
       $auth
         .signup(vm.user)
         .then((user) => {
@@ -31,7 +31,7 @@ function LoginCtrl($auth, $state, $stateParams, ToastAlertService) {
   vm.credentials = {};
 
   vm.submit = () => {
-    if(vm.loginForm.$valid) {
+    if (vm.loginForm.$valid) {
       $auth
         .login(vm.credentials)
         .then((user) => {

@@ -7,14 +7,12 @@ GroupsEditCtrl.$inject = ['$stateParams', '$auth', '$state', '$scope', 'Group', 
 function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, User, searchFilter, $uibModal, ToastAlertService, $timeout) {
   const vm = this;
 
-  vm.group       = Group.get($stateParams);
-  vm.groupUsers  = [];
-  vm.chosenUsers = [];
-  vm.states      = '';
-  vm.query       = null;
-  vm.toastDelay  = 3000;
-  vm.toastStatus = 'success';
-  vm.filteredLength = 0;
+  // vm.group                = Group.get($stateParams);
+  vm.groupUsers           = [];
+  vm.query                = null;
+  vm.toastDelay           = 3000;
+  vm.toastStatus          = 'success';
+  vm.filteredLength       = 0;
   vm.availableUsersLength = 0;
 
   const authUserId = $auth.getPayload().userId;
@@ -23,54 +21,59 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
   $scope.$watch(watchSearchBar, handleSearchBarChanges); // To focus on input element after it appears
 
   function fetchGroup() {
-    return Group
-    .get($stateParams)
-    .$promise
-    .then((group) => {
-      vm.groupUsers = [];
+    Group
+      .get($stateParams)
+      .$promise
+      .then((group) => {
+        vm.group = group;
+        vm.groupUsers = [];
 
-      group.users.forEach((user) => (user.id !== authUserId) && (vm.groupUsers.push(user)));
-      fetchUsers();
-    });
+        group.users.forEach((user) => (user.id !== authUserId) && (vm.groupUsers.push(user)));
+        fetchUsers();
+      });
   }
 
+  if (vm.group) fetchGroup();
   fetchGroup();
 
   function fetchUsers() {
-    return User
+    User
       .query()
       .$promise
       .then((users) => {
         vm.availableUsers = [];
+
         users.forEach((user) => (user.group === null) && (vm.availableUsers.push(user)));
-        if(vm.availableUsers.length > 0) vm.availableUsersLength = vm.availableUsers.length;
+        if (vm.availableUsers.length > 0) vm.availableUsersLength = vm.availableUsers.length;
       });
   }
 
   function filterUsers(query) {
     const params = { username: vm.query };
-    vm.filtered = searchFilter(vm.availableUsers, query); // vm.filtered = $filter('filter')(vm.availableUsers, params);
-    if(vm.filtered && vm.filtered.length > 0) vm.filteredLength = vm.filtered.length;
+
+    vm.filtered = searchFilter(vm.availableUsers, query);
+    if (vm.filtered && vm.filtered.length > 0) vm.filteredLength = vm.filtered.length;
   }
 
   function clearFilter() {
     vm.query = null; // reset input value after query
     vm.filtered = {}; // reset filtered so users input list disappear after selecting a add
-    if(vm.filtered && vm.filtered.length > 0) vm.filteredLength = vm.filtered.length;
-    if(vm.availableUsers && vm.availableUsers.length > 0) vm.availableUsersLength = vm.availableUsers.length;
+
+    if (vm.filtered && vm.filtered.length > 0) vm.filteredLength = vm.filtered.length;
+    if (vm.availableUsers && vm.availableUsers.length > 0) vm.availableUsersLength = vm.availableUsers.length;
   }
 
-  function watchSearchBar(scope) {
+  function watchSearchBar() {
     return document.querySelector('#search-bar:not(.ng-hide)');
   }
 
-  function handleSearchBarChanges(newValue, oldValue) {
+  function handleSearchBarChanges() {
     return document.getElementById('search-input').focus();
   }
 
   // function pushToArray(array, obj) {
   //   const index = array.findIndex((element) => element.id === obj.id);
-  //   if(index === -1) array.push(obj);
+  //   if (index === -1) array.push(obj);
   //   else array[index] = obj;
   // }
 
@@ -81,6 +84,9 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
       .then((user) => {
         vm.groupUsers.push(user);
         vm.group.users.push(user);
+
+        // if(!vm.group.users.includes(user.id) && user.id !== authUserId) vm.group.users.push(user.id);
+        // if(!vm.chosenUsers.includes(user.id) && user.id !== authUserId) vm.chosenUsers.push(user);
 
         clearFilter();
         fetchGroup();
@@ -104,7 +110,7 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
   };
 
   vm.update = () => {
-    if(vm.groupsEditForm.$valid) {
+    if (vm.groupsEditForm.$valid) {
       vm.group
         .$update()
         .then((group) => {
@@ -132,38 +138,32 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
   };
 
   vm.showPreSearchBar = () => {
-    // console.log('Pre Search Bar : Opened');
     return vm.query === null;
   };
 
   vm.initiateSearch = () => {
-    // console.log('Search Bar : initiated');
     vm.query = '';
   };
 
   vm.showSearchBar = () => {
-    // console.log('Search Bar : Revealed');
     return vm.query !== null;
   };
 
   vm.endSearch = () => {
-    // console.log('Search Bar : Closed');
     vm.query = null;
   };
 
   vm.submitSearch = () => {
     // console.log('Search function : Has been disabled');
-    // filterUsers(); // MANUAL SEARCH
   };
 }
 
-GroupsUserModalCtrl.$inject = ['selectedUser', 'User', 'Group', 'GroupUser', '$uibModalInstance', '$stateParams', '$auth', '$state'];
-function GroupsUserModalCtrl(selectedUser, User, Group, GroupUser, $uibModalInstance, $stateParams, $auth, $state) {
+GroupsUserModalCtrl.$inject = ['Group', 'selectedUser', '$stateParams', '$uibModalInstance'];
+function GroupsUserModalCtrl(Group, selectedUser, $stateParams, $uibModalInstance) {
   const vm = this;
 
-  vm.selected = selectedUser;
-  vm.group    = Group.get($stateParams);
-
-  vm.closeModal = () => $uibModalInstance.close(vm.selected);
+  vm.selected    = selectedUser;
+  vm.group       = Group.get($stateParams);
+  vm.closeModal  = () => $uibModalInstance.close(vm.selected);
   vm.cancelModal = () => $uibModalInstance.dismiss(vm.selected);
 }
