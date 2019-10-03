@@ -2,19 +2,18 @@ const router      = require('express').Router();
 const secureRoute = require('../lib/secureRoute');
 const imageUpload = require('../lib/imageUpload');
 const auth        = require('../controllers/auth');
-// const oauth       = require('../controllers/oauth');
 const users       = require('../controllers/users');
 const groups      = require('../controllers/groups');
 const properties  = require('../controllers/properties');
-// const likes       = require('../controllers/likes');
 const crimes      = require('../lib/crimeRoute');
 const zooplas     = require('../lib/zooplaRoutes');
-const geoCoder    = require('../lib/geoCoderRoutes');
+// const oauth       = require('../controllers/oauth');
+// const likes       = require('../controllers/likes');
+// const geoCoder    = require('../lib/geoCoderRoutes');
 
-// API
-router.route('/location')
-  .all(secureRoute)
-  .get(geoCoder.getLocation);
+// router.route('/location')
+//   .all(secureRoute)
+//   .get(geoCoder.getLocation);
 
 router.route('/properties')
   .all(secureRoute)

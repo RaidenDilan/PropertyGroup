@@ -3,8 +3,8 @@ angular
   .controller('GroupsPropsShowCtrl', GroupsPropsShowCtrl)
   .controller('UserImageModalCtrl', UserImageModalCtrl);
 
-GroupsPropsShowCtrl.$inject = ['$stateParams', '$state', '$http', 'Group', 'GroupProperty', 'GroupPropertyComment', 'GroupPropertyImage', 'GroupPropertyRating', 'Crimes', '$uibModal', '$mdDialog', 'GeoCoder', '$moment', 'ToastAlertService'];
-function GroupsPropsShowCtrl($stateParams, $state, $http, Group, GroupProperty, GroupPropertyComment, GroupPropertyImage, GroupPropertyRating, Crimes, $uibModal, $mdDialog, GeoCoder, $moment, ToastAlertService) {
+GroupsPropsShowCtrl.$inject = ['$stateParams', '$state', '$http', 'Group', 'GroupProperty', 'GroupPropertyComment', 'GroupPropertyImage', 'GroupPropertyRating', 'Crimes', '$uibModal', '$mdDialog', '$moment', 'ToastAlertService'];
+function GroupsPropsShowCtrl($stateParams, $state, $http, Group, GroupProperty, GroupPropertyComment, GroupPropertyImage, GroupPropertyRating, Crimes, $uibModal, $mdDialog, $moment, ToastAlertService) {
   const vm = this;
 
   vm.group            = Group.get($stateParams);

@@ -1,5 +1,11 @@
 bower_components
 node_modules
+
+npm-debug.log
+
 public
 archive
+
 oauth.js
+geoCoder.js
+geoCoderRoutes.js

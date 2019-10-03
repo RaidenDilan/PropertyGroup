@@ -443,25 +443,21 @@ md-content.groupsShowProp {
     }
   }
 }
-
 .chart, canvas, canvas.chart, .chart-doughnut {
   width: 250px;
   height: auto;
 }
-
 .google-map {
   height: 600px;
   width: 100%;
   background-color: grey;
 }
-
 .maps, #maps {
   height: 400px;
   width: 100%;
   text-align: center;
   margin-bottom: 50px;
 }
-
 .votingLikes {
   width: auto !important;
   border: 1px solid $brand-color;
@@ -476,7 +472,38 @@ md-content.groupsShowProp {
     padding: 0 !important;
   }
 }
-
 .votingButton {
   width: auto !important;
+}
+
+@include breakpoint(iPhoneSE) {
+  md-content.groupsShowProp {
+    md-card.groupsShowPropCard {
+      md-card-title, md-card-content {
+        padding: 0 0 16px 0;
+      }
+      md-card-actions {
+        padding: 0;
+        flex-flow: column nowrap;
+
+        .md-button {
+          margin: 3px 0;
+        }
+      }
+      div.groupsShowPropCardDiv {
+        md-card.groupsPropsShowTitle {
+          flex-flow: column nowrap;
+
+          div {
+            width: 100%;
+            min-height: 200px;
+          }
+        }
+      }
+    }
+
+    md-card.propertyAddRating {
+      
+    }
+  }
 }

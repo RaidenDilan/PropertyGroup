@@ -65,12 +65,35 @@ md-dialog {
       }
     }
 
+    &.md-content-overflow .md-actions,
+    &.md-content-overflow md-dialog-actions {
+      border-top-width: 0;
+    }
+
     md-dialog-content {
       padding: 0;
 
-      ul li {
-        letter-spacing: 1px;
+      ul {
+        li {
+          letter-spacing: 1px;
+          font-size: 15px;
+        }
+      }
+
+      div h3 {
         font-size: 15px;
+      }
+    }
+    md-dialog-actions {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      align-items: center;
+      min-height: 125px;
+      margin: 16px;
+
+      .md-button {
+        margin: 3px 0;
       }
     }
   }

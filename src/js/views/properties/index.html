@@ -23,8 +23,8 @@
             class="area"
             id="area"
             type="text"
-            autocomplete
             ng-model="propertiesIndex.area"
+            autocomplete
             geometry="propertiesIndex.area"
             placeholder="e.g. Chelsea, SW3 or Sloane Square Station"
             ng-required="true"
@@ -236,7 +236,7 @@
               </md-menu-item>
               <md-menu-divider></md-menu-divider>
               <md-menu-item>
-                <md-button ng-click="propertiesIndex.maxNum(49)">All</md-button>
+                <md-button ng-click="propertiesIndex.maxNum(100)">All</md-button>
               </md-menu-item>
             </md-menu-content>
           </md-menu>
@@ -279,7 +279,7 @@
     <div class="propsIndexContainer row">
       <md-card
         class="searchResultsCard"
-        ng-repeat="props in propertiesIndex.results.listing | limitTo: propertiesIndex.limit | orderBy: propertiesIndex.sortBy"
+        ng-repeat="props in propertiesIndex.results.listing | limitTo: propertiesIndex.queryLimit | orderBy: propertiesIndex.sortBy"
         ng-animate="'animate'"
         ng-show="$index < propertiesIndex.toShow"
         >

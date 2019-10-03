@@ -1,3 +1,5 @@
+/* global google:ignore */
+
 angular
   .module('pncApp')
   .controller('PropertiesIndexCtrl', PropertiesIndexCtrl)
@@ -7,24 +9,20 @@ PropertiesIndexCtrl.$inject = ['$scope', '$http', '$uibModal', '$mdDialog', '$mo
 function PropertiesIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
   const vm = this;
 
-
-  vm.results         = [];
-
-  // ZOOPLA DEFAULTS
-  vm.area            = null;
-  vm.propertyType    = null;
-  vm.minimumBeds     = null;
-  vm.maximumBeds     = null;
-  vm.minimumPrice    = null;
-  vm.maximumPrice    = null;
-  vm.maximumPrice    = null;
-  vm.orderBy         = 'price';
-  vm.ordering        = 'descending';
-
-  vm.originatorEvent = null; // Menu functionality
-  vm.limit           = 10; // loadMore Limit
-  vm.toShow          = 100; // Filtering and sorting - was 49
-  vm.sortBy          = '-first_published_date'; // Filtering and  sorting
+  vm.results      = [];
+  vm.area         = null;
+  vm.propertyType = null;
+  vm.minimumBeds  = null;
+  vm.maximumBeds  = null;
+  vm.minimumPrice = null;
+  vm.maximumPrice = null;
+  vm.maximumPrice = null;
+  vm.originEvent  = null;
+  vm.orderBy      = 'price';
+  vm.ordering     = 'descending';
+  vm.sortBy       = '-first_published_date'; // Filtering and sorting
+  vm.queryLimit   = 10; // loadMore Limit
+  vm.toShow       = 100; // Filtering and sorting --> was 49
 
   vm.getProperties = () => {
     if (vm.propertiesIndexForm.$valid) {
@@ -42,7 +40,6 @@ function PropertiesIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
         .then((response) => {
           propertyUpdater(response.data);
           vm.results = response.data;
-          console.log('vm.results', vm.results);
         })
         .then(() => {
           // var moment = $moment().format('ddd, hA');
@@ -57,21 +54,31 @@ function PropertiesIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
     }
   };
 
-  // function getPropertyLocation(lat, lng) {
-  //   console.log('getPropertyLocation --->>', lat, lng);
-  //   // if(!vm.listingLat) return false;
-  //
-  //   GeoCoder
-  //     .getLocation(lat, lng)
-  //     .then((response) => {
-  //       console.log('<--- ^ response ^ --->', lat, lng);
-  //       vm.property = response;
-  //       return vm.property;
-  //     });
-  // }
+  // $scope.$watch(() => vm.area, getPropertyLocation);
+  // $scope.$on('place_changed', (e, place) => console.log('place', place));
+
+  function propertyUpdater(properties) {
+    if (typeof(properties) !== 'object') throw 'Properties should be an object';
+    for (var i = 0; i < properties.length; i++) {
+      properties[i].first_published_date = createdOnParser(properties[i].first_published_date);
+      // properties[i].price = properties[i].like.length - properties[i].dislike.length;
+      // properties[i].popular = properties[i].like + properties[i].dislike;
+
+      // console.log('properties', properties);
+      // console.log('first_published_date', properties[i]);
+    }
+  }
+
+  // make sense of the timestamps.
+  function createdOnParser(data) {
+    var str  = data.split('T');
+    var date = str[0];
+    var time = str[1].split('.')[0];
+    return `${date} at ${time}`;
+  }
 
   vm.openMenu = ($mdMenu, e) => {
-    vm.originatorEvent = e;
+    vm.originEvent = e;
     $mdMenu.open(e);
   };
 
@@ -84,7 +91,7 @@ function PropertiesIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
   };
 
   vm.loadMore = () => {
-    return vm.limit +=12;
+    return vm.queryLimit +=12;
   };
 
   vm.showResults = () => {
@@ -107,26 +114,6 @@ function PropertiesIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
       }
     });
   };
-
-  function propertyUpdater(properties) {
-    if (typeof(properties) !== 'object') throw 'Properties should be an object';
-    for (var i = 0; i < properties.length; i++) {
-      properties[i].first_published_date = createdOnParser(properties[i].first_published_date);
-      // properties[i].price = properties[i].like.length - properties[i].dislike.length;
-      // properties[i].popular = properties[i].like + properties[i].dislike;
-
-      // console.log('properties', properties);
-      // console.log('first_published_date', properties[i]);
-    }
-  }
-
-  // make sense of the timestamps.
-  function createdOnParser(data) {
-    var str  = data.split('T');
-    var date = str[0];
-    var time = str[1].split('.')[0];
-    return `${date} at ${time}`;
-  }
 }
 
 PropertiesShowCtrl.$inject = ['$state', '$auth', 'User', 'GroupProperty', 'selectedProperty', '$mdDialog', 'ToastAlertService'];

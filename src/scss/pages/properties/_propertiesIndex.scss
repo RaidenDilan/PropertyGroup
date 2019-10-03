@@ -200,7 +200,6 @@ md-content.propsIndex {
       background-color: $white;
     }
   }
-
 }
 
 @include breakpoint(iPhoneSE) {
@@ -208,7 +207,7 @@ md-content.propsIndex {
     left: 18px !important;
   }
 
-  .propsIndex {
+  md-content.propsIndex {
     md-card.searchProperties {
       width: 100%;
 
@@ -218,13 +217,28 @@ md-content.propsIndex {
           flex-flow: column nowrap;
           align-items: center;
 
-          md-input-container {
+          md-input-container:first-child,
+          md-input-container:nth-of-type(2),
+          md-input-container:nth-of-type(3),
+          md-input-container:nth-of-type(4),
+          md-input-container:nth-of-type(5),
+          md-input-container:nth-of-type(6),
+          md-input-container:nth-of-type(7),
+          md-input-container:nth-of-type(8),
+          md-input-container:nth-of-type(9) {
             width: 100%;
           }
         }
       }
     }
-
+    md-card.propsIndexCard {
+      div.propsIndexCardContent {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+      }
+    }
     md-card-actions.loadMore {
       display: flex;
       justify-content: center;
