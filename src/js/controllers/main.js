@@ -46,6 +46,7 @@ angular
     function authenticateState(event, toState) {
       if (vm.stateHasChanged) vm.message = null;
       if (!vm.stateHasChanged) vm.stateHasChanged = true;
+      if (vm.hideBack) vm.hideBack = $state.current.hideBack ? $state.current.hideBack : false;
       if (vm.stateHasChanged) document.body.scrollTop = document.documentElement.scrollTop = 0; // BUG????
 
       if ($auth.getPayload()) {
@@ -89,8 +90,6 @@ angular
         .close()
         .then(() => $log.debug('close LEFT is done'));
     };
-
-    // vm.message = 'Sorry to see you leaving and we hope to see you again soon.😃';
 
     vm.logout = () => {
       $auth

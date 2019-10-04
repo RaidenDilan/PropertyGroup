@@ -13,7 +13,7 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, Group, GroupProperty, 
   vm.isReadonlyfalse  = false;
   vm.listingLat       = null;
   vm.listingLon       = null;
-  vm.latlng           = null;
+  vm.geometry           = null;
   vm.listingId        = $stateParams.listing_id;
   vm.labels           = ['Anti Social Behaviour', 'Burglary', 'Bike Theft', 'Drugs', 'Robbery', 'Vehicle Crimes', 'Violent Crimes'];
   vm.crimes           = [];
@@ -58,7 +58,7 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, Group, GroupProperty, 
         vm.properties = response.data;
         vm.listingLat = vm.properties.listing[0].latitude;
         vm.listingLon = vm.properties.listing[0].longitude;
-        vm.latlng     = `${vm.listingLat},${vm.listingLon}`;
+        vm.geometry     = `${vm.listingLat},${vm.listingLon}`;
         getPropertyCrimes();
       });
   }
