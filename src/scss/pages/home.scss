@@ -10,6 +10,14 @@ section.home {
   justify-content: center;
   align-items: center;
 
+  .material-icons {
+    margin: 0;
+    width: 80px;
+    height: 80px;
+    font-size: 80px;
+    color: $white;
+  }
+
   // .intro {
     // text-align: center;
     // width: 100%;
@@ -29,6 +37,8 @@ section.home {
 
     section.account {
       padding: 4rem 0 0 0;
+      display: flex;
+      flex-flow: row wrap;
 
       .md-button, a {
         min-width: 125px;
@@ -57,4 +67,90 @@ section.home {
   // .home {
   //   margin-top: 60px
   // }
+}
+
+@include breakpoint(iPhoneSE) {
+  section.home {
+    .material-icons {
+      width: 55px;
+      height: 55px;
+      font-size: 55px;
+    }
+    h1 {
+      font-size: 1.5rem !important;
+    }
+    h2 {
+      font-size: 100%;
+    }
+    section.account {
+      padding: 2rem 0 0 0;
+      display: flex;
+      flex-flow: column wrap;
+    }
+  }
+}
+
+@include breakpoint(iPhone8) {
+  section.home {
+    h1 {
+      font-size: 1.5rem;
+    }
+    h2 {
+      font-size: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhone8Plus) {
+  section.home {
+    h1 {
+      font-size: 2rem;
+    }
+    h2 {
+      font-size: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhoneX) {
+  section.home {
+    h1 {
+      font-size: 2rem;
+    }
+    h2 {
+      font-size: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPadMiniPortrait) {
+  section.home {
+    .material-icons {
+      width: 100px;
+      height: 100px;
+      font-size: 100px;
+    }
+    h1 {
+      font-size: 2.5rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+@include breakpoint(iPadPro) {
+  section.home {
+    .material-icons {
+      width: 125px;
+      height: 125px;
+      font-size: 125px;
+    }
+    h1 {
+      font-size: 3.5rem;
+    }
+    h2 {
+      font-size: 1.9rem;
+    }
+  }
 }

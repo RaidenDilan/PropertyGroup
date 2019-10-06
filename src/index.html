@@ -32,19 +32,15 @@
       </button>
 
       <div class="md-toolbar-tools">
-        <md-button class="md-icon-button" aria-label="Settings" ng-click="main.toggleLeft()">
+        <md-button class="md-icon-button menuIcon" aria-label="Settings" ng-click="main.toggleLeft()">
           <md-icon md-font-set="material-icons">menu</md-icon>
         </md-button>
 
-        <a ui-sref="home" aria-label="Go to: Home">
-          <h2>
-            <span>PNC</span>
-          </h2>
-        </a>
+        <a ui-sref="home" aria-label="Go to: Home"><h2><span>PNC</span></h2></a>
         <span flex></span>
 
         <md-button
-          class="md-icon-button"
+          class="md-icon-button groupIcon"
           name="usersShow"
           ng-if="main.isAuthenticated() && main.currentGroupId"
           md-nav-sref="groupsHome({ id: main.currentGroupId })"

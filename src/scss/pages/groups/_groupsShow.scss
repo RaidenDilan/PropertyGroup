@@ -443,6 +443,7 @@ md-content.groupsShowProp {
     }
   }
 }
+
 .chart, canvas, canvas.chart, .chart-doughnut {
   width: 250px;
   height: auto;
@@ -475,13 +476,19 @@ md-content.groupsShowProp {
 .votingButton {
   width: auto !important;
 }
-
+.gm-style img {
+  max-width: 100%;
+}
+// .gm-style .gm-style-iw-c {
+//   padding: 1rem !important;
+// }
 @include breakpoint(iPhoneSE) {
   md-content.groupsShowProp {
     md-card.groupsShowPropCard {
       md-card-title, md-card-content {
         padding: 0 0 16px 0;
       }
+
       md-card-actions {
         padding: 0;
         flex-flow: column nowrap;
@@ -490,27 +497,590 @@ md-content.groupsShowProp {
           margin: 3px 0;
         }
       }
+
       div.groupsShowPropCardDiv {
         md-card.groupsPropsShowTitle {
           flex-flow: column nowrap;
 
           div {
+            text-align: center;
             width: 100%;
             min-height: 200px;
+
+            md-card-title {
+              .md-headline {
+              font-size: 20px;
+            }
+            }
+
+            md-card-content {
+              ul {
+                justify-content: center;
+                align-items: center;
+                li {
+
+                }
+              }
+            }
           }
+        }
+        md-card.propertyAddRating {
+          .ratingForm {
+            .ratingBox {
+              width: 100%;
+            }
+            .md-button {
+              width: 100%;
+            }
+          }
+        }
+        md-card.propertyAddImage {
+          .addImageForm {
+            label {
+              width: 100%;
+            }
+            .md-button {
+              width: 100%;
+            }
+          }
+        }
+        md-card.propertyAddReview {
+          padding: 8px;
+
+          .addComment {
+            .addCommentForm {
+              .md-button {
+                width: 100%;
+              }
+            }
+          }
+        }
+
+        .md-tab {
+          padding: 12px 20px;
         }
       }
     }
+  }
+  md-dialog {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
 
-    md-card.propertyAddRating {
+    .md-dialog-content {
+      padding: 0;
 
+      img {
+        max-width: 100%;
+        // max-width: 100% !important;
+      }
+    }
+
+    md-dialog-actions {
+      margin: 0 16px;
+      // margin: 0 16px !important;
+      // min-height: 142px !important;
     }
   }
 }
 
-// .gm-style .gm-style-iw-c {
-//   padding: 1rem !important;
-// }
-.gm-style img {
-  max-width: 100%;
+@include breakpoint(iPhone8) {
+  md-content.groupsShowProp {
+    md-card.groupsShowPropCard {
+      md-card-title, md-card-content {
+        padding: 0 0 16px 0;
+      }
+
+      md-card-actions {
+        padding: 0;
+        flex-flow: column nowrap;
+
+        .md-button {
+          margin: 3px 0;
+        }
+      }
+
+      div.groupsShowPropCardDiv {
+        md-card.groupsPropsShowTitle {
+          flex-flow: column nowrap;
+
+          div {
+            text-align: center;
+            width: 100%;
+            min-height: 200px;
+
+            md-card-title {
+              .md-headline {
+              font-size: 20px;
+            }
+            }
+
+            md-card-content {
+              ul {
+                justify-content: center;
+                align-items: center;
+                li {
+
+                }
+              }
+            }
+          }
+        }
+        md-card.propertyAddRating {
+          .ratingForm {
+            .ratingBox {
+              width: 100%;
+            }
+            .md-button {
+              width: 100%;
+            }
+          }
+        }
+        md-card.propertyAddImage {
+          .addImageForm {
+            label {
+              width: 100%;
+            }
+            .md-button {
+              width: 100%;
+            }
+          }
+        }
+        md-card.propertyAddReview {
+          padding: 8px;
+
+          .addComment {
+            .addCommentForm {
+              .md-button {
+                width: 100%;
+              }
+            }
+          }
+        }
+
+        .md-tab {
+          padding: 12px 20px;
+        }
+      }
+    }
+  }
+  md-dialog {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+
+    .md-dialog-content {
+      padding: 0;
+
+      img {
+        max-width: 100%;
+        // max-width: 100% !important;
+      }
+    }
+
+    md-dialog-actions {
+      margin: 0 16px;
+      // margin: 0 16px !important;
+      // min-height: 142px !important;
+    }
+  }
+}
+
+@include breakpoint(iPhone8Plus) {
+  md-content.groupsShowProp {
+    md-card.groupsShowPropCard {
+      md-card-title, md-card-content {
+        padding: 0 0 16px 0;
+      }
+
+      md-card-actions {
+        padding: 0;
+        flex-flow: column nowrap;
+
+        .md-button {
+          margin: 3px 0;
+        }
+      }
+
+      div.groupsShowPropCardDiv {
+        md-card.groupsPropsShowTitle {
+          flex-flow: column nowrap;
+
+          div {
+            text-align: center;
+            width: 100%;
+            min-height: 200px;
+
+            md-card-title {
+              .md-headline {
+              font-size: 20px;
+            }
+            }
+
+            md-card-content {
+              ul {
+                justify-content: center;
+                align-items: center;
+                li {
+
+                }
+              }
+            }
+          }
+        }
+        md-card.propertyAddRating {
+          .ratingForm {
+            .ratingBox {
+              width: 100%;
+            }
+            .md-button {
+              width: 100%;
+            }
+          }
+        }
+        md-card.propertyAddImage {
+          .addImageForm {
+            label {
+              width: 100%;
+            }
+            .md-button {
+              width: 100%;
+            }
+          }
+        }
+        md-card.propertyAddReview {
+          padding: 8px;
+
+          .addComment {
+            .addCommentForm {
+              .md-button {
+                width: 100%;
+              }
+            }
+          }
+        }
+
+        .md-tab {
+          padding: 12px 20px;
+        }
+      }
+    }
+  }
+  md-dialog {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+
+    .md-dialog-content {
+      padding: 0;
+
+      img {
+        max-width: 100%;
+        // max-width: 100% !important;
+      }
+    }
+
+    md-dialog-actions {
+      margin: 0 16px;
+      // margin: 0 16px !important;
+      // min-height: 142px !important;
+    }
+  }
+}
+
+@include breakpoint(iPhoneX) {
+  md-content.groupsShowProp {
+    md-card.groupsShowPropCard {
+      md-card-title, md-card-content {
+        padding: 0 0 16px 0;
+      }
+
+      md-card-actions {
+        padding: 0;
+        flex-flow: column nowrap;
+
+        .md-button {
+          margin: 3px 0;
+        }
+      }
+
+      div.groupsShowPropCardDiv {
+        md-card.groupsPropsShowTitle {
+          flex-flow: column nowrap;
+
+          div {
+            text-align: center;
+            width: 100%;
+            min-height: 200px;
+
+            md-card-title {
+              .md-headline {
+              font-size: 20px;
+            }
+            }
+
+            md-card-content {
+              ul {
+                justify-content: center;
+                align-items: center;
+                li {
+
+                }
+              }
+            }
+          }
+        }
+        md-card.propertyAddRating {
+          .ratingForm {
+            .ratingBox {
+              width: 100%;
+            }
+            .md-button {
+              width: 100%;
+            }
+          }
+        }
+        md-card.propertyAddImage {
+          .addImageForm {
+            label {
+              width: 100%;
+            }
+            .md-button {
+              width: 100%;
+            }
+          }
+        }
+        md-card.propertyAddReview {
+          padding: 8px;
+
+          .addComment {
+            .addCommentForm {
+              .md-button {
+                width: 100%;
+              }
+            }
+          }
+        }
+
+        .md-tab {
+          padding: 12px 20px;
+        }
+      }
+    }
+
+    md-tab-content > div {
+      md-content {
+        display: flex;
+        flex-flow: column;
+      }
+
+      canvas {
+        // width: 200px;
+      }
+    }
+  }
+  md-dialog {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+
+    .md-dialog-content {
+      padding: 0;
+
+      img {
+        max-width: 100%;
+        // max-width: 100% !important;
+      }
+    }
+
+    md-dialog-actions {
+      margin: 0 16px;
+      // margin: 0 16px !important;
+      // min-height: 142px !important;
+    }
+  }
+}
+
+@include breakpoint(iPadMiniPortrait) {
+  md-content.groupsShowProp {
+    md-card-header {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+
+      md-card-avatar {
+        width: 25% !important;
+        md-content.groupsShowProp
+        img {
+          // width: 20%;
+        }
+      }
+      md-card-header-text {
+        width: 75% !important;
+        text-align: center;
+
+        span {
+          font-size: 18px;
+        }
+      }
+
+    }
+    md-card.groupsShowPropCard {
+      md-card-title, md-card-content {
+        padding: 0 0 16px 0;
+      }
+      div.groupsShowPropCardDiv {
+        md-card.propertyAddRating {
+          .ratingForm {
+            .ratingBox {
+              width: 25%;
+            }
+            .md-button {
+              width: 25%;
+            }
+          }
+        }
+        md-card.propertyAddImage {
+          .addImageForm {
+            label {
+              width: 25%;
+            }
+            .md-button {
+              width: 25%;
+            }
+          }
+        }
+        md-card.propertyAddReview {
+          padding: 8px;
+
+          .addComment {
+            .addCommentForm {
+              .md-button {
+                width: 100%;
+              }
+            }
+          }
+        }
+
+        md-card.propertyImages .groupsPropsShowUserImages md-card .userImages {
+          padding: 100px 0;
+        }
+      }
+    }
+  }
+  md-dialog {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+
+    .md-dialog-content {
+      padding: 0;
+
+      img {
+        max-width: 100%;
+        // max-width: 100% !important;
+      }
+    }
+
+    md-dialog-actions {
+      margin: 0 16px;
+      // margin: 0 16px !important;
+      // min-height: 142px !important;
+    }
+  }
+}
+
+@include breakpoint(iPadPro) {
+  md-content.groupsShowProp {
+    md-card-header {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+
+      md-card-avatar {
+        width: 25% !important;
+        md-content.groupsShowProp
+        img {
+          // width: 20%;
+        }
+      }
+      md-card-header-text {
+        width: 75% !important;
+        text-align: center;
+
+        span {
+          font-size: 18px;
+        }
+      }
+
+    }
+    md-card.groupsShowPropCard {
+      md-card-title, md-card-content {
+        padding: 0 0 16px 0;
+      }
+      div.groupsShowPropCardDiv {
+        md-card.propertyAddRating {
+          .ratingForm {
+            .ratingBox {
+              width: 25%;
+            }
+            .md-button {
+              width: 25%;
+            }
+          }
+        }
+        md-card.propertyAddImage {
+          .addImageForm {
+            label {
+              width: 25%;
+            }
+            .md-button {
+              width: 25%;
+            }
+          }
+        }
+        md-card.propertyAddReview {
+          padding: 8px;
+
+          .addComment {
+            .addCommentForm {
+              .md-button {
+                width: 100%;
+              }
+            }
+          }
+        }
+
+        md-card.propertyImages .groupsPropsShowUserImages md-card .userImages {
+          padding: 150px 0;
+        }
+      }
+    }
+  }
+  md-dialog {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+
+    .md-dialog-content {
+      padding: 0;
+
+      img {
+        max-width: 100%;
+        // max-width: 100% !important;
+      }
+    }
+
+    md-dialog-actions {
+      margin: 0 16px;
+      // margin: 0 16px !important;
+      // min-height: 142px !important;
+    }
+  }
 }

@@ -1,3 +1,5 @@
+@import 'queries';
+
 footer {
   flex-shrink: 0; /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
   // flex: 1 1 auto;
@@ -18,9 +20,27 @@ footer {
     }
   }
 
-  md-toolbar.md-default-theme.md-hue-2:not(.md-menu-toolbar), md-toolbar.md-hue-2:not(.md-menu-toolbar) {
+  md-toolbar.md-default-theme.md-hue-2:not(.md-menu-toolbar),
+  md-toolbar.md-hue-2:not(.md-menu-toolbar) {
     min-height: auto;
     margin: 0;
     padding: 0;
+  }
+}
+
+@include breakpoint(iPhoneSE) {
+  footer div {
+    font-size: 10px;
+  }
+}
+
+@include breakpoint(iPadMiniPortrait) {
+  footer div {
+    font-size: 15px;
+  }
+}
+@include breakpoint(iPadPro) {
+  footer div {
+    font-size: 20px;
   }
 }

@@ -1,13 +1,4 @@
 .usersShow {
-  // width: 100%;
-  // height: calc(100vh - 50px);
-  // height: 100%;
-  // min-width: 100%;
-  // min-height: 100%;
-  // display: flex;
-  // flex-flow: column nowrap;
-  // justify-content: center;
-  // align-items: center;
   background: $brand-color;
 
   md-card .md-actions:not(.layout-column) .md-button:not(.md-icon-button),
@@ -122,61 +113,172 @@
 
 @include breakpoint(iPhoneSE) {
   .usersShow {
-    height: 100vh;
-
     md-card {
       width: 100%;
+
+      md-card-content {
+        padding: 30px 0;
+
+        div {
+          width: 90%;
+        }
+        .groupInformation {
+          .user_group {
+            a {
+              font-size: 13px;
+            }
+          }
+
+          h3 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+        }
+      }
     }
   }
 }
 
-
 @include breakpoint(iPhone8) {
   .usersShow {
-    height: 100vh;
-
     md-card {
       width: 100%;
+
+      md-card-content {
+        padding: 30px 0;
+
+        div {
+          width: 90%;
+        }
+        .groupInformation {
+          .user_group {
+            a {
+              font-size: 13px;
+            }
+          }
+
+          h3 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+        }
+      }
     }
   }
 }
 
 @include breakpoint(iPhone8Plus) {
   .usersShow {
-    height: 100vh;
-
     md-card {
       width: 100%;
+
+      md-card-content {
+        padding: 30px 0;
+
+        div {
+          width: 90%;
+        }
+        .groupInformation {
+          .user_group {
+            a {
+              font-size: 13px;
+            }
+          }
+
+          h3 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+        }
+      }
     }
   }
 }
 
 @include breakpoint(iPhoneX) {
   .usersShow {
-    height: 100vh;
-
     md-card {
       width: 100%;
+
+      md-card-content {
+        padding: 30px 0;
+
+        div {
+          width: 90%;
+        }
+        .groupInformation {
+          .user_group {
+            a {
+              font-size: 13px;
+            }
+          }
+
+          h3 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+        }
+      }
     }
   }
 }
 
 @include breakpoint(iPadMiniPortrait) {
   .usersShow {
-    height: 100vh;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     md-card {
-      width: 75%;
+      width: 50%;
+
+      md-card-content {
+        padding: 30px 0;
+
+        div {
+          width: 75%;
+        }
+        .groupInformation {
+          h3 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+        }
+      }
     }
   }
 }
 
 @include breakpoint(iPadPro) {
   .usersShow {
-    height: 100vh;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     md-card {
-      width: 75%;
+      width: 50%;
+
+      md-card-content {
+        padding: 30px 0;
+
+        div {
+          width: 75%;
+        }
+        .groupInformation {
+          h3 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+        }
+      }
     }
   }
 }

@@ -119,3 +119,93 @@ md-content.groupsHome {
     }
   }
 }
+
+@include breakpoint(iPhoneSE) {
+  .groupsHome {
+    md-card-header {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+@include breakpoint(iPhone8) {
+  .groupsHome {
+    md-card-header {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+@include breakpoint(iPhone8Plus) {
+  .groupsHome {
+    md-card-header {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+@include breakpoint(iPhoneX) {
+  .groupsHome {
+    md-card-header {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+@include breakpoint(iPadMiniPortrait) {
+  .groupsHome {
+    md-card-header {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        font-size: 25px;
+      }
+    }
+  }
+}
+
+@include breakpoint(iPadPro) {
+  .groupsHome {
+    md-card-header {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        font-size: 25px;
+      }
+    }
+  }
+}

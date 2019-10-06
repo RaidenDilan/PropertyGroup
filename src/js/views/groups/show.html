@@ -50,13 +50,13 @@
 
       <md-card class="propertyTabs">
         <md-tabs class="md-primary" md-center-tabs="" md-dynamic-height md-border-bottom>
-          <md-tab label="Property Details">
+          <md-tab label="Details">
             <md-content class="md-padding">
               <p class="md-body-1">{{ property.description }}</p>
             </md-content>
           </md-tab>
 
-          <md-tab label="Maps & Nearby">
+          <md-tab label="Map">
             <md-content>
               <property-map
                 property="property"
@@ -68,7 +68,7 @@
             </md-content>
           </md-tab>
 
-          <md-tab label="Crime Stats">
+          <md-tab label="Crime">
             <md-content class="md-padding">
               <canvas
                 basechart
@@ -186,7 +186,7 @@
         <br>
 
         <div class="groupsPropsShowUserImages row">
-          <div class="col s2" ng-repeat="image in groupsPropsShow.prop.images track by $index">
+          <div class="col s6 m4" ng-repeat="image in groupsPropsShow.prop.images track by $index">
 
             <md-card>
               <md-card-header>
@@ -225,7 +225,7 @@
 
       <md-card class="md-padding propertyAddReview">
         <div class="addComment">
-          <div class="row">
+          <!-- <div class="row"> -->
             <form class="addCommentForm" ng-submit="groupsPropsShow.addComment()" ng-if="main.isAuthenticated()">
               <div class="col s12">
                 <md-input-container class="md-block">
@@ -253,7 +253,7 @@
                 </md-button>
               </md-card-actions>
             </form>
-          </div>
+          <!-- </div> -->
         </div>
       </md-card>
 

@@ -1,3 +1,5 @@
+@import 'queries';
+
 md-toolbar.md-default-theme.md-hue-2:not(.md-menu-toolbar),
 md-toolbar.md-hue-2:not(.md-menu-toolbar) {
   // background-color: transparent;
@@ -70,3 +72,155 @@ md-toolbar.navBar {
 //   color: #FFFFFF;
 //   background: #FFFFFF;
 // }
+
+
+@include breakpoint(iPhoneSE) {
+  md-toolbar.navBar {
+    .md-toolbar-tools {
+      .md-button {
+        md-icon {
+          height: 22px;
+          min-height: 22px;
+        }
+      }
+    }
+  }
+}
+
+@include breakpoint(iPhone8) {
+  md-toolbar.navBar {
+    .md-toolbar-tools {
+      .md-button {
+        md-icon {
+          height: 22px;
+          min-height: 22px;
+        }
+      }
+    }
+  }
+}
+
+@include breakpoint(iPhone8Plus) {
+  md-toolbar.navBar {
+    .md-toolbar-tools {
+      .md-button {
+        md-icon {
+          height: 22px;
+          min-height: 22px;
+        }
+      }
+    }
+  }
+}
+
+@include breakpoint(iPhoneX) {
+  md-toolbar.navBar {
+    .md-toolbar-tools {
+      .md-button {
+        md-icon {
+          height: 22px;
+          min-height: 22px;
+        }
+      }
+    }
+  }
+}
+
+@include breakpoint(iPadMiniPortrait) {
+  md-toolbar.navBar {
+    #btn-back {
+      // min-height: 80px;
+      left: 0;
+      display: flex;
+      justify-content: center;
+
+      &:hover {
+        transition: none;
+      }
+
+      md-icon {
+        // width: 35px;
+        // height: 30px;
+        // font-size: 30px;
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+        background-color: $white;
+        color: $black;
+      }
+    }
+
+    .md-toolbar-tools {
+      .md-button {
+        md-icon {
+          height: 22px;
+          min-height: 22px;
+        }
+      }
+    }
+  }
+}
+
+@include breakpoint(iPadPro) {
+  md-toolbar.navBar {
+    #btn-back {
+      min-height: 80px;
+      left: 0;
+      display: flex;
+      justify-content: center;
+
+      &:hover {
+        transition: none;
+      }
+
+      md-icon {
+        width: 35px;
+        height: 30px;
+        font-size: 30px;
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+        background-color: $white;
+        color: $black;
+      }
+    }
+
+    .md-toolbar-tools {
+      height: 80px;
+      max-height: 80px;
+
+      a {
+        font-size: 1.5rem;
+        font-weight: 800;
+      }
+
+      .groupIcon {
+        width: 80px;
+        height: 80px;
+        max-height: 80px;
+        display: flex;
+        justify-content: center;
+
+        md-icon {
+          width: 40px;
+          height: 40px;
+          min-height: 40px;
+          font-size: 40px;
+        }
+      }
+
+      .menuIcon {
+        width: 80px;
+        height: 80px;
+        max-height: 80px;
+        display: flex;
+        justify-content: center;
+
+        md-icon {
+          width: 40px;
+          height: 40px;
+          min-height: 40px;
+          font-size: 40px;
+        }
+      }
+    }
+  }
+}

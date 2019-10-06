@@ -1,44 +1,55 @@
 /* NOTE Breakpoint Sizes */
-$screen-iPhoneSE-max-width: 320px; // iPhone SE
 
-$screen-iPhoneX-max-width: 375px; // iPhone X
-$screen-iPhoneX-max-height: 812px; // iPhone X
+$screen-iPhoneSE-max-width: 320px;
+$screen-iPhoneSE-min-width: 320px;
+$screen-iPhoneSE-max-height: 568px;
+$screen-iPhoneSE-min-height: 568px;
 
-$screen-iPhone8-min-width: 375px; // iPhone 6/7/8
-$screen-iPhone8-max-width: 375px; // iPhone 6/7/8
-$screen-iPhone8-min-height: 667px; // iPhone 6/7/8
-$screen-iPhone8-max-height: 667px; // iPhone 6/7/8
+$screen-iPhoneX-max-width: 375px;
+$screen-iPhoneX-min-width: 375px;
+$screen-iPhoneX-max-height: 812px;
+$screen-iPhoneX-min-height: 812px;
 
-$screen-iPhone8Plus-min-width: 414px; // iPhone 6/7/8 PLUS
-$screen-iPhone8Plus-max-width: 414px; // iPhone 6/7/8 PLUS
-$screen-iPhone8Plus-min-height: 736px; // iPhone 6/7/8 PLUS
-$screen-iPhone8Plus-max-height: 736px; // iPhone 6/7/8 PLUS
+$screen-iPhone8-min-width: 375px;
+$screen-iPhone8-max-width: 375px;
+$screen-iPhone8-min-height: 667px;
+$screen-iPhone8-max-height: 667px;
 
-$screen-iPad-max-width: 768px; // iPad
+$screen-iPhone8Plus-min-width: 414px;
+$screen-iPhone8Plus-max-width: 414px;
+$screen-iPhone8Plus-min-height: 736px;
+$screen-iPhone8Plus-max-height: 736px;
 
-$screen-iPadMini-min-width: 768px; // iPad Mini
-$screen-iPadMini-max-width: 768px; // iPad Mini
-$screen-iPadMini-min-height: 1024px; // iPad Mini
-$screen-iPadMini-max-height: 1024px; // iPad Mini
+$screen-iPad-max-width: 768px;
 
-$screen-desktop-max-width: 1024px; // Desktop
-$screen-desktop-min-width: 1024px; // Desktop
+$screen-iPadMini-min-width: 768px;
+$screen-iPadMini-max-width: 768px;
+$screen-iPadMini-min-height: 1024px;
+$screen-iPadMini-max-height: 1024px;
 
-$screen-iPadPro-min-width: 1024px; // Desktop
-$screen-iPadPro-max-width: 1024px; // Desktop
-$screen-iPadPro-min-height: 1366px; // Desktop
-$screen-iPadPro-max-height: 1366px; // Desktop
+$screen-desktop-max-width: 1024px;
+$screen-desktop-min-width: 1024px;
+
+$screen-iPadPro-min-width: 1024px;
+$screen-iPadPro-max-width: 1024px;
+$screen-iPadPro-min-height: 1366px;
+$screen-iPadPro-max-height: 1366px;
 
 /* NOTE BREAKPOINT MIXIN */
 @mixin breakpoint($media) {
 	@if $media == iPhoneSE {
 		@media only screen
-			and (max-device-width: $screen-iPhoneSE-max-width) { @content; }
+			and (max-device-width: $screen-iPhoneSE-max-width)
+			and (min-device-width: $screen-iPhoneSE-min-width)
+			and (max-device-height: $screen-iPhoneSE-max-height)
+			and (min-device-height: $screen-iPhoneSE-min-height) { @content; }
 	}
 	@else if $media == iPhoneX {
 		@media only screen
 			and (max-device-width: $screen-iPhoneX-max-width)
-			and (max-device-height: $screen-iPhoneX-max-height) { @content; }
+			and (min-device-width: $screen-iPhoneX-min-width)
+			and (max-device-height: $screen-iPhoneX-max-height)
+			and (min-device-height: $screen-iPhoneX-min-height) { @content; }
 	}
 	@else if $media == iPhone8 {
 		@media only screen

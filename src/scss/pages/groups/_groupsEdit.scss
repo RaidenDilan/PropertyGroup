@@ -181,3 +181,89 @@
     }
   }
 }
+
+@include breakpoint(iPhoneSE) {
+  .groupsEdit {
+    md-card {
+      padding: 1.5rem;
+      width: 100%;
+
+      .search-bar-instruction {
+        padding: 0 0 0 1rem;
+      }
+    }
+  }
+}
+
+@include breakpoint(iPhone8) {
+  .groupsEdit {
+    md-card {
+      padding: 1.5rem;
+      width: 100%;
+
+      .search-bar-instruction {
+        padding: 0 0 0 1rem;
+      }
+    }
+  }
+}
+
+@include breakpoint(iPhone8Plus) {
+  .groupsEdit {
+    md-card {
+      padding: 2.5rem;
+      width: 100%;
+
+      .search-bar-instruction {
+        padding: 0 0 0 1rem;
+      }
+    }
+  }
+}
+
+@include breakpoint(iPhoneX) {
+  .groupsEdit {
+    md-card {
+      padding: 1.5rem;
+      width: 100%;
+
+      .search-bar-instruction {
+        padding: 0 0 0 1rem;
+      }
+    }
+  }
+}
+
+@include breakpoint(iPadMiniPortrait) {
+  .groupsEdit {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    md-card {
+      width: 50%;
+
+      .search-bar-instruction {
+        padding: 0 0 0 1rem;
+      }
+    }
+  }
+}
+
+@include breakpoint(iPadPro) {
+  .groupsEdit {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    md-card {
+      width: 50%;
+
+      .search-bar-instruction {
+        padding: 0 0 0 1rem;
+      }
+    }
+  }
+}

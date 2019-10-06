@@ -7,6 +7,7 @@
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+  background-color: $brand-color;
 
   md-card {
     width: 50%;
@@ -178,5 +179,49 @@
         }
       }
     }
+  }
+}
+
+@include breakpoint(iPhoneSE) {
+  .groupsNew {
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhone8) {
+  .groupsNew {
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhone8Plus) {
+  .groupsNew {
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhoneX) {
+  .groupsNew {
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPadMiniPortrait) {
+  .groupsNew {
+
+  }
+}
+
+@include breakpoint(iPadPro) {
+  .groupsNew {
+
   }
 }

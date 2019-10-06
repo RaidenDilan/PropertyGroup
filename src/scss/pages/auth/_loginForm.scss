@@ -1,5 +1,9 @@
 .loginForm {
   background-color: $brand-color;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .loginFormCard {
     width: 50%;
@@ -47,7 +51,12 @@
 
 @include breakpoint(iPhoneSE) {
   .loginForm {
-    height: 100vh;
+
+    .loginFormCard {
+      // margin: 1.5rem auto 0 auto;
+      margin: 0;
+      width: 100%;
+    }
 
     md-card {
       width: 100%;
@@ -57,38 +66,65 @@
 
 @include breakpoint(iPhoneX) {
   .loginForm {
-    height: 100vh;
+    .loginFormCard {
+      // margin: 1.5rem auto 0 auto;
+      margin: 0;
+      width: 100%;
+    }
+    md-card {
+      width: 100%;
+    }
   }
 }
 
 @include breakpoint(iPhone8) {
   .loginForm {
-    height: 100vh;
+    .loginFormCard {
+      // margin: 3.5rem auto 0 auto;
+      margin: 0;
+      width: 100%;
+    }
+    md-card {
+      width: 100%;
+    }
   }
 }
 
 @include breakpoint(iPhone8Plus) {
   .loginForm {
-    height: 100vh;
+    .loginFormCard {
+      // margin: 5rem auto 0 auto;
+      margin: 0;
+      width: 100%;
+    }
+    md-card {
+      width: 100%;
+    }
   }
 }
 
 @include breakpoint(iPadPro) {
   .loginForm {
-    height: 100vh;
-
-    md-card {
+    .loginFormCard {
+      // margin: 5rem auto 0 auto;
+      margin: 0;
       width: 50%;
+    }
+    md-card {
+      width: 100%;
     }
   }
 }
 
 @include breakpoint(iPadMiniPortrait) {
   .loginForm {
-    height: 100vh;
-
-    md-card {
+    .loginFormCard {
+      // margin: 5rem auto 0 auto;
+      margin: 0;
       width: 50%;
+    }
+    md-card {
+      width: 100%;
     }
   }
 }
