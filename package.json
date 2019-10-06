@@ -4,7 +4,8 @@
   "description": "WDI_25 Project 3 - propertyGroup",
   "main": "server.js",
   "engines": {
-    "node": "7.4.0"
+    "node": "7.4.0",
+    "npm": "6.10.x"
   },
   "scripts": {
     "postinstall": "bower install && gulp deploy",

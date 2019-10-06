@@ -1,10 +1,8 @@
-bower_components
-node_modules
+/node_modules
+/bower_components
 
-npm-debug.log
-
-public
-archive
+/public
+/archive
 
 oauth.js
 geoCoder.js
