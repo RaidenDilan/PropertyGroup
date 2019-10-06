@@ -193,6 +193,14 @@ md-content.groupsHome {
       }
     }
   }
+  md-dialog.userModal {
+    height: 35% !important;
+
+    md-dialog-actions {
+      margin: 16px !important;
+      border: 0 !important;
+    }
+  }
 }
 
 @include breakpoint(iPadPro) {
@@ -206,6 +214,13 @@ md-content.groupsHome {
       span {
         font-size: 25px;
       }
+    }
+  }
+  md-dialog.userModal {
+    height: 35% !important;
+    md-dialog-actions {
+      margin: 16px !important;
+      border: 0 !important;
     }
   }
 }

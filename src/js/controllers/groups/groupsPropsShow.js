@@ -13,26 +13,26 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, Group, GroupProperty, 
   vm.isReadonlyfalse  = false;
   vm.listingLat       = null;
   vm.listingLon       = null;
-  vm.geometry           = null;
+  vm.geometry         = null;
   vm.listingId        = $stateParams.listing_id;
-  vm.labels           = ['Anti Social Behaviour', 'Burglary', 'Bike Theft', 'Drugs', 'Robbery', 'Vehicle Crimes', 'Violent Crimes'];
   vm.crimes           = [];
   vm.crimes.crimeData = [];
   vm.toastDelay       = 3000;
   vm.toastStatus      = 'success';
+  vm.labels           = ['Anti Social Behaviour', 'Burglary', 'Bike Theft', 'Drugs', 'Robbery', 'Vehicle Crimes', 'Violent Crimes'];
 
-  vm.chartOptions = {
-    responsive: true, // set to false to remove responsiveness. Default responsive value is true.
-    legend: {
-      display: true,
-      position: 'right',
-      fullWidth: false,
-      labels: {
-        fontColor: 'rgb(255, 99, 132)'
-      },
-      onClick: (e) => e.stopPropagation(),
-    }
-  };
+  // vm.chartOptions = {
+  //   responsive: true, // set to false to remove responsiveness. Default responsive value is true.
+  //   legend: {
+  //     display: true,
+  //     position: 'right',
+  //     fullWidth: false,
+  //     labels: {
+  //       fontColor: 'rgb(255, 99, 132)'
+  //     },
+  //     onClick: (e) => e.stopPropagation(),
+  //   }
+  // };
 
   if(vm.group) getGroup();
 
@@ -62,18 +62,6 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, Group, GroupProperty, 
         getPropertyCrimes();
       });
   }
-
-  // function getPropertyLocation(lat, lng) {
-  //   console.log('getPropertyLocation --->>', lat, lng);
-  //   if(!vm.listingLat) return false;
-  //
-  //   GeoCoder
-  //     .getLocation(lat, lng)
-  //     .then((response) => {
-  //       vm.property = response;
-  //       return vm.property;
-  //     });
-  // }
 
   function getPropertyCrimes() {
     if(!vm.listingLat) return false;

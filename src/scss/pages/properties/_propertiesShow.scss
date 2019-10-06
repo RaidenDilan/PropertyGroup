@@ -169,8 +169,14 @@ md-dialog {
       ul li {
         letter-spacing: 1px;
         font-size: 20px;
+
+        &:nth-child(2) {
+          padding: 26px;
+        }
       }
       div {
+        padding: 26px;
+
         h3 {
           font-size: 22px;
           padding-top: 1rem;
@@ -200,8 +206,14 @@ md-dialog {
       ul li {
         letter-spacing: 1px;
         font-size: 22px;
+
+        &:nth-child(2) {
+          padding: 26px;
+        }
       }
       div {
+        padding: 26px;
+
         h3 {
           font-size: 22px;
           padding-top: 1rem;

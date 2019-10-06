@@ -29,8 +29,7 @@ angular
 
     function secureState(event, toState, toParams, fromState, fromParams) {
       vm.message = null;
-
-      if (vm.hideBack === true) vm.hideBack = $state.current.hideBack ? $state.current.hideBack : false;
+      if (!detectMobile() && vm.hideBack === true) vm.hideBack = $state.current.hideBack ? $state.current.hideBack : false;
       if (!$auth.isAuthenticated() && protectedStates.includes(toState.name)) {
         event.preventDefault();
         $state.go('login');
@@ -72,6 +71,11 @@ angular
           .toggle()
           .then(() => $log.debug('toggle ' + navID + ' is done'));
       };
+    }
+
+    function detectMobile() {
+      if(navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)) return true;
+      else return false;
     }
 
     vm.close = () => {

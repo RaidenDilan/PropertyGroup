@@ -250,3 +250,267 @@ md-content.propsIndex {
     }
   }
 }
+
+@include breakpoint(iPhone8) {
+  md-select-menu-container, .md-select-menu-container {
+    left: 18px !important;
+  }
+
+  md-content.propsIndex {
+    md-card.searchProperties {
+      width: 100%;
+
+      form {
+        .propertiesSearch {
+          display: flex;
+          flex-flow: column nowrap;
+          align-items: center;
+
+          md-input-container:first-child,
+          md-input-container:nth-of-type(2),
+          md-input-container:nth-of-type(3),
+          md-input-container:nth-of-type(4),
+          md-input-container:nth-of-type(5),
+          md-input-container:nth-of-type(6),
+          md-input-container:nth-of-type(7),
+          md-input-container:nth-of-type(8),
+          md-input-container:nth-of-type(9) {
+            width: 100%;
+          }
+        }
+      }
+    }
+    md-card.propsIndexCard {
+      div.propsIndexContainer md-card {
+        width: 100%;
+      }
+      div.propsIndexCardContent {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    md-card-actions.loadMore {
+      display: flex;
+      justify-content: center;
+      margin: 0;
+
+      button {
+        margin: 1.25rem auto 0 auto;
+      }
+    }
+  }
+}
+
+@include breakpoint(iPhone8Plus) {
+  md-select-menu-container, .md-select-menu-container {
+    left: 18px !important;
+  }
+
+  md-content.propsIndex {
+    md-card.searchProperties {
+      width: 100%;
+
+      form {
+        .propertiesSearch {
+          display: flex;
+          flex-flow: column nowrap;
+          align-items: center;
+
+          md-input-container:first-child,
+          md-input-container:nth-of-type(2),
+          md-input-container:nth-of-type(3),
+          md-input-container:nth-of-type(4),
+          md-input-container:nth-of-type(5),
+          md-input-container:nth-of-type(6),
+          md-input-container:nth-of-type(7),
+          md-input-container:nth-of-type(8),
+          md-input-container:nth-of-type(9) {
+            width: 100%;
+          }
+        }
+      }
+    }
+    md-card.propsIndexCard {
+      div.propsIndexContainer md-card {
+        width: 100%;
+      }
+      div.propsIndexCardContent {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    md-card-actions.loadMore {
+      display: flex;
+      justify-content: center;
+      margin: 0;
+
+      button {
+        margin: 1.25rem auto 0 auto;
+      }
+    }
+  }
+}
+
+@include breakpoint(iPhoneX) {
+  md-select-menu-container, .md-select-menu-container {
+    left: 18px !important;
+  }
+
+  md-content.propsIndex {
+    md-card.searchProperties {
+      width: 100%;
+
+      form {
+        .propertiesSearch {
+          display: flex;
+          flex-flow: column nowrap;
+          align-items: center;
+
+          md-input-container:first-child,
+          md-input-container:nth-of-type(2),
+          md-input-container:nth-of-type(3),
+          md-input-container:nth-of-type(4),
+          md-input-container:nth-of-type(5),
+          md-input-container:nth-of-type(6),
+          md-input-container:nth-of-type(7),
+          md-input-container:nth-of-type(8),
+          md-input-container:nth-of-type(9) {
+            width: 100%;
+          }
+        }
+      }
+    }
+    md-card.propsIndexCard {
+      div.propsIndexContainer md-card {
+        width: 100%;
+      }
+      div.propsIndexCardContent {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    md-card-actions.loadMore {
+      display: flex;
+      justify-content: center;
+      margin: 0;
+
+      button {
+        margin: 1.25rem auto 0 auto;
+      }
+    }
+  }
+}
+
+@include breakpoint(iPadMiniPortrait) {
+  md-select-menu-container, .md-select-menu-container {
+    left: 18px !important;
+  }
+
+  md-content.propsIndex {
+    height: 100%;
+
+    md-card.searchProperties {
+      form {
+        .propertiesSearch {
+          display: flex;
+          flex-flow: column nowrap;
+          align-items: center;
+
+          md-input-container:first-child,
+          md-input-container:nth-of-type(2),
+          md-input-container:nth-of-type(3),
+          md-input-container:nth-of-type(4),
+          md-input-container:nth-of-type(5),
+          md-input-container:nth-of-type(6),
+          md-input-container:nth-of-type(7),
+          md-input-container:nth-of-type(8),
+          md-input-container:nth-of-type(9) {
+            width: 100%;
+          }
+        }
+      }
+    }
+    md-card.propsIndexCard {
+      div.propsIndexCardContent {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+      }
+      div.propsIndexContainer {
+        md-card {
+          width: calc(100% / 3 - 8px);
+        }
+      }
+    }
+    md-card-actions.loadMore {
+      display: flex;
+      justify-content: center;
+      margin: 0;
+
+      button {
+        margin: 1.25rem auto 0 auto;
+      }
+    }
+  }
+}
+
+@include breakpoint(iPadPro) {
+  md-select-menu-container, .md-select-menu-container {
+    left: 18px !important;
+  }
+
+  md-content.propsIndex {
+    md-card.searchProperties {
+      width: 50%;
+
+      form {
+        .propertiesSearch {
+          display: flex;
+          flex-flow: column nowrap;
+          align-items: center;
+
+          md-input-container:first-child,
+          md-input-container:nth-of-type(2),
+          md-input-container:nth-of-type(3),
+          md-input-container:nth-of-type(4),
+          md-input-container:nth-of-type(5),
+          md-input-container:nth-of-type(6),
+          md-input-container:nth-of-type(7),
+          md-input-container:nth-of-type(8),
+          md-input-container:nth-of-type(9) {
+            width: 100%;
+          }
+        }
+      }
+    }
+    md-card.propsIndexCard {
+      div.propsIndexCardContent {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+      }
+      div.propsIndexContainer {
+        md-card {
+          width: calc(100% / 3 - 8px);
+        }
+      }
+    }
+    md-card-actions.loadMore {
+      display: flex;
+      justify-content: center;
+      margin: 0;
+
+      button {
+        margin: 1.25rem auto 0 auto;
+      }
+    }
+  }
+}
