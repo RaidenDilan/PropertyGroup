@@ -17,7 +17,7 @@ function GroupsPropsShowCtrl($stateParams, $state, $http, Group, GroupProperty, 
   vm.listingId        = $stateParams.listing_id;
   vm.crimes           = [];
   vm.crimes.crimeData = [];
-  vm.toastDelay       = 3000;
+  vm.toastDelay       = 2000;
   vm.toastStatus      = 'success';
   vm.labels           = ['Anti Social Behaviour', 'Burglary', 'Bike Theft', 'Drugs', 'Robbery', 'Vehicle Crimes', 'Violent Crimes'];
 

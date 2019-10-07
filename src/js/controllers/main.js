@@ -11,7 +11,7 @@ angular
     $state.current.hideBack = true;
     vm.hideBack             = $state.current.hideBack;
     vm.isAuthenticated      = $auth.isAuthenticated;
-    vm.toastDelay           = 3000;
+    vm.toastDelay           = 2000;
     vm.toggleLeft           = buildToggler('left');
 
     $rootScope.$on('error', stateErrors);

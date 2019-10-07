@@ -4,5 +4,21 @@ const dbURI        = process.env.MONGODB_URI || `mongodb://localhost/propertyGro
 const secret       = process.env.SECRET || 'I bet you never even look at this!';
 const google       = process.env.PR3_GOOGLE_MAP_KEY;
 const mongoOptions = { useMongoClient: true };
+const bluebirdOptions = {
+  warnings: { // Enables all warnings except forgotten return statements.
+    wForgottenReturn: false // The corresponding environmental variable key is BLUEBIRD_W_FORGOTTEN_RETURN.
+  }
+  // longStackTraces: true, // Enable long stack traces
+  // cancellation: true, // Enable cancellation
+  // monitoring: true // Enable monitoring
+};
 
-module.exports = { port, env, dbURI, secret, google, mongoOptions };
+module.exports = {
+  port,
+  env,
+  dbURI,
+  secret,
+  google,
+  mongoOptions,
+  bluebirdOptions
+};

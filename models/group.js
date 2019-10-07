@@ -51,7 +51,6 @@ groupSchema.pre('save', function addGroupToUsers(next) {
     .then((users) => {
       const promises = users.map((user) => {
         user.group = this.id;
-        console.log('user.id <---*** addGroupIdToUsers ***---> id:', user.id);
         return user.save();
       });
 
@@ -71,7 +70,6 @@ groupSchema.pre('remove', function removeGroupFromUsers(next) {
     .then((users) => {
       const promises = users.map((user) => {
         user.group = null;
-        console.log('user.id <---*** removeGroupIdFromUsers ***---> id:', user.id);
         return user.save();
       });
 

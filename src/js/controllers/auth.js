@@ -15,7 +15,7 @@ function RegisterCtrl($auth, $state, ToastAlertService) {
         .signup(vm.user)
         .then((user) => {
           $state.go('login');
-          ToastAlertService.customToast(`${user.data.message}`, 3000, 'success');
+          ToastAlertService.customToast(`${user.data.message}`, 2000, 'success');
         });
 
       vm.registerForm.$setUntouched();
@@ -36,7 +36,7 @@ function LoginCtrl($auth, $state, $stateParams, ToastAlertService) {
         .login(vm.credentials)
         .then((user) => {
           $state.go('usersShow', { id: $auth.getPayload().userId });
-          ToastAlertService.customToast(`${user.data.message}`, 3000, 'success');
+          ToastAlertService.customToast(`${user.data.message}`, 2000, 'success');
         });
 
       vm.loginForm.$setUntouched();
@@ -49,7 +49,7 @@ function LoginCtrl($auth, $state, $stateParams, ToastAlertService) {
       .authenticate(provider)
       .then(() => {
         $state.go('usersShow', { id: $auth.getPayload().userId });
-        ToastAlertService.customToast('You\'re now logged in', 3000, 'top right', 'success');
+        ToastAlertService.customToast('You\'re now logged in', 2000, 'top right', 'success');
       });
   };
 }

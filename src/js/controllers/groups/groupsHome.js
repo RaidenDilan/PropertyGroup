@@ -9,7 +9,7 @@ function GroupsHomeCtrl($scope, $state, $http, Group, GroupUser, $stateParams, $
 
   vm.group      = {};
   vm.listingIds = [];
-  vm.toastDelay = 3000;
+  vm.toastDelay = 2000;
 
   Group
     .get($stateParams)

@@ -10,7 +10,7 @@ function GroupsNewCtrl($state, $auth, $scope, Group, User, $filter, ToastAlertSe
   vm.group.users          = [];
   vm.chosenUsers          = [];
   vm.query                = null;
-  vm.toastDelay           = 3000;
+  vm.toastDelay           = 2000;
   vm.toastStatus          = 'success';
   vm.filteredLength       = 0;
   vm.availableUsersLength = 0;

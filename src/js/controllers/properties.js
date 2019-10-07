@@ -120,8 +120,8 @@ PropertiesShowCtrl.$inject = ['$state', '$auth', 'User', 'GroupProperty', 'selec
 function PropertiesShowCtrl($state, $auth, User, GroupProperty, selectedProperty, $mdDialog, ToastAlertService) {
   const vm = this;
 
-  vm.selected = selectedProperty;
-  vm.toastDelay  = 3000;
+  vm.selected    = selectedProperty;
+  vm.toastDelay  = 2000;
   vm.toastStatus = 'success';
 
   const authUserId = $auth.getPayload().userId;

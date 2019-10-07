@@ -10,7 +10,7 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
   // vm.group                = Group.get($stateParams);
   vm.groupUsers           = [];
   vm.query                = null;
-  vm.toastDelay           = 3000;
+  vm.toastDelay           = 2000;
   vm.toastStatus          = 'success';
   vm.filteredLength       = 0;
   vm.availableUsersLength = 0;

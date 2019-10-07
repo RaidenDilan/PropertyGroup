@@ -27,7 +27,7 @@ const validateLocalJs = () => {
 const fetchLocalJs = () => {
   return validateLocalJs()
     .pipe(order([config.main.js,config.selectors.js]))
-    .pipe(babel({ presets: ['es2015'] }));
+    .pipe(babel({ presets: ['env'] }));
 };
 
 const buildJs = () => {

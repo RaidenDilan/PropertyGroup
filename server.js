@@ -2,25 +2,12 @@ const express    = require('express');
 const morgan     = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose   = require('mongoose');
+const { port, env, dbURI, mongoOptions, bluebirdOptions } = require('./config/environment');
 mongoose.plugin(require('./lib/globalToJSON'));
-mongoose.Promise = require('bluebird').config({
-  // Enables all warnings except forgotten return statements.
-  warnings: {
-    wForgottenReturn: false // The corresponding environmental variable key is BLUEBIRD_W_FORGOTTEN_RETURN.
-  }
-  // Enable warnings
-  // warnings: true,
-  // // Enable long stack traces
-  // longStackTraces: true,
-  // // Enable cancellation
-  // cancellation: true,
-  // // Enable monitoring
-  // monitoring: true
-});
-const { port, env, dbURI, mongoOptions } = require('./config/environment');
-const routes               = require('./config/routes');
-const customResponses      = require('./lib/customResponses');
-const errorHandler         = require('./lib/errorHandler');
+mongoose.Promise      = require('bluebird').config(bluebirdOptions);
+const routes          = require('./config/routes');
+const customResponses = require('./lib/customResponses');
+const errorHandler    = require('./lib/errorHandler');
 
 const app = express();
 
