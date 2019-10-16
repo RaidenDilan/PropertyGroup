@@ -119,7 +119,7 @@ function PropertiesIndexCtrl($scope, $http, $mdDialog, $moment) {
       parent: angular.element(document.body),
       targetEvent: thisProperty,
       clickOutsideToClose: true,
-      fullscreen: true,
+      fullscreen: false,
       resolve: {
         selectedProperty: () => {
           return thisProperty;

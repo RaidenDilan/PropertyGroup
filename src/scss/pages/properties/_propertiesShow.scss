@@ -1,4 +1,7 @@
-md-dialog {
+md-dialog.propertyShowModal {
+  min-width: 100%;
+  min-height: 100%;
+
   md-toolbar {
     padding: 0 16px;
 
@@ -16,6 +19,7 @@ md-dialog {
       background-size: cover;
       width: 100%;
       height: 400px;
+      padding: 0;
     }
 
     ul {
@@ -35,15 +39,15 @@ md-dialog {
         padding: 5px 0 0 0;
       }
 
-      .userModalImage {
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        width: 150px;
-        height: 150px;
-        margin: 0 auto;
-        border-radius: 50%;
-      }
+      // .userModalImage {
+      //   background-position: center;
+      //   background-repeat: no-repeat;
+      //   background-size: cover;
+      //   width: 150px;
+      //   height: 150px;
+      //   margin: 0 auto;
+      //   border-radius: 50%;
+      // }
     }
   }
   md-dialog-actions {
@@ -54,16 +58,28 @@ md-dialog {
 }
 
 @include breakpoint(iPhoneSE) {
-  md-dialog.userModal {
+  md-dialog.propertyShowModal {
     md-toolbar {
+      padding: 0;
+
       .md-toolbar-tools {
+        padding: 0;
+
         h3 {
-          font-size: 16px;
+          font-size: 14px;
         }
       }
     }
     md-dialog-content {
       padding: 0;
+
+      .md-dialog-content {
+        padding: 0 0 16px 0;
+      }
+
+      .propsShowImage {
+        height: 300px;
+      }
 
       ul {
         li {
@@ -78,7 +94,7 @@ md-dialog {
       }
     }
     md-dialog-actions {
-      min-height: 50px;
+      min-height: 150px;
       display: flex;
       flex-flow: column nowrap;
 
@@ -91,16 +107,28 @@ md-dialog {
 }
 
 @include breakpoint(iPhone8) {
-  md-dialog.userModal {
+  md-dialog.propertyShowModal {
     md-toolbar {
+      padding: 0;
+
       .md-toolbar-tools {
+        padding: 0;
+
         h3 {
-          font-size: 16px;
+          font-size: 14px;
         }
       }
     }
     md-dialog-content {
       padding: 0;
+
+      .md-dialog-content {
+        padding: 0 0 16px 0;
+      }
+
+      .propsShowImage {
+        height: 300px;
+      }
 
       ul {
         li {
@@ -115,28 +143,41 @@ md-dialog {
       }
     }
     md-dialog-actions {
-      min-height: 50px;
+      min-height: 150px;
       display: flex;
       flex-flow: column nowrap;
 
       .md-button {
         margin: 6px auto;
+        font-size: 12px;
       }
     }
   }
 }
 
 @include breakpoint(iPhone8Plus) {
-  md-dialog.userModal {
+  md-dialog.propertyShowModal {
     md-toolbar {
+      padding: 0;
+
       .md-toolbar-tools {
+        padding: 0;
+
         h3 {
-          font-size: 16px;
+          font-size: 14px;
         }
       }
     }
     md-dialog-content {
       padding: 0;
+
+      .md-dialog-content {
+        padding: 0 0 16px 0;
+      }
+
+      .propsShowImage {
+        height: 300px;
+      }
 
       ul {
         li {
@@ -151,107 +192,134 @@ md-dialog {
       }
     }
     md-dialog-actions {
-      min-height: 50px;
+      min-height: 150px;
       display: flex;
       flex-flow: column nowrap;
 
       .md-button {
         margin: 6px auto;
+        font-size: 12px;
       }
     }
   }
 }
 
 @include breakpoint(iPhoneX) {
-  md-dialog.userModal {
+  md-dialog.propertyShowModal {
     md-toolbar {
+      padding: 0;
+
       .md-toolbar-tools {
+        padding: 0;
+
         h3 {
-          font-size: 16px;
+          font-size: 14px;
         }
       }
     }
     md-dialog-content {
       padding: 0;
 
+      .md-dialog-content {
+        padding: 0 0 16px 0;
+      }
+
+      .propsShowImage {
+        height: 300px;
+      }
+
       ul {
         li {
-          line-height: 22px;
           padding: 16px;
+          line-height: 22px;
         }
       }
 
       div {
         padding: 16px;
-
-        h3 {
-          line-height: 22px;
-        }
+        line-height: 22px;
       }
     }
     md-dialog-actions {
-      min-height: 50px;
+      min-height: 150px;
       display: flex;
       flex-flow: column nowrap;
 
       .md-button {
         margin: 6px auto;
+        font-size: 12px;
       }
     }
   }
 }
 
 @include breakpoint(iPadMiniPortrait) {
-  md-dialog.userModal {
+  md-dialog.propertyShowModal {
     md-toolbar {
+      padding: 0;
+
       .md-toolbar-tools {
+        padding: 0;
+
         h3 {
-          font-size: 26px;
+          font-size: 22px;
         }
       }
     }
     md-dialog-content {
       padding: 0;
 
+      .md-dialog-content {
+        padding: 0 0 16px 0;
+      }
+
+      .propsShowImage {
+        height: 500px;
+      }
+
       ul {
         li {
-          padding: 32px;
-          line-height: 40px;
-          font-size: 28px;
+          padding: 16px;
+          line-height: 32px;
+          font-size: 22px;
         }
       }
 
       div {
-        padding: 32px;
-        line-height: 40px;
+        padding: 16px;
+        line-height: 32px;
 
-        .md-headline {
-          font-size: 36px;
-          font-weight: 600;
+        span {
+          color: $brand-color;
+          font-size: 26px;
+          font-weight: 900;
         }
         strong, h3 {
-          font-size: 28px;
+          font-size: 22px;
         }
       }
     }
     md-dialog-actions {
-      min-height: 50px;
+      min-height: 150px;
       display: flex;
       flex-flow: column nowrap;
 
       .md-button {
-        min-height: 50px;
-        margin: 12px auto;
-        font-size: 25px;
+        margin: 6px auto;
+        font-size: 12px;
       }
     }
   }
 }
 
 @include breakpoint(iPadPro) {
-  md-dialog.userModal {
+  md-dialog.propertyShowModal {
     md-toolbar {
+      padding: 0;
+
       .md-toolbar-tools {
+        padding: 0;
+
         h3 {
           font-size: 32px;
         }
@@ -260,36 +328,44 @@ md-dialog {
     md-dialog-content {
       padding: 0;
 
+      .md-dialog-content {
+        padding: 0 0 16px 0;
+      }
+
+      .propsShowImage {
+        height: 500px;
+      }
+
       ul {
         li {
-          padding: 32px;
-          line-height: 40px;
-          font-size: 28px;
+          padding: 16px;
+          line-height: 38px;
+          font-size: 26px;
         }
       }
 
       div {
-        padding: 32px;
-        line-height: 40px;
+        padding: 16px;
+        line-height: 32px;
 
-        .md-headline {
-          font-size: 36px;
-          font-weight: 600;
+        span {
+          color: $brand-color;
+          font-size: 26px;
+          font-weight: 900;
         }
         strong, h3 {
-          font-size: 28px;
+          font-size: 22px;
         }
       }
     }
     md-dialog-actions {
-      min-height: 50px;
+      min-height: 150px;
       display: flex;
       flex-flow: column nowrap;
 
       .md-button {
-        min-height: 68px;
-        margin: 12px auto;
-        font-size: 30px;
+        margin: 6px auto;
+        font-size: 16px;
       }
     }
   }
