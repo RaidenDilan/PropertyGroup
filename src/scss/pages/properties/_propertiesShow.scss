@@ -54,7 +54,7 @@ md-dialog {
 }
 
 @include breakpoint(iPhoneSE) {
-  md-dialog {
+  md-dialog.userModal {
     md-toolbar {
       .md-toolbar-tools {
         h3 {
@@ -78,7 +78,7 @@ md-dialog {
       }
     }
     md-dialog-actions {
-      min-height: 150px;
+      min-height: 50px;
       display: flex;
       flex-flow: column nowrap;
 
@@ -91,7 +91,7 @@ md-dialog {
 }
 
 @include breakpoint(iPhone8) {
-  md-dialog {
+  md-dialog.userModal {
     md-toolbar {
       .md-toolbar-tools {
         h3 {
@@ -115,7 +115,7 @@ md-dialog {
       }
     }
     md-dialog-actions {
-      min-height: 150px;
+      min-height: 50px;
       display: flex;
       flex-flow: column nowrap;
 
@@ -127,7 +127,7 @@ md-dialog {
 }
 
 @include breakpoint(iPhone8Plus) {
-  md-dialog {
+  md-dialog.userModal {
     md-toolbar {
       .md-toolbar-tools {
         h3 {
@@ -151,7 +151,7 @@ md-dialog {
       }
     }
     md-dialog-actions {
-      min-height: 150px;
+      min-height: 50px;
       display: flex;
       flex-flow: column nowrap;
 
@@ -163,7 +163,7 @@ md-dialog {
 }
 
 @include breakpoint(iPhoneX) {
-  md-dialog {
+  md-dialog.userModal {
     md-toolbar {
       .md-toolbar-tools {
         h3 {
@@ -190,7 +190,7 @@ md-dialog {
       }
     }
     md-dialog-actions {
-      min-height: 150px;
+      min-height: 50px;
       display: flex;
       flex-flow: column nowrap;
 
@@ -202,7 +202,7 @@ md-dialog {
 }
 
 @include breakpoint(iPadMiniPortrait) {
-  md-dialog {
+  md-dialog.userModal {
     md-toolbar {
       .md-toolbar-tools {
         h3 {
@@ -235,7 +235,7 @@ md-dialog {
       }
     }
     md-dialog-actions {
-      min-height: 225px;
+      min-height: 50px;
       display: flex;
       flex-flow: column nowrap;
 
@@ -249,7 +249,7 @@ md-dialog {
 }
 
 @include breakpoint(iPadPro) {
-  md-dialog {
+  md-dialog.userModal {
     md-toolbar {
       .md-toolbar-tools {
         h3 {
@@ -282,7 +282,7 @@ md-dialog {
       }
     }
     md-dialog-actions {
-      min-height: 275px;
+      min-height: 50px;
       display: flex;
       flex-flow: column nowrap;
 
