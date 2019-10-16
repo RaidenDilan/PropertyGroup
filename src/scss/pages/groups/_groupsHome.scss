@@ -7,6 +7,7 @@ md-content.groupsHome {
   div.md-card-actions {
     display: flex;
     flex-flow: column wrap;
+    padding: 0 0 16px 0;
 
     a:first-child {
       margin: 16px auto 6px auto;
@@ -95,17 +96,20 @@ md-content.groupsHome {
 
         }
         md-card-title {
-          padding: 24px 0 0;
 
           .md-headline {
             color: $brand-color;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 900;
           }
         }
         md-card-content {
-          // padding: 24px 0 0;
-          padding: 0 0 0 16px;
+          padding: 0;
+
+          h3 {
+            line-height: 20px;
+            font-size: 14px;
+          }
         }
         md-card-actions {
           padding: 24px 0 0;
@@ -124,7 +128,6 @@ md-dialog.userModal {
       .userModalImage {
         margin: auto;
         max-width: 250px;
-        // min-height: 200px;
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
@@ -210,14 +213,6 @@ md-dialog.userModal {
       }
     }
   }
-  // md-dialog.userModal {
-  //   height: 35% !important;
-  //
-  //   md-dialog-actions {
-  //     margin: 16px !important;
-  //     border: 0 !important;
-  //   }
-  // }
 }
 
 @include breakpoint(iPadPro) {
@@ -233,11 +228,4 @@ md-dialog.userModal {
       }
     }
   }
-  // md-dialog.userModal {
-  //   height: 35% !important;
-  //   md-dialog-actions {
-  //     margin: 16px !important;
-  //     border: 0 !important;
-  //   }
-  // }
 }

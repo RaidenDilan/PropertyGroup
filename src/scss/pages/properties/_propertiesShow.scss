@@ -47,188 +47,250 @@ md-dialog {
     }
   }
   md-dialog-actions {
-    // padding: 0;
-    // margin: 0 16px 16px 16px;
-    // display: flex;
-    // flex-flow: row nowrap;
-    //
-    // button {
-    //   width: 100%;
-    // }
-
     .md-button {
       margin: 0 6px;
-      // width: 100%;
     }
   }
 }
 
 @include breakpoint(iPhoneSE) {
-  // md-dialog {
-  //   .md-toolbar-tools {
-  //     h3 {
-  //       font-size: 12px;
-  //     }
-  //   }
-  //
-  //   &.md-content-overflow .md-actions,
-  //   &.md-content-overflow md-dialog-actions {
-  //     border-top-width: 0; ////////////////////////////////////
-  //   }
-  //
-  //   // md-dialog-content {
-  //   //   padding: 0;
-  //   //
-  //   //   ul {
-  //   //     li {
-  //   //       letter-spacing: 1px;
-  //   //       font-size: 15px;
-  //   //     }
-  //   //   }
-  //   //
-  //   //   div h3 {
-  //   //     font-size: 15px;
-  //   //   }
-  //   // }
-  //   // md-dialog-actions {
-  //   //   // display: flex;
-  //   //   // flex-flow: column nowrap;
-  //   //   // justify-content: center;
-  //   //   // align-items: center;
-  //   //   // min-height: 125px;
-  //   //   // margin: 16px;
-  //   //
-  //   //   .md-button {
-  //   //     margin: 3px 0;
-  //   //   }
-  //   // }
-  // }
+  md-dialog {
+    md-toolbar {
+      .md-toolbar-tools {
+        h3 {
+          font-size: 16px;
+        }
+      }
+    }
+    md-dialog-content {
+      padding: 0;
+
+      ul {
+        li {
+          padding: 16px;
+          line-height: 22px;
+        }
+      }
+
+      div {
+        padding: 16px;
+        line-height: 22px;
+      }
+    }
+    md-dialog-actions {
+      min-height: 150px;
+      display: flex;
+      flex-flow: column nowrap;
+
+      .md-button {
+        margin: 6px auto;
+        font-size: 12px;
+      }
+    }
+  }
 }
 
 @include breakpoint(iPhone8) {
-  // md-dialog {
-  //   .md-toolbar-tools {
-  //     h3 {
-  //       font-size: 15px;
-  //     }
-  //   }
-  //
-  //   md-dialog-content {
-  //     padding: 0;
-  //
-  //     ul li {
-  //       letter-spacing: 1px;
-  //     }
-  //   }
-  // }
+  md-dialog {
+    md-toolbar {
+      .md-toolbar-tools {
+        h3 {
+          font-size: 16px;
+        }
+      }
+    }
+    md-dialog-content {
+      padding: 0;
+
+      ul {
+        li {
+          padding: 16px;
+          line-height: 22px;
+        }
+      }
+
+      div {
+        padding: 16px;
+        line-height: 22px;
+      }
+    }
+    md-dialog-actions {
+      min-height: 150px;
+      display: flex;
+      flex-flow: column nowrap;
+
+      .md-button {
+        margin: 6px auto;
+      }
+    }
+  }
 }
 
 @include breakpoint(iPhone8Plus) {
-  // md-dialog {
-  //   .md-toolbar-tools {
-  //     h3 {
-  //       font-size: 15px;
-  //     }
-  //   }
-  //
-  //   md-dialog-content {
-  //     padding: 0;
-  //
-  //     ul li {
-  //       letter-spacing: 1px;
-  //     }
-  //   }
-  // }
+  md-dialog {
+    md-toolbar {
+      .md-toolbar-tools {
+        h3 {
+          font-size: 16px;
+        }
+      }
+    }
+    md-dialog-content {
+      padding: 0;
+
+      ul {
+        li {
+          padding: 16px;
+          line-height: 22px;
+        }
+      }
+
+      div {
+        padding: 16px;
+        line-height: 22px;
+      }
+    }
+    md-dialog-actions {
+      min-height: 150px;
+      display: flex;
+      flex-flow: column nowrap;
+
+      .md-button {
+        margin: 6px auto;
+      }
+    }
+  }
 }
 
 @include breakpoint(iPhoneX) {
-  // md-dialog {
-  //   .md-toolbar-tools {
-  //     h3 {
-  //       font-size: 15px;
-  //     }
-  //   }
-  //
-  //   md-dialog-content {
-  //     padding: 0;
-  //
-  //     ul li {
-  //       letter-spacing: 1px;
-  //     }
-  //   }
-  // }
+  md-dialog {
+    md-toolbar {
+      .md-toolbar-tools {
+        h3 {
+          font-size: 16px;
+        }
+      }
+    }
+    md-dialog-content {
+      padding: 0;
+
+      ul {
+        li {
+          line-height: 22px;
+          padding: 16px;
+        }
+      }
+
+      div {
+        padding: 16px;
+
+        h3 {
+          line-height: 22px;
+        }
+      }
+    }
+    md-dialog-actions {
+      min-height: 150px;
+      display: flex;
+      flex-flow: column nowrap;
+
+      .md-button {
+        margin: 6px auto;
+      }
+    }
+  }
 }
 
 @include breakpoint(iPadMiniPortrait) {
-  // md-dialog {
-  //   // height: 100vh;
-  //
-  //   .md-toolbar-tools {
-  //     h3 {
-  //       font-size: 20px;
-  //     }
-  //   }
-  //
-  //   md-dialog-content {
-  //     padding: 0;
-  //
-  //     ul li {
-  //       letter-spacing: 1px;
-  //       font-size: 20px;
-  //
-  //       &:nth-child(2) {
-  //         padding: 26px;
-  //       }
-  //     }
-  //     div {
-  //       padding: 26px;
-  //
-  //       h3 {
-  //         font-size: 22px;
-  //         padding-top: 1rem;
-  //       }
-  //       .md-headline {
-  //         font-size: 30px;
-  //         font-weight: 600;
-  //       }
-  //     }
-  //   }
-  // }
+  md-dialog {
+    md-toolbar {
+      .md-toolbar-tools {
+        h3 {
+          font-size: 26px;
+        }
+      }
+    }
+    md-dialog-content {
+      padding: 0;
+
+      ul {
+        li {
+          padding: 32px;
+          line-height: 40px;
+          font-size: 28px;
+        }
+      }
+
+      div {
+        padding: 32px;
+        line-height: 40px;
+
+        .md-headline {
+          font-size: 36px;
+          font-weight: 600;
+        }
+        strong, h3 {
+          font-size: 28px;
+        }
+      }
+    }
+    md-dialog-actions {
+      min-height: 225px;
+      display: flex;
+      flex-flow: column nowrap;
+
+      .md-button {
+        min-height: 50px;
+        margin: 12px auto;
+        font-size: 25px;
+      }
+    }
+  }
 }
 
 @include breakpoint(iPadPro) {
-  // md-dialog {
-  //   // height: 100vh;
-  //
-  //   .md-toolbar-tools {
-  //     h3 {
-  //       font-size: 22px;
-  //     }
-  //   }
-  //
-  //   md-dialog-content {
-  //     padding: 0;
-  //
-  //     ul li {
-  //       letter-spacing: 1px;
-  //       font-size: 22px;
-  //
-  //       &:nth-child(2) {
-  //         padding: 26px;
-  //       }
-  //     }
-  //     div {
-  //       padding: 26px;
-  //
-  //       h3 {
-  //         font-size: 22px;
-  //         padding-top: 1rem;
-  //       }
-  //       .md-headline {
-  //         font-size: 30px;
-  //         font-weight: 600;
-  //       }
-  //     }
-  //   }
-  // }
+  md-dialog {
+    md-toolbar {
+      .md-toolbar-tools {
+        h3 {
+          font-size: 32px;
+        }
+      }
+    }
+    md-dialog-content {
+      padding: 0;
+
+      ul {
+        li {
+          padding: 32px;
+          line-height: 40px;
+          font-size: 28px;
+        }
+      }
+
+      div {
+        padding: 32px;
+        line-height: 40px;
+
+        .md-headline {
+          font-size: 36px;
+          font-weight: 600;
+        }
+        strong, h3 {
+          font-size: 28px;
+        }
+      }
+    }
+    md-dialog-actions {
+      min-height: 275px;
+      display: flex;
+      flex-flow: column nowrap;
+
+      .md-button {
+        min-height: 68px;
+        margin: 12px auto;
+        font-size: 30px;
+      }
+    }
+  }
 }

@@ -7,28 +7,11 @@ md-card {
 }
 
 .md-button {
-  // border-radius: 15px;
   border-radius: 4px;
 }
 
-// .toastdemoCustomUsage #custom-toast-container {
-//   height: 300px;
-//   padding: 25px;
-// }
-//
-// .toastdemoCustomUsage #custom-toast-container .md-button.md-raised {
-//   padding-left: 10px;
-//   padding-right: 10px;
-// }
-
 md-toast {
   position: fixed;
-  // top: 0;
-  // right: 0;
-  // left: 0;
-  // min-width: 100%;
-	// margin: 0;
-  // padding: 0;
 
 	&.success .md-toast-content {
     background-color: #4CAF50;
@@ -55,27 +38,6 @@ md-toast {
   }
 
 }
-
-// md-toast.md-success-toast-theme .md-toast-content {
-//   background-color: green;
-// }
-//
-// md-toast.md-error-toast-theme .md-toast-content {
-//   background-color: blue;
-// }
-//
-// .success .md-toast-content {
-//   background: green;
-// }
-// .error .md-toast-content {
-//   background: red;
-// }
-// .info .md-toast-content {
-//   background: orange;
-// }
-// .warning .md-toast-content {
-//   background: purple;
-// }
 
 md-dialog {
   // max-height: 85%;
@@ -111,9 +73,6 @@ md-dialog {
 
 md-progress-circular {
   margin: 0 0.5rem 0 0;
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
 }
 
 md-progress-circular.md-default-theme path,
@@ -215,42 +174,55 @@ rating-stars {
   }
 }
 
-.angular-star-ratings-container {
-  // width: 100%;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-  width: 15%;
-  margin: 0 auto;
-  // border: 1px solid #ddd;
-  // border-radius: 15px;
-  // padding: 0.5rem;
+// .angular-star-ratings-container {
+//   display: flex;
+//   flex-flow: row nowrap;
+//   justify-content: center;
+//   align-items: center;
+//   width: 15%;
+//   margin: 0 auto;
+//
+//   .button {
+//     cursor: pointer;
+//
+//     .material-icons {
+//       font-size: 25px;
+//     }
+//   }
+//
+//   .star-button {
+//     // text-shadow: 0.06em .04em #000000;
+//     &.star-on {
+//       .material-icons {
+//         color: $brand-color;
+//       }
+//     }
+//
+//     &.star-off {
+//       .material-icons {
+//         color: #ddd;
+//       }
+//     }
+//   }
+// }
 
-  .button {
-    cursor: pointer;
-
-    .material-icons {
-      font-size: 25px;
-    }
-  }
-
-  .star-button {
-    // text-shadow: 0.06em .04em #000000;
-
-    &.star-on {
-
-      .material-icons {
-        color: $brand-color;
-      }
-    }
-
-    &.star-off {
-
-      .material-icons {
-        color: #ddd;
-      }
-    }
-
-  }
-}
+// md-toast.md-success-toast-theme .md-toast-content {
+//   background-color: green;
+// }
+//
+// md-toast.md-error-toast-theme .md-toast-content {
+//   background-color: blue;
+// }
+//
+// .success .md-toast-content {
+//   background: green;
+// }
+// .error .md-toast-content {
+//   background: red;
+// }
+// .info .md-toast-content {
+//   background: orange;
+// }
+// .warning .md-toast-content {
+//   background: purple;
+// }

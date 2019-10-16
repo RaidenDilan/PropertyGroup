@@ -17,19 +17,10 @@
       border-radius: 20px;
       border: 0px solid rgba(255, 255, 255, 0);
       outline: none;
-      // border: 2px solid #FFFFFF;
     }
     md-card-content {
       padding: 30px;
-      // display: flex;
-      // margin: auto;
-      // flex-flow: column nowrap;
-      // justify-content: center;
-      // align-items: center;
 
-      // .basicInformation, .propertyInformation {
-      //   margin-bottom: 3rem;
-      // }
 
       .propertyInformation {
         span:not(:first-child) {
@@ -55,16 +46,11 @@
       div {
         margin: auto;
         width: 75%;
-        // display: flex;
-        // flex-flow: column wrap;
-        // justify-content: space-between;
-        // // align-items: center;
 
         &:not(:last-child) {
           margin-bottom: 3rem;
         }
         &:last-child {
-          // margin-top: 1rem;
         }
 
         h2 {
@@ -77,17 +63,11 @@
           justify-content: space-between;
 
           span {
-            // padding-right: 10px;
             a {
               color: #9c27b0;
-
-              // &:hover {
-              //   color: #9c27b0;
-              // }
             }
           }
           span:first-child {
-            // font-weight: 600;
           }
         }
       }
@@ -95,15 +75,7 @@
     md-card-actions {
       display: flex;
       flex-flow: row nowrap;
-      // justify-content: center;
-      // align-items: center;
 
-      .md-button, .md-icon-button {
-      // .md-button:not(.md-icon-button) {
-        // margin: 6px 8px;
-        // margin-left: 8px;
-        // margin-right: 8px;
-      }
       .md-button, a {
         width: 50%;
       }

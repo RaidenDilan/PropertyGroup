@@ -1,9 +1,5 @@
 @import 'queries';
 
-md-toolbar.md-default-theme.md-hue-2:not(.md-menu-toolbar),
-md-toolbar.md-hue-2:not(.md-menu-toolbar) {
-  // background-color: transparent;
-}
 md-toolbar.navBar {
   min-height: 54px;
   display: flex;
@@ -34,19 +30,21 @@ md-toolbar.navBar {
     max-height: 52px;
     padding: 0 26px;
 
+    a {
+      height: 40px;
+
+      span {
+        font-size: 15px;
+        line-height: 42px;
+      }
+    }
+
     .md-button {
       md-icon {
         height: 22px;
         min-height: 22px;
       }
     }
-
-    // a {
-    //   display: flex;
-    //   flex-flow: column nowrap;
-    //   justify-content: center;
-    //   align-items: center;
-    // }
   }
 
   a:hover, a:focus {
@@ -54,7 +52,6 @@ md-toolbar.navBar {
     text-decoration: none;
   }
 }
-
 
 @include breakpoint(iPhoneSE) {
   md-toolbar.navBar {
@@ -115,8 +112,9 @@ md-toolbar.navBar {
       max-height: 80px;
 
       a {
-        font-size: 1.5rem;
-        font-weight: 800;
+        span {
+          font-size: 26px;
+        }
       }
 
       .groupIcon {
@@ -150,6 +148,36 @@ md-toolbar.navBar {
       }
     }
   }
+
+  .md-sidenav-left, md-sidenav {
+    .material-icons {
+      font-size: 32px;
+      min-width: 32px;
+      min-height: 32px;
+    }
+    .md-body-2 {
+      font-size: 16px;
+    }
+    .md-toolbar-tools {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      height: 70px;
+      max-height: 70px;
+
+      img {
+        height: 50px;
+        width: 50px;
+        margin-right: 22px;
+      }
+      .md-body-2 {
+        font-size: 18px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+    }
+  }
 }
 
 @include breakpoint(iPadPro) {
@@ -159,8 +187,9 @@ md-toolbar.navBar {
       max-height: 80px;
 
       a {
-        font-size: 1.5rem;
-        font-weight: 800;
+        span {
+          font-size: 26px;
+        }
       }
 
       .groupIcon {
@@ -191,6 +220,36 @@ md-toolbar.navBar {
           min-height: 40px;
           font-size: 40px;
         }
+      }
+    }
+  }
+
+  .md-sidenav-left, md-sidenav {
+    .material-icons {
+      font-size: 32px;
+      min-width: 32px;
+      min-height: 32px;
+    }
+    .md-body-2 {
+      font-size: 16px;
+    }
+    .md-toolbar-tools {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      height: 70px;
+      max-height: 70px;
+
+      img {
+        height: 50px;
+        width: 50px;
+        margin-right: 22px;
+      }
+      .md-body-2 {
+        font-size: 18px;
+        font-weight: 900;
+        text-transform: uppercase;
       }
     }
   }

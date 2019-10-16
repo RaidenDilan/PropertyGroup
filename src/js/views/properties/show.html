@@ -8,7 +8,7 @@
       layout="row"
       layout-align="center center"
       >
-      <h3>Property ID: {{ propsShow.selected.displayable_address }}</h3>
+      <h3>{{ propsShow.selected.displayable_address }}</h3>
     </div>
   </md-toolbar>
 
@@ -18,18 +18,12 @@
       layout="column"
       layout-align="center center"
       >
-      <!-- <img
-        class="propsShowImage"
-        alt="{{ propsShow.selected.image_645_430_url }}"
-        ng-src="{{ propsShow.selected.image_645_430_url }}"
-        > -->
       <div
         class="propsShowImage"
         style="background-image:url('{{ propsShow.selected.image_645_430_url }}')"
         >
       </div>
       <ul>
-        <!-- <li><img class="propsShowImage" ng-src="{{ propsShow.selected.image_645_430_url }}"></li> -->
         <li>{{ propsShow.selected.description }}</li>
         <div>
           <span class="md-headline">Agency Info</span>

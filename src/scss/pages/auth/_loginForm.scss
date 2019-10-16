@@ -34,8 +34,6 @@
       width: 100%;
       margin: 0 auto;
 
-      // md-icon {}
-
       button {
         width: 100%;
         margin: 0;
@@ -44,16 +42,10 @@
   }
 }
 
-// @include breakpoint(desktop) {
-//   .loginForm {
-//   }
-// }
-
 @include breakpoint(iPhoneSE) {
   .loginForm {
 
     .loginFormCard {
-      // margin: 1.5rem auto 0 auto;
       margin: 0;
       width: 100%;
     }
@@ -67,7 +59,6 @@
 @include breakpoint(iPhoneX) {
   .loginForm {
     .loginFormCard {
-      // margin: 1.5rem auto 0 auto;
       margin: 0;
       width: 100%;
     }
@@ -80,7 +71,6 @@
 @include breakpoint(iPhone8) {
   .loginForm {
     .loginFormCard {
-      // margin: 3.5rem auto 0 auto;
       margin: 0;
       width: 100%;
     }
@@ -93,7 +83,6 @@
 @include breakpoint(iPhone8Plus) {
   .loginForm {
     .loginFormCard {
-      // margin: 5rem auto 0 auto;
       margin: 0;
       width: 100%;
     }
@@ -106,7 +95,6 @@
 @include breakpoint(iPadPro) {
   .loginForm {
     .loginFormCard {
-      // margin: 5rem auto 0 auto;
       margin: 0;
       width: 50%;
     }
@@ -119,7 +107,6 @@
 @include breakpoint(iPadMiniPortrait) {
   .loginForm {
     .loginFormCard {
-      // margin: 5rem auto 0 auto;
       margin: 0;
       width: 50%;
     }
