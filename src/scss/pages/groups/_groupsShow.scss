@@ -1,12 +1,9 @@
 md-content.groupsShowProp {
   background: $brand-color;
 
-  // md-card-header {
-  //   display: flex;
-  //   flex-flow: row nowrap;
-  //   justify-content: center;
-  //   align-items: center;
-  // }
+  .md-card-actions {
+    min-height: 37px;
+  }
   md-card {
     md-card-actions {
       .md-button {
@@ -167,16 +164,13 @@ md-content.groupsShowProp {
           flex-flow: column nowrap;
 
           div:not(:last-child) {
-            // width: 100%;
             display: flex;
             flex-flow: row nowrap;
             justify-content: center;
             align-items: center;
           }
           div:not(:first-child) {
-            // width: 100%;
             display: flex;
-            // flex-flow: column nowrap;
             justify-content: center;
             align-items: center;
           }
@@ -189,8 +183,7 @@ md-content.groupsShowProp {
             width: 15%;
             margin: 0 auto;
             border: 1px solid $brand-color;
-            border-radius: 15px;
-            // padding: 0.5rem;
+            border-radius: 4px;
 
             span {
               color: $brand-color;
@@ -235,7 +228,6 @@ md-content.groupsShowProp {
           }
 
           .userRatingOpinion {
-            // padding: 0 1rem;
             display: flex;
             flex-flow: column nowrap;
             justify-content: center;
@@ -319,34 +311,13 @@ md-content.groupsShowProp {
           align-items: flex-start;
 
           div.userImageCard {
-            // width: calc(100% / 5);
-            // width: 25%;
-            // width: auto;
             min-width: 236px;
-            // margin: auto;
-            // float: left;
-            // left: auto;
           }
           md-card {
             md-card-header {
               padding: 8px;
-              // display: flex;
-              // flex-flow: row nowrap;
-              // justify-content: center;
-              // align-items: center;
             }
             md-card-avatar {
-              // width: 10%;
-              // height: 100%;
-              // width: 30px;
-              // height: 30px;
-
-              // img {
-              //   border-radius: 100%;
-              //   margin-right: 10px;
-              //   // width: 30px;
-              //   // height: 30px;
-              // }
               .avatar {
                 background-position: center;
                 background-repeat: no-repeat;
@@ -358,11 +329,8 @@ md-content.groupsShowProp {
               }
             }
             md-card-header-text {
-              // width: 50%;
-
               .md-subhead {
                 font-size: 11px;
-                // line-height: 12px;
               }
             }
 
@@ -519,7 +487,6 @@ md-dialog.imageModal {
       .uploadedUserImage {
         margin: auto;
         max-width: 250px;
-        // min-height: 200px;
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
@@ -563,9 +530,6 @@ md-dialog.imageModal {
 .gm-style img {
   max-width: 100%;
 }
-// .gm-style .gm-style-iw-c {
-//   padding: 1rem !important;
-// }
 
 @include breakpoint(iPhoneSE) {
   md-content.groupsShowProp {
@@ -653,19 +617,6 @@ md-dialog.imageModal {
       }
     }
   }
-  // md-dialog {
-  //   &.md-content-overflow .md-actions,
-  //   &.md-content-overflow md-dialog-actions {
-  //     margin: 0 16px 16px 16px;
-  //     padding: 16px 0 0 0;
-  //   }
-  //   .md-dialog-content {
-  //     padding: 0 0 0 0;
-  //     margin: 0 !important;
-  //
-  //     button {}
-  //   }
-  // }
 }
 
 @include breakpoint(iPhone8) {
@@ -755,9 +706,6 @@ md-dialog.imageModal {
       }
     }
   }
-  // md-dialog .md-dialog-content {
-  //   padding: 0 0 16px 0;
-  // }
 }
 
 @include breakpoint(iPhone8Plus) {
@@ -837,6 +785,7 @@ md-dialog.imageModal {
           .groupsPropsShowUserImages {
             div.userImageCard {
               width: 50%;
+              min-width: 50%;
             }
           }
         }
@@ -847,9 +796,6 @@ md-dialog.imageModal {
       }
     }
   }
-  // md-dialog .md-dialog-content {
-  //   padding: 0 0 16px 0;
-  // }
 }
 
 @include breakpoint(iPhoneX) {
@@ -928,6 +874,11 @@ md-dialog.imageModal {
 
         md-card.propertyImages {
           .groupsPropsShowUserImages {
+            md-card {
+              .userImages {
+                min-height: 200px;
+              }
+            }
             div.userImageCard {
               width: 100%;
             }
@@ -945,16 +896,8 @@ md-dialog.imageModal {
         display: flex;
         flex-flow: column;
       }
-
-      canvas {
-        // height: 150px;
-        // width: 200px;
-      }
     }
   }
-  // md-dialog .md-dialog-content {
-  //   padding: 0 0 16px 0;
-  // }
 }
 
 @include breakpoint(iPadMiniPortrait) {
@@ -963,23 +906,6 @@ md-dialog.imageModal {
       display: flex;
       flex-flow: row nowrap;
       justify-content: center;
-
-      md-card-avatar {
-        // width: 25% !important;
-        md-content.groupsShowProp
-        img {
-          // width: 20%;
-        }
-      }
-      // md-card-header-text {
-      //   width: 75% !important;
-      //   text-align: center;
-      //
-      //   span {
-      //     font-size: 18px;
-      //   }
-      // }
-
     }
     md-card.groupsShowPropCard {
       md-card-title, md-card-content {
@@ -1017,23 +943,17 @@ md-dialog.imageModal {
             }
           }
         }
-
-        // md-card.propertyImages .groupsPropsShowUserImages md-card .userImages {
-        //   padding: 100px 0;
-        // }
         md-card.propertyImages {
           .groupsPropsShowUserImages {
             div.userImageCard {
-              width: calc(100% / 4);
+              width: calc(100% / 3);
+              min-width: calc(100% / 3);
             }
           }
         }
       }
     }
   }
-  // md-dialog .md-dialog-content {
-  //   padding: 0 0 16px 0;
-  // }
 }
 
 @include breakpoint(iPadPro) {
@@ -1042,23 +962,6 @@ md-dialog.imageModal {
       display: flex;
       flex-flow: row nowrap;
       justify-content: center;
-
-      md-card-avatar {
-        // width: 25% !important;
-        md-content.groupsShowProp
-        img {
-          // width: 20%;
-        }
-      }
-      // md-card-header-text {
-      //   width: 75% !important;
-      //   text-align: center;
-      //
-      //   span {
-      //     font-size: 18px;
-      //   }
-      // }
-
     }
     md-card.groupsShowPropCard {
       md-card-title, md-card-content {
@@ -1096,21 +999,15 @@ md-dialog.imageModal {
             }
           }
         }
-
-        // md-card.propertyImages .groupsPropsShowUserImages md-card .userImages {
-        //   padding: 150px 0;
-        // }
         md-card.propertyImages {
           .groupsPropsShowUserImages {
             div.userImageCard {
-              width: calc(100% / 6);
+              width: calc(100% / 4);
+              min-width: calc(100% / 4);
             }
           }
         }
       }
     }
   }
-  // md-dialog .md-dialog-content {
-  //   padding: 0 0 16px 0;
-  // }
 }

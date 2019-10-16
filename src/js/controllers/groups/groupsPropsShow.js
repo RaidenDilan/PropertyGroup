@@ -64,11 +64,13 @@ function GroupsPropsShowCtrl($stateParams, $scope, $state, $http, Group, GroupPr
 
   // HELPER FUNCTIONS
   function toggleVoted() {
-    vm.voted = vm.voted === true ? false : true;
+    vm.voted = !vm.voted;
+    // vm.voted = vm.voted === true ? false : true;
 	}
 
   function toggleLoading() {
-    vm.isLoading = vm.isLoading === false ? true : false;
+    vm.isLoading = !vm.isLoading;
+    // vm.isLoading = vm.isLoading === false ? true : false;
   }
 
   vm.addRating = () => {
@@ -80,24 +82,24 @@ function GroupsPropsShowCtrl($stateParams, $scope, $state, $http, Group, GroupPr
         vm.newRating = {};
       })
       .then((rating) => {
-        toggleVoted();
         ToastAlertService.customToast('Rating posted', vm.toastDelay, vm.toastStatus);
+        toggleVoted();
       });
   };
 
-  vm.deleteRating = (rating) => {
-    GroupPropertyRating
-      .delete({ id: vm.group.id, listingId: vm.listingId, ratingId: rating.id })
-      .$promise
-      .then(() => {
-        const index = vm.prop.ratings.indexOf(rating);
-        return vm.prop.ratings.splice(index, 1);
-      })
-      .then(() => {
-        toggleVoted();
-        ToastAlertService.customToast('Rating deleted', vm.toastDelay, vm.toastStatus);
-      });
-  };
+  // vm.deleteRating = (rating) => {
+  //   GroupPropertyRating
+  //     .delete({ id: vm.group.id, listingId: vm.listingId, ratingId: rating.id })
+  //     .$promise
+  //     .then(() => {
+  //       const index = vm.prop.ratings.indexOf(rating);
+  //       return vm.prop.ratings.splice(index, 1);
+  //     })
+  //     .then(() => {
+  //       ToastAlertService.customToast('Rating deleted', vm.toastDelay, vm.toastStatus);
+  //       toggleVoted();
+  //     });
+  // };
 
   vm.addImage = () => {
     vm.isLoading = true;

@@ -43,7 +43,8 @@
             </md-button> -->
 
             <md-button class="md-raised md-warn md-button md-ink-ripple">Email Agent</md-button>
-            <md-button class="md-raised md-primary md-button md-ink-ripple" ng-click="groupsPropsShow.deleteProperty(property)" ng-if="main.isAuthenticated()">Delete Property</md-button>
+            <!-- <pre>{{ groupsPropsShow.prop | json }}</pre> -->
+            <md-button class="md-raised md-primary md-button md-ink-ripple" ng-click="groupsPropsShow.deleteProperty(property)" ng-if="main.isAuthenticated() && groupsPropsShow.prop.createdBy === main.currentUserId">Delete Property</md-button>
           </md-card-actions>
         </div>
       </md-card>
@@ -137,11 +138,11 @@
               <strong>{{ rating.createdBy.username }}</strong>
             </div>
 
-            <div class="smart-confirm" ng-if="main.isAuthenticated() && rating.createdBy.id === main.currentUserId">
+            <!-- <div class="smart-confirm" ng-if="main.isAuthenticated() && rating.createdBy.id === main.currentUserId">
               <smart-confirm confirm="groupsPropsShow.deleteRating(rating)">
                 <md-icon class="material-icons">close</md-icon>
               </smart-confirm>
-            </div>
+            </div> -->
           </div>
         </div>
       </md-card>
@@ -214,11 +215,8 @@
                 style="background-image:url('{{ image.imageSRC }}')"
                 >
               </div>
-              <div
-                class="md-card-actions"
-                ng-if="main.isAuthenticated() && image.createdBy.id === main.currentUserId"
-                >
-                <smart-confirm confirm="groupsPropsShow.deleteImage(image)">
+              <div class="md-card-actions">
+                <smart-confirm confirm="groupsPropsShow.deleteImage(image)" ng-if="main.isAuthenticated() && image.createdBy.id === main.currentUserId">
                   <md-icon class="material-icons">close</md-icon>
                 </smart-confirm>
               </div>

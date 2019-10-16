@@ -6,7 +6,17 @@ angular
   function MainCtrl($rootScope, $scope, $state, $auth, ToastAlertService, User, $mdSidenav, $log) {
     const vm = this;
 
-    const protectedStates = ['groupsIndex', 'groupsNew', 'groupsHome', 'groupsEdit', 'groupsEdit', 'groupsPropsShow', 'usersShow', 'usersEdit', 'propertiesIndex'];
+    const protectedStates = [
+      'usersShow',
+      'usersEdit',
+      'groupsIndex',
+      'groupsNew',
+      'groupsHome',
+      'groupsEdit',
+      'groupsPropsShow',
+      'propertiesIndex',
+      'propertiesShow'
+    ];
 
     $state.current.hideBack = true;
     vm.hideBack             = $state.current.hideBack;
@@ -29,7 +39,17 @@ angular
 
     function secureState(event, toState, toParams, fromState, fromParams) {
       vm.message = null;
+      // console.log('vm.currentGroupId', vm.currentGroupId);
       if (!detectMobile() && vm.hideBack === true) vm.hideBack = $state.current.hideBack ? $state.current.hideBack : false;
+
+      // SOME HOW PROTECTED ROUTES CAN BE ACCESSED WHEN NOT IN A GROUP BUT IS AUTHENTICATED
+      // if (vm.currentGroupId === undefined) {
+      //   event.preventDefault();
+      //   $state.go('groupsNew');
+      //   vm.message = 'You must be in this group to view it\'s contents!';
+      //   ToastAlertService.customToast(vm.message, vm.toastDelay, 'warning');
+      // }
+
       if (!$auth.isAuthenticated() && protectedStates.includes(toState.name)) {
         event.preventDefault();
         $state.go('login');
