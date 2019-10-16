@@ -104,17 +104,34 @@ md-content.groupsHome {
           }
         }
         md-card-content {
-          padding: 24px 0 0;
-
-          h3 {
-            padding: 4px 0;
-            line-height: 20px;
-          }
+          // padding: 24px 0 0;
+          padding: 0 0 0 16px;
         }
         md-card-actions {
           padding: 24px 0 0;
           margin: 0;
         }
+      }
+    }
+  }
+}
+md-dialog.userModal {
+  md-dialog-content {
+    padding: 16px 0;
+
+    .md-dialog-content {
+
+      .userModalImage {
+        margin: auto;
+        max-width: 250px;
+        // min-height: 200px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+
+      h3 {
+        padding: 16px 0 0 0;
       }
     }
   }
@@ -193,14 +210,14 @@ md-content.groupsHome {
       }
     }
   }
-  md-dialog.userModal {
-    height: 35% !important;
-
-    md-dialog-actions {
-      margin: 16px !important;
-      border: 0 !important;
-    }
-  }
+  // md-dialog.userModal {
+  //   height: 35% !important;
+  //
+  //   md-dialog-actions {
+  //     margin: 16px !important;
+  //     border: 0 !important;
+  //   }
+  // }
 }
 
 @include breakpoint(iPadPro) {
@@ -216,11 +233,11 @@ md-content.groupsHome {
       }
     }
   }
-  md-dialog.userModal {
-    height: 35% !important;
-    md-dialog-actions {
-      margin: 16px !important;
-      border: 0 !important;
-    }
-  }
+  // md-dialog.userModal {
+  //   height: 35% !important;
+  //   md-dialog-actions {
+  //     margin: 16px !important;
+  //     border: 0 !important;
+  //   }
+  // }
 }

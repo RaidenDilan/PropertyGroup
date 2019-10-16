@@ -82,7 +82,8 @@
     </md-card-title>
 
     <div class="groupsHomePropertiesContainer row">
-      <md-card ng-repeat="selected in groupsHome.selected.listing" ng-animate="'animate'">
+      <!-- <md-card ng-repeat="selected in groupsHome.selected.listing" ng-animate="'animate'"> -->
+      <md-card ng-repeat="selected in groupsHome.selected.listing">
         <div style="background-image:url('{{ selected.image_645_430_url }}')" class="zooplaImage"></div>
 
         <md-card-title>
@@ -95,7 +96,7 @@
           <h3><strong>Address: </strong>{{ selected.displayable_address }}</h3>
           <h3><strong>Price Per Month: </strong>£{{ selected.rental_prices.per_month | number : fractionSize }}</h3>
           <h3><strong>Bedrooms: </strong>{{ selected.num_bedrooms }}</h3>
-          <h3><strong>Property Type: </strong>{{ selected.property_type }}</h3>
+          <h3 ng-if="selected.property_type"><strong>Property Type: </strong>{{ selected.property_type }}</h3>
         </md-card-content>
 
         <md-card-actions layout="row" layout-align="end center">

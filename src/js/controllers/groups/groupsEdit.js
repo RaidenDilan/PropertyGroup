@@ -1,10 +1,9 @@
 angular
   .module('pncApp')
-  .controller('GroupsEditCtrl', GroupsEditCtrl)
-  .controller('GroupsUserModalCtrl', GroupsUserModalCtrl);
+  .controller('GroupsEditCtrl', GroupsEditCtrl);
 
-GroupsEditCtrl.$inject = ['$stateParams', '$auth', '$state', '$scope', 'Group', 'GroupUser', 'User', 'searchFilter', '$uibModal', 'ToastAlertService'];
-function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, User, searchFilter, $uibModal, ToastAlertService, $timeout) {
+GroupsEditCtrl.$inject = ['$stateParams', '$auth', '$state', '$scope', 'Group', 'GroupUser', 'User', 'searchFilter', 'ToastAlertService'];
+function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, User, searchFilter, ToastAlertService, $timeout) {
   const vm = this;
 
   // vm.group                = Group.get($stateParams);
@@ -120,23 +119,6 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
     }
   };
 
-  vm.openModal = (thisUser) => {
-    $uibModal.open({
-      templateUrl: 'js/views/modals/user.html',
-      controller: 'GroupsUserModalCtrl as groupUsersDelete',
-      windowClass: 'app-modal-window',
-      animation: true,
-      size: 'sm', //modal open size large
-      backdrop: 'static', // 'static' - means not to close modal when clicking on background
-      keyboard: false,
-      resolve: {
-        selectedUser: () => {
-          return thisUser;
-        }
-      }
-    });
-  };
-
   vm.showPreSearchBar = () => {
     return vm.query === null;
   };
@@ -156,14 +138,4 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
   vm.submitSearch = () => {
     // console.log('Search function : Has been disabled');
   };
-}
-
-GroupsUserModalCtrl.$inject = ['Group', 'selectedUser', '$stateParams', '$uibModalInstance'];
-function GroupsUserModalCtrl(Group, selectedUser, $stateParams, $uibModalInstance) {
-  const vm = this;
-
-  vm.selected    = selectedUser;
-  vm.group       = Group.get($stateParams);
-  vm.closeModal  = () => $uibModalInstance.close(vm.selected);
-  vm.cancelModal = () => $uibModalInstance.dismiss(vm.selected);
 }

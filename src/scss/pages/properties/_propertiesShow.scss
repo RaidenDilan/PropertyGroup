@@ -2,19 +2,25 @@ md-dialog {
   md-toolbar {
     padding: 0 16px;
 
-    // h2, .md-toolbar-tools {
-    //   text-align: center;
-    //   margin: 0 auto;
-    // }
+    h2, .md-toolbar-tools {
+      text-align: center;
+      margin: 0 auto;
+    }
   }
   md-dialog-content {
-    padding: 0 16px;
+    padding: 0 16px 16px 16px;
 
     .propsShowImage {
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
       width: 100%;
+      height: 400px;
     }
 
     ul {
+      padding: 16px 0 0 0;
+
       li {
         &:nth-of-type(2) {
           padding-top: 1rem;
@@ -41,188 +47,188 @@ md-dialog {
     }
   }
   md-dialog-actions {
-    padding: 0;
-    margin: 0 16px 16px 16px;
-    display: flex;
-    flex-flow: row nowrap;
-
-    button {
-      width: 100%;
-    }
+    // padding: 0;
+    // margin: 0 16px 16px 16px;
+    // display: flex;
+    // flex-flow: row nowrap;
+    //
+    // button {
+    //   width: 100%;
+    // }
 
     .md-button {
-      margin: 0 8px;
-      width: 100%;
+      margin: 0 6px;
+      // width: 100%;
     }
   }
 }
 
 @include breakpoint(iPhoneSE) {
-  md-dialog {
-    .md-toolbar-tools {
-      h3 {
-        font-size: 12px;
-      }
-    }
-
-    &.md-content-overflow .md-actions,
-    &.md-content-overflow md-dialog-actions {
-      border-top-width: 0;
-    }
-
-    md-dialog-content {
-      padding: 0;
-
-      ul {
-        li {
-          letter-spacing: 1px;
-          font-size: 15px;
-        }
-      }
-
-      div h3 {
-        font-size: 15px;
-      }
-    }
-    md-dialog-actions {
-      display: flex;
-      flex-flow: column nowrap;
-      justify-content: center;
-      align-items: center;
-      min-height: 125px;
-      margin: 16px;
-
-      .md-button {
-        margin: 3px 0;
-      }
-    }
-  }
+  // md-dialog {
+  //   .md-toolbar-tools {
+  //     h3 {
+  //       font-size: 12px;
+  //     }
+  //   }
+  //
+  //   &.md-content-overflow .md-actions,
+  //   &.md-content-overflow md-dialog-actions {
+  //     border-top-width: 0; ////////////////////////////////////
+  //   }
+  //
+  //   // md-dialog-content {
+  //   //   padding: 0;
+  //   //
+  //   //   ul {
+  //   //     li {
+  //   //       letter-spacing: 1px;
+  //   //       font-size: 15px;
+  //   //     }
+  //   //   }
+  //   //
+  //   //   div h3 {
+  //   //     font-size: 15px;
+  //   //   }
+  //   // }
+  //   // md-dialog-actions {
+  //   //   // display: flex;
+  //   //   // flex-flow: column nowrap;
+  //   //   // justify-content: center;
+  //   //   // align-items: center;
+  //   //   // min-height: 125px;
+  //   //   // margin: 16px;
+  //   //
+  //   //   .md-button {
+  //   //     margin: 3px 0;
+  //   //   }
+  //   // }
+  // }
 }
 
 @include breakpoint(iPhone8) {
-  md-dialog {
-    .md-toolbar-tools {
-      h3 {
-        font-size: 15px;
-      }
-    }
-
-    md-dialog-content {
-      padding: 0;
-
-      ul li {
-        letter-spacing: 1px;
-      }
-    }
-  }
+  // md-dialog {
+  //   .md-toolbar-tools {
+  //     h3 {
+  //       font-size: 15px;
+  //     }
+  //   }
+  //
+  //   md-dialog-content {
+  //     padding: 0;
+  //
+  //     ul li {
+  //       letter-spacing: 1px;
+  //     }
+  //   }
+  // }
 }
 
 @include breakpoint(iPhone8Plus) {
-  md-dialog {
-    .md-toolbar-tools {
-      h3 {
-        font-size: 15px;
-      }
-    }
-
-    md-dialog-content {
-      padding: 0;
-
-      ul li {
-        letter-spacing: 1px;
-      }
-    }
-  }
+  // md-dialog {
+  //   .md-toolbar-tools {
+  //     h3 {
+  //       font-size: 15px;
+  //     }
+  //   }
+  //
+  //   md-dialog-content {
+  //     padding: 0;
+  //
+  //     ul li {
+  //       letter-spacing: 1px;
+  //     }
+  //   }
+  // }
 }
 
 @include breakpoint(iPhoneX) {
-  md-dialog {
-    .md-toolbar-tools {
-      h3 {
-        font-size: 15px;
-      }
-    }
-
-    md-dialog-content {
-      padding: 0;
-
-      ul li {
-        letter-spacing: 1px;
-      }
-    }
-  }
+  // md-dialog {
+  //   .md-toolbar-tools {
+  //     h3 {
+  //       font-size: 15px;
+  //     }
+  //   }
+  //
+  //   md-dialog-content {
+  //     padding: 0;
+  //
+  //     ul li {
+  //       letter-spacing: 1px;
+  //     }
+  //   }
+  // }
 }
 
 @include breakpoint(iPadMiniPortrait) {
-  md-dialog {
-    height: 100vh;
-
-    .md-toolbar-tools {
-      h3 {
-        font-size: 20px;
-      }
-    }
-
-    md-dialog-content {
-      padding: 0;
-
-      ul li {
-        letter-spacing: 1px;
-        font-size: 20px;
-
-        &:nth-child(2) {
-          padding: 26px;
-        }
-      }
-      div {
-        padding: 26px;
-
-        h3 {
-          font-size: 22px;
-          padding-top: 1rem;
-        }
-        .md-headline {
-          font-size: 30px;
-          font-weight: 600;
-        }
-      }
-    }
-  }
+  // md-dialog {
+  //   // height: 100vh;
+  //
+  //   .md-toolbar-tools {
+  //     h3 {
+  //       font-size: 20px;
+  //     }
+  //   }
+  //
+  //   md-dialog-content {
+  //     padding: 0;
+  //
+  //     ul li {
+  //       letter-spacing: 1px;
+  //       font-size: 20px;
+  //
+  //       &:nth-child(2) {
+  //         padding: 26px;
+  //       }
+  //     }
+  //     div {
+  //       padding: 26px;
+  //
+  //       h3 {
+  //         font-size: 22px;
+  //         padding-top: 1rem;
+  //       }
+  //       .md-headline {
+  //         font-size: 30px;
+  //         font-weight: 600;
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 @include breakpoint(iPadPro) {
-  md-dialog {
-    height: 100vh;
-
-    .md-toolbar-tools {
-      h3 {
-        font-size: 22px;
-      }
-    }
-
-    md-dialog-content {
-      padding: 0;
-
-      ul li {
-        letter-spacing: 1px;
-        font-size: 22px;
-
-        &:nth-child(2) {
-          padding: 26px;
-        }
-      }
-      div {
-        padding: 26px;
-
-        h3 {
-          font-size: 22px;
-          padding-top: 1rem;
-        }
-        .md-headline {
-          font-size: 30px;
-          font-weight: 600;
-        }
-      }
-    }
-  }
+  // md-dialog {
+  //   // height: 100vh;
+  //
+  //   .md-toolbar-tools {
+  //     h3 {
+  //       font-size: 22px;
+  //     }
+  //   }
+  //
+  //   md-dialog-content {
+  //     padding: 0;
+  //
+  //     ul li {
+  //       letter-spacing: 1px;
+  //       font-size: 22px;
+  //
+  //       &:nth-child(2) {
+  //         padding: 26px;
+  //       }
+  //     }
+  //     div {
+  //       padding: 26px;
+  //
+  //       h3 {
+  //         font-size: 22px;
+  //         padding-top: 1rem;
+  //       }
+  //       .md-headline {
+  //         font-size: 30px;
+  //         font-weight: 600;
+  //       }
+  //     }
+  //   }
+  // }
 }

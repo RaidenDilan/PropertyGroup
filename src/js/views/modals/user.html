@@ -18,13 +18,11 @@
       layout="column"
       layout-align="center center"
       >
-      <div
+      <img
         class="userModalImage"
         alt="{{ groupsHomeUser.selected.profileImageSRC }}"
-        style="background-image:url('{{ groupsHomeUser.selected.profileImageSRC }}');"
-        >
-      </div>
-      <br>
+        ng-src="{{ groupsHomeUser.selected.profileImageSRC }}"
+      />
       <h3><strong>Budget:</strong> £{{ groupsHomeUser.selected.budget }}</h3>
     </div>
   </md-dialog-content>

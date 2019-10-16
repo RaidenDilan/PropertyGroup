@@ -1,15 +1,15 @@
 md-content.groupsShowProp {
   background: $brand-color;
 
-  md-card-header {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-  }
+  // md-card-header {
+  //   display: flex;
+  //   flex-flow: row nowrap;
+  //   justify-content: center;
+  //   align-items: center;
+  // }
   md-card {
     md-card-actions {
-      button {
+      .md-button {
         width: 100%;
       }
     }
@@ -151,6 +151,14 @@ md-content.groupsShowProp {
       md-card.propertyAddRating {
         margin: 0 8px 2.5rem 8px;
 
+        .userVoted {
+          padding: 16px;
+
+          span {
+            padding: 0;
+            font-size: 16px;
+          }
+        }
         md-card-title {
           text-align: center;
         }
@@ -159,16 +167,16 @@ md-content.groupsShowProp {
           flex-flow: column nowrap;
 
           div:not(:last-child) {
-            width: 100%;
+            // width: 100%;
             display: flex;
             flex-flow: row nowrap;
             justify-content: center;
             align-items: center;
           }
           div:not(:first-child) {
-            width: 100%;
+            // width: 100%;
             display: flex;
-            flex-flow: column nowrap;
+            // flex-flow: column nowrap;
             justify-content: center;
             align-items: center;
           }
@@ -182,7 +190,7 @@ md-content.groupsShowProp {
             margin: 0 auto;
             border: 1px solid $brand-color;
             border-radius: 15px;
-            padding: 0.5rem;
+            // padding: 0.5rem;
 
             span {
               color: $brand-color;
@@ -217,49 +225,58 @@ md-content.groupsShowProp {
           align-items: center;
 
           .userRatingImage {
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: 100%;
+            margin-right: 10px;
             width: 40px;
+            height: 40px;
           }
 
           .userRatingOpinion {
-            padding: 0 1rem;
+            // padding: 0 1rem;
             display: flex;
             flex-flow: column nowrap;
             justify-content: center;
             align-items: center;
 
-            span {
-              color: $brand-color;
-
-              i {
-                cursor: default;
-                outline: none;
-              }
+            rating-stars .star:not(.on) {
+              display: none;
+            }
+            strong {
+              font-size: 15px;
+              font-weight: 500;
             }
           }
-          smart-confirm {
-            margin: 0;
+          .smart-confirm {
+            margin-left: 10px;
 
-            div {
-              display: flex;
-              flex-flow: row nowrap;
-            }
-            .md-button {
-              display: flex;
-              flex-flow: row nowrap;
-              justify-content: center;
-              align-items: center;
-              width: 25px;
-              min-width: 25px;
-              height: 25px;
-              min-height: 25px;
-              margin: 0 0.25rem;
+            smart-confirm {
+              margin: 0;
 
-              md-icon {
-                font-size: 18px;
-                height: auto;
-                width: auto;
-                min-height: auto;
-                min-width: auto;
+              div {
+                display: flex;
+                flex-flow: row nowrap;
+              }
+              .md-button {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: center;
+                align-items: center;
+                width: 25px;
+                min-width: 25px;
+                height: 25px;
+                min-height: 25px;
+                margin: 0 0.25rem;
+
+                md-icon {
+                  font-size: 18px;
+                  height: auto;
+                  width: auto;
+                  min-height: auto;
+                  min-width: auto;
+                }
               }
             }
           }
@@ -296,20 +313,64 @@ md-content.groupsShowProp {
         }
 
         .groupsPropsShowUserImages {
+          display: flex;
+          flex-flow: row wrap;
+          justify-content: flex-start;
+          align-items: flex-start;
+
+          div.userImageCard {
+            // width: calc(100% / 5);
+            // width: 25%;
+            // width: auto;
+            min-width: 236px;
+            // margin: auto;
+            // float: left;
+            // left: auto;
+          }
           md-card {
+            md-card-header {
+              padding: 8px;
+              // display: flex;
+              // flex-flow: row nowrap;
+              // justify-content: center;
+              // align-items: center;
+            }
             md-card-avatar {
-              width: auto;
-              height: auto;
+              // width: 10%;
+              // height: 100%;
+              // width: 30px;
+              // height: 30px;
+
+              // img {
+              //   border-radius: 100%;
+              //   margin-right: 10px;
+              //   // width: 30px;
+              //   // height: 30px;
+              // }
+              .avatar {
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                border-radius: 100%;
+                margin-right: 10px;
+                width: 100%;
+                height: 100%;
+              }
+            }
+            md-card-header-text {
+              // width: 50%;
+
+              .md-subhead {
+                font-size: 11px;
+                // line-height: 12px;
+              }
             }
 
             .userImages {
-              width: 100%;
-              padding: 50px 0;
+              min-height: 125px;
               background-repeat: no-repeat;
               background-position: center;
               background-size: cover;
-              border-radius: 0;
-              border: 0;
             }
 
             div.md-card-actions {
@@ -412,6 +473,12 @@ md-content.groupsShowProp {
             align-items: center;
           }
 
+          .md-list-item-text {
+            h4 {
+              font-size: 12px;
+            }
+          }
+
           smart-confirm {
             div {
               display: flex;
@@ -439,6 +506,23 @@ md-content.groupsShowProp {
             }
           }
         }
+      }
+    }
+  }
+}
+
+md-dialog.imageModal {
+  md-dialog-content {
+    .md-dialog-content {
+      padding: 0;
+
+      .uploadedUserImage {
+        margin: auto;
+        max-width: 250px;
+        // min-height: 200px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
       }
     }
   }
@@ -482,13 +566,13 @@ md-content.groupsShowProp {
 // .gm-style .gm-style-iw-c {
 //   padding: 1rem !important;
 // }
+
 @include breakpoint(iPhoneSE) {
   md-content.groupsShowProp {
     md-card.groupsShowPropCard {
       md-card-title, md-card-content {
         padding: 0 0 16px 0;
       }
-
       md-card-actions {
         padding: 0;
         flex-flow: column nowrap;
@@ -555,6 +639,13 @@ md-content.groupsShowProp {
             }
           }
         }
+        md-card.propertyImages {
+          .groupsPropsShowUserImages {
+            div.userImageCard {
+              width: 100%;
+            }
+          }
+        }
 
         .md-tab {
           padding: 12px 20px;
@@ -562,27 +653,19 @@ md-content.groupsShowProp {
       }
     }
   }
-  md-dialog {
-    height: 100%;
-    display: flex;
-    flex-flow: column;
-    justify-content: flex-start;
-
-    .md-dialog-content {
-      padding: 0;
-
-      img {
-        max-width: 100%;
-        // max-width: 100% !important;
-      }
-    }
-
-    md-dialog-actions {
-      margin: 0 16px;
-      // margin: 0 16px !important;
-      // min-height: 142px !important;
-    }
-  }
+  // md-dialog {
+  //   &.md-content-overflow .md-actions,
+  //   &.md-content-overflow md-dialog-actions {
+  //     margin: 0 16px 16px 16px;
+  //     padding: 16px 0 0 0;
+  //   }
+  //   .md-dialog-content {
+  //     padding: 0 0 0 0;
+  //     margin: 0 !important;
+  //
+  //     button {}
+  //   }
+  // }
 }
 
 @include breakpoint(iPhone8) {
@@ -658,6 +741,13 @@ md-content.groupsShowProp {
             }
           }
         }
+        md-card.propertyImages {
+          .groupsPropsShowUserImages {
+            div.userImageCard {
+              width: 100%;
+            }
+          }
+        }
 
         .md-tab {
           padding: 12px 20px;
@@ -665,27 +755,9 @@ md-content.groupsShowProp {
       }
     }
   }
-  md-dialog {
-    height: 100%;
-    display: flex;
-    flex-flow: column;
-    justify-content: flex-start;
-
-    .md-dialog-content {
-      padding: 0;
-
-      img {
-        max-width: 100%;
-        // max-width: 100% !important;
-      }
-    }
-
-    md-dialog-actions {
-      margin: 0 16px;
-      // margin: 0 16px !important;
-      // min-height: 142px !important;
-    }
-  }
+  // md-dialog .md-dialog-content {
+  //   padding: 0 0 16px 0;
+  // }
 }
 
 @include breakpoint(iPhone8Plus) {
@@ -761,6 +833,13 @@ md-content.groupsShowProp {
             }
           }
         }
+        md-card.propertyImages {
+          .groupsPropsShowUserImages {
+            div.userImageCard {
+              width: 50%;
+            }
+          }
+        }
 
         .md-tab {
           padding: 12px 20px;
@@ -768,27 +847,9 @@ md-content.groupsShowProp {
       }
     }
   }
-  md-dialog {
-    height: 100%;
-    display: flex;
-    flex-flow: column;
-    justify-content: flex-start;
-
-    .md-dialog-content {
-      padding: 0;
-
-      img {
-        max-width: 100%;
-        // max-width: 100% !important;
-      }
-    }
-
-    md-dialog-actions {
-      margin: 0 16px;
-      // margin: 0 16px !important;
-      // min-height: 142px !important;
-    }
-  }
+  // md-dialog .md-dialog-content {
+  //   padding: 0 0 16px 0;
+  // }
 }
 
 @include breakpoint(iPhoneX) {
@@ -865,6 +926,14 @@ md-content.groupsShowProp {
           }
         }
 
+        md-card.propertyImages {
+          .groupsPropsShowUserImages {
+            div.userImageCard {
+              width: 100%;
+            }
+          }
+        }
+
         .md-tab {
           padding: 12px 20px;
         }
@@ -883,27 +952,9 @@ md-content.groupsShowProp {
       }
     }
   }
-  md-dialog {
-    height: 100%;
-    display: flex;
-    flex-flow: column;
-    justify-content: flex-start;
-
-    .md-dialog-content {
-      padding: 0;
-
-      img {
-        max-width: 100%;
-        // max-width: 100% !important;
-      }
-    }
-
-    md-dialog-actions {
-      margin: 0 16px;
-      // margin: 0 16px !important;
-      // min-height: 142px !important;
-    }
-  }
+  // md-dialog .md-dialog-content {
+  //   padding: 0 0 16px 0;
+  // }
 }
 
 @include breakpoint(iPadMiniPortrait) {
@@ -914,20 +965,20 @@ md-content.groupsShowProp {
       justify-content: center;
 
       md-card-avatar {
-        width: 25% !important;
+        // width: 25% !important;
         md-content.groupsShowProp
         img {
           // width: 20%;
         }
       }
-      md-card-header-text {
-        width: 75% !important;
-        text-align: center;
-
-        span {
-          font-size: 18px;
-        }
-      }
+      // md-card-header-text {
+      //   width: 75% !important;
+      //   text-align: center;
+      //
+      //   span {
+      //     font-size: 18px;
+      //   }
+      // }
 
     }
     md-card.groupsShowPropCard {
@@ -967,33 +1018,22 @@ md-content.groupsShowProp {
           }
         }
 
-        md-card.propertyImages .groupsPropsShowUserImages md-card .userImages {
-          padding: 100px 0;
+        // md-card.propertyImages .groupsPropsShowUserImages md-card .userImages {
+        //   padding: 100px 0;
+        // }
+        md-card.propertyImages {
+          .groupsPropsShowUserImages {
+            div.userImageCard {
+              width: calc(100% / 4);
+            }
+          }
         }
       }
     }
   }
-  md-dialog {
-    height: 100%;
-    display: flex;
-    flex-flow: column;
-    justify-content: flex-start;
-
-    .md-dialog-content {
-      padding: 0;
-
-      img {
-        max-width: 100%;
-        // max-width: 100% !important;
-      }
-    }
-
-    md-dialog-actions {
-      margin: 0 16px;
-      // margin: 0 16px !important;
-      // min-height: 142px !important;
-    }
-  }
+  // md-dialog .md-dialog-content {
+  //   padding: 0 0 16px 0;
+  // }
 }
 
 @include breakpoint(iPadPro) {
@@ -1004,20 +1044,20 @@ md-content.groupsShowProp {
       justify-content: center;
 
       md-card-avatar {
-        width: 25% !important;
+        // width: 25% !important;
         md-content.groupsShowProp
         img {
           // width: 20%;
         }
       }
-      md-card-header-text {
-        width: 75% !important;
-        text-align: center;
-
-        span {
-          font-size: 18px;
-        }
-      }
+      // md-card-header-text {
+      //   width: 75% !important;
+      //   text-align: center;
+      //
+      //   span {
+      //     font-size: 18px;
+      //   }
+      // }
 
     }
     md-card.groupsShowPropCard {
@@ -1057,31 +1097,20 @@ md-content.groupsShowProp {
           }
         }
 
-        md-card.propertyImages .groupsPropsShowUserImages md-card .userImages {
-          padding: 150px 0;
+        // md-card.propertyImages .groupsPropsShowUserImages md-card .userImages {
+        //   padding: 150px 0;
+        // }
+        md-card.propertyImages {
+          .groupsPropsShowUserImages {
+            div.userImageCard {
+              width: calc(100% / 6);
+            }
+          }
         }
       }
     }
   }
-  md-dialog {
-    height: 100%;
-    display: flex;
-    flex-flow: column;
-    justify-content: flex-start;
-
-    .md-dialog-content {
-      padding: 0;
-
-      img {
-        max-width: 100%;
-        // max-width: 100% !important;
-      }
-    }
-
-    md-dialog-actions {
-      margin: 0 16px;
-      // margin: 0 16px !important;
-      // min-height: 142px !important;
-    }
-  }
+  // md-dialog .md-dialog-content {
+  //   padding: 0 0 16px 0;
+  // }
 }

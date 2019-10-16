@@ -2,6 +2,8 @@
 
 <center><h1>Project 3: propertyGroup</h1></center>
 
+<center><h4>Updated: Version 3.0 - 6 October 2019</h4></center>
+
 <center>[Launch Application!](https://property-group.herokuapp.com)</center>
 
 ![Imgur](http://i.imgur.com/mzEeGwI.png)

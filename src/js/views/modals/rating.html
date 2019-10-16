@@ -1,0 +1,14 @@
+<div class="ratingBox" ng-class="{ 'hover': vm.mutable, 'mutable': vm.mutable }">
+  <!-- <span ng-if="vm.ratingsPosition === 'left'" class="ratings-left">{{ vm.ratings }}</span> -->
+  <i
+    class="star hover material-icons"
+    ng-class="vm.getClass(num)"
+    ng-repeat="num in vm.starsArray track by $index"
+    ng-mouseover="vm.mouseover(num)"
+    ng-mouseout="vm.mouseout()"
+    ng-click="vm.click()"
+    >
+  </i>
+  <!-- <span ng-if="vm.ratingsPosition === 'right'" class="ratings-right">{{ vm.ratings }}</span> -->
+</div>
+<!-- <pre>{{ vm | json }}</pre> -->

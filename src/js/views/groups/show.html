@@ -79,7 +79,6 @@
                 chart-labels="groupsPropsShow.labels"
                 chart-legend="false"
                 >
-                <!-- chart-options="groupsPropsShow.chartOptions" -->
               </canvas>
             </md-content>
           </md-tab>
@@ -88,21 +87,21 @@
 
       <md-card class="md-padding propertyAddRating">
         <div class="ratings">
-          <form class="ratingForm" ng-submit="groupsPropsShow.addRating()" ng-if="main.isAuthenticated()">
+
+          <md-card-title class="userVoted" ng-show="groupsPropsShow.voted">
+            <md-card-title-text>
+              <span class="md-subhead">Thank you for rating this property.</span>
+            </md-card-title-text>
+          </md-card-title>
+
+          <form class="ratingForm" ng-show="!groupsPropsShow.voted" ng-submit="groupsPropsShow.addRating()">
             <md-input-container class="md-block">
               <label for="rating"></label>
-              <span
-                class="ratingBox"
-                name="rating"
-                id="rating"
-                uib-rating
+              <rating-stars
                 ng-model="groupsPropsShow.newRating.stars"
-                max="groupsPropsShow.max"
-                read-only="groupsPropsShow.isReadonlyfalse"
-                on-hover="hoveringOver(value)"
-                on-leave="overStar = null"
-                >
-              </span>
+                ng-change="groupsPropsShow.ratingChange()"
+              >
+              </rating-stars>
             </md-input-container>
 
             <md-button
@@ -113,6 +112,7 @@
               <md-icon class="material-icons" aria-label="Leave a review">stars</md-icon>
             </md-button>
           </form>
+
         </div>
       </md-card>
 
@@ -130,27 +130,24 @@
             <img class="md-card-image userRatingImage" ng-src="{{ rating.createdBy.profileImageSRC }}" alt="User Image">
 
             <div class="userRatingOpinion">
-              <span
-                uib-rating
-                ng-model="rating.stars"
-                max="groupsPropsShow.max"
-                read-only="groupsPropsShow.isReadonly"
-                on-hover="hoveringOver(value)"
-                on-leave="overStar = null"
+              <rating-stars
+                average-rating="rating.stars"
                 >
-              </span>
+              </rating-stars>
               <strong>{{ rating.createdBy.username }}</strong>
             </div>
 
-            <smart-confirm confirm="groupsPropsShow.deleteRating(rating)">
-              <md-icon class="material-icons">close</md-icon>
-            </smart-confirm>
+            <div class="smart-confirm" ng-if="main.isAuthenticated() && rating.createdBy.id === main.currentUserId">
+              <smart-confirm confirm="groupsPropsShow.deleteRating(rating)">
+                <md-icon class="material-icons">close</md-icon>
+              </smart-confirm>
+            </div>
           </div>
         </div>
       </md-card>
 
       <md-card class="md-padding propertyAddImage">
-        <form class="addImageForm" ng-submit="groupsPropsShow.addImage()" ng-if="main.isAuthenticated()">
+        <form name="groupsPropsShow.newImageForm" class="addImageForm" ng-submit="groupsPropsShow.addImage()" ng-if="main.isAuthenticated()">
           <div class="uploadPhoto">
             <label for="base64" class="md-raised md-accent md-button md-ink-ripple addimage">
               <md-icon class="material-icons" aria-label="Add an image">add_a_photo</md-icon>
@@ -165,12 +162,21 @@
               style="display:none"
               >
           </div>
+
           <md-button
-            ng-disabled="!groupsPropsShow.newImage.base64"
             class="md-raised md-primary md-button md-ink-ripple addimage"
-            ng-click="groupsPropsShow.addImage()"
+            ng-click="groupsPropsShow.addImage(); groupsPropsShow.toggle();"
+            ng-disabled="!groupsPropsShow.newImage.base64 && !groupsPropsShow.newImageForm.$invalid"
+            aria-label="Upload image"
             >
-            <md-icon class="material-icons" aria-label="Upload image">cloud_upload</md-icon>
+            <http-loader></http-loader>
+            <md-icon
+              class="material-icons"
+              ng-show="!groupsPropsShow.isLoading"
+              aria-label="Upload icon"
+              >
+              cloud_upload
+            </md-icon>
           </md-button>
         </form>
       </md-card>
@@ -185,34 +191,33 @@
         <md-divider></md-divider>
         <br>
 
-        <div class="groupsPropsShowUserImages row">
-          <div class="col s6 m4" ng-repeat="image in groupsPropsShow.prop.images track by $index">
+        <div class="groupsPropsShowUserImages">
+          <div class="col s4 m2 userImageCard" ng-repeat="image in groupsPropsShow.prop.images track by $index">
 
             <md-card>
               <md-card-header>
 
                 <md-card-avatar>
-                  <img
-                    ng-src="{{ image.createdBy.profileImageSRC }}"
-                    width="30"
-                    height="30"
-                    style="border-radius:50px;margin-right:10px"
-                    />
+                  <div class="avatar" style="background-image:url('{{ image.createdBy.profileImageSRC }}')"></div>
                 </md-card-avatar>
 
                 <md-card-header-text>
                   <span class="md-title">{{ image.createdBy.username }}</span>
+                  <span class="md-subhead">{{ image.createdAt }}</span>
                 </md-card-header-text>
 
               </md-card-header>
 
-              <img
-                class="userImages img-fluid img-thumbnail"
+              <div
+                class="userImages responsive-img"
                 ng-click="groupsPropsShow.showUserImage(image)"
                 style="background-image:url('{{ image.imageSRC }}')"
-                />
-
-              <div class="md-card-actions">
+                >
+              </div>
+              <div
+                class="md-card-actions"
+                ng-if="main.isAuthenticated() && image.createdBy.id === main.currentUserId"
+                >
                 <smart-confirm confirm="groupsPropsShow.deleteImage(image)">
                   <md-icon class="material-icons">close</md-icon>
                 </smart-confirm>
@@ -225,35 +230,33 @@
 
       <md-card class="md-padding propertyAddReview">
         <div class="addComment">
-          <!-- <div class="row"> -->
-            <form class="addCommentForm" ng-submit="groupsPropsShow.addComment()" ng-if="main.isAuthenticated()">
-              <div class="col s12">
-                <md-input-container class="md-block">
-                  <textarea
-                    ng-model="groupsPropsShow.newComment.text"
-                    md-maxlength="150"
-                    maxlength="150"
-                    placeholder="Right a comment..."
-                    aria-label="Review (required)"
-                    style="width:100%;"
-                    >
-                  </textarea>
-                </md-input-container>
-              </div>
-
-              <md-card-actions>
-                <md-button
-                  type="button"
-                  class="md-raised md-primary md-button md-ink-ripple"
-                  ng-click="groupsPropsShow.addComment()"
-                  ng-disabled="!groupsPropsShow.newComment.text"
-                  aria-label="Close"
+          <form class="addCommentForm" ng-submit="groupsPropsShow.addComment()" ng-if="main.isAuthenticated()">
+            <div class="col s12">
+              <md-input-container class="md-block">
+                <textarea
+                  ng-model="groupsPropsShow.newComment.text"
+                  md-maxlength="150"
+                  maxlength="150"
+                  placeholder="Right a comment..."
+                  aria-label="Review (required)"
+                  style="width:100%;"
                   >
-                  <md-icon class="material-icons" aria-label="Right a comment">mode_comment</md-icon>
-                </md-button>
-              </md-card-actions>
-            </form>
-          <!-- </div> -->
+                </textarea>
+              </md-input-container>
+            </div>
+
+            <md-card-actions>
+              <md-button
+                type="button"
+                class="md-raised md-primary md-button md-ink-ripple"
+                ng-click="groupsPropsShow.addComment()"
+                ng-disabled="!groupsPropsShow.newComment.text"
+                aria-label="Close"
+                >
+                <md-icon class="material-icons" aria-label="Right a comment">mode_comment</md-icon>
+              </md-button>
+            </md-card-actions>
+          </form>
         </div>
       </md-card>
 
@@ -276,9 +279,11 @@
               <p>{{ comment.text }}</p>
             </div>
 
-            <smart-confirm confirm="groupsPropsShow.deleteComment(comment)">
-              <md-icon class="material-icons">close</md-icon>
-            </smart-confirm>
+            <div ng-if="main.isAuthenticated() && comment.createdBy.id === main.currentUserId">
+              <smart-confirm confirm="groupsPropsShow.deleteComment(comment)">
+                <md-icon class="material-icons">close</md-icon>
+              </smart-confirm>
+            </div>
           </md-list-item>
         </md-list>
       </md-card>

@@ -17,7 +17,7 @@ function propertyMap($window, mapStyles) {
     link(scope, element, attrs) {
       const property = scope.property;
 
-      const latLng   = { lat: property.latitude, lng: property.longitude }; // .toFixed(3)
+      const latLng = { lat: property.latitude, lng: property.longitude }; // .toFixed(3)
 
       const map = new $window.google.maps.Map(element[0], {
         zoom: 12,

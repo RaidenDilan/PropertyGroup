@@ -1,15 +1,35 @@
-<md-dialog aria-label="Image modal">
+<md-dialog
+  class="propertyShowModal"
+  aria-label="Image modal"
+  >
   <md-toolbar>
-    <div class="md-toolbar-tools" layout="row" layout-align="center center">
+    <div
+      class="md-toolbar-tools"
+      layout="row"
+      layout-align="center center"
+      >
       <h3>Property ID: {{ propsShow.selected.displayable_address }}</h3>
-      <!-- <h2>Property ID: {{ propsShow.selected.listing_id }}</h2> -->
     </div>
   </md-toolbar>
 
   <md-dialog-content>
-    <div class="md-dialog-content" layout="column" layout-align="center center">
+    <div
+      class="md-dialog-content"
+      layout="column"
+      layout-align="center center"
+      >
+      <!-- <img
+        class="propsShowImage"
+        alt="{{ propsShow.selected.image_645_430_url }}"
+        ng-src="{{ propsShow.selected.image_645_430_url }}"
+        > -->
+      <div
+        class="propsShowImage"
+        style="background-image:url('{{ propsShow.selected.image_645_430_url }}')"
+        >
+      </div>
       <ul>
-        <li><img class="propsShowImage" ng-src="{{ propsShow.selected.image_645_430_url }}"></li>
+        <!-- <li><img class="propsShowImage" ng-src="{{ propsShow.selected.image_645_430_url }}"></li> -->
         <li>{{ propsShow.selected.description }}</li>
         <div>
           <span class="md-headline">Agency Info</span>
@@ -35,14 +55,6 @@
       >
       Save & Continue
     </md-button>
-
-    <!-- <md-button
-      class="md-raised md-primary md-button md-ink-ripple"
-      ng-click="propsShow.store(selected); propsShow.hide()"
-      aria-label="Store Property"
-      >
-      Save Property
-    </md-button> -->
     <md-button
       class="md-raised md-warn md-button md-ink-ripple"
       ng-click="propsShow.hide()"

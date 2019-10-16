@@ -79,6 +79,10 @@ md-content.propsIndex {
       .md-button {
         width: 100%;
         margin: 1.5rem auto 0 auto;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
       }
     }
   }

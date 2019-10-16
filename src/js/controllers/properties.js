@@ -5,8 +5,8 @@ angular
   .controller('PropertiesIndexCtrl', PropertiesIndexCtrl)
   .controller('PropertiesShowCtrl', PropertiesShowCtrl);
 
-PropertiesIndexCtrl.$inject = ['$scope', '$http', '$uibModal', '$mdDialog', '$moment'];
-function PropertiesIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
+PropertiesIndexCtrl.$inject = ['$scope', '$http', '$mdDialog', '$moment'];
+function PropertiesIndexCtrl($scope, $http, $mdDialog, $moment) {
   const vm = this;
 
   vm.results      = [];
@@ -23,6 +23,7 @@ function PropertiesIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
   vm.sortBy       = '-first_published_date'; // Filtering and sorting
   vm.queryLimit   = 10; // loadMore Limit
   vm.toShow       = 100; // Filtering and sorting --> was 49
+  vm.isLoading    = false;
 
   vm.getProperties = () => {
     if (vm.propertiesIndexForm.$valid) {
@@ -38,6 +39,7 @@ function PropertiesIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
           ordering: vm.ordering
         }})
         .then((response) => {
+          vm.isLoading = true;
           propertyUpdater(response.data);
           vm.results = response.data;
         })
@@ -47,12 +49,23 @@ function PropertiesIndexCtrl($scope, $http, $uibModal, $mdDialog, $moment) {
           for (var i = 0; i < x.length; i++) {
             x[i].sinceWhen = $moment(x[i].first_published_date).fromNow();
           }
+          vm.isLoading = false;
         });
 
         vm.propertiesIndexForm.$setUntouched();
         vm.propertiesIndexForm.$setPristine();
     }
   };
+
+  function toggle() {
+    vm.isLoading = !vm.isLoading;
+	}
+  vm.toggle = toggle;
+
+  function toggleLoading() {
+    vm.isLoading = vm.isLoading === false ? true : false;
+  }
+  vm.toggleLoading = toggleLoading;
 
   // $scope.$watch(() => vm.area, getPropertyLocation);
   // $scope.$on('place_changed', (e, place) => console.log('place', place));
