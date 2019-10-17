@@ -28,21 +28,20 @@ function ratingStars() {
 
       function init() {
         vm.mutable = !!ngModel;
-        if(ngModel) ngModel.$render = () => newRatingStar = ngModel.$viewValue;
-        // return ngModel ? ngModel.$render = () => newRatingStar = ngModel.$viewValue : ngModel = ngModel;
+        if (ngModel) ngModel.$render = () => newRatingStar = ngModel.$viewValue;
       }
 
       vm.getClass = (num) => {
         return {
           on: vm.averageRating >= num || newRatingStar >= num,
-          // 'on-half': vm.averageRating > newRatingStar && vm.averageRating < num && vm.averageRating >= num - 0.75,
           my: newRatingStar >= num
+          // 'on-half': vm.averageRating > newRatingStar && vm.averageRating < num && vm.averageRating >= num - 0.75,
         };
       };
 
-      vm.mouseover = (rating) => ngModel ? newRatingStar = rating : newRatingStar = null;
-      vm.mouseout  = () => ngModel ? newRatingStar = ngModel.$viewValue : newRatingStar = null;
-      vm.click     = () => ngModel ? newRatingStar = ngModel.$setViewValue(newRatingStar) : newRatingStar = null;
+      vm.mouseover = (rating) => (ngModel) && (newRatingStar = rating);
+      vm.mouseout = () => (ngModel) && (newRatingStar = ngModel.$viewValue);
+      vm.click = () => (ngModel) && (ngModel.$setViewValue(newRatingStar));
     }
   };
 

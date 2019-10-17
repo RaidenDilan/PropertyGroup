@@ -546,6 +546,12 @@ md-dialog.imageModal {
         }
       }
 
+      md-card.propertyTabs {
+        md-content {
+          padding: 16px;
+        }
+      }
+
       div.groupsShowPropCardDiv {
         md-card.groupsPropsShowTitle {
           flex-flow: column nowrap;
@@ -632,6 +638,12 @@ md-dialog.imageModal {
 
         .md-button {
           margin: 3px 0;
+        }
+      }
+
+      md-card.propertyTabs {
+        md-content {
+          padding: 16px;
         }
       }
 
@@ -723,6 +735,11 @@ md-dialog.imageModal {
           margin: 3px 0;
         }
       }
+      md-card.propertyTabs {
+        md-content {
+          padding: 16px;
+        }
+      }
 
       div.groupsShowPropCardDiv {
         md-card.groupsPropsShowTitle {
@@ -811,6 +828,11 @@ md-dialog.imageModal {
 
         .md-button {
           margin: 3px 0;
+        }
+      }
+      md-card.propertyTabs {
+        md-content {
+          padding: 16px;
         }
       }
 
@@ -911,6 +933,11 @@ md-dialog.imageModal {
       md-card-title, md-card-content {
         padding: 0 0 16px 0;
       }
+      md-card.propertyTabs {
+        md-content {
+          padding: 16px;
+        }
+      }
       div.groupsShowPropCardDiv {
         md-card.propertyAddRating {
           .ratingForm {
@@ -966,6 +993,11 @@ md-dialog.imageModal {
     md-card.groupsShowPropCard {
       md-card-title, md-card-content {
         padding: 0 0 16px 0;
+      }
+      md-card.propertyTabs {
+        md-content {
+          padding: 16px;
+        }
       }
       div.groupsShowPropCardDiv {
         md-card.propertyAddRating {
