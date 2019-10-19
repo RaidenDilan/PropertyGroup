@@ -71,6 +71,43 @@ md-dialog {
   }
 }
 
+md-dialog.userModal {
+  md-dialog-content {
+    padding: 0 0 16px 0;
+
+    .md-dialog-content {
+
+      .userModalImage {
+        margin: auto;
+        max-width: 250px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+
+      h3 {
+        padding: 16px 0 0 0;
+      }
+    }
+  }
+}
+
+md-dialog.imageModal {
+  md-dialog-content {
+    .md-dialog-content {
+      padding: 0;
+
+      .uploadedUserImage {
+        margin: auto;
+        max-width: 250px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+    }
+  }
+}
+
 md-progress-circular {
   margin: 0 0.5rem 0 0;
 }

@@ -119,26 +119,6 @@ md-content.groupsHome {
     }
   }
 }
-md-dialog.userModal {
-  md-dialog-content {
-    padding: 16px 0;
-
-    .md-dialog-content {
-
-      .userModalImage {
-        margin: auto;
-        max-width: 250px;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-      }
-
-      h3 {
-        padding: 16px 0 0 0;
-      }
-    }
-  }
-}
 
 @include breakpoint(iPhoneSE) {
   .groupsHome {

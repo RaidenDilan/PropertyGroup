@@ -8,13 +8,13 @@ const config      = require('../package').gulp;
 const validatePartials = () => {
   return gulp
     .src(`${config.src.js}${config.selectors.html}`)
-    .pipe(htmlhint({'doctype-first': false}))
+    .pipe(htmlhint({ 'doctype-first': false }))
     .pipe(htmlhint.reporter('htmlhint-stylish'));
 };
 
 const buildPartials = () => {
   return validatePartials()
-    .pipe(gulpIf(global.production, htmlmin({collapseWhitespace: true, removeComments: true})))
+    .pipe(gulpIf(global.production, htmlmin({ collapseWhitespace: true, removeComments: true })))
     .pipe(gulp.dest(config.dest.js))
     .pipe(gulpIf(!global.production, browserSync.stream()));
 };

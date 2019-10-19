@@ -479,22 +479,6 @@ md-content.groupsShowProp {
   }
 }
 
-md-dialog.imageModal {
-  md-dialog-content {
-    .md-dialog-content {
-      padding: 0;
-
-      .uploadedUserImage {
-        margin: auto;
-        max-width: 250px;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-      }
-    }
-  }
-}
-
 .chart, canvas, canvas.chart, .chart-doughnut {
   width: 250px;
   height: auto;
