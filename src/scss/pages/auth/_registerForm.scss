@@ -77,6 +77,26 @@
 @include breakpoint(iPhoneSE) {
   .registerForm {
 
+    .registerFormCard {
+      padding: 1rem;
+      margin: 0;
+      width: 100%;
+
+      form {
+        md-input-container label {
+          font-size: 13px;
+        }
+      }
+
+      md-card-title {
+        padding: 6px 0;
+        text-transform: uppercase;
+      }
+      .alreadyRegistered {
+        padding: 0;
+      }
+    }
+
     md-card {
       width: 100%;
     }
@@ -110,6 +130,14 @@
   }
 }
 
+@include breakpoint(iPhoneXI) {
+  .registerForm {
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
 @include breakpoint(iPadPro) {
   .registerForm {
     .registerFormCard {
@@ -135,28 +163,3 @@
     }
   }
 }
-
-// /* ----------- Non-Retina Screens ----------- */
-// @media screen
-//   and (min-device-width: 1200px)
-//   and (max-device-width: 1600px)
-//   and (-webkit-min-device-pixel-ratio: 1) {
-//     .registerForm {
-//       md-card {
-//         width: 50%;
-//       }
-//     }
-// }
-//
-// /* ----------- Retina Screens ----------- */
-// @media screen
-//   and (min-device-width: 1200px)
-//   and (max-device-width: 1600px)
-//   and (-webkit-min-device-pixel-ratio: 2)
-//   and (min-resolution: 192dpi) {
-//     .registerForm {
-//       md-card {
-//         width: 50%;
-//       }
-//     }
-// }

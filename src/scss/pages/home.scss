@@ -3,7 +3,7 @@ section.home {
   height: 100%;
   color: #FFFFFF;
   display: flex;
-  flex-flow: column nowrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
@@ -39,6 +39,8 @@ section.home {
 
 @include breakpoint(iPhoneSE) {
   section.home {
+    @include iOS-Viewport;
+
     .material-icons {
       width: 55px;
       height: 55px;
@@ -53,13 +55,15 @@ section.home {
     section.account {
       padding: 2rem 0 0 0;
       display: flex;
-      flex-flow: column wrap;
+      flex-flow: row wrap;
     }
   }
 }
 
 @include breakpoint(iPhone8) {
   section.home {
+    @include iOS-Viewport;
+
     h1 {
       font-size: 1.5rem;
     }
@@ -71,6 +75,8 @@ section.home {
 
 @include breakpoint(iPhone8Plus) {
   section.home {
+    @include iOS-Viewport;
+
     h1 {
       font-size: 2rem;
     }
@@ -82,6 +88,21 @@ section.home {
 
 @include breakpoint(iPhoneX) {
   section.home {
+    @include iOS-Viewport;
+
+    h1 {
+      font-size: 2rem;
+    }
+    h2 {
+      font-size: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhoneXI) {
+  section.home {
+    @include iOS-Viewport;
+
     h1 {
       font-size: 2rem;
     }

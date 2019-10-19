@@ -906,6 +906,113 @@ md-content.groupsShowProp {
   }
 }
 
+@include breakpoint(iPhoneXI) {
+  md-content.groupsShowProp {
+    md-card.groupsShowPropCard {
+      md-card-title, md-card-content {
+        padding: 0 0 16px 0;
+      }
+
+      md-card-actions {
+        padding: 0;
+        flex-flow: column nowrap;
+
+        .md-button {
+          margin: 3px 0;
+        }
+      }
+      md-card.propertyTabs {
+        md-content {
+          padding: 16px;
+        }
+      }
+
+      div.groupsShowPropCardDiv {
+        md-card.groupsPropsShowTitle {
+          flex-flow: column nowrap;
+
+          div {
+            text-align: center;
+            width: 100%;
+            min-height: 200px;
+
+            md-card-title {
+              .md-headline {
+              font-size: 20px;
+            }
+            }
+
+            md-card-content {
+              ul {
+                justify-content: center;
+                align-items: center;
+                li {
+
+                }
+              }
+            }
+          }
+        }
+        md-card.propertyAddRating {
+          .ratingForm {
+            .ratingBox {
+              width: 100%;
+            }
+            .md-button {
+              width: 100%;
+            }
+          }
+        }
+        md-card.propertyAddImage {
+          .addImageForm {
+            label {
+              width: 100%;
+            }
+            .md-button {
+              width: 100%;
+            }
+          }
+        }
+        md-card.propertyAddReview {
+          padding: 8px;
+
+          .addComment {
+            .addCommentForm {
+              .md-button {
+                width: 100%;
+              }
+            }
+          }
+        }
+
+        md-card.propertyImages {
+          .groupsPropsShowUserImages {
+            md-card {
+              .userImages {
+                min-height: 200px;
+              }
+            }
+            div.userImageCard {
+              width: 100%;
+            }
+          }
+        }
+
+        .md-tab {
+          padding: 12px 20px;
+        }
+      }
+    }
+
+    md-tab-content > div {
+      md-content {
+        display: flex;
+        flex-flow: column;
+      }
+    }
+  }
+}
+
 @include breakpoint(iPadMiniPortrait) {
   md-content.groupsShowProp {
     md-card-header {

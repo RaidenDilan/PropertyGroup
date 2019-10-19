@@ -105,6 +105,19 @@ md-toolbar.navBar {
   }
 }
 
+@include breakpoint(iPhoneXI) {
+  md-toolbar.navBar {
+    .md-toolbar-tools {
+      .md-button {
+        md-icon {
+          height: 22px;
+          min-height: 22px;
+        }
+      }
+    }
+  }
+}
+
 @include breakpoint(iPadMiniPortrait) {
   md-toolbar.navBar {
     .md-toolbar-tools {

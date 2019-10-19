@@ -234,6 +234,19 @@
   }
 }
 
+@include breakpoint(iPhoneXI) {
+  .groupsEdit {
+    md-card {
+      padding: 1.5rem;
+      width: 100%;
+
+      .search-bar-instruction {
+        padding: 0 0 0 1rem;
+      }
+    }
+  }
+}
+
 @include breakpoint(iPadMiniPortrait) {
   .groupsEdit {
     height: 100%;

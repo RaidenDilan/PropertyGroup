@@ -15,6 +15,7 @@ angular
         $mdToast.show({
           // parent: angular.element(document.body), // The element to append the toast to. Defaults to appending to the root element of the application.
           // clickOutsideToClose: true,
+          // escapeToClose: true,
           // scope: this, // the scope to link the template / controller to. If none is specified, it will create a new child scope. This scope will be destroyed when the toast is removed unless preserveScope is set to true.
           // preserveScope: true, // whether to preserve the scope when the element is removed. Default is false
           // autoWrap: true, // Whether or not to automatically wrap the template content with a <div class="md-toast-content"> if one is not provided. Defaults to true. Can be disabled if you provide a custom toast directive.

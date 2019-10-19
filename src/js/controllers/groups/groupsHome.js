@@ -57,6 +57,7 @@ function GroupsHomeCtrl($scope, $state, $http, Group, GroupUser, $stateParams, $
         parent: angular.element(document.body),
         targetEvent: user,
         clickOutsideToClose: true,
+        escapeToClose: true,
         fullscreen: false, // Only for -xs, -sm breakpoints.
         // onComplete: afterShowAnimation,
         // locals: { user: $scope.username },

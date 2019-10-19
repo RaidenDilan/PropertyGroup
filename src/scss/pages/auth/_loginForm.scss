@@ -17,7 +17,6 @@
     md-card-title {
       padding: 0;
     }
-
     .registerLink {
       padding: 1rem 0;
 
@@ -44,12 +43,78 @@
 
 @include breakpoint(iPhoneSE) {
   .loginForm {
+    .loginFormCard {
+      padding: 1rem;
+      margin: 0;
+      width: 100%;
 
+      form {
+        md-input-container label {
+          font-size: 13px;
+        }
+      }
+
+      md-card-title {
+        padding: 6px 0;
+        text-transform: uppercase;
+      }
+      .registerLink {
+        padding: 0;
+      }
+    }
+
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhone8) {
+  .loginForm {
     .loginFormCard {
       margin: 0;
       width: 100%;
-    }
 
+      form {
+        md-input-container label {
+          font-size: 13px;
+        }
+      }
+
+      md-card-title {
+        padding: 6px 0;
+        text-transform: uppercase;
+      }
+      .registerLink {
+        padding: 0;
+      }
+    }
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhone8Plus) {
+  .loginForm {
+    .loginFormCard {
+      margin: 0;
+      width: 100%;
+
+      form {
+        md-input-container label {
+          font-size: 13px;
+        }
+      }
+
+      md-card-title {
+        padding: 6px 0;
+        text-transform: uppercase;
+      }
+      .registerLink {
+        padding: 0;
+      }
+    }
     md-card {
       width: 100%;
     }
@@ -68,20 +133,13 @@
   }
 }
 
-@include breakpoint(iPhone8) {
+@include breakpoint(iPhoneXI) {
   .loginForm {
-    .loginFormCard {
-      margin: 0;
-      width: 100%;
-    }
-    md-card {
-      width: 100%;
-    }
-  }
-}
+    // @include iOS-Viewport;width: 100vw;  /* Use vw as a fallback for browsers that do not support Custom Properties */
+  	width: calc(var(--vw, 1vw) * 100);
+  	height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
+  	height: calc(var(--vh, 1vh) * 100);
 
-@include breakpoint(iPhone8Plus) {
-  .loginForm {
     .loginFormCard {
       margin: 0;
       width: 100%;

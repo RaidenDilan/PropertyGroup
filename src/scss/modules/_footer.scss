@@ -33,7 +33,6 @@ footer {
     font-size: 10px;
   }
 }
-
 @include breakpoint(iPadMiniPortrait) {
   footer div {
     font-size: 15px;

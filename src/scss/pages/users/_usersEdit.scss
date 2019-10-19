@@ -69,6 +69,15 @@
   }
 }
 
+@include breakpoint(iPhoneXI) {
+  .usersEdit {
+
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
 @include breakpoint(iPadMiniPortrait) {
   .usersEdit {
     md-card {

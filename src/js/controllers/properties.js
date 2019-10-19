@@ -119,7 +119,9 @@ function PropertiesIndexCtrl($scope, $http, $mdDialog, $moment) {
       parent: angular.element(document.body),
       targetEvent: thisProperty,
       clickOutsideToClose: true,
+      escapeToClose: true,
       fullscreen: false,
+      // onComplete: afterShowAnimation,
       resolve: {
         selectedProperty: () => {
           return thisProperty;
@@ -127,6 +129,11 @@ function PropertiesIndexCtrl($scope, $http, $mdDialog, $moment) {
       }
     });
   };
+
+  // When the 'enter' animation finishes...
+  function afterShowAnimation(scope, element, options) {
+    // post-show code here: DOM element focus, etc.
+  }
 }
 
 PropertiesShowCtrl.$inject = ['$state', '$auth', 'User', 'GroupProperty', 'selectedProperty', '$mdDialog', 'ToastAlertService'];

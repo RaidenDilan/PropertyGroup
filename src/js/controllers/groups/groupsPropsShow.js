@@ -172,6 +172,7 @@ function GroupsPropsShowCtrl($stateParams, $scope, $state, $http, Group, GroupPr
       parent: angular.element(document.body),
       targetEvent: thisImage,
       clickOutsideToClose: true,
+      escapeToClose: true,
       fullscreen: false,
       resolve: {
         selectedImage: () => {

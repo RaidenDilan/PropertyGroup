@@ -214,6 +214,14 @@
   }
 }
 
+@include breakpoint(iPhoneXI) {
+  .groupsNew {
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
 @include breakpoint(iPadMiniPortrait) {
   .groupsNew {
 
