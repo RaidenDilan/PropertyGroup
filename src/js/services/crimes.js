@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .service('Crimes', Crimes);
 
 Crimes.$inject = ['$http'];

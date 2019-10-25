@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .directive('ratingStars', ratingStars);
 
 ratingStars.$inject = [];

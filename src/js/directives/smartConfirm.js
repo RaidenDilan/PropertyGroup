@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
 	.directive('smartConfirm', smartConfirm);
 
 smartConfirm.$inject = ['$compile'];

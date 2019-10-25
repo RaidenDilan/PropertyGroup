@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .controller('GroupsIndexCtrl', GroupsIndexCtrl);
   
 GroupsIndexCtrl.$inject = ['Group'];

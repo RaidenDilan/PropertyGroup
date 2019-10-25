@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .config(Router);
 
 Router.$inject = ['$locationProvider', '$stateProvider', '$urlRouterProvider'];

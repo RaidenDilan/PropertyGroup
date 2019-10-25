@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .config(Auth);
   // .run(ClearLocalStorage);
 

@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .config(Interceptors);
 
 Interceptors.$inject = ['$httpProvider'];

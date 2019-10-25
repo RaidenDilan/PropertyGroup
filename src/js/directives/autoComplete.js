@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .directive('autocomplete', autocomplete);
 
 autocomplete.$inject = ['$window', '$rootScope'];

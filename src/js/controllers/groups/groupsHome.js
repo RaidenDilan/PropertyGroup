@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .controller('GroupsHomeCtrl', GroupsHomeCtrl)
   .controller('GroupsHomeUserCtrl', GroupsHomeUserCtrl);
 

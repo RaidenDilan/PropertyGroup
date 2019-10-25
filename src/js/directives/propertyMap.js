@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .directive('propertyMap', propertyMap);
 
 propertyMap.$inject = ['$window', 'mapStyles'];

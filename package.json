@@ -1,7 +1,7 @@
 {
-  "name": "groparty",
+  "name": "grouparty",
   "version": "3.0.0",
-  "description": "WDI_25 Project 3 - Groparty",
+  "description": "WDI_25 Project 3 - Grouparty",
   "main": "server.js",
   "engines": {
     "node": "8.11.0",
@@ -14,9 +14,9 @@
   "author": "Raiden Dilan <raiden18@me.com> (https://github.com/raidendilan)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/raidendilan/groparty/issues"
+    "url": "https://github.com/raidendilan/grouparty/issues"
   },
-  "homepage": "https://github.com/raidendilan/groparty#readme",
+  "homepage": "https://github.com/raidendilan/grouparty#readme",
   "gulp": {
     "srcDir": "src/",
     "destDir": "public/",

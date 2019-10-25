@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .service('ToastAlertService', ToastAlertService);
 
   ToastAlertService.$inject = ['$mdToast', '$document', '$log'];

@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .controller('GroupsPropsShowCtrl', GroupsPropsShowCtrl)
   .controller('UserImageModalCtrl', UserImageModalCtrl);
 

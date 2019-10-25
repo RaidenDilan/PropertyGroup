@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .controller('ToastCtrl', ToastCtrl);
 
 ToastCtrl.$inject = ['$mdToast', '$mdDialog', '$document', '$scope'];

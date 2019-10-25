@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .directive('compareTo', compareTo);
 
 compareTo.$inject = [];

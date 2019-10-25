@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .constant('API', `${window.location.origin}/api`)
   .constant('mapStyles', [{ // Map Style (from here to end of file)
     featureType: 'administrative',

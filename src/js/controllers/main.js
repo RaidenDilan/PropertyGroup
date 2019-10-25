@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .controller('MainCtrl', MainCtrl);
 
   MainCtrl.$inject = ['$rootScope', '$scope', '$state', '$auth', 'ToastAlertService', 'User', '$mdSidenav', '$log'];

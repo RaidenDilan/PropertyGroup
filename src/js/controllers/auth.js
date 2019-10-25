@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .controller('RegisterCtrl', RegisterCtrl)
   .controller('LoginCtrl', LoginCtrl);
 

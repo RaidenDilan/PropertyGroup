@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .factory('ErrorHandler', ErrorHandler);
 
 ErrorHandler.$inject = ['$rootScope'];

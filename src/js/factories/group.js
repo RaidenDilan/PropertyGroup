@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .factory('Group', Group)
   .factory('GroupUser', GroupUser)
   .factory('GroupProperty', GroupProperty)

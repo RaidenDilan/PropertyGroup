@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .factory('User', User);
 
 User.$inject = ['$resource'];

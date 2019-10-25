@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .directive('backButton', backButton);
 
 backButton.$inject = ['$window'];

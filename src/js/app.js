@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp', [
+  .module('groupartyApp', [
     'ui.router',
     'ngResource',
     'satellizer',

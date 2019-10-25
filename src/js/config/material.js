@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .config(Material);
 
   Material.$inject = ['$mdThemingProvider', '$mdIconProvider'];

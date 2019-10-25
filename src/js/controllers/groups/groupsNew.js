@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .controller('GroupsNewCtrl', GroupsNewCtrl);
 
 GroupsNewCtrl.$inject = ['$state', '$auth', '$scope', 'Group', 'User', '$filter', 'ToastAlertService'];

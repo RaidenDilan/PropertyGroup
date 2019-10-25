@@ -1,7 +1,7 @@
 /* global google:ignore */
 
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .controller('PropertiesIndexCtrl', PropertiesIndexCtrl)
   .controller('PropertiesShowCtrl', PropertiesShowCtrl);
 

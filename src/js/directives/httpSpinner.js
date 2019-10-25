@@ -1,5 +1,5 @@
 angular
-  .module('gropartyApp')
+  .module('groupartyApp')
   .directive('httpLoader', httpLoader);
 
   httpLoader.$inject = ['$http'];
