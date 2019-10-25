@@ -1,5 +1,5 @@
 angular
-  .module('pncApp')
+  .module('gropartyApp')
   .config(Router);
 
 Router.$inject = ['$locationProvider', '$stateProvider', '$urlRouterProvider'];

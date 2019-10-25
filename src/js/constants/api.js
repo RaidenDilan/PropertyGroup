@@ -1,5 +1,5 @@
 angular
-  .module('pncApp')
+  .module('gropartyApp')
   .constant('API', `${window.location.origin}/api`)
   .constant('mapStyles', [{ // Map Style (from here to end of file)
     featureType: 'administrative',

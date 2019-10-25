@@ -1,5 +1,5 @@
 angular
-  .module('pncApp')
+  .module('gropartyApp')
   .directive('compareTo', compareTo);
 
 compareTo.$inject = [];

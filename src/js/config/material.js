@@ -1,5 +1,5 @@
 angular
-  .module('pncApp')
+  .module('gropartyApp')
   .config(Material);
 
   Material.$inject = ['$mdThemingProvider', '$mdIconProvider'];

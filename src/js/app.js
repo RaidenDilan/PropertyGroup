@@ -1,5 +1,5 @@
 angular
-  .module('pncApp', [
+  .module('gropartyApp', [
     'ui.router',
     'ngResource',
     'satellizer',

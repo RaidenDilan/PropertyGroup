@@ -1,5 +1,5 @@
 angular
-  .module('pncApp')
+  .module('gropartyApp')
   .directive('autocomplete', autocomplete);
 
 autocomplete.$inject = ['$window', '$rootScope'];

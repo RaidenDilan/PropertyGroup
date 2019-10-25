@@ -1,5 +1,5 @@
 angular
-  .module('pncApp')
+  .module('gropartyApp')
   .factory('ErrorHandler', ErrorHandler);
 
 ErrorHandler.$inject = ['$rootScope'];

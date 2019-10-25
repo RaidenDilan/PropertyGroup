@@ -1,5 +1,5 @@
 angular
-  .module('pncApp')
+  .module('gropartyApp')
 	.directive('smartConfirm', smartConfirm);
 
 smartConfirm.$inject = ['$compile'];

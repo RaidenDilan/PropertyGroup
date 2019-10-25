@@ -1,5 +1,5 @@
 angular
-  .module('pncApp')
+  .module('gropartyApp')
   .controller('MainCtrl', MainCtrl);
 
   MainCtrl.$inject = ['$rootScope', '$scope', '$state', '$auth', 'ToastAlertService', 'User', '$mdSidenav', '$log'];

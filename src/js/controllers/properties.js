@@ -1,7 +1,7 @@
 /* global google:ignore */
 
 angular
-  .module('pncApp')
+  .module('gropartyApp')
   .controller('PropertiesIndexCtrl', PropertiesIndexCtrl)
   .controller('PropertiesShowCtrl', PropertiesShowCtrl);
 

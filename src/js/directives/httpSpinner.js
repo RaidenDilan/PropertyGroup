@@ -1,5 +1,5 @@
 angular
-  .module('pncApp')
+  .module('gropartyApp')
   .directive('httpLoader', httpLoader);
 
   httpLoader.$inject = ['$http'];

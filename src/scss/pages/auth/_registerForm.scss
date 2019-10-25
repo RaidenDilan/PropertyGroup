@@ -50,11 +50,15 @@
 
       md-input-container {
         width: 100%;
-        margin: 6px 0;
+        margin: 3px 0;
+        // margin: 6px 0;
 
         label {
           line-height: 20px;
         }
+      }
+      md-input-container .md-errors-spacer {
+        min-height: 12px; // 24px
       }
 
       .md-button {

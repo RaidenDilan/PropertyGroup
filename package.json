@@ -1,7 +1,7 @@
 {
-  "name": "property-group",
+  "name": "groparty",
   "version": "3.0.0",
-  "description": "WDI_25 Project 3 - propertyGroup",
+  "description": "WDI_25 Project 3 - Groparty",
   "main": "server.js",
   "engines": {
     "node": "8.11.0",
@@ -14,9 +14,9 @@
   "author": "Raiden Dilan <raiden18@me.com> (https://github.com/raidendilan)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/raidendilan/propertyGroup/issues"
+    "url": "https://github.com/raidendilan/groparty/issues"
   },
-  "homepage": "https://github.com/raidendilan/propertyGroup#readme",
+  "homepage": "https://github.com/raidendilan/groparty#readme",
   "gulp": {
     "srcDir": "src/",
     "destDir": "public/",

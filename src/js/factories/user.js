@@ -1,5 +1,5 @@
 angular
-  .module('pncApp')
+  .module('gropartyApp')
   .factory('User', User);
 
 User.$inject = ['$resource'];

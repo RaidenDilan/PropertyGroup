@@ -1,6 +1,6 @@
 {
-  "name": "property-group",
-  "description": "WDI_25 Project 3 - propertyGroup",
+  "name": "groparty",
+  "description": "WDI_25 Project 3 - Groparty",
   "main": "server.js",
   "authors": [
     "Raiden Dilan <raiden18@me.com>"

@@ -1,5 +1,5 @@
 angular
-  .module('pncApp')
+  .module('gropartyApp')
   .controller('RegisterCtrl', RegisterCtrl)
   .controller('LoginCtrl', LoginCtrl);
 

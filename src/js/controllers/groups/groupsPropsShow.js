@@ -1,5 +1,5 @@
 angular
-  .module('pncApp')
+  .module('gropartyApp')
   .controller('GroupsPropsShowCtrl', GroupsPropsShowCtrl)
   .controller('UserImageModalCtrl', UserImageModalCtrl);
 

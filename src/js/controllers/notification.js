@@ -1,5 +1,5 @@
 angular
-  .module('pncApp')
+  .module('gropartyApp')
   .controller('ToastCtrl', ToastCtrl);
 
 ToastCtrl.$inject = ['$mdToast', '$mdDialog', '$document', '$scope'];

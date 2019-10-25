@@ -1,5 +1,5 @@
 angular
-  .module('pncApp')
+  .module('gropartyApp')
   .config(Interceptors);
 
 Interceptors.$inject = ['$httpProvider'];
