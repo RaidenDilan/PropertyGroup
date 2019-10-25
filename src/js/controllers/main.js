@@ -24,6 +24,14 @@ angular
     vm.toastDelay           = 2000;
     vm.toggleLeft           = buildToggler('left');
 
+    // vm.words = [' to buy', ' to rent', ' with your friends', ' in the UK'];
+    // vm.startDelay = '2000';
+    // vm.backspaceTime = '50';
+    // vm.typeTime = '60';
+    // vm.highlightBackground = 'rgba(255, 255, 255, 0.85)';
+    // vm.highlightColor = '#000000';
+    // vm.highlightTime = '250';
+
     $rootScope.$on('error', stateErrors);
     $rootScope.$on('$stateChangeStart', secureState);
     $rootScope.$on('$stateChangeSuccess', authenticateState);
