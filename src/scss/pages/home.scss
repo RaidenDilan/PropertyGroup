@@ -2,6 +2,8 @@
 
 body.home {
   @include cover-background('https://pixabay.com/get/55e5d3474357a914f6d1867dda6d49214b6ac3e45656734876277bd395/apartment-3564955_1920.jpg');
+  width: 100vw;
+  height: 100vh;
 
   md-toolbar.navBar {
     color: $brand-color;
