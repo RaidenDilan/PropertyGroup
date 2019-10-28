@@ -1,3 +1,5 @@
+@import 'mixins';
+
 body.home {
   @include cover-background('https://pixabay.com/get/55e5d3474357a914f6d1867dda6d49214b6ac3e45656734876277bd395/apartment-3564955_1920.jpg');
 
@@ -37,10 +39,10 @@ body.home {
   }
 }
 
-
 section.home {
   @include vertical-horizontal-center();
-  background-color: $brand-color;
+  background-color: rgba(106, 27, 154, 0.9);
+  // background-color: $brand-color;
   border-radius: 10px;
   width: 35%;
   // height: 50%;
@@ -102,9 +104,11 @@ section.home {
   100% { opacity: 0; }
 }
 
+
 @include breakpoint(iPhoneSE) {
   section.home {
-    @include iOS-Viewport;
+    width: 80%;
+    // @include iOS-Viewport;
 
     .material-icons {
       width: 55px;
@@ -116,69 +120,102 @@ section.home {
     }
     h2 {
       font-size: 100%;
+      text-align: center;
+      @include word-overflow;
     }
     section.account {
-      padding: 2rem 0 0 0;
+      padding: 1rem 0 0 0;
       display: flex;
       flex-flow: row wrap;
+
+      .md-button {
+        font-size: 12px;
+        min-height: 30px;
+        line-height: 30px;
+      }
     }
   }
 }
 
 @include breakpoint(iPhone8) {
   section.home {
-    @include iOS-Viewport;
+    width: 80%;
+    // @include iOS-Viewport;
 
     h1 {
       font-size: 1.5rem;
     }
     h2 {
       font-size: 100%;
+      text-align: center;
+      @include word-overflow;
+    }
+    section.account {
+      padding: 1rem 0 0 0;
     }
   }
 }
 
 @include breakpoint(iPhone8Plus) {
   section.home {
-    @include iOS-Viewport;
+    width: 80%;
+    // @include iOS-Viewport;
 
     h1 {
       font-size: 2rem;
     }
     h2 {
       font-size: 100%;
+      text-align: center;
+      @include word-overflow;
+    }
+    section.account {
+      padding: 1rem 0 0 0;
     }
   }
 }
 
 @include breakpoint(iPhoneX) {
   section.home {
-    @include iOS-Viewport;
+    width: 80%;
+    // @include iOS-Viewport;
 
     h1 {
       font-size: 2rem;
     }
     h2 {
       font-size: 100%;
+      text-align: center;
+      @include word-overflow;
+    }
+    section.account {
+      padding: 1rem 0 0 0;
     }
   }
 }
 
 @include breakpoint(iPhoneXI) {
   section.home {
-    @include iOS-Viewport;
+    // @include iOS-Viewport;
 
     h1 {
       font-size: 2rem;
     }
     h2 {
       font-size: 100%;
+      text-align: center;
+      @include word-overflow;
+    }
+    section.account {
+      padding: 1rem 0 0 0;
     }
   }
 }
 
 @include breakpoint(iPadMiniPortrait) {
   section.home {
+    width: 50%;
+
     .material-icons {
       width: 100px;
       height: 100px;
@@ -189,12 +226,19 @@ section.home {
     }
     h2 {
       font-size: 1.5rem;
+      text-align: center;
+      @include word-overflow;
+    }
+    section.account {
+      padding: 3rem 0 0 0;
     }
   }
 }
 
 @include breakpoint(iPadPro) {
   section.home {
+    width: 50%;
+
     .material-icons {
       width: 125px;
       height: 125px;
@@ -205,6 +249,11 @@ section.home {
     }
     h2 {
       font-size: 1.9rem;
+      text-align: center;
+      @include word-overflow;
+    }
+    section.account {
+      padding: 3rem 0 0 0;
     }
   }
 }
