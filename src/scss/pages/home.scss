@@ -1,7 +1,51 @@
+body.home {
+  @include cover-background('https://pixabay.com/get/55e5d3474357a914f6d1867dda6d49214b6ac3e45656734876277bd395/apartment-3564955_1920.jpg');
+
+  md-toolbar.navBar {
+    color: $brand-color;
+    transition: background-color 0s, color 0s;
+
+    #btn-back md-icon {
+      background-color: $brand-color;
+      color: $white;
+      transition: background-color 0s, color 0s;
+    }
+
+    a {
+      color: $brand-color;
+
+      &:hover, &:focus {
+        color: $brand-color;
+      }
+    }
+
+    .material-icons {
+      fill: $brand-color;
+      color: $brand-color;
+      transition: fill 0s, color 0s;
+    }
+    .md-toolbar-tools a:hover {
+      color: $brand-color;
+      // color: #333333;
+      transition: color 0s;
+    }
+  }
+  footer .footer-toolbar {
+    background-color: transparent;
+    color: $brand-color;
+    transition: background-color 0s, color 0s;
+  }
+}
+
+
 section.home {
-  width: 100%;
-  height: 100%;
-  color: #FFFFFF;
+  @include vertical-horizontal-center();
+  background-color: $brand-color;
+  border-radius: 10px;
+  width: 35%;
+  // height: 50%;
+  padding: 2rem;
+  color: $white;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,7 +64,7 @@ section.home {
   }
   h2 {
     font-size: 1.5rem;
-    padding: 1rem 0 0 0;
+    padding: 2rem 0 0 0;
   }
 
   section.account {

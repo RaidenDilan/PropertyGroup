@@ -23,6 +23,7 @@ angular
     vm.isAuthenticated      = $auth.isAuthenticated;
     vm.toastDelay           = 2000;
     vm.toggleLeft           = buildToggler('left');
+    vm.isHome               = false;
 
     // vm.words = [' to buy', ' to rent', ' with your friends', ' in the UK'];
     // vm.startDelay = '2000';
@@ -31,6 +32,23 @@ angular
     // vm.highlightBackground = 'rgba(255, 255, 255, 0.85)';
     // vm.highlightColor = '#000000';
     // vm.highlightTime = '250';
+    // vm.repeatTyper = 'false';
+
+    // $rootScope.bodyClass = 'login-layout';
+    // $rootScope.$on('$routeChangeSuccess', function(currentRoute, previousRoute) {
+    //   console.log('currentRoute', currentRoute);
+    //   if (currentRoute) console.log('currentRoute.templateUrl', currentRoute);
+    //   // switch(currentRoute.templateUrl) {
+    //     //   // case 'login.html':
+    //     //   // case 'register.html':
+    //     //   case 'index.html':
+    //     //     $rootScope.bodyClass = 'home';
+    //     //     break;
+    //     //   default:
+    //     //     $rootScope.bodyClass = '';
+    //     //     break;
+    //     // }
+    //   });
 
     $rootScope.$on('error', stateErrors);
     $rootScope.$on('$stateChangeStart', secureState);
@@ -46,6 +64,7 @@ angular
     }
 
     function secureState(event, toState, toParams, fromState, fromParams) {
+      // vm.isHome = (toState.url === '/' || toState.name === 'home') ? true : false;
       vm.message = null;
       // console.log('vm.currentGroupId', vm.currentGroupId);
       if (!detectMobile() && vm.hideBack === true) vm.hideBack = $state.current.hideBack ? $state.current.hideBack : false;
@@ -67,9 +86,12 @@ angular
     }
 
     function authenticateState(event, toState, toParams, fromState, fromParams) {
+      vm.isHome = (toState.url === '/' || toState.name === 'home') ? true : false;
+
       if (vm.stateHasChanged) vm.message = null;
       if (!vm.stateHasChanged) vm.stateHasChanged = true;
       if (vm.stateHasChanged) document.body.scrollTop = document.documentElement.scrollTop = 0; // BUG????
+
       if ($auth.getPayload()) {
         vm.currentUserId = $auth.getPayload().userId;
 

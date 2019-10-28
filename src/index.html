@@ -14,7 +14,7 @@
   <!-- inject:css -->
   <!-- endinject -->
 </head>
-  <body class="site" ng-controller="MainCtrl as main" ng-cloak>
+  <body class="site" ng-class="{ 'home': main.isHome }" ng-controller="MainCtrl as main" ng-cloak>
 
     <md-toolbar class="md-hue-2 navBar">
       <button back-button id="btn-back" ng-show="!main.hideBack" ng-cloak>
@@ -154,7 +154,7 @@
     <main ui-view class="site-content"></main>
 
     <footer>
-      <md-toolbar class="md-hue-2 md-scroll-shrink footer-toolbar">
+      <md-toolbar class="md-hue-2 footer-toolbar md-scroll-shrink">
         <div>Made With <span>&hearts;</span> @ General Assembly London</div>
       </md-toolbar>
     </footer>

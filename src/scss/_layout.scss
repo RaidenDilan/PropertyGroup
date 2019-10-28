@@ -1,0 +1,63 @@
+// NOTE FONT-FACE MIXIN
+// Built from https://css-tricks.com/snippets/css/using-font-face/
+@mixin font-face(
+  $font-name,
+  $font-path, // path + file name. Ex : path/to/font/filename
+  $font-weight: 400,
+  $font-style: normal,
+  $support-required: 'modern') {
+    @font-face {
+      font-family: $font-name;
+      font-style: $font-style;
+      font-weight: $font-weight;
+
+      @if $support-required == 'oldie' {
+        // src: url('#{$font-path}.eot');
+        src: // url('#{$font-path}.eot?#iefix') format('embedded-opentype'),
+          // url('#{$font-path}.woff2') format('woff2'),
+          // url('#{$font-path}.woff') format('woff'),
+          // url('#{$font-path}.otf');
+          url('#{$font-path}.ttf') format('truetype');
+        // @debug 'IF --->' $support-required;
+      }
+      @else if $support-required == 'recent' {
+        src: // url('#{$font-path}.woff') format('woff'),
+          // url('#{$font-path}.woff2') format('woff2'),
+          // url('#{$font-path}.otf');
+          url('#{$font-path}.ttf') format('truetype');
+        // @debug 'ELSE IF --->' #{$font-path};
+      }
+      // @else if $support-required == 'modern' {
+      //   src:
+      //     url('#{$font-path}.woff') format('woff'),
+      //     url('#{$font-path}.woff2') format('woff2');
+      // }
+    }
+
+    @if $support-required != 'oldie' and $support-required != 'recent' and $support-required != 'modern' {
+      @error 'Invalid support-required value. Must be "oldie" ==> IE8 and above/ Android native browser 4+/ Safari 4.3 OR "recent" ==> IE9+/ Android native browser 4.0+/ Safari 4.3+ OR "modern" ==> IE9+/ Android native browser 4.4+/ Safari 5.1+';
+    }
+}
+
+// NOTE MIXIN USEGE
+@include font-face('nasalization', '../fonts/futuristic-fonts/nasalization/nasalization', 100, normal, 'oldie');
+
+
+// DEBUG SASS DEBUGGING
+// $debug: '';
+// @function debug($d: '') {
+//   $debug: $debug + '» #{inspect($d)} \A' !global;
+//   @return $debug;
+// }
+// @mixin debug($d) {
+//   $debug: debug($d);
+// }
+//
+// @include debug(Hello);
+// $debug: debug('world!');
+//
+// @include debug('Debug Sass in Codepen!');
+//
+// @mixin color($color) {
+//   @include debug('rgb(#{red($color)},#{green($color)},#{blue($color)})');
+// }

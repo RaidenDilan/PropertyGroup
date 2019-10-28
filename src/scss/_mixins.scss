@@ -10,3 +10,132 @@
 	height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
 	height: calc(var(--vh, 1vh) * 75);
 }
+
+/*
+@mixin cover-background ()
+Creates a full width background image on an element.
+
+-Parameters:
+--Required:
+  $img-uri: URI of image you want to use as the background
+
+--Optional:
+  $background-top:  Defaults to "center - sets the "top" value of the background position
+  $background-left: Defaults to "center - sets the "left" value of the background position.
+  $background-attachment: Defaults to "fixed" - allows you to specify background attachment.
+
+*/
+@mixin cover-background(
+  $img-uri,
+  $background-top: 'center',
+  $background-left: 'center',
+  $background-attachment: 'fixed'
+) {
+  background: url($img-uri) no-repeat unquote($background-top) unquote($background-left) unquote($background-attachment);
+  -webkit-background-size: cover;
+     -moz-background-size: cover;
+       -o-background-size: cover;
+          background-size: cover;
+}
+
+@mixin no-select {
+	-webkit-touch-callout: none; // Chrome / Safari
+    -webkit-user-select: none; // Safari
+     -khtml-user-select: none; // Konqueror HTML
+       -moz-user-select: none; // Firefox
+        -ms-user-select: none; // Internet Explorer / Edge / IE 10+
+            user-select: none; // Non-prefixed version, currently / Likely future
+}
+
+@mixin font-smoothing {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+// USAGE: @include font-smoothing;
+
+@mixin font($family: false, $weight: false, $size: false, $line-height: false, $color: false) {
+	@if $family { font-family: $family; }
+	@if $weight { font-weight: $weight; }
+	@if $size { font-size: $size; }
+	@if $line-height { line-height: $line-height; }
+	@if $color { color: $color; }
+}
+
+@mixin background-props($size, $position) {
+	background-size: $size;
+	background-position: $position;
+}
+
+@mixin flex-box(
+  $display: 'flex',
+  $flex-direction: false,
+  $justify-content: 'center',
+  $align-items: 'center',
+  $align-content: false
+) {
+  @if $display { display: $display }
+  @if $flex-direction { flex-direction: $flex-direction }
+  @if $justify-content { justify-content: $justify-content }
+  @if $align-items { align-items: $align-items }
+  @if $align-content { align-content: $align-content }
+}
+
+// .flex-box {
+//   display: flex;
+//   flex-direction:
+//   justify-content:
+//   align-items:
+//   align-content:
+// };
+
+@mixin center($xy:xy) {
+  @if $xy == xy {
+    left: 50%;
+    top: 50%;
+    bottom: auto;
+    right: auto;
+    @include transform(translateX(-50%) translateY(-50%));
+  }
+  @else if $xy == x {
+    left: 50%;
+    right: auto;
+    @include transform(translateX(-50%));
+  }
+  @else if $xy == y {
+    top: 50%;
+    bottom: auto;
+    @include transform(translateY(-50%));
+  }
+}
+
+@mixin vertical-horizontal-center {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translateX(-50%) translateY(-50%);
+}
+
+//
+// footer md-toolbar {
+//   background-color: transparent;
+//   color: $black;
+// }
+
+// $debug: false; // TODO: move to _settings.scss
+//
+// article {
+//   color: black;
+//
+//   @if ($debug) { // visualizing layout internals
+//     border: 1px dotted red;
+//   }
+// }
+// @function my-calculation-function($some-number, $another-number) {
+//   @return $some-number + $another-number;
+// }
+// padding: my-calculation-function(10px, 5px);
+// $alertClass: 'error';
+//
+// body.site#{$alertClass} {
+//   color: red;
+// }

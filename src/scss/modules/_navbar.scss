@@ -1,9 +1,12 @@
 @import 'queries';
 
 md-toolbar.navBar {
+  color: $white;
   min-height: 54px;
   display: flex;
   flex-flow: row nowrap;
+  background-color: transparent !important;
+  transition: background-color 0s, color 0s;
 
   #btn-back {
     position: absolute;
@@ -39,6 +42,12 @@ md-toolbar.navBar {
       }
     }
 
+    .material-icons {
+      fill: $white;
+      color: $white;
+      transition: fill 0s, color 0s;
+    }
+
     .md-button {
       md-icon {
         height: 22px;
@@ -47,9 +56,20 @@ md-toolbar.navBar {
     }
   }
 
-  a:hover, a:focus {
-    color: rgba(255, 255, 255, 0.87);
-    text-decoration: none;
+  a {
+    color: $white;
+
+    &:hover, &:focus {
+      color: $white;
+      // color: rgba(255, 255, 255, 0.87);
+      text-decoration: none;
+    }
+  }
+}
+
+.md-sidenav-left, md-sidenav {
+  span.md-body-2 {
+    text-transform: uppercase;
   }
 }
 

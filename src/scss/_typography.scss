@@ -1,3 +1,5 @@
+@import 'mixins';
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -13,14 +15,44 @@ body {
   // font: 78% / 130% arial, helvetica, sans-serif;
   font-family: $lato-font;
   background-color: $brand-color;
+  // width: 100vw;
   height: 100vh; /* Avoid the IE 10-11 `min-height` bug. */
   // @include iOS-Viewport;
   display: flex;
   flex-direction: column;
+
+  .site-content {
+    section:has(.home) {
+      color: red;
+
+      md-toolbar.navBar {
+        background-color: transparent;
+        color: $black;
+
+        #btn-back md-icon {
+          background-color: $black;
+          color: $white;
+        }
+
+        .material-icons {
+          fill: $black;
+          color: $black;
+        }
+
+        .md-toolbar-tools a:hover {
+          color: #333333;
+        }
+      }
+      footer md-toolbar {
+        background-color: transparent;
+        color: $black;
+      }
+    }
+  }
 }
 
 main {
-  background-color: $brand-color;
+  // background-color: $brand-color;
   flex: 5 0 auto; /* Prevent Chrome, Opera, and Safari from letting these items shrink to smaller than their content's default minimum size. */
   // height: auto;
 }

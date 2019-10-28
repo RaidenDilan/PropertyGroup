@@ -14,7 +14,7 @@ User
     { username: 'Lanja', email: 'lanja@me.com', budget: 2000, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
     { username: 'Luca', email: 'luca@me.com', budget: 1600, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
     { username: 'Omario', email: 'omario@me.com', budget: 2000, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
-    { username: 'Raiden', email: 'raiden18@me.com', budget: 1800, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
+    { username: 'Raiden', email: 'raiden@me.com', budget: 1800, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
     { username: 'Rawand', email: 'rawand@me.com', budget: 1100, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
     { username: 'Ranja', email: 'ranja@me.com', budget: 1200, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
     { username: 'Ty', email: 'ty@me.com', budget: 2500, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
