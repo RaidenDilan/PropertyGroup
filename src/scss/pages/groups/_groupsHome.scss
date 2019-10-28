@@ -239,6 +239,50 @@ md-content.groupsHome {
   }
 }
 
+// @include breakpoint(iPhoneXIPro) {
+//   md-content.groupsHome {
+//     md-card-header {
+//       display: flex;
+//       flex-flow: row nowrap;
+//       justify-content: center;
+//       align-items: center;
+//
+//       span {
+//         font-size: 20px;
+//       }
+//     }
+//     md-card.groupsHomeProperties {
+//       div.groupsHomePropertiesContainer {
+//         md-card {
+//           width: 100%;
+//         }
+//       }
+//     }
+//   }
+// }
+
+@include breakpoint(iPhoneXIProMax) {
+  md-content.groupsHome {
+    md-card-header {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        font-size: 20px;
+      }
+    }
+    md-card.groupsHomeProperties {
+      div.groupsHomePropertiesContainer {
+        md-card {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
 @include breakpoint(iPadMiniPortrait) {
   md-content.groupsHome {
     md-card-header {

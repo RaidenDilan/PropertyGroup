@@ -142,6 +142,22 @@
   }
 }
 
+@include breakpoint(iPhoneXIPro) {
+  .registerForm {
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhoneXIProMax) {
+  .registerForm {
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
 @include breakpoint(iPadPro) {
   .registerForm {
     .registerFormCard {

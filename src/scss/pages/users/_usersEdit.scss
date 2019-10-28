@@ -82,6 +82,24 @@
   }
 }
 
+@include breakpoint(iPhoneXIPro) {
+  .usersEdit {
+
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhoneXIProMax) {
+  .usersEdit {
+
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
 @include breakpoint(iPadMiniPortrait) {
   .usersEdit {
     md-card {

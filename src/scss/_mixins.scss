@@ -73,6 +73,12 @@ Creates a full width background image on an element.
 	@if $color { color: $color; }
 }
 
+@mixin background-image($backgroundImage: false, $backgroundSize: false, $backgroundPosition: false) {
+	@if $backgroundImage { background-image: url($backgroundImage); }
+	@if $backgroundSize { background-size: $backgroundSize; }
+	@if $backgroundPosition { background-position: $backgroundPosition; }
+}
+
 @mixin background-props($size, $position) {
 	background-size: $size;
 	background-position: $position;

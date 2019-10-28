@@ -9,7 +9,7 @@ const config      = require('../package').gulp;
 const validateIndex = () => {
   return gulp
     .src(`${config.srcDir}${config.main.index}`)
-    .pipe(htmlhint({ 'doctype-first': false }))
+    .pipe(htmlhint({ 'doctype-first': false, 'attr-lowercase': ['viewBox'] }))
     .pipe(htmlhint.reporter('htmlhint-stylish'));
 };
 

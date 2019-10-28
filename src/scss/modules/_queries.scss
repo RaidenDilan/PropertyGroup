@@ -50,7 +50,15 @@
 			and (min-device-width: 375px)
       and (max-device-width: 375px)
 			and (min-device-height: 896px)
-      and (max-device-height: 896px)  { @content; }
+      and (max-device-height: 896px) { @content; }
+	}
+  @else if $media == iPhoneXIProMax {
+    @media only screen
+			and (min-device-width: 414px)
+      and (max-device-width: 414px)
+			and (min-device-height: 896px)
+      and (max-device-height: 896px)
+      and (-webkit-device-pixel-ratio: 3) { @content; }
 	}
 	@else if $media == iPad {
 		@media only screen

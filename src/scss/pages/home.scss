@@ -1,7 +1,8 @@
 @import 'mixins';
 
 body.home {
-  @include cover-background('https://pixabay.com/get/55e5d3474357a914f6d1867dda6d49214b6ac3e45656734876277bd395/apartment-3564955_1920.jpg');
+  // @include cover-background('../images/apartment-3564955_1920.jpg');
+  @include background-image('../images/apartment-3564955_1920.jpg', cover, center);
   width: 100vw;
   height: 100vh;
 
@@ -9,12 +10,13 @@ body.home {
     color: $brand-color;
     transition: background-color 0s, color 0s;
 
-    #btn-back md-icon {
-      background-color: $brand-color;
-      color: $white;
-      transition: background-color 0s, color 0s;
+    #btn-back {
+      md-icon {
+        background-color: $brand-color;
+        color: $white;
+        transition: background-color 0s, color 0s;
+      }
     }
-
     a {
       color: $brand-color;
 
@@ -22,10 +24,14 @@ body.home {
         color: $brand-color;
       }
     }
-
     .material-icons {
       fill: $brand-color;
       color: $brand-color;
+      transition: fill 0s, color 0s;
+    }
+    #logo .groupIcon {
+      fill: $white;
+      color: $white;
       transition: fill 0s, color 0s;
     }
     .md-toolbar-tools a:hover {
@@ -34,6 +40,7 @@ body.home {
       transition: color 0s;
     }
   }
+
   footer .footer-toolbar {
     background-color: transparent;
     color: $brand-color;
@@ -55,20 +62,52 @@ section.home {
   justify-content: center;
   align-items: center;
 
+  svg#home {
+    width: 150px;
+    height: 150px;
+
+    #brand-logo {
+      stroke: none;
+      stroke-width: 1;
+      fill: #FFFFFF;
+      fill-rule: evenodd;
+    }
+
+    polygon {
+      fill: #FFFFFF;
+      fill-rule: nonzero;
+    }
+
+    text {
+      font-family: 'Lato-Regular', 'Lato';
+      font-size: 3px;
+      font-weight: normal;
+      line-height: 4;
+      fill: #FFFFFF;
+    }
+  }
   .material-icons {
     margin: 0;
-    width: 80px;
-    height: 80px;
-    font-size: 80px;
+    // width: 15vw;
+    // height: 100%;
+    width: 125px;
+    height: 125px;
+    // height: 161px;
+    font-size: 15vw;
     color: $white;
   }
 
   h1 {
-    font-size: 3rem;
+    font-size: 1.95vw;
+    width: 15vw;
+    text-align: center;
+    // height: 100%;
+    // font-size: 15vw;
   }
   h2 {
-    font-size: 1.5rem;
-    padding: 2rem 0 0 0;
+    text-align: center;
+    font-size: 1.5vw;
+    padding: 1rem 0 0 0;
   }
 
   section.account {
@@ -110,7 +149,6 @@ section.home {
 @include breakpoint(iPhoneSE) {
   section.home {
     width: 80%;
-    // @include iOS-Viewport;
 
     .material-icons {
       width: 55px;
@@ -124,6 +162,11 @@ section.home {
       font-size: 100%;
       text-align: center;
       @include word-overflow;
+    }
+    svg#home {
+      text {
+        font-size: 3.3px;
+      }
     }
     section.account {
       padding: 1rem 0 0 0;
@@ -142,7 +185,6 @@ section.home {
 @include breakpoint(iPhone8) {
   section.home {
     width: 80%;
-    // @include iOS-Viewport;
 
     h1 {
       font-size: 1.5rem;
@@ -151,6 +193,11 @@ section.home {
       font-size: 100%;
       text-align: center;
       @include word-overflow;
+    }
+    svg#home {
+      text {
+        font-size: 3.35px;
+      }
     }
     section.account {
       padding: 1rem 0 0 0;
@@ -161,7 +208,7 @@ section.home {
 @include breakpoint(iPhone8Plus) {
   section.home {
     width: 80%;
-    // @include iOS-Viewport;
+    padding: 1rem;
 
     h1 {
       font-size: 2rem;
@@ -170,6 +217,11 @@ section.home {
       font-size: 100%;
       text-align: center;
       @include word-overflow;
+    }
+    svg#home {
+      text {
+        font-size: 3.3px;
+      }
     }
     section.account {
       padding: 1rem 0 0 0;
@@ -180,7 +232,6 @@ section.home {
 @include breakpoint(iPhoneX) {
   section.home {
     width: 80%;
-    // @include iOS-Viewport;
 
     h1 {
       font-size: 2rem;
@@ -189,6 +240,11 @@ section.home {
       font-size: 100%;
       text-align: center;
       @include word-overflow;
+    }
+    svg#home {
+      text {
+        font-size: 3.3px;
+      }
     }
     section.account {
       padding: 1rem 0 0 0;
@@ -198,7 +254,7 @@ section.home {
 
 @include breakpoint(iPhoneXI) {
   section.home {
-    // @include iOS-Viewport;
+    width: 80%;
 
     h1 {
       font-size: 2rem;
@@ -207,6 +263,56 @@ section.home {
       font-size: 100%;
       text-align: center;
       @include word-overflow;
+    }
+    svg#home {
+      text {
+        font-size: 3.3px;
+      }
+    }
+    section.account {
+      padding: 1rem 0 0 0;
+    }
+  }
+}
+
+@include breakpoint(iPhoneXIPro) {
+  section.home {
+    width: 80%;
+
+    h1 {
+      font-size: 2rem;
+    }
+    h2 {
+      font-size: 100%;
+      text-align: center;
+      @include word-overflow;
+    }
+    svg#home {
+      text {
+        font-size: 3.3px;
+      }
+    }
+    section.account {
+      padding: 1rem 0 0 0;
+    }
+  }
+}
+@include breakpoint(iPhoneXIProMax) {
+  section.home {
+    width: 80%;
+
+    h1 {
+      font-size: 2rem;
+    }
+    h2 {
+      font-size: 100%;
+      text-align: center;
+      @include word-overflow;
+    }
+    svg#home {
+      text {
+        font-size: 3.3px;
+      }
     }
     section.account {
       padding: 1rem 0 0 0;

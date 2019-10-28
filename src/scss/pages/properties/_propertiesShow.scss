@@ -302,6 +302,104 @@ md-dialog.propertyShowModal {
   }
 }
 
+@include breakpoint(iPhoneXIPro) {
+  md-dialog.propertyShowModal {
+    md-toolbar {
+      padding: 0;
+
+      .md-toolbar-tools {
+        padding: 0;
+
+        h3 {
+          font-size: 14px;
+        }
+      }
+    }
+    md-dialog-content {
+      padding: 0;
+
+      .md-dialog-content {
+        padding: 0 0 16px 0;
+      }
+
+      .propsShowImage {
+        height: 300px;
+      }
+
+      ul {
+        li {
+          padding: 16px;
+          line-height: 22px;
+        }
+      }
+
+      div {
+        padding: 16px;
+        line-height: 22px;
+      }
+    }
+    md-dialog-actions {
+      min-height: 150px;
+      display: flex;
+      flex-flow: column nowrap;
+
+      .md-button {
+        margin: 6px auto;
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+@include breakpoint(iPhoneXIProMax) {
+  md-dialog.propertyShowModal {
+    md-toolbar {
+      padding: 0;
+
+      .md-toolbar-tools {
+        padding: 0;
+
+        h3 {
+          font-size: 14px;
+        }
+      }
+    }
+    md-dialog-content {
+      padding: 0;
+
+      .md-dialog-content {
+        padding: 0 0 16px 0;
+      }
+
+      .propsShowImage {
+        height: 300px;
+      }
+
+      ul {
+        li {
+          padding: 16px;
+          line-height: 22px;
+        }
+      }
+
+      div {
+        padding: 16px;
+        line-height: 22px;
+      }
+    }
+    md-dialog-actions {
+      min-height: 150px;
+      display: flex;
+      flex-flow: column nowrap;
+
+      .md-button {
+        margin: 6px auto;
+        font-size: 12px;
+      }
+    }
+  }
+}
+
 @include breakpoint(iPadMiniPortrait) {
   md-dialog.propertyShowModal {
     md-toolbar {

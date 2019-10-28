@@ -222,6 +222,22 @@
   }
 }
 
+@include breakpoint(iPhoneXIPro) {
+  .groupsNew {
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
+@include breakpoint(iPhoneXIProMax) {
+  .groupsNew {
+    md-card {
+      width: 100%;
+    }
+  }
+}
+
 @include breakpoint(iPadMiniPortrait) {
   .groupsNew {
 

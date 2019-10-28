@@ -54,7 +54,7 @@
       "css": "**/*.css",
       "scss": "**/*.scss",
       "html": "**/*.html",
-      "images": "**/*.{png,jpg,jpeg,gif,ico}",
+      "images": "**/*.{png,jpg,jpeg,gif,ico,svg}",
       "fonts": "**/*.{eot,svg,ttf,woff,woff2}"
     }
   },
@@ -90,7 +90,7 @@
     "gulp-htmlhint": "^0.3.1",
     "gulp-htmlmin": "^3.0.0",
     "gulp-if": "^2.0.2",
-    "gulp-imagemin": "^3.1.1",
+    "gulp-imagemin": "^4.1.0",
     "gulp-inject": "^4.1.0",
     "gulp-jshint": "^2.0.2",
     "gulp-nodemon": "^2.2.1",
