@@ -11,7 +11,7 @@ function github(req, res, next) {
     qs: {
       client_id: oauth.github.clientId,
       client_secret: oauth.github.clientSecret,
-      redirect_uri: req.body.redirectUri,
+      // redirect_uri: req.body.redirectUri,
       code: req.body.code
     },
     json: true
