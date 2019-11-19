@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   username: { type: String, unique: true, trim: true, lowercase: true, required: true },
   email: { type: String, unique: true, trim: true, lowercase: true, required: true },
   budget: { type: Number, required: true },
-  password: { type: String, required: true,  minLength: 1 },
+  password: { type: String,  minLength: 1 },
   profileImage: { type: String, default: avatar, required: true },
   githubId: { type: Number },
   group: { type: ObjectId, ref: 'Group', default: null } // Referenced Document

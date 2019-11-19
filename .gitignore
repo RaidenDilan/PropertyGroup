@@ -2,6 +2,5 @@
 /bower_components
 /public
 /archive
-oauth.js
 geoCoder.js
 geoCoderRoutes.js

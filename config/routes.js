@@ -7,7 +7,7 @@ const groups      = require('../controllers/groups');
 const properties  = require('../controllers/properties');
 const crimes      = require('../lib/crimeRoute');
 const zooplas     = require('../lib/zooplaRoutes');
-// const oauth       = require('../controllers/oauth');
+const oauth       = require('../controllers/oauth');
 // const likes       = require('../controllers/likes');
 // const geoCoder    = require('../lib/geoCoderRoutes');
 
@@ -99,8 +99,8 @@ router.route('/login')
 router.route('/register')
   .post(imageUpload, auth.register);
 
-// router.route('/oauth/github')
-  // .post(oauth.github);
+router.route('/oauth/github')
+  .post(oauth.github);
 
 router.all('/*', (req, res) => res.notFound());
 

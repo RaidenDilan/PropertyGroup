@@ -68,14 +68,11 @@
         </div>
       </div>
 
-      <md-button
-        class="md-raised md-primary md-button md-ink-ripple"
-        type="submit"
-        ng-disabled="login.loginForm.$invalid"
-        ng-click="login.loginForm.$invalid"
-        >
+      <md-button class="md-raised md-primary md-button md-ink-ripple" type="submit" ng-disabled="login.loginForm.$invalid" ng-click="login.loginForm.$invalid">
         <i class="material-icons left"></i>Login
       </md-button>
+      <md-button class="md-raised md-button md-ink-ripple" id="github" ng-click="login.authenticate('github')">Login with Github</md-button>
+      <!-- <md-button ng-click="login.authenticate('facebook')" class="md-raised md-button md-ink-ripple" id="facebook">Login with Facebook</md-button> -->
 
     </form>
   </md-card>

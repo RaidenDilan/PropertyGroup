@@ -3,6 +3,6 @@ angular
   .config(Interceptors);
 
 Interceptors.$inject = ['$httpProvider'];
-function Interceptors ($httpProvider) {
+function Interceptors($httpProvider) {
   $httpProvider.interceptors.push('ErrorHandler');
 }

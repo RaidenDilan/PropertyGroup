@@ -3,6 +3,8 @@ const env          = process.env.NODE_ENV || 'development';
 const dbURI        = process.env.MONGODB_URI || `mongodb://localhost/grouparty-${env}`;
 const secret       = process.env.SECRET || 'I bet you never even look at this!';
 const google       = process.env.PR3_GOOGLE_MAP_KEY;
+// const githubID     = process.env.PR3_GITHUB_CLIENT_ID;
+// const githubSecret = process.env.PR3_GITHUB_CLIENT_SECRET;
 const mongoOptions = { useMongoClient: true };
 const bluebirdOptions = {
   warnings: { // Enables all warnings except forgotten return statements.
@@ -21,4 +23,6 @@ module.exports = {
   google,
   mongoOptions,
   bluebirdOptions
+  // githubID,
+  // githubSecret
 };
