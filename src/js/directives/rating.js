@@ -7,8 +7,14 @@ function ratingStars() {
   const directive = {
     restrict: 'E',
     require: '?ngModel',
+    // controller: 'RatingIndexCtrl as ratingCtrl',
     controller: angular.noop,
     controllerAs: 'vm',
+    // bindToController: {
+    //   ratings: '<',
+    //   averageRating: '<',
+    //   ratingsPosition: '@'
+    // },
     bindToController: true,
     templateUrl: 'js/views/modals/rating.html',
     scope: {
@@ -16,12 +22,17 @@ function ratingStars() {
       averageRating: '<',
       ratingsPosition: '@'
     },
-    link(scope, element, attrs, ngModel) {
-      const vm          = scope.vm;
-      var numArray      = [1, 2, 3, 4, 5];
+    link(scope, element, attrs, ngModel, ratingCtrl) {
+      // console.log('[ratingStars] -+-> this -+->', this);
+      // console.log('[ratingStars] -+-> scope.vm -+->', scope);
+      // console.log('[ratingStars] -+-> ngModel -+->', ngModel);
+      // console.log('[ratingStars] -+-> ratingCtrl -+->', ratingCtrl);
+
+      const vm = scope.vm;
+      var numArray = [1, 2, 3, 4, 5];
       var newRatingStar = null;
 
-      vm.mutable    = false;
+      vm.mutable = false;
       vm.starsArray = numArray.join('');
 
       init();

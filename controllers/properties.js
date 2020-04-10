@@ -7,7 +7,7 @@ function addPropertyRoute(req, res, next) {
     .findById(req.user.group)
     .exec()
     .then((group) => {
-      if(!group) return res.notFound('Group not found');
+      if (!group) return res.notFound('Group not found');
 
       const property = group.properties.create(req.body);
 
@@ -26,7 +26,7 @@ function deletePropertyRoute(req, res, next) {
     .findById(req.params.id)
     .exec()
     .then((group) => {
-      if(!group) return res.notFound('Group not found');
+      if (!group) return res.notFound('Group not found');
 
       const prop = group.properties.find((property) => property.listingId === req.params.listingId);
 
@@ -42,16 +42,16 @@ function deletePropertyRoute(req, res, next) {
 }
 
 function addPropertyRating(req, res, next) {
-  if(req.user) req.body.createdBy = req.user;
+  if (req.user) req.body.createdBy = req.user;
 
   Group
     .findById(req.params.id)
     .populate('users properties.images.createdBy properties.comments.createdBy properties.ratings.createdBy')
     .exec()
     .then((group) => {
-      if(!group) return res.notFound('Group not found');
+      if (!group) return res.notFound('Group not found');
 
-      const prop   = group.properties.find((property) => property.listingId === req.params.listingId);
+      const prop = group.properties.find((property) => property.listingId === req.params.listingId);
       const rating = prop.ratings.create(req.body);
 
       prop.ratings.push(rating);
@@ -69,9 +69,9 @@ function deletePropertyRating(req, res, next) {
     .findById(req.params.id)
     .exec()
     .then((group) => {
-      if(!group) return res.notFound('Group not found');
+      if (!group) return res.notFound('Group not found');
 
-      const prop   = group.properties.find((property) => property.listingId === req.params.listingId);
+      const prop = group.properties.find((property) => property.listingId === req.params.listingId);
       const rating = prop.ratings.id(req.params.ratingId);
 
       rating.remove();
@@ -85,16 +85,16 @@ function deletePropertyRating(req, res, next) {
 }
 
 function addPropertyImage(req, res, next) {
-  if(req.file) req.body.file = req.file.filename;
+  if (req.file) req.body.file = req.file.filename;
   req.body.createdBy = req.user;
 
   Group
     .findById(req.params.id)
     .exec()
     .then((group) => {
-      if(!group) return res.notFound('Group not found');
+      if (!group) return res.notFound('Group not found');
 
-      const prop  = group.properties.find((property) => property.listingId === req.params.listingId);
+      const prop = group.properties.find((property) => property.listingId === req.params.listingId);
       const image = prop.images.create(req.body);
 
       prop.images.push(image);
@@ -112,7 +112,7 @@ function deletePropertyImage(req, res, next) {
     .findById(req.params.id)
     .exec()
     .then((group) => {
-      if(!group) return res.notFound('Group not found');
+      if (!group) return res.notFound('Group not found');
 
       const prop = group.properties.find((property) => property.listingId === req.params.listingId);
       const image = prop.images.id(req.params.imageId);
@@ -136,9 +136,9 @@ function addPropertyComment(req, res, next) {
     .findById(req.params.id)
     .exec()
     .then((group) => {
-      if(!group) return res.notFound('Group not found');
+      if (!group) return res.notFound('Group not found');
 
-      const prop    = group.properties.find((property) => property.listingId === req.params.listingId);
+      const prop = group.properties.find((property) => property.listingId === req.params.listingId);
       const comment = prop.comments.create(req.body);
 
       prop.comments.push(comment);
@@ -156,9 +156,9 @@ function deletePropertyComment(req, res, next) {
     .findById(req.params.id)
     .exec()
     .then((group) => {
-      if(!group) return res.notFound('Group not found');
+      if (!group) return res.notFound('Group not found');
 
-      const prop    = group.properties.find((property) => property.listingId === req.params.listingId);
+      const prop = group.properties.find((property) => property.listingId === req.params.listingId);
       const comment = prop.comments.id(req.params.commentId);
 
       comment.remove();

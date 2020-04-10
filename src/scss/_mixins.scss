@@ -1,14 +1,14 @@
 @mixin border-radius($radius) {
- -webkit-border-radius: $radius;
-    -moz-border-radius: $radius;
-         border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
 }
 
 @mixin iOS-Viewport {
-	width: 100vw;  /* Use vw as a fallback for browsers that do not support Custom Properties */
-	width: calc(var(--vw, 1vw) * 100);
-	height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
-	height: calc(var(--vh, 1vh) * 75);
+  width: 100vw;  /* Use vw as a fallback for browsers that do not support Custom Properties */
+  width: calc(var(--vw, 1vw) * 100);
+  height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 75);
 }
 
 @mixin word-overflow {
@@ -42,21 +42,21 @@ Creates a full width background image on an element.
     url($img-uri) no-repeat
     unquote($background-top)
     unquote($background-left);
-    // unquote($background-attachment);
+  // unquote($background-attachment);
   // background-position: center;
   -webkit-background-size: cover;
-     -moz-background-size: cover;
-       -o-background-size: cover;
-          background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 @mixin no-select {
-	-webkit-touch-callout: none; // Chrome / Safari
-    -webkit-user-select: none; // Safari
-     -khtml-user-select: none; // Konqueror HTML
-       -moz-user-select: none; // Firefox
-        -ms-user-select: none; // Internet Explorer / Edge / IE 10+
-            user-select: none; // Non-prefixed version, currently / Likely future
+  -webkit-touch-callout: none; // Chrome / Safari
+  -webkit-user-select: none; // Safari
+  -khtml-user-select: none; // Konqueror HTML
+  -moz-user-select: none; // Firefox
+  -ms-user-select: none; // Internet Explorer / Edge / IE 10+
+  user-select: none; // Non-prefixed version, currently / Likely future
 }
 
 @mixin font-smoothing {
@@ -66,22 +66,22 @@ Creates a full width background image on an element.
 // USAGE: @include font-smoothing;
 
 @mixin font($family: false, $weight: false, $size: false, $line-height: false, $color: false) {
-	@if $family { font-family: $family; }
-	@if $weight { font-weight: $weight; }
-	@if $size { font-size: $size; }
-	@if $line-height { line-height: $line-height; }
-	@if $color { color: $color; }
+  @if $family { font-family: $family; }
+  @if $weight { font-weight: $weight; }
+  @if $size { font-size: $size; }
+  @if $line-height { line-height: $line-height; }
+  @if $color { color: $color; }
 }
 
 @mixin background-image($backgroundImage: false, $backgroundSize: false, $backgroundPosition: false) {
-	@if $backgroundImage { background-image: url($backgroundImage); }
-	@if $backgroundSize { background-size: $backgroundSize; }
-	@if $backgroundPosition { background-position: $backgroundPosition; }
+  @if $backgroundImage { background-image: url($backgroundImage); }
+  @if $backgroundSize { background-size: $backgroundSize; }
+  @if $backgroundPosition { background-position: $backgroundPosition; }
 }
 
 @mixin background-props($size, $position) {
-	background-size: $size;
-	background-position: $position;
+  background-size: $size;
+  background-position: $position;
 }
 
 @mixin flex-box(
@@ -127,10 +127,10 @@ Creates a full width background image on an element.
 }
 
 @mixin vertical-horizontal-center {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translateX(-50%) translateY(-50%);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
 }
 
 //

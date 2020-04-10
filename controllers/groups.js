@@ -1,5 +1,5 @@
 const Group = require('../models/group');
-const User  = require('../models/user');
+const User = require('../models/user');
 
 function indexGroup(req, res, next) {
   Group
@@ -7,19 +7,19 @@ function indexGroup(req, res, next) {
     .populate('users properties.images.createdBy properties.comments.createdBy properties.ratings.createdBy')
     .exec()
     .then((groups) => {
-      if(!groups) res.notFound('Group not found');
+      if (!groups) res.notFound('Group not found');
       return res.status(200).json(groups);
     })
     .catch(next);
 }
 
 function createGroup(req, res, next) {
-  if(req.user) req.body.createdBy = req.user.id;
+  if (req.user) req.body.createdBy = req.user.id;
 
   Group
     .create(req.body)
     .then((group) => {
-      if(!group) return res.notFound('Group was found');
+      if (!group) return res.notFound('Group was found');
       return res.status(200).json({ message: `${group.groupName} Created` });
     })
     .catch(next);
@@ -31,17 +31,17 @@ function showGroup(req, res, next) {
     .populate('users properties.images.createdBy properties.comments.createdBy properties.ratings.createdBy')
     .exec()
     .then((group) => {
-      if(!group) return res.notFound('Group was not found');
+      if (!group) return res.notFound('Group was not found');
       return res.json(group);
     })
     .catch(next);
 }
 
 function updateGroup(req, res, next) {
-  if(req.user) req.body.createdBy = req.user.id;
+  if (req.user) req.body.createdBy = req.user.id;
 
-  var params  = req.params.id;
-  var update  = { $set: { groupName: req.body.groupName }};
+  var params = req.params.id;
+  var update = { $set: { groupName: req.body.groupName } };
   var options = { new: true };
 
   Group
@@ -49,7 +49,7 @@ function updateGroup(req, res, next) {
     .populate('users')
     .exec()
     .then((group) => {
-      if(!group) return res.notFound('Group not found');
+      if (!group) return res.notFound('Group not found');
       return res.json({ group: group, message: `${group.groupName} Updated` });
     })
     .catch(next);
@@ -61,7 +61,7 @@ function deleteGroup(req, res, next) {
     .populate('users')
     .exec()
     .then((group) => {
-      if(!group) return res.notFound('Group not found');
+      if (!group) return res.notFound('Group not found');
       return group.remove();
     })
     .then((group) => res.status(200).json({ message: `${group.groupName} Deleted` }))
@@ -69,17 +69,17 @@ function deleteGroup(req, res, next) {
 }
 
 function addUserToGroup(req, res, next) {
-  if(req.user) req.body.createdBy = req.user.id;
+  if (req.user) req.body.createdBy = req.user.id;
 
   Group
     .findById(req.params.id)
     .populate('users')
     .exec()
     .then((group) => {
-      if(!group) return res.notFound('Group not found');
+      if (!group) return res.notFound('Group not found');
 
-      var params  = req.body.userId;
-      var update  = { $set: { group: req.params.id } };
+      var params = req.body.userId;
+      var update = { $set: { group: req.params.id } };
       var options = { new: true };
 
       return User
@@ -87,7 +87,7 @@ function addUserToGroup(req, res, next) {
         .populate('group')
         .exec()
         .then((user) => {
-          if(!user) res.status(404).json({ message: `User not found` });
+          if (!user) res.status(404).json({ message: 'User not found' });
 
           return user
             .save()
@@ -100,14 +100,14 @@ function addUserToGroup(req, res, next) {
 }
 
 function deleteUserFromGroup(req, res, next) {
-  if(req.user) req.body.createdBy = req.user.id;
+  if (req.user) req.body.createdBy = req.user.id;
 
   Group
     .findById(req.params.id)
     .populate('users')
     .exec()
     .then((group) => {
-      if(!group) return res.notFound('Group not found');
+      if (!group) return res.notFound('Group not found');
 
       var params = req.params.userId;
       var update = { $set: { group: null } };
@@ -118,7 +118,7 @@ function deleteUserFromGroup(req, res, next) {
         .populate('group')
         .exec()
         .then((user) => {
-          if(!user) res.status(404).json({ message: `User not found` });
+          if (!user) res.status(404).json({ message: 'User not found' });
 
           return user
             .save()

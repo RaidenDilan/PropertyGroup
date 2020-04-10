@@ -17,22 +17,22 @@ function showUser(req, res, next) {
     .populate('group')
     .exec()
     .then((user) => {
-      if(!user) return res.notFound('User not found');
+      if (!user) return res.notFound('User not found');
       return res.json(user);
     })
     .catch(next);
 }
 
 function updateUser(req, res, next) {
-  if(req.file) req.body.profileImage = req.file.filename;
-  if(req.user.group && typeof req.user.group === 'object' || req.user.group instanceof Object) req.body.group = req.user.group;
+  if (req.file) req.body.profileImage = req.file.filename;
+  if (req.user.group && typeof req.user.group === 'object' || req.user.group instanceof Object) req.body.group = req.user.group;
 
   User
     .findById(req.params.id)
     .populate('group')
     .exec()
     .then((user) => {
-      if(!user) return res.notFound('User not found');
+      if (!user) return res.notFound('User not found');
 
       for (const field in req.body) {
         user[field] = req.body[field];
@@ -49,7 +49,7 @@ function deleteUser(req, res, next) {
     .findById(req.params.id)
     .exec()
     .then((user) => {
-      if(!user) return res.notFound('User not found');
+      if (!user) return res.notFound('User not found');
       return user.remove();
     })
     .then((user) => res.status(200).json({ message: `${user.username} deleted` }))

@@ -4,8 +4,8 @@
   "description": "WDI_25 Project 3 - Grouparty",
   "main": "server.js",
   "engines": {
-    "node": "8.11.0",
-    "npm": "5.6.0"
+    "node": "8.12.x",
+    "npm": "6.14.x"
   },
   "scripts": {
     "postinstall": "bower install && gulp deploy",
@@ -80,6 +80,9 @@
     "bcrypt": "^2.0.1",
     "bower": "^1.8.0",
     "browser-sync": "^2.17.6",
+    "eslint": "^6.8.0",
+    "eslint-plugin-angular": "^4.0.1",
+    "eslint-plugin-node": "^11.1.0",
     "event-stream": "^3.3.4",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
@@ -87,6 +90,7 @@
     "gulp-clean": "^0.3.2",
     "gulp-clean-css": "^4.2.0",
     "gulp-concat": "^2.6.0",
+    "gulp-eslint": "^6.0.0",
     "gulp-htmlhint": "^0.3.1",
     "gulp-htmlmin": "^3.0.0",
     "gulp-if": "^2.0.2",

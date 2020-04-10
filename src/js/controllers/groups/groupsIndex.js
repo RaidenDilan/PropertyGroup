@@ -1,7 +1,7 @@
 angular
   .module('groupartyApp')
   .controller('GroupsIndexCtrl', GroupsIndexCtrl);
-  
+
 GroupsIndexCtrl.$inject = ['Group'];
 function GroupsIndexCtrl(Group) {
   const vm = this;

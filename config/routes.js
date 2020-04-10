@@ -1,13 +1,13 @@
-const router      = require('express').Router();
+const router = require('express').Router();
 const secureRoute = require('../lib/secureRoute');
 const imageUpload = require('../lib/imageUpload');
-const auth        = require('../controllers/auth');
-const users       = require('../controllers/users');
-const groups      = require('../controllers/groups');
-const properties  = require('../controllers/properties');
-const crimes      = require('../lib/crimeRoute');
-const zooplas     = require('../lib/zooplaRoutes');
-const oauth       = require('../controllers/oauth');
+const auth = require('../controllers/auth');
+const users = require('../controllers/users');
+const groups = require('../controllers/groups');
+const properties = require('../controllers/properties');
+const crimes = require('../lib/crimeRoute');
+const zooplas = require('../lib/zooplaRoutes');
+const oauth = require('../controllers/oauth');
 // const likes       = require('../controllers/likes');
 // const geoCoder    = require('../lib/geoCoderRoutes');
 

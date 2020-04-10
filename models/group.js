@@ -1,27 +1,27 @@
 const mongoose = require('mongoose');
-const s3       = require('../lib/s3');
-const Promise  = require('bluebird');
+const s3 = require('../lib/s3');
+const Promise = require('bluebird');
 const ObjectId = mongoose.Schema.ObjectId;
 
 // Embedded Document
 // const userLikeSchema = new mongoose.Schema({ user: { type: ObjectId, ref: 'User', unique: true, index: true }});
-const userImageSchema = new mongoose.Schema({ file: { type: String }, createdBy: { type: ObjectId, ref: 'User', required: true }}, { timestamps: { createdAt: true, updatedAt: false }});
-const userRatingSchema = new mongoose.Schema({ stars: { type: Number, required: true }, createdBy: { type: ObjectId, ref: 'User', required: true }}, { timestamps: { createdAt: true, updatedAt: false }});
-const userCommentSchema = new mongoose.Schema({ text: { type: String, required: true }, createdBy: { type: ObjectId, ref: 'User', required: true }}, { timestamps: { createdAt: true, updatedAt: false }});
+const userImageSchema = new mongoose.Schema({ file: { type: String }, createdBy: { type: ObjectId, ref: 'User', required: true } }, { timestamps: { createdAt: true, updatedAt: false } });
+const userRatingSchema = new mongoose.Schema({ stars: { type: Number, required: true }, createdBy: { type: ObjectId, ref: 'User', required: true } }, { timestamps: { createdAt: true, updatedAt: false } });
+const userCommentSchema = new mongoose.Schema({ text: { type: String, required: true }, createdBy: { type: ObjectId, ref: 'User', required: true } }, { timestamps: { createdAt: true, updatedAt: false } });
 
 const propertySchema = new mongoose.Schema({
   listingId: { type: String },
   likeCount: { type: Number, default: 0 },
   // likes: [ userLikeSchema ],
-  ratings: [ userRatingSchema ],
-  images: [ userImageSchema ],
-  comments: [ userCommentSchema ],
+  ratings: [userRatingSchema],
+  images: [userImageSchema],
+  comments: [userCommentSchema],
   createdBy: { type: ObjectId, ref: 'User', required: true }
-}, { timestamps: { createdAt: true, updatedAt: false }});
+}, { timestamps: { createdAt: true, updatedAt: false } });
 
 const groupSchema = new mongoose.Schema({
   groupName: { type: String, required: true },
-  properties: [ propertySchema ],
+  properties: [propertySchema],
   // properties: [{ type: ObjectId, ref: 'Property' }],
   // users: [{ type: ObjectId, ref: 'User' }],
   createdBy: { type: ObjectId, ref: 'User', required: true }
@@ -81,13 +81,13 @@ groupSchema.pre('remove', function removeGroupFromUsers(next) {
 });
 
 userImageSchema.virtual('imageSRC').get(function getImageSRC() {
-  if(!this.file) return null;
-  if(this.file.match(/^http/)) return (this.file);
+  if (!this.file) return null;
+  if (this.file.match(/^http/)) return (this.file);
   return `https://s3-eu-west-1.amazonaws.com/${process.env.AWS_BUCKET_NAME}/${this.file}`;
 });
 
 userImageSchema.pre('remove', function deleteImage(next) {
-  if(this.file) return s3.deleteObject({ Key: this.file }, next);
+  if (this.file) return s3.deleteObject({ Key: this.file }, next);
   return next();
 });
 

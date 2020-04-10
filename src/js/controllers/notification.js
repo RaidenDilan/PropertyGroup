@@ -28,7 +28,7 @@ function ToastCtrl($mdToast, $mdDialog, $document, $scope) {
         .ariaLabel('More info')
         .ok('Got it')
         .targetEvent(e)
-      )
+    )
       .then(() => vm.isDlgOpen = false);
   };
 

@@ -6,18 +6,18 @@ GroupsNewCtrl.$inject = ['$state', '$auth', '$scope', 'Group', 'User', '$filter'
 function GroupsNewCtrl($state, $auth, $scope, Group, User, $filter, ToastAlertService) {
   const vm = this;
 
-  vm.group                = {};
-  vm.group.users          = [];
-  vm.chosenUsers          = [];
-  vm.query                = null;
-  vm.toastDelay           = 2000;
-  vm.toastStatus          = 'success';
-  vm.filteredLength       = 0;
+  vm.group = {};
+  vm.group.users = [];
+  vm.chosenUsers = [];
+  vm.query = null;
+  vm.toastDelay = 2000;
+  vm.toastStatus = 'success';
+  vm.filteredLength = 0;
   vm.availableUsersLength = 0;
 
   const authUserId = $auth.getPayload().userId;
 
-  if(vm.group) fetchUsers();
+  if (vm.group) fetchUsers();
 
   $scope.$watch(() => vm.query, filterUsers);
   $scope.$watch(watchSearchBar, handleSearchBarChanges);
@@ -58,14 +58,14 @@ function GroupsNewCtrl($state, $auth, $scope, Group, User, $filter, ToastAlertSe
   }
 
   vm.addUser = (user) => {
-    if(!vm.group.users.includes(user.id) && user.id !== authUserId) vm.group.users.push(user.id);
-    if(!vm.chosenUsers.includes(user.id) && user.id !== authUserId) vm.chosenUsers.push(user);
+    if (!vm.group.users.includes(user.id) && user.id !== authUserId) vm.group.users.push(user.id);
+    if (!vm.chosenUsers.includes(user.id) && user.id !== authUserId) vm.chosenUsers.push(user);
 
     clearFilter();
   };
 
   vm.removeUser = (user) => {
-    const index   = vm.group.users.indexOf(user);
+    const index = vm.group.users.indexOf(user);
     const userIdx = vm.chosenUsers.indexOf(user);
 
     vm.group.users.splice(index, 1);
@@ -75,8 +75,8 @@ function GroupsNewCtrl($state, $auth, $scope, Group, User, $filter, ToastAlertSe
   };
 
   vm.create = () => {
-    if(vm.groupsNewForm.$valid) {
-      if(!vm.group.users.includes(authUserId)) vm.group.users.push(authUserId);
+    if (vm.groupsNewForm.$valid) {
+      if (!vm.group.users.includes(authUserId)) vm.group.users.push(authUserId);
 
       Group
         .save(vm.group)

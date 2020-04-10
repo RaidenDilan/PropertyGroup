@@ -6,15 +6,15 @@
   role="alert"
   aria-relevant="all"
   >
-  <span class="md-toast-text" flex>{{ toast.toastMessage }}</span>
+  <span class="md-toast-text" flex>{{ toastCtrl.toastMessage }}</span>
 
-  <span class="md-visually-hidden">Press Escape to dismiss. Press Control-"{{ toast.dialogKey }}" for</span>
+  <span class="md-visually-hidden">Press Escape to dismiss. Press Control-"{{ toastCtrl.dialogKey }}" for</span>
 
-  <md-button class="md-highlight" ng-show="toast" ng-click="toast.openMoreInfo($event)">
+  <md-button class="md-highlight" ng-show="toast" ng-click="toastCtrl.openMoreInfo($event)">
     <md-icon class="material-icons">more_horiz</md-icon>
   </md-button>
 
-  <span class="md-visually-hidden">Press Control-"{{ toast.hideKey }}" to</span>
+  <span class="md-visually-hidden">Press Control-"{{ toastCtrl.hideKey }}" to</span>
 
-  <md-button ng-click="toast.closeToast()">Hide</md-button>
+  <md-button ng-click="toastCtrl.closeToast()">Hide</md-button>
 </md-toast>

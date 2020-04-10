@@ -1,9 +1,9 @@
-const mongoose   = require('mongoose');
+const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 const { dbURI, mongoOptions } = require('../config/environment');
 mongoose.connect(dbURI, mongoOptions);
-const User       = require('../models/user');
-const Group      = require('../models/group');
+const User = require('../models/user');
+const Group = require('../models/group');
 
 User.collection.drop();
 Group.collection.drop();
@@ -19,7 +19,7 @@ User
     { username: 'Ranja', email: 'ranja@me.com', budget: 1200, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
     { username: 'Ty', email: 'ty@me.com', budget: 2500, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
     { username: 'Billie', email: 'billie@me.com', budget: 1500, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
-    { username: 'Edwin', email: 'edwin@me.com', budget: 1700, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' },
+    { username: 'Edwin', email: 'edwin@me.com', budget: 1700, password: 'p', passwordConfirmation: 'p', profileImage: 'http://cdn.onlinewebfonts.com/svg/img_568656.png' }
   ])
   .then((users) => {
     console.log(`${users.length} Users(s) created`);
@@ -28,7 +28,7 @@ User
       .create([{
         groupName: 'Kings & Queens',
         createdBy: users[4],
-        users: [ users[4], users[7], users[8] ],
+        users: [users[4], users[7], users[8]],
         properties: [{ createdBy: users[4], listingId: '52509811' }]
       }]);
   })

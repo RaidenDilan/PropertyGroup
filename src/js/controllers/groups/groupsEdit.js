@@ -7,11 +7,11 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
   const vm = this;
 
   // vm.group                = Group.get($stateParams);
-  vm.groupUsers           = [];
-  vm.query                = null;
-  vm.toastDelay           = 2000;
-  vm.toastStatus          = 'success';
-  vm.filteredLength       = 0;
+  vm.groupUsers = [];
+  vm.query = null;
+  vm.toastDelay = 2000;
+  vm.toastStatus = 'success';
+  vm.filteredLength = 0;
   vm.availableUsersLength = 0;
 
   const authUserId = $auth.getPayload().userId;

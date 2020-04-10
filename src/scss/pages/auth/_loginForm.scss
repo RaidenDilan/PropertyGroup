@@ -140,9 +140,9 @@
 @include breakpoint(iPhoneXI) {
   .loginForm {
     // @include iOS-Viewport;width: 100vw;  /* Use vw as a fallback for browsers that do not support Custom Properties */
-  	width: calc(var(--vw, 1vw) * 100);
-  	height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
-  	height: calc(var(--vh, 1vh) * 100);
+    width: calc(var(--vw, 1vw) * 100);
+    height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
+    height: calc(var(--vh, 1vh) * 100);
 
     .loginFormCard {
       margin: 0;
@@ -157,9 +157,9 @@
 @include breakpoint(iPhoneXIPro) {
   .loginForm {
     // @include iOS-Viewport;width: 100vw;  /* Use vw as a fallback for browsers that do not support Custom Properties */
-  	width: calc(var(--vw, 1vw) * 100);
-  	height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
-  	height: calc(var(--vh, 1vh) * 100);
+    width: calc(var(--vw, 1vw) * 100);
+    height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
+    height: calc(var(--vh, 1vh) * 100);
 
     .loginFormCard {
       margin: 0;
@@ -174,9 +174,9 @@
 @include breakpoint(iPhoneXIProMax) {
   .loginForm {
     // @include iOS-Viewport;width: 100vw;  /* Use vw as a fallback for browsers that do not support Custom Properties */
-  	width: calc(var(--vw, 1vw) * 100);
-  	height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
-  	height: calc(var(--vh, 1vh) * 70);
+    width: calc(var(--vw, 1vw) * 100);
+    height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
+    height: calc(var(--vh, 1vh) * 70);
 
     .loginFormCard {
       margin: 0;

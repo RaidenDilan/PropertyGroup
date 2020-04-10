@@ -44,7 +44,7 @@ function propertyMap($window, mapStyles) {
       });
 
       marker.addListener('click', function(event) {
-        if(!marker.open && infoWindow) {
+        if (!marker.open && infoWindow) {
           infoWindow.close();
           marker.open = false;
         }

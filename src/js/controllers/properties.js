@@ -1,5 +1,3 @@
-/* global google:ignore */
-
 angular
   .module('groupartyApp')
   .controller('PropertiesIndexCtrl', PropertiesIndexCtrl)
@@ -9,21 +7,21 @@ PropertiesIndexCtrl.$inject = ['$scope', '$http', '$mdDialog', '$moment'];
 function PropertiesIndexCtrl($scope, $http, $mdDialog, $moment) {
   const vm = this;
 
-  vm.results      = [];
-  vm.area         = null;
+  vm.results = [];
+  vm.area = null;
   vm.propertyType = null;
-  vm.minimumBeds  = null;
-  vm.maximumBeds  = null;
+  vm.minimumBeds = null;
+  vm.maximumBeds = null;
   vm.minimumPrice = null;
   vm.maximumPrice = null;
   vm.maximumPrice = null;
-  vm.originEvent  = null;
-  vm.orderBy      = 'price';
-  vm.ordering     = 'descending';
-  vm.sortBy       = '-first_published_date'; // Filtering and sorting
-  vm.queryLimit   = 10; // loadMore Limit
-  vm.toShow       = 100; // Filtering and sorting --> was 49
-  vm.isLoading    = false;
+  vm.originEvent = null;
+  vm.orderBy = 'price';
+  vm.ordering = 'descending';
+  vm.sortBy = '-first_published_date'; // Filtering and sorting
+  vm.queryLimit = 10; // loadMore Limit
+  vm.toShow = 100; // Filtering and sorting --> was 49
+  vm.isLoading = false;
 
   vm.getProperties = () => {
     if (vm.propertiesIndexForm.$valid) {
@@ -37,7 +35,7 @@ function PropertiesIndexCtrl($scope, $http, $mdDialog, $moment) {
           maximum_price: vm.maximumPrice,
           order_by: vm.orderBy,
           ordering: vm.ordering
-        }})
+        } })
         .then((response) => {
           vm.isLoading = true;
           propertyUpdater(response.data);
@@ -52,18 +50,18 @@ function PropertiesIndexCtrl($scope, $http, $mdDialog, $moment) {
           vm.isLoading = false;
         });
 
-        vm.propertiesIndexForm.$setUntouched();
-        vm.propertiesIndexForm.$setPristine();
+      vm.propertiesIndexForm.$setUntouched();
+      vm.propertiesIndexForm.$setPristine();
     }
   };
 
   function toggle() {
     vm.isLoading = !vm.isLoading;
-	}
+  }
   vm.toggle = toggle;
 
   function toggleLoading() {
-    vm.isLoading = vm.isLoading === false ? true : false;
+    vm.isLoading = vm.isLoading === false;
   }
   vm.toggleLoading = toggleLoading;
 
@@ -71,7 +69,7 @@ function PropertiesIndexCtrl($scope, $http, $mdDialog, $moment) {
   // $scope.$on('place_changed', (e, place) => console.log('place', place));
 
   function propertyUpdater(properties) {
-    if (typeof(properties) !== 'object') throw 'Properties should be an object';
+    if (typeof (properties) !== 'object') throw new Error('Properties should be an object');
     for (var i = 0; i < properties.length; i++) {
       properties[i].first_published_date = createdOnParser(properties[i].first_published_date);
       // properties[i].price = properties[i].like.length - properties[i].dislike.length;
@@ -84,7 +82,7 @@ function PropertiesIndexCtrl($scope, $http, $mdDialog, $moment) {
 
   // make sense of the timestamps.
   function createdOnParser(data) {
-    var str  = data.split('T');
+    var str = data.split('T');
     var date = str[0];
     var time = str[1].split('.')[0];
     return `${date} at ${time}`;
@@ -104,7 +102,7 @@ function PropertiesIndexCtrl($scope, $http, $mdDialog, $moment) {
   };
 
   vm.loadMore = () => {
-    return vm.queryLimit +=12;
+    return vm.queryLimit += 12;
   };
 
   vm.showResults = () => {
@@ -140,8 +138,8 @@ PropertiesShowCtrl.$inject = ['$state', '$auth', 'User', 'GroupProperty', 'selec
 function PropertiesShowCtrl($state, $auth, User, GroupProperty, selectedProperty, $mdDialog, ToastAlertService) {
   const vm = this;
 
-  vm.selected    = selectedProperty;
-  vm.toastDelay  = 2000;
+  vm.selected = selectedProperty;
+  vm.toastDelay = 2000;
   vm.toastStatus = 'success';
 
   const authUserId = $auth.getPayload().userId;
@@ -165,7 +163,7 @@ function PropertiesShowCtrl($state, $auth, User, GroupProperty, selectedProperty
         vm.newProperty = {};
       });
 
-      ToastAlertService.customToast(`${newProperty.listingId} stored in ${vm.user.group.groupName} group`, vm.toastDelay, vm.toastStatus);
+    ToastAlertService.customToast(`${newProperty.listingId} stored in ${vm.user.group.groupName} group`, vm.toastDelay, vm.toastStatus);
   };
 
   vm.storeAndContinue = () => {
@@ -178,7 +176,7 @@ function PropertiesShowCtrl($state, $auth, User, GroupProperty, selectedProperty
         vm.newProperty = {};
       });
 
-      ToastAlertService.customToast(`${newProperty.listingId} stored in ${vm.user.group.groupName} group`, vm.toastDelay, vm.toastStatus);
+    ToastAlertService.customToast(`${newProperty.listingId} stored in ${vm.user.group.groupName} group`, vm.toastDelay, vm.toastStatus);
   };
 
   vm.hide = () => $mdDialog.hide();

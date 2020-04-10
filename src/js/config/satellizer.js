@@ -1,7 +1,7 @@
 angular
   .module('groupartyApp')
   .config(Auth);
-  // .run(ClearLocalStorage);
+// .run(ClearLocalStorage);
 
 Auth.$inject = ['$authProvider'];
 function Auth($authProvider) {

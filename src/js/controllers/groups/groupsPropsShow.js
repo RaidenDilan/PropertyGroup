@@ -9,21 +9,21 @@ function GroupsPropsShowCtrl($stateParams, $scope, $state, $http, Group, GroupPr
 
   const authUserId = $auth.getPayload().userId;
 
-  vm.group            = Group.get($stateParams);
-  vm.listingLat       = null;
-  vm.listingLon       = null;
-  vm.geometry         = null;
-  vm.listingId        = $stateParams.listing_id;
-  vm.crimes           = [];
+  vm.group = Group.get($stateParams);
+  vm.listingLat = null;
+  vm.listingLon = null;
+  vm.geometry = null;
+  vm.listingId = $stateParams.listing_id;
+  vm.crimes = [];
   vm.crimes.crimeData = [];
-  vm.toastDelay       = 2000;
-  vm.toastStatus      = 'success';
-  vm.labels           = ['Anti Social Behaviour', 'Burglary', 'Bike Theft', 'Drugs', 'Robbery', 'Vehicle Crimes', 'Violent Crimes'];
-  vm.isLoading        = false;
-  vm.readOnly         = true;
-  vm.voted            = null;
+  vm.toastDelay = 2000;
+  vm.toastStatus = 'success';
+  vm.labels = ['Anti Social Behaviour', 'Burglary', 'Bike Theft', 'Drugs', 'Robbery', 'Vehicle Crimes', 'Violent Crimes'];
+  vm.isLoading = false;
+  vm.readOnly = true;
+  vm.voted = null;
 
-  if(vm.group) getGroup();
+  if (vm.group) getGroup();
 
   function getGroup() {
     Group
@@ -32,12 +32,12 @@ function GroupsPropsShowCtrl($stateParams, $scope, $state, $http, Group, GroupPr
       .then((data) => {
         vm.group = data;
         getGroupProperty();
-        vm.prop = vm.group.properties.find(obj => obj.listingId === vm.listingId);
+        vm.prop = vm.group.properties.find((obj) => obj.listingId === vm.listingId);
         vm.prop.createdAt = $moment(vm.prop.createdAt).fromNow();
         vm.prop.ratings.forEach((rating) => rating.createdAt = $moment(rating.createdAt).fromNow());
         vm.prop.images.forEach((image) => image.createdAt = $moment(image.createdAt).fromNow()); // .fromNow(true);
         vm.prop.comments.forEach((comment) => comment.createdAt = $moment(comment.createdAt).fromNow());
-        vm.voted = vm.prop.ratings.find(obj => obj.createdBy.id === authUserId);
+        vm.voted = vm.prop.ratings.find((obj) => obj.createdBy.id === authUserId);
         // vm.ratings = vm.prop.ratings.length;
       });
   }
@@ -49,13 +49,13 @@ function GroupsPropsShowCtrl($stateParams, $scope, $state, $http, Group, GroupPr
         vm.properties = response.data;
         vm.listingLat = vm.properties.listing[0].latitude;
         vm.listingLon = vm.properties.listing[0].longitude;
-        vm.geometry     = `${vm.listingLat},${vm.listingLon}`;
+        vm.geometry = `${vm.listingLat},${vm.listingLon}`;
         getPropertyCrimes();
       });
   }
 
   function getPropertyCrimes() {
-    if(!vm.listingLat) return false;
+    if (!vm.listingLat) return false;
 
     Crimes
       .getCrimes(vm.listingLat, vm.listingLon)
@@ -66,7 +66,7 @@ function GroupsPropsShowCtrl($stateParams, $scope, $state, $http, Group, GroupPr
   function toggleVoted() {
     vm.voted = !vm.voted;
     // vm.voted = vm.voted === true ? false : true;
-	}
+  }
 
   function toggleLoading() {
     vm.isLoading = !vm.isLoading;
@@ -189,9 +189,9 @@ UserImageModalCtrl.$inject = ['selectedImage', '$mdDialog'];
 function UserImageModalCtrl(selectedImage, $mdDialog) {
   const vm = this;
 
-  vm.selected   = selectedImage;
-  vm.hide       = () => $mdDialog.hide();
-  vm.cancel     = () => $mdDialog.cancel();
+  vm.selected = selectedImage;
+  vm.hide = () => $mdDialog.hide();
+  vm.cancel = () => $mdDialog.cancel();
   vm.showUserId = (userId) => $mdDialog.hide(userId);
 }
 

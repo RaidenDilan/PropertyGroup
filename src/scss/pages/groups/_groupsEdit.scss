@@ -97,13 +97,13 @@
   .groupUsersToAdd {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     -webkit-transition: 0.5s linear all;
-            transition: 0.5s linear all;
+    transition: 0.5s linear all;
 
     &.ng-move,
     &.ng-enter,
     &.ng-leave {
       -webkit-transition: all linear 0.1s;
-              transition: all linear 0.1s;
+      transition: all linear 0.1s;
     }
 
     &.ng-leave.ng-leave-active,
@@ -126,12 +126,12 @@
     &.ng-leave-stagger {
       /* this will have a 100ms delay between each successive leave animation */
       -webkit-transition-delay: 0.1s;
-              transition-delay: 0.1s;
+      transition-delay: 0.1s;
 
       /* in case the stagger doesn't work then these two values
        must be set to 0 to avoid an accidental CSS inheritance */
       -webkit-transition-duration: 0s;
-              transition-duration: 0s;
+      transition-duration: 0s;
     }
 
     /**
@@ -140,12 +140,12 @@
     &.ng-enter-stagger {
       /* this will have a 100ms delay between each successive enter animation */
       -webkit-transition-delay: 0.1s;
-              transition-delay: 0.1s;
+      transition-delay: 0.1s;
 
       /* in case the stagger doesn't work then these two values
        must be set to 0 to avoid an accidental CSS inheritance */
       -webkit-transition-duration: 0s;
-              transition-duration: 0s;
+      transition-duration: 0s;
     }
 
     div {

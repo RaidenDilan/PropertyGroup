@@ -2,164 +2,164 @@ angular
   .module('groupartyApp')
   .controller('MainCtrl', MainCtrl);
 
-  MainCtrl.$inject = ['$rootScope', '$scope', '$state', '$auth', 'ToastAlertService', 'User', '$mdSidenav', '$log'];
-  function MainCtrl($rootScope, $scope, $state, $auth, ToastAlertService, User, $mdSidenav, $log) {
-    const vm = this;
+MainCtrl.$inject = ['$rootScope', '$scope', '$state', '$auth', 'ToastAlertService', 'User', '$mdSidenav', '$log'];
+function MainCtrl($rootScope, $scope, $state, $auth, ToastAlertService, User, $mdSidenav, $log) {
+  const vm = this;
 
-    const protectedStates = [
-      'usersShow',
-      'usersEdit',
-      'groupsIndex',
-      'groupsNew',
-      'groupsHome',
-      'groupsEdit',
-      'groupsPropsShow',
-      'propertiesIndex',
-      'propertiesShow'
-    ];
+  const protectedStates = [
+    'usersShow',
+    'usersEdit',
+    'groupsIndex',
+    'groupsNew',
+    'groupsHome',
+    'groupsEdit',
+    'groupsPropsShow',
+    'propertiesIndex',
+    'propertiesShow'
+  ];
 
-    $state.current.hideBack = true;
-    vm.hideBack             = $state.current.hideBack;
-    vm.isAuthenticated      = $auth.isAuthenticated;
-    vm.toastDelay           = 2000;
-    vm.toggleLeft           = buildToggler('left');
-    vm.isHome               = false;
+  $state.current.hideBack = true;
+  vm.hideBack = $state.current.hideBack;
+  vm.isAuthenticated = $auth.isAuthenticated;
+  vm.toastDelay = 2000;
+  vm.toggleLeft = buildToggler('left');
+  vm.isHome = false;
 
-    // vm.words = [' to buy', ' to rent', ' with your friends', ' in the UK'];
-    // vm.startDelay = '2000';
-    // vm.backspaceTime = '50';
-    // vm.typeTime = '60';
-    // vm.highlightBackground = 'rgba(255, 255, 255, 0.85)';
-    // vm.highlightColor = '#000000';
-    // vm.highlightTime = '250';
-    // vm.repeatTyper = 'false';
+  // vm.words = [' to buy', ' to rent', ' with your friends', ' in the UK'];
+  // vm.startDelay = '2000';
+  // vm.backspaceTime = '50';
+  // vm.typeTime = '60';
+  // vm.highlightBackground = 'rgba(255, 255, 255, 0.85)';
+  // vm.highlightColor = '#000000';
+  // vm.highlightTime = '250';
+  // vm.repeatTyper = 'false';
 
-    // $rootScope.bodyClass = 'login-layout';
-    // $rootScope.$on('$routeChangeSuccess', function(currentRoute, previousRoute) {
-    //   console.log('currentRoute', currentRoute);
-    //   if (currentRoute) console.log('currentRoute.templateUrl', currentRoute);
-    //   // switch(currentRoute.templateUrl) {
-    //     //   // case 'login.html':
-    //     //   // case 'register.html':
-    //     //   case 'index.html':
-    //     //     $rootScope.bodyClass = 'home';
-    //     //     break;
-    //     //   default:
-    //     //     $rootScope.bodyClass = '';
-    //     //     break;
-    //     // }
-    //   });
+  // $rootScope.bodyClass = 'login-layout';
+  // $rootScope.$on('$routeChangeSuccess', function(currentRoute, previousRoute) {
+  //   console.log('currentRoute', currentRoute);
+  //   if (currentRoute) console.log('currentRoute.templateUrl', currentRoute);
+  //   // switch(currentRoute.templateUrl) {
+  //     //   // case 'login.html':
+  //     //   // case 'register.html':
+  //     //   case 'index.html':
+  //     //     $rootScope.bodyClass = 'home';
+  //     //     break;
+  //     //   default:
+  //     //     $rootScope.bodyClass = '';
+  //     //     break;
+  //     // }
+  //   });
 
-    $rootScope.$on('error', stateErrors);
-    $rootScope.$on('$stateChangeStart', secureState);
-    $rootScope.$on('$stateChangeSuccess', authenticateState);
+  $rootScope.$on('error', stateErrors);
+  $rootScope.$on('$stateChangeStart', secureState);
+  $rootScope.$on('$stateChangeSuccess', authenticateState);
 
-    function stateErrors(event, err) {
-      vm.stateHasChanged = false;
-      vm.message = err.data.message;
+  function stateErrors(event, err) {
+    vm.stateHasChanged = false;
+    vm.message = err.data.message;
 
-      ToastAlertService.customToast(vm.message, 5000, 'error');
+    ToastAlertService.customToast(vm.message, 5000, 'error');
 
-      if (err.status === 401) $state.go('login');
+    if (err.status === 401) $state.go('login');
+  }
+
+  function secureState(event, toState, toParams, fromState, fromParams) {
+    // vm.isHome = (toState.url === '/' || toState.name === 'home') ? true : false;
+    vm.message = null;
+    // console.log('vm.currentGroupId', vm.currentGroupId);
+    if (!detectMobile() && vm.hideBack === true) vm.hideBack = $state.current.hideBack ? $state.current.hideBack : false;
+
+    // SOME HOW PROTECTED ROUTES CAN BE ACCESSED WHEN NOT IN A GROUP BUT IS AUTHENTICATED
+    // if (vm.currentGroupId === undefined) {
+    //   event.preventDefault();
+    //   $state.go('groupsNew');
+    //   vm.message = 'You must be in this group to view it\'s contents!';
+    //   ToastAlertService.customToast(vm.message, vm.toastDelay, 'warning');
+    // }
+
+    if (!$auth.isAuthenticated() && protectedStates.includes(toState.name)) {
+      event.preventDefault();
+      $state.go('login');
+      vm.message = 'You must be logged in to view web contents!';
+      ToastAlertService.customToast(vm.message, vm.toastDelay, 'warning');
     }
+  }
 
-    function secureState(event, toState, toParams, fromState, fromParams) {
-      // vm.isHome = (toState.url === '/' || toState.name === 'home') ? true : false;
-      vm.message = null;
-      // console.log('vm.currentGroupId', vm.currentGroupId);
-      if (!detectMobile() && vm.hideBack === true) vm.hideBack = $state.current.hideBack ? $state.current.hideBack : false;
+  function authenticateState(event, toState, toParams, fromState, fromParams) {
+    vm.isHome = !!((toState.url === '/' || toState.name === 'home'));
 
-      // SOME HOW PROTECTED ROUTES CAN BE ACCESSED WHEN NOT IN A GROUP BUT IS AUTHENTICATED
-      // if (vm.currentGroupId === undefined) {
-      //   event.preventDefault();
-      //   $state.go('groupsNew');
-      //   vm.message = 'You must be in this group to view it\'s contents!';
-      //   ToastAlertService.customToast(vm.message, vm.toastDelay, 'warning');
-      // }
+    if (vm.stateHasChanged) vm.message = null;
+    if (!vm.stateHasChanged) vm.stateHasChanged = true;
+    if (vm.stateHasChanged) document.body.scrollTop = document.documentElement.scrollTop = 0; // BUG????
 
-      if (!$auth.isAuthenticated() && protectedStates.includes(toState.name)) {
-        event.preventDefault();
-        $state.go('login');
-        vm.message = 'You must be logged in to view web contents!';
-        ToastAlertService.customToast(vm.message, vm.toastDelay, 'warning');
-      }
-    }
+    if ($auth.getPayload()) {
+      vm.currentUserId = $auth.getPayload().userId;
 
-    function authenticateState(event, toState, toParams, fromState, fromParams) {
-      vm.isHome = (toState.url === '/' || toState.name === 'home') ? true : false;
+      return User
+        .get({ id: vm.currentUserId })
+        .$promise
+        .then((user) => {
+          vm.user = user;
 
-      if (vm.stateHasChanged) vm.message = null;
-      if (!vm.stateHasChanged) vm.stateHasChanged = true;
-      if (vm.stateHasChanged) document.body.scrollTop = document.documentElement.scrollTop = 0; // BUG????
+          if ((toState.name === 'propertiesIndex' && vm.user.group === null) && protectedStates.includes(toState.name)) {
+            event.preventDefault();
 
-      if ($auth.getPayload()) {
-        vm.currentUserId = $auth.getPayload().userId;
+            $state.go('groupsNew');
+            vm.message = 'You must create a group before searching for properties';
 
-        return User
-          .get({ id: vm.currentUserId })
-          .$promise
-          .then((user) => {
-            vm.user = user;
-
-            if ((toState.name === 'propertiesIndex' && vm.user.group === null) && protectedStates.includes(toState.name)) {
-              event.preventDefault();
-
-              $state.go('groupsNew');
-              vm.message = 'You must create a group before searching for properties';
-
-              ToastAlertService.customToast(vm.message, vm.toastDelay, 'warning');
-            }
-            return !vm.user.group ? vm.currentGroupId = null : vm.currentGroupId = vm.user.group.id;
-          });
-      }
-    }
-
-    function buildToggler(navID) {
-      return () => {
-        // Component lookup should always be available since we are not using `ng-if`
-        $mdSidenav(navID)
-          .toggle()
-          .then(() => $log.debug('toggle ' + navID + ' is done'));
-      };
-    }
-
-    function detectMobile() {
-      if(navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)) return true;
-      else return false;
-    }
-
-    vm.close = () => {
-      // Component lookup should always be available since we are not using `ng-if`
-      $mdSidenav('left')
-        .close()
-        .then(() => $log.debug('close LEFT is done'));
-    };
-
-    vm.logout = () => {
-      $auth
-        .logout()
-        .then(() => {
-          $state.go('home');
-          ToastAlertService.customToast(`Logged out successfully`, vm.toastDelay, 'success');
+            ToastAlertService.customToast(vm.message, vm.toastDelay, 'warning');
+          }
+          return !vm.user.group ? vm.currentGroupId = null : vm.currentGroupId = vm.user.group.id;
         });
+    }
+  }
+
+  function buildToggler(navID) {
+    return () => {
+      // Component lookup should always be available since we are not using `ng-if`
+      $mdSidenav(navID)
+        .toggle()
+        .then(() => $log.debug('toggle ' + navID + ' is done'));
     };
   }
 
-  // $scope.urlHistory = [];
-  // $scope.$on('$routeChangeSuccess', function () {
-  //   if ($location.$$absUrl.split('#')[1] !== $scope.urlHistory[$scope.urlHistory.length - 1]) $scope.urlHistory.push($location.$$absUrl.split('#')[1]);
-  // });
-  // $scope.goBack = function () {
-  //   $scope.urlHistory.pop();
-  //   $location.path($scope.urlHistory[$scope.urlHistory.length - 1]);
-  // };
+  function detectMobile() {
+    if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)) return true;
+    return false;
+  }
 
-  // $scope.$on('$routeChangeStart', function (scope, next, current) {
-  //   console.log('scope', scope);
-  //   console.log('next', next);
-  //   console.log('current', current);
-  //   if (next.$$route.controller != "/") {
-  //     // Show here for your model, and do what you need**
-  //     // $("#yourModel").show();
-  //   }
-  // });
+  vm.close = () => {
+    // Component lookup should always be available since we are not using `ng-if`
+    $mdSidenav('left')
+      .close()
+      .then(() => $log.debug('close LEFT is done'));
+  };
+
+  vm.logout = () => {
+    $auth
+      .logout()
+      .then(() => {
+        $state.go('home');
+        ToastAlertService.customToast('Logged out successfully', vm.toastDelay, 'success');
+      });
+  };
+}
+
+// $scope.urlHistory = [];
+// $scope.$on('$routeChangeSuccess', function () {
+//   if ($location.$$absUrl.split('#')[1] !== $scope.urlHistory[$scope.urlHistory.length - 1]) $scope.urlHistory.push($location.$$absUrl.split('#')[1]);
+// });
+// $scope.goBack = function () {
+//   $scope.urlHistory.pop();
+//   $location.path($scope.urlHistory[$scope.urlHistory.length - 1]);
+// };
+
+// $scope.$on('$routeChangeStart', function (scope, next, current) {
+//   console.log('scope', scope);
+//   console.log('next', next);
+//   console.log('current', current);
+//   if (next.$$route.controller != "/") {
+//     // Show here for your model, and do what you need**
+//     // $("#yourModel").show();
+//   }
+// });

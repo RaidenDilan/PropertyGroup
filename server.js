@@ -1,13 +1,13 @@
-const express    = require('express');
-const morgan     = require('morgan');
+const express = require('express');
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const mongoose   = require('mongoose');
+const mongoose = require('mongoose');
 const { port, env, dbURI, mongoOptions, bluebirdOptions } = require('./config/environment');
 mongoose.plugin(require('./lib/globalToJSON'));
-mongoose.Promise      = require('bluebird').config(bluebirdOptions);
-const routes          = require('./config/routes');
+mongoose.Promise = require('bluebird').config(bluebirdOptions);
+const routes = require('./config/routes');
 const customResponses = require('./lib/customResponses');
-const errorHandler    = require('./lib/errorHandler');
+const errorHandler = require('./lib/errorHandler');
 
 const app = express();
 
@@ -16,7 +16,7 @@ mongoose.connect(dbURI, mongoOptions);
 mongoose.connection.once('open', () => {
   mongoose.connection
     // .on('connected', () => console.log('Mongoose default connection is open to [%s]', dbURI))
-    .on('error', (err) => console.log(error('Mongoose default connection has occured ' + err + ' error')))
+    .on('error', (err) => console.log(console.error('Mongoose default connection has occured ' + err + ' error')))
     .on('reconnected', () => console.log('MongoDB event reconnected'))
     // .on('reconnected', () => console.info('MongoDB event reconnected'))
     .on('disconnected', () => console.log('Mongoose default connection is disconnected '));
@@ -43,7 +43,7 @@ mongoose.connection.once('open', () => {
 //   else console.log('Connected to Server successfully!');
 // });
 
-if(env !== 'test') app.use(morgan('dev'));
+if (env !== 'test') app.use(morgan('dev'));
 
 app.use(express.static(`${__dirname}/public`));
 app.use(bodyParser.json({ limit: '5mb' }));

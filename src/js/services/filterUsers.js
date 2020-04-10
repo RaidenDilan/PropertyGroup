@@ -4,8 +4,8 @@ angular
 
 function search() {
   return function(input, filterString) {
-    if(!filterString) return input;
-    if(filterString) filterString = '.*' + filterString.toLowerCase().split(' ').join('.*');
+    if (!filterString) return input;
+    if (filterString) filterString = '.*' + filterString.toLowerCase().split(' ').join('.*');
 
     var regex = new RegExp(filterString, 'i');
     var filteredOutput = [];

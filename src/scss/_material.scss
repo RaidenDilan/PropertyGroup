@@ -17,16 +17,16 @@ md-card {
 md-toast {
   position: fixed;
 
-	&.success .md-toast-content {
+  &.success .md-toast-content {
     background-color: #4CAF50;
     color: $white;
   }
 
-	&.error .md-toast-content {
+  &.error .md-toast-content {
     background-color: #FF0000;
     color: $white;
   }
-	&.warning .md-toast-content {
+  &.warning .md-toast-content {
     background-color: #F44336;
     color: $white;
   }
