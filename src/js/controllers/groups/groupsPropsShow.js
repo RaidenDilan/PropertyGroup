@@ -136,7 +136,6 @@ function GroupsPropsShowCtrl($stateParams, $scope, $state, $http, Group, GroupPr
       .then((comment) => {
         comment.createdAt = $moment(comment.createdAt).fromNow();
         // comment.createdAt = $moment(vm.newComment.createdAt).fromNow();
-        console.log('CHECK THE LINE ABOVE');
         vm.prop.comments.push(comment);
         vm.newComment = {};
       })
