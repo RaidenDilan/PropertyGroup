@@ -31,7 +31,7 @@ User
       .create([{
         groupName: 'Kings & Queens',
         createdBy: users[4],
-        users: [users[4], users[7], users[8]],
+        users: [users[4], users[7], users[8], users[9]],
         properties: [{ createdBy: users[4], listingId: '52509811' }]
       }]);
   })

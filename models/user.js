@@ -9,11 +9,11 @@ const userSchema = new mongoose.Schema({
   username: { type: String, unique: true, trim: true, lowercase: true, required: true },
   email: { type: String, unique: true, trim: true, lowercase: true, required: true },
   budget: { type: Number, required: true },
-  password: { type: String, minLength: 1 },
+  password: { type: String, minLength: 1, required: true },
   profileImage: { type: String, default: avatar, required: true },
   githubId: { type: Number },
   group: { type: ObjectId, ref: 'Group', default: null } // Referenced Document
-});
+}, { timestamps: true });
 
 userSchema.path('profileImage').set(function getPreviousImage(profileImage) {
   this._profileImage = this.profileImage;
@@ -25,7 +25,7 @@ userSchema.path('email').validate(validateEmail);
 userSchema.virtual('profileImageSRC').get(function getProfileImageSRC() {
   if (!this.profileImage) return null;
   if (this.profileImage.match(/^http/)) return (this.profileImage);
-  return `https://s3-eu-west-1.amazonaws.com/${process.env.AWS_BUCKET_NAME}/${this.profileImage}`;
+  return `https://s3-eu-west-1.amazonaws.com/${ process.env.AWS_BUCKET_NAME }/${ this.profileImage }`;
 });
 
 userSchema.pre('save', function checkPreviousProfileImage(next) {
