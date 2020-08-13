@@ -22,12 +22,11 @@ const propertySchema = new mongoose.Schema({
 const groupSchema = new mongoose.Schema({
   groupName: { type: String, required: true },
   properties: [propertySchema],
-  // properties: [{ type: ObjectId, ref: 'Property' }],
   // users: [{ type: ObjectId, ref: 'User' }],
   createdBy: { type: ObjectId, ref: 'User', required: true }
 }, {
-  timestamps: { createdAt: true, updatedAt: true },
-  usePushEach: true // $push operator with $each instead. This forces the use of $pushAll - MongoDB 3.6
+  timestamps: { createdAt: true, updatedAt: true }
+  // usePushEach: true // $push operator with $each instead. This forces the use of $pushAll - MongoDB 3.6
 });
 
 groupSchema
@@ -48,17 +47,18 @@ groupSchema.pre('save', function addGroupToUsers(next) {
     .model('User')
     .find({ _id: this._users }) // this._users refers to virtual users field
     .exec()
-    .then((users) => {
-      const promises = users.map((user) => {
+    .then(users => {
+      const promises = users.map(user => {
         user.group = this.id;
         return user.save();
       });
-
 
       return Promise.all(promises);
     })
     .then(next)
     .catch(next);
+  
+  return next();
 });
 
 groupSchema.pre('remove', function removeGroupFromUsers(next) {
@@ -67,23 +67,27 @@ groupSchema.pre('remove', function removeGroupFromUsers(next) {
     .find({ _id: this.users }) // this.users refers to req.body.users
     .populate('group')
     .exec()
-    .then((users) => {
-      const promises = users.map((user) => {
+    .then(users => {
+      const promises = users.map(user => {
         user.group = null;
-        return user.save();
+        console.log('removeGroupFromUsers] ------> user.group ', user.group);
+        user.save();
+        
+        return users;
       });
-
 
       return Promise.all(promises);
     })
     .then(next)
     .catch(next);
+
+  return next();
 });
 
 userImageSchema.virtual('imageSRC').get(function getImageSRC() {
   if (!this.file) return null;
   if (this.file.match(/^http/)) return (this.file);
-  return `https://s3-eu-west-1.amazonaws.com/${process.env.AWS_BUCKET_NAME}/${this.file}`;
+  return `https://s3-eu-west-1.amazonaws.com/${ process.env.AWS_BUCKET_NAME }/${ this.file }`;
 });
 
 userImageSchema.pre('remove', function deleteImage(next) {

@@ -25,8 +25,9 @@ const fetchLocalCss = () => {
     .src(`${config.src.scss}${config.main.scss}`)
     .pipe(sass({ style: 'expanded' }))
     // .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
+    // .pipe(autoprefixer())
     .pipe(autoprefixer({
-      browsers: ['last 2 version', 'safari >= 10', 'ie 8', 'ie 9', 'opera 12.1', 'ios 10', 'android 4'],
+      Browserslist: ['last 2 version', 'safari >= 10', 'ie 8', 'ie 9', 'opera 12.1', 'ios 10', 'android 4'],
       cascade: true, /* should Autoprefixer use Visual Cascade, if CSS is uncompressed. Default: true */
       flexbox: true /* should Autoprefixer add prefixes for flexbox properties Default: true */
     }))
