@@ -3,6 +3,10 @@
   "version": "3.0.0",
   "description": "WDI_25 Project 3 - Grouparty",
   "main": "server.js",
+  "engines": {
+    "node": "10.21.x",
+    "npm": "6.14.x"
+  },
   "scripts": {
     "postinstall": "bower install && gulp deploy",
     "start": "node server.js"
