@@ -11,7 +11,7 @@ function backButton($window) {
     // controller: ($scope, $state) => {
     //   $scope.$on('$stateChangeSuccess', (event, toState) => {
     //     $scope.hideBack = $state.current.hideBack ? $state.current.hideBack : false;
-    //     console.log('$state.current', $state.current);
+    //     $log('$state.current', $state.current);
     //   });
     // },
     link(scope, element, attrs) {

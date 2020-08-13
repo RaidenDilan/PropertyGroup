@@ -36,8 +36,6 @@ function MainCtrl($rootScope, $scope, $state, $auth, ToastAlertService, User, $m
 
   // $rootScope.bodyClass = 'login-layout';
   // $rootScope.$on('$routeChangeSuccess', function(currentRoute, previousRoute) {
-  //   console.log('currentRoute', currentRoute);
-  //   if (currentRoute) console.log('currentRoute.templateUrl', currentRoute);
   //   // switch(currentRoute.templateUrl) {
   //     //   // case 'login.html':
   //     //   // case 'register.html':
@@ -66,7 +64,6 @@ function MainCtrl($rootScope, $scope, $state, $auth, ToastAlertService, User, $m
   function secureState(event, toState, toParams, fromState, fromParams) {
     // vm.isHome = (toState.url === '/' || toState.name === 'home') ? true : false;
     vm.message = null;
-    // console.log('vm.currentGroupId', vm.currentGroupId);
     if (!detectMobile() && vm.hideBack === true) vm.hideBack = $state.current.hideBack ? $state.current.hideBack : false;
 
     // SOME HOW PROTECTED ROUTES CAN BE ACCESSED WHEN NOT IN A GROUP BUT IS AUTHENTICATED
@@ -155,9 +152,6 @@ function MainCtrl($rootScope, $scope, $state, $auth, ToastAlertService, User, $m
 // };
 
 // $scope.$on('$routeChangeStart', function (scope, next, current) {
-//   console.log('scope', scope);
-//   console.log('next', next);
-//   console.log('current', current);
 //   if (next.$$route.controller != "/") {
 //     // Show here for your model, and do what you need**
 //     // $("#yourModel").show();

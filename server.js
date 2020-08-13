@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const { port, env, dbURI, dbOPS, bluebirdOptions } = require('./config/environment');
+const { port, env, dbURI, dbOPS } = require('./config/environment');
 const mongoose = require('mongoose');
 mongoose.plugin(require('./lib/globalToJSON'));
 mongoose.Promise = require('bluebird');
@@ -14,38 +14,8 @@ const app = express();
 
 mongoose
   .connect(dbURI, dbOPS)
-  .then(res => console.log('DB Connected'))
-  .catch(err => console.log('DB Connection Failed '));
-
-// mongoose.connection.once('open', () => {
-//   mongoose.connection
-//     // .on('connected', () => console.log('Mongoose default connection is open to [%s]', dbURI))
-//     .on('error', (err) => console.log(console.error('Mongoose default connection has occured ' + err + ' error')))
-//     .on('reconnected', () => console.log('MongoDB event reconnected'))
-//     // .on('reconnected', () => console.info('MongoDB event reconnected'))
-//     .on('disconnected', () => console.log('Mongoose default connection is disconnected '));
-
-//   process.on('SIGINT', () => mongoose.connection.close(() => {
-//     console.log('Mongoose default connection is disconnected due to application termination ');
-//     process.exit(0);
-//   }));
-// });
-
-// mongoose
-//   .connect(dbURI, options)
-//   .then((err) => {
-//     if (err) console.log('Unable to connect to the server. Please start the server. Error:', err);
-//     else console.log('Connected to Server successfully!');
-//   })
-//   .catch((err) => { // we will not be here...
-//     console.log('App starting error:', err.stack);
-//     process.exit(1);
-//   });
-
-// mongoose.connect(dbURI, (err) => {
-//   if (err) console.log('Unable to connect to the server. Please start the server. Error:', err);
-//   else console.log('Connected to Server successfully!');
-// });
+  .then(() => console.log('DB Connected'))
+  .catch(err => console.log('DB Connection Failed', err));
 
 if (env !== 'test') app.use(morgan('dev'));
 

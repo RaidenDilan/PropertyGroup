@@ -23,11 +23,6 @@ function ratingStars() {
       ratingsPosition: '@'
     },
     link(scope, element, attrs, ngModel, ratingCtrl) {
-      // console.log('[ratingStars] -+-> this -+->', this);
-      // console.log('[ratingStars] -+-> scope.vm -+->', scope);
-      // console.log('[ratingStars] -+-> ngModel -+->', ngModel);
-      // console.log('[ratingStars] -+-> ratingCtrl -+->', ratingCtrl);
-
       const vm = scope.vm;
       let numArray = [1, 2, 3, 4, 5];
       let newRatingStar = null;

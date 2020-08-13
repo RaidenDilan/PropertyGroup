@@ -24,13 +24,11 @@ function PropertiesIndexCtrl($scope, $http, $mdDialog, $moment) {
   vm.isLoading = false;
 
   function propertyUpdater(properties) {
-    // console.log('properties', properties);
     if (typeof (properties) !== 'object') throw new Error('Properties should be an object');
     for (let i = 0; i < properties.length; i++) {
       properties[i].first_published_date = createdOnParser(properties[i].first_published_date);
       // properties[i].price = properties[i].like.length - properties[i].dislike.length;
       // properties[i].popular = properties[i].like + properties[i].dislike;
-      console.log('first_published_date', properties[i]);
     }
   }
 
@@ -39,8 +37,6 @@ function PropertiesIndexCtrl($scope, $http, $mdDialog, $moment) {
     let str = data.split('T');
     let date = str[0];
     let time = str[1].split('.')[0];
-
-    console.log(`${ date } at ${ time }`);
     return `${ date } at ${ time }`;
   }
 
@@ -87,7 +83,7 @@ function PropertiesIndexCtrl($scope, $http, $mdDialog, $moment) {
   vm.toggleLoading = toggleLoading;
 
   // $scope.$watch(() => vm.area, getPropertyLocation);
-  // $scope.$on('place_changed', (e, place) => console.log('place', place));
+  // $scope.$on('place_changed', (e, place) => $log('place', place));
 
   vm.openMenu = ($mdMenu, e) => {
     vm.originEvent = e;

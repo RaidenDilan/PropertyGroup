@@ -35,7 +35,6 @@ function GroupsHomeCtrl($scope, $state, $http, Group, GroupUser, $stateParams, $
     vm.group
       .$remove()
       .then(group => {
-        console.log('[groupsHome]', group);
         $state.go('groupsNew');
         return ToastAlertService.customToast(`${ group.message }`, vm.toastDelay, 'success');
       });

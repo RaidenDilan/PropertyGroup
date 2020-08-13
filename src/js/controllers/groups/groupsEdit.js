@@ -136,6 +136,6 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
   };
 
   vm.submitSearch = () => {
-    // console.log('Search function : Has been disabled');
+    // $log('Search function : Has been disabled');
   };
 }
