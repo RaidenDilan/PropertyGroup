@@ -9,5 +9,5 @@ function GroupsIndexCtrl(Group) {
   Group
     .query()
     .$promise
-    .then((response) => vm.all = response);
+    .then(response => vm.all = response);
 }

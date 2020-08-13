@@ -14,7 +14,7 @@ function base64() {
         ngModel.$setViewValue(fileReader.result);
       };
 
-      element.on('change', (e) => {
+      element.on('change', e => {
         const file = (e.target.files || e.dataTransfer.files)[0];
         fileReader.readAsDataURL(file);
       });

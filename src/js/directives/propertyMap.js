@@ -37,8 +37,8 @@ function propertyMap($window, mapStyles) {
       const infoWindow = new google.maps.InfoWindow({
         content:
           `<div id="infoWindow">
-            <img src="${property.image_354_255_url}">
-            <p>${property.displayable_address}</p>
+            <img src="${ property.image_354_255_url }">
+            <p>${ property.displayable_address }</p>
           </div>`,
         maxWidth: 300
       });

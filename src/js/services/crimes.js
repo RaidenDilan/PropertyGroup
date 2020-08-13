@@ -7,7 +7,7 @@ function Crimes($http) {
   this.getCrimes = function getCrimes(lat, lon) {
     return $http
       .get('/api/crimes', { params: { lat, lon } })
-      .then((response) => {
+      .then(response => {
 
         // ASB - Anti Social Behaviour
         response.data.antiSocial = [];
@@ -20,7 +20,7 @@ function Crimes($http) {
         response.data.crimes = [];
         response.data.crimeData = [];
 
-        response.data.forEach((crime) => {
+        response.data.forEach(crime => {
           if (crime.category.includes('anti-social-behaviour')) response.data.antiSocial.push(crime);
           if (crime.category.includes('burglary')) response.data.burglary.push(crime);
           if (crime.category.includes('bicycle-theft')) response.data.bikeTheft.push(crime);

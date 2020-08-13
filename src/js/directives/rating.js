@@ -29,8 +29,8 @@ function ratingStars() {
       // console.log('[ratingStars] -+-> ratingCtrl -+->', ratingCtrl);
 
       const vm = scope.vm;
-      var numArray = [1, 2, 3, 4, 5];
-      var newRatingStar = null;
+      let numArray = [1, 2, 3, 4, 5];
+      let newRatingStar = null;
 
       vm.mutable = false;
       vm.starsArray = numArray.join('');
@@ -42,7 +42,7 @@ function ratingStars() {
         if (ngModel) ngModel.$render = () => newRatingStar = ngModel.$viewValue;
       }
 
-      vm.getClass = (num) => {
+      vm.getClass = num => {
         return {
           on: vm.averageRating >= num || newRatingStar >= num,
           my: newRatingStar >= num
@@ -50,7 +50,7 @@ function ratingStars() {
         };
       };
 
-      vm.mouseover = (rating) => (ngModel) && (newRatingStar = rating);
+      vm.mouseover = rating => (ngModel) && (newRatingStar = rating);
       vm.mouseout = () => (ngModel) && (newRatingStar = ngModel.$viewValue);
       vm.click = () => (ngModel) && (ngModel.$setViewValue(newRatingStar));
     }

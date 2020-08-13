@@ -12,10 +12,10 @@ function UsersShowCtrl(User, $stateParams, $state, $auth, ToastAlertService) {
   vm.delete = () => {
     vm.user
       .$remove()
-      .then((user) => {
+      .then(user => {
         $auth.logout();
         $state.go('login');
-        ToastAlertService.customToast(`${user.message}`, 2000, 'success');
+        ToastAlertService.customToast(`${ user.message }`, 2000, 'success');
       });
   };
 }
@@ -30,9 +30,9 @@ function UsersEditCtrl(User, $stateParams, $state, ToastAlertService) {
     if (vm.usersEditForm.$valid) {
       vm.user
         .$update()
-        .then((res) => {
+        .then(res => {
           $state.go('usersShow', $stateParams);
-          ToastAlertService.customToast(`${res.user.username} Updated`, 2000, 'success');
+          ToastAlertService.customToast(`${ res.user.username } Updated`, 2000, 'success');
         });
 
       vm.usersEditForm.$setUntouched();

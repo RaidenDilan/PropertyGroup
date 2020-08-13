@@ -16,7 +16,7 @@ function ToastCtrl($mdToast, $mdDialog, $document, $scope) {
       .then(() => vm.isDlgOpen = false);
   };
 
-  vm.openMoreInfo = (e) => {
+  vm.openMoreInfo = e => {
     if (vm.isDlgOpen) return;
     vm.isDlgOpen = true;
 

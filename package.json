@@ -3,10 +3,6 @@
   "version": "3.0.0",
   "description": "WDI_25 Project 3 - Grouparty",
   "main": "server.js",
-  "engines": {
-    "node": "8.12.x",
-    "npm": "6.14.x"
-  },
   "scripts": {
     "postinstall": "bower install && gulp deploy",
     "start": "node server.js"
@@ -65,6 +61,7 @@
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "chart.js": "^2.9.3",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.7",

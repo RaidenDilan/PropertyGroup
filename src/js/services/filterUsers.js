@@ -7,10 +7,10 @@ function search() {
     if (!filterString) return input;
     if (filterString) filterString = '.*' + filterString.toLowerCase().split(' ').join('.*');
 
-    var regex = new RegExp(filterString, 'i');
-    var filteredOutput = [];
+    let regex = new RegExp(filterString, 'i');
+    let filteredOutput = [];
 
-    angular.forEach(input, (user) => (user.group === null) && (regex.test(user.username)) && (filteredOutput.push(user)));
+    angular.forEach(input, user => (user.group === null) && (regex.test(user.username)) && (filteredOutput.push(user)));
 
     // angular.forEach(input, (user) => {
     //   if(user.group === null) {

@@ -26,10 +26,10 @@ function GroupsNewCtrl($state, $auth, $scope, Group, User, $filter, ToastAlertSe
     User
       .query()
       .$promise
-      .then((users) => {
+      .then(users => {
         vm.availableUsers = [];
 
-        users.forEach((user) => (user.group === null) && (vm.availableUsers.push(user)));
+        users.forEach(user => (user.group === null) && (vm.availableUsers.push(user)));
         if (vm.availableUsers.length > 0) vm.availableUsersLength = vm.availableUsers.length;
       });
   }
@@ -57,14 +57,14 @@ function GroupsNewCtrl($state, $auth, $scope, Group, User, $filter, ToastAlertSe
     return document.getElementById('search-input').focus();
   }
 
-  vm.addUser = (user) => {
+  vm.addUser = user => {
     if (!vm.group.users.includes(user.id) && user.id !== authUserId) vm.group.users.push(user.id);
     if (!vm.chosenUsers.includes(user.id) && user.id !== authUserId) vm.chosenUsers.push(user);
 
     clearFilter();
   };
 
-  vm.removeUser = (user) => {
+  vm.removeUser = user => {
     const index = vm.group.users.indexOf(user);
     const userIdx = vm.chosenUsers.indexOf(user);
 
@@ -81,9 +81,9 @@ function GroupsNewCtrl($state, $auth, $scope, Group, User, $filter, ToastAlertSe
       Group
         .save(vm.group)
         .$promise
-        .then((group) => {
+        .then(group => {
           $state.go('propertiesIndex');
-          return ToastAlertService.customToast(`${group.message}`, vm.toastDelay, vm.toastStatus);
+          return ToastAlertService.customToast(`${ group.message }`, vm.toastDelay, vm.toastStatus);
         });
     }
   };

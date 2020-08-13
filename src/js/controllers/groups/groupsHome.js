@@ -14,11 +14,11 @@ function GroupsHomeCtrl($scope, $state, $http, Group, GroupUser, $stateParams, $
   Group
     .get($stateParams)
     .$promise
-    .then((data) => {
+    .then(data => {
       vm.group = data;
       let propIds = [];
 
-      vm.group.properties.forEach((property) => {
+      vm.group.properties.forEach(property => {
         return propIds.push(property.listingId);
       });
 
@@ -27,29 +27,30 @@ function GroupsHomeCtrl($scope, $state, $http, Group, GroupUser, $stateParams, $
       if (propIds) {
         $http
           .get('/api/groups/:id/properties', { params: { id: vm.group.id, listingId: propIds } })
-          .then((response) => vm.selected = response.data);
+          .then(response => vm.selected = response.data);
       }
     });
 
   vm.delete = () => {
     vm.group
       .$remove()
-      .then((group) => {
+      .then(group => {
+        console.log('[groupsHome]', group);
         $state.go('groupsNew');
-        return ToastAlertService.customToast(`${group.message}`, vm.toastDelay, 'success');
+        return ToastAlertService.customToast(`${ group.message }`, vm.toastDelay, 'success');
       });
   };
 
   vm.update = () => {
     vm.group
       .$update()
-      .then((group) => {
+      .then(group => {
         $state.go('groupsNew');
-        return ToastAlertService.customToast(`${group.groupName}`, vm.toastDelay, 'success');
+        return ToastAlertService.customToast(`${ group.groupName }`, vm.toastDelay, 'success');
       });
   };
 
-  vm.groupsUsersShow = (user) => {
+  vm.groupsUsersShow = user => {
     $mdDialog.show({
       controller: GroupsHomeUserCtrl,
       controllerAs: 'groupsHomeUser',
@@ -69,11 +70,11 @@ function GroupsHomeCtrl($scope, $state, $http, Group, GroupUser, $stateParams, $
     });
   };
 
-  vm.leaveGroup = (user) => {
+  vm.leaveGroup = user => {
     GroupUser
       .delete({ id: vm.group.id, userId: user })
       .$promise
-      .then((group) => {
+      .then(group => {
         const index = vm.group.users.indexOf(user);
         vm.group.users.splice(index, 1);
 
@@ -89,5 +90,5 @@ function GroupsHomeUserCtrl($scope, selectedUser, $mdDialog) {
   vm.selected = selectedUser;
   vm.hide = () => $mdDialog.hide();
   vm.cancel = () => $mdDialog.cancel();
-  vm.showUserId = (userId) => $mdDialog.hide(userId);
+  vm.showUserId = userId => $mdDialog.hide(userId);
 }

@@ -61,10 +61,11 @@ function deleteGroup(req, res, next) {
     .populate('users')
     .exec()
     .then(group => {
-      console.log('group', group);
       if (!group) return res.notFound('Group not found');
+      group.remove();
+      return res.status(200).json({ group, message: `${ group.groupName } Deleted` });
     })
-    .then(group => res.status(200).json({ message: `${ group.groupName } Deleted` }))
+    .then(() => res.status(204).end())
     .catch(next);
 }
 
@@ -85,16 +86,21 @@ function addUserToGroup(req, res, next) {
       return User
         .findByIdAndUpdate(params, update, options)
         .populate('group')
-        .exec()
-        .then(user => {
-          if (!user) res.status(404).json({ message: 'User not found' });
+        .exec((err, user) => {
+          if (err) res.status(404).json({ err, message: 'User not found' });
           return user
             .save()
-            .then(user => res.status(200).json(user));
-        })
-        .catch(next);
+            .then(user => res.status(200).json(user).end());
+        });
+      // .then(user => {
+      //   if (!user) res.status(404).json({ message: 'User not found' });
+      //   return user
+      //     .save()
+      //     .then(user => res.status(200).json(user));
+      // })
+      // .catch(next);
     })
-    .then(() => res.status(204).end())
+    // .then(() => res.status(204).end())
     .catch(next);
 }
 
@@ -115,16 +121,21 @@ function deleteUserFromGroup(req, res, next) {
       return User
         .findByIdAndUpdate(params, update, options)
         .populate('group')
-        .exec()
-        .then(user => {
-          if (!user) res.status(404).json({ message: 'User not found' });
+        .exec((err, user) => {
+          if (err) res.status(404).json({ err, message: 'User not found' });
           return user
             .save()
-            .then(user => res.status(200).json(user));
-        })
-        .catch(next);
+            .then(user => res.status(200).json(user).end());
+        });
+      // .then(user => {
+      //   if (!user) res.status(404).json({ message: 'User not found' });
+      //   return user
+      //     .save()
+      //     .then(user => res.status(200).json(user));
+      // })
+      // .catch(next);
     })
-    .then(() => res.status(204).end())
+    // .then(() => res.status(204).end())
     .catch(next);
 }
 

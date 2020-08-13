@@ -98,7 +98,7 @@ function MainCtrl($rootScope, $scope, $state, $auth, ToastAlertService, User, $m
       return User
         .get({ id: vm.currentUserId })
         .$promise
-        .then((user) => {
+        .then(user => {
           vm.user = user;
 
           if ((toState.name === 'propertiesIndex' && vm.user.group === null) && protectedStates.includes(toState.name)) {

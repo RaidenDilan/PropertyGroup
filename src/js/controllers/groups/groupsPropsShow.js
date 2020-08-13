@@ -29,15 +29,15 @@ function GroupsPropsShowCtrl($stateParams, $scope, $state, $http, Group, GroupPr
     Group
       .get($stateParams)
       .$promise
-      .then((data) => {
+      .then(data => {
         vm.group = data;
         getGroupProperty();
-        vm.prop = vm.group.properties.find((obj) => obj.listingId === vm.listingId);
+        vm.prop = vm.group.properties.find(obj => obj.listingId === vm.listingId);
         vm.prop.createdAt = $moment(vm.prop.createdAt).fromNow();
-        vm.prop.ratings.forEach((rating) => rating.createdAt = $moment(rating.createdAt).fromNow());
-        vm.prop.images.forEach((image) => image.createdAt = $moment(image.createdAt).fromNow()); // .fromNow(true);
-        vm.prop.comments.forEach((comment) => comment.createdAt = $moment(comment.createdAt).fromNow());
-        vm.voted = vm.prop.ratings.find((obj) => obj.createdBy.id === authUserId);
+        vm.prop.ratings.forEach(rating => rating.createdAt = $moment(rating.createdAt).fromNow());
+        vm.prop.images.forEach(image => image.createdAt = $moment(image.createdAt).fromNow()); // .fromNow(true);
+        vm.prop.comments.forEach(comment => comment.createdAt = $moment(comment.createdAt).fromNow());
+        vm.voted = vm.prop.ratings.find(obj => obj.createdBy.id === authUserId);
         // vm.ratings = vm.prop.ratings.length;
       });
   }
@@ -45,11 +45,11 @@ function GroupsPropsShowCtrl($stateParams, $scope, $state, $http, Group, GroupPr
   function getGroupProperty() {
     $http
       .get('/api/groups/:id/properties/:listingId', { params: { id: vm.group.id, listingId: vm.listingId } })
-      .then((response) => {
+      .then(response => {
         vm.properties = response.data;
         vm.listingLat = vm.properties.listing[0].latitude;
         vm.listingLon = vm.properties.listing[0].longitude;
-        vm.geometry = `${vm.listingLat},${vm.listingLon}`;
+        vm.geometry = `${ vm.listingLat },${ vm.listingLon }`;
         getPropertyCrimes();
       });
   }
@@ -59,7 +59,7 @@ function GroupsPropsShowCtrl($stateParams, $scope, $state, $http, Group, GroupPr
 
     Crimes
       .getCrimes(vm.listingLat, vm.listingLon)
-      .then((data) => vm.crimes = data);
+      .then(data => vm.crimes = data);
   }
 
   // HELPER FUNCTIONS
@@ -77,11 +77,11 @@ function GroupsPropsShowCtrl($stateParams, $scope, $state, $http, Group, GroupPr
     GroupPropertyRating
       .save({ id: vm.group.id, listingId: vm.listingId }, vm.newRating)
       .$promise
-      .then((rating) => {
+      .then(rating => {
         vm.prop.ratings.push(rating);
         vm.newRating = {};
       })
-      .then((rating) => {
+      .then(rating => {
         ToastAlertService.customToast('Rating posted', vm.toastDelay, vm.toastStatus);
         toggleVoted();
       });
@@ -107,18 +107,18 @@ function GroupsPropsShowCtrl($stateParams, $scope, $state, $http, Group, GroupPr
     GroupPropertyImage
       .save({ id: vm.group.id, listingId: vm.listingId }, vm.newImage)
       .$promise
-      .then((image) => {
+      .then(image => {
         image.createdAt = $moment(this.newImage.createdAt).fromNow(); // .fromNow(true);
         vm.prop.images.push(image);
         vm.newImage = {};
       })
-      .then((image) => {
+      .then(image => {
         toggleLoading();
         ToastAlertService.customToast('Image uploaded', vm.toastDelay, vm.toastStatus);
       });
   };
 
-  vm.deleteImage = (image) => {
+  vm.deleteImage = image => {
     GroupPropertyImage
       .delete({ id: vm.group.id, listingId: vm.listingId, imageId: image.id })
       .$promise
@@ -133,7 +133,7 @@ function GroupsPropsShowCtrl($stateParams, $scope, $state, $http, Group, GroupPr
     GroupPropertyComment
       .save({ id: vm.group.id, listingId: vm.listingId }, vm.newComment)
       .$promise
-      .then((comment) => {
+      .then(comment => {
         comment.createdAt = $moment(comment.createdAt).fromNow();
         // comment.createdAt = $moment(vm.newComment.createdAt).fromNow();
         vm.prop.comments.push(comment);
@@ -142,7 +142,7 @@ function GroupsPropsShowCtrl($stateParams, $scope, $state, $http, Group, GroupPr
       .then(() => ToastAlertService.customToast('Comment posted', vm.toastDelay, vm.toastStatus));
   };
 
-  vm.deleteComment = (comment) => {
+  vm.deleteComment = comment => {
     GroupPropertyComment
       .delete({ id: vm.group.id, listingId: vm.listingId, commentId: comment.id })
       .$promise
@@ -153,7 +153,7 @@ function GroupsPropsShowCtrl($stateParams, $scope, $state, $http, Group, GroupPr
       .then(() => ToastAlertService.customToast('Commend deleted', vm.toastDelay, vm.toastStatus));
   };
 
-  vm.deleteProperty = (property) => {
+  vm.deleteProperty = property => {
     GroupProperty
       .delete({ id: vm.group.id, listingId: vm.listingId })
       .$promise
@@ -162,10 +162,10 @@ function GroupsPropsShowCtrl($stateParams, $scope, $state, $http, Group, GroupPr
         vm.group.properties.splice(index, 1);
         return $state.go('groupsHome', { id: vm.group.id });
       })
-      .then(() => ToastAlertService.customToast(`${property.listing_id} deleted from ${vm.group.groupName} group`, vm.toastDelay, vm.toastStatus));
+      .then(() => ToastAlertService.customToast(`${ property.listing_id } deleted from ${ vm.group.groupName } group`, vm.toastDelay, vm.toastStatus));
   };
 
-  vm.showUserImage = (thisImage) => {
+  vm.showUserImage = thisImage => {
     $mdDialog.show({
       controller: UserImageModalCtrl,
       controllerAs: 'userImageModal',
@@ -191,7 +191,7 @@ function UserImageModalCtrl(selectedImage, $mdDialog) {
   vm.selected = selectedImage;
   vm.hide = () => $mdDialog.hide();
   vm.cancel = () => $mdDialog.cancel();
-  vm.showUserId = (userId) => $mdDialog.hide(userId);
+  vm.showUserId = userId => $mdDialog.hide(userId);
 }
 
 // vm.chartOptions = {

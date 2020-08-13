@@ -2,9 +2,9 @@ angular
   .module('groupartyApp')
   .service('ToastAlertService', ToastAlertService);
 
-ToastAlertService.$inject = ['$mdToast', '$document'];
-function ToastAlertService($mdToast, $document) {
-  var dialogs = {
+ToastAlertService.$inject = ['$mdToast'];
+function ToastAlertService($mdToast) {
+  let dialogs = {
     isDlgOpen: null,
     hideKey: 'z',
     dialogKey: 'd',

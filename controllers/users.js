@@ -4,7 +4,7 @@ function indexUser(req, res, next) {
   User
     .find()
     .exec()
-    .then((users) => res.json(users))
+    .then(users => res.json(users))
     .catch((err, next) => {
       if (err.status) return res.status(err.status).json({ message: err.message });
       return res.status(500).json({ message: err.message });
@@ -16,7 +16,7 @@ function showUser(req, res, next) {
     .findById(req.params.id)
     .populate('group')
     .exec()
-    .then((user) => {
+    .then(user => {
       if (!user) return res.notFound('User not found');
       return res.json(user);
     })
@@ -31,7 +31,7 @@ function updateUser(req, res, next) {
     .findById(req.params.id)
     .populate('group')
     .exec()
-    .then((user) => {
+    .then(user => {
       if (!user) return res.notFound('User not found');
 
       for (const field in req.body) {
@@ -40,7 +40,7 @@ function updateUser(req, res, next) {
 
       return user.save();
     })
-    .then((user) => res.json({ user, message: `${user.username} Updated` }))
+    .then(user => res.json({ user, message: `${ user.username } Updated` }))
     .catch(next);
 }
 
@@ -48,11 +48,11 @@ function deleteUser(req, res, next) {
   User
     .findById(req.params.id)
     .exec()
-    .then((user) => {
+    .then(user => {
       if (!user) return res.notFound('User not found');
       return user.remove();
     })
-    .then((user) => res.status(200).json({ message: `${user.username} deleted` }))
+    .then(user => res.status(200).json({ message: `${ user.username } deleted` }))
     .catch(next);
 }
 

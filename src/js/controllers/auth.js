@@ -13,9 +13,9 @@ function RegisterCtrl($auth, $state, ToastAlertService) {
     if (vm.registerForm.$valid) {
       $auth
         .signup(vm.user)
-        .then((user) => {
+        .then(user => {
           $state.go('login');
-          ToastAlertService.customToast(`${user.data.message}`, 2000, 'success');
+          ToastAlertService.customToast(`${ user.data.message }`, 2000, 'success');
         });
 
       vm.registerForm.$setUntouched();
@@ -34,9 +34,9 @@ function LoginCtrl($auth, $state, $stateParams, ToastAlertService) {
     if (vm.loginForm.$valid) {
       $auth
         .login(vm.credentials)
-        .then((user) => {
+        .then(user => {
           $state.go('usersShow', { id: $auth.getPayload().userId });
-          ToastAlertService.customToast(`${user.data.message}`, 2000, 'success');
+          ToastAlertService.customToast(`${ user.data.message }`, 2000, 'success');
         });
 
       vm.loginForm.$setUntouched();
@@ -44,7 +44,7 @@ function LoginCtrl($auth, $state, $stateParams, ToastAlertService) {
     }
   };
 
-  vm.authenticate = (provider) => {
+  vm.authenticate = provider => {
     $auth
       .authenticate(provider)
       .then(() => {

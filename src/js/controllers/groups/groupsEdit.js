@@ -23,11 +23,11 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
     Group
       .get($stateParams)
       .$promise
-      .then((group) => {
+      .then(group => {
         vm.group = group;
         vm.groupUsers = [];
 
-        group.users.forEach((user) => (user.id !== authUserId) && (vm.groupUsers.push(user)));
+        group.users.forEach(user => (user.id !== authUserId) && (vm.groupUsers.push(user)));
         fetchUsers();
       });
   }
@@ -39,10 +39,10 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
     User
       .query()
       .$promise
-      .then((users) => {
+      .then(users => {
         vm.availableUsers = [];
 
-        users.forEach((user) => (user.group === null) && (vm.availableUsers.push(user)));
+        users.forEach(user => (user.group === null) && (vm.availableUsers.push(user)));
         if (vm.availableUsers.length > 0) vm.availableUsersLength = vm.availableUsers.length;
       });
   }
@@ -76,11 +76,11 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
   //   else array[index] = obj;
   // }
 
-  vm.addUser = (user) => {
+  vm.addUser = user => {
     GroupUser
       .update({ id: vm.group.id, userId: user.id })
       .$promise
-      .then((user) => {
+      .then(user => {
         vm.groupUsers.push(user);
         vm.group.users.push(user);
 
@@ -92,11 +92,11 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
       });
   };
 
-  vm.removeUser = (user) => {
+  vm.removeUser = user => {
     GroupUser
       .delete({ id: vm.group.id, userId: user.id })
       .$promise
-      .then((group) => {
+      .then(group => {
         const index = vm.groupUsers.indexOf(user);
         const useridx = vm.group.users.indexOf(user);
 
@@ -112,9 +112,9 @@ function GroupsEditCtrl($stateParams, $auth, $state, $scope, Group, GroupUser, U
     if (vm.groupsEditForm.$valid) {
       vm.group
         .$update()
-        .then((group) => {
+        .then(group => {
           $state.go('groupsHome', $stateParams);
-          return ToastAlertService.customToast(`${group.message}`, vm.toastDelay, vm.toastStatus);
+          return ToastAlertService.customToast(`${ group.message }`, vm.toastDelay, vm.toastStatus);
         });
     }
   };
