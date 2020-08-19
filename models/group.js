@@ -74,7 +74,7 @@ groupSchema.pre('remove', function removeGroupFromUsers(next) {
 userImageSchema.virtual('imageSRC').get(function getImageSRC() {
   if (!this.file) return null;
   if (this.file.match(/^http/)) return (this.file);
-  return `https://s3-eu-west-1.amazonaws.com/${ process.env.AWS_BUCKET_NAME }/${ this.file }`;
+  return `https://s3-eu-west-2.amazonaws.com/${ process.env.AWS_BUCKET_NAME }/${ this.file }`;
 });
 
 userImageSchema.pre('remove', function deleteImage(next) {
